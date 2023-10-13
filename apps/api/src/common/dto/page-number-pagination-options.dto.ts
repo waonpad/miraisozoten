@@ -1,23 +1,26 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { Transform } from 'class-transformer';
-import { IsBoolean, IsNumber, IsOptional } from 'class-validator';
+import { createZodDto } from 'nestjs-zod';
+import { z } from 'nestjs-zod/z';
 
-export class PageNumberPaginationOptionsDto {
-  @ApiProperty({ required: false })
-  @Transform(({ value }) => Number(value))
-  @IsNumber()
-  @IsOptional()
-  page: number = 1;
+export const PageNumberPaginationOptionsSchema = z.object({
+  page: z
+    .number()
+    .or(z.string())
+    .transform((value) => Number(value))
+    .default(1),
+  limit: z
+    .number()
+    .or(z.string())
+    .transform((value) => Number(value))
+    .default(10),
+  includePageCount: z
+    .boolean()
+    .or(z.string())
+    .transform((value) => Boolean(value))
+    .default(true),
+});
 
-  @ApiProperty({ required: false })
-  @Transform(({ value }) => Number(value))
-  @IsNumber()
-  @IsOptional()
-  limit: number = 10;
+export type PageNumberPaginationOptions = z.infer<typeof PageNumberPaginationOptionsSchema>;
 
-  @ApiProperty({ required: false })
-  @Transform(({ value }) => value === 'true')
-  @IsBoolean()
-  @IsOptional()
-  includePageCount: boolean = true;
-}
+export class PageNumberPaginationOptionsDto extends createZodDto(
+  PageNumberPaginationOptionsSchema
+) {}
