@@ -131,6 +131,9 @@ module.exports = {
     util: {
       gensec: `node ${root('tool/gen-secret.js')}`,
       upnxsec: `node ${root('tool/update-nextauth-secret.js')}`,
+      pkill: {
+        api: `node ${root('tool/process-kill.js')} 3000`,
+      },
     },
   },
 };
