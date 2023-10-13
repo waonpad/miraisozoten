@@ -20,7 +20,7 @@ export class AuthController {
 
   @Get('me')
   @UseGuards(AuthGuard)
-  async me(@User() user: JwtDecodedUser): Promise<UserData> {
+  async me(@User() user: JwtDecodedUser): Promise<UserData | null> {
     return this.authService.me(user);
   }
 }

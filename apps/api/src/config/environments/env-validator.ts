@@ -6,17 +6,17 @@ import { HostEnum } from './constants/host.enum';
 
 export class EnvValidator {
   @IsEnum(AppEnvEnum)
-  APP_ENV: AppEnvEnum;
+  APP_ENV!: AppEnvEnum;
 
   @IsEnum(HostEnum)
-  HOST: HostEnum;
+  HOST!: HostEnum;
 
   @IsNumber()
-  PORT: number;
+  PORT!: number;
 
   @IsNotEmpty()
   @IsString()
-  DATABASE_URL: string;
+  DATABASE_URL!: string;
 }
 
 /**

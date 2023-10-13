@@ -14,14 +14,14 @@ export class Env {
   }
 
   get AppEnv(): string {
-    return this.configService.get('APP_ENV');
+    return this.configService.get('APP_ENV') as string;
   }
 
   get Host(): string {
-    return this.configService.get('HOST');
+    return this.configService.get('HOST') as string;
   }
 
   get Port(): number {
-    return this.configService.get('PORT');
+    return this.configService.get('PORT') as number;
   }
 }
