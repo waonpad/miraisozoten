@@ -2,7 +2,7 @@
 
 ### 前提条件
 
-yarn, nps, Dredd, [git-cz](https://www.npmjs.com/package//git-cz) をインストール
+yarn, nps, Dredd, [git-cz](https://www.npmjs.com/package//git-cz) glob をインストール
 
 ```
 npm i -g yarn nps dredd git-cz
@@ -31,6 +31,8 @@ git clone <リポジトリURL>.git
 - DBコンテナの起動と初回マイグレーション
 
 が実行される
+
+💡 Docker アプリを立ち上げておく
 
 ```
 nps prepare
