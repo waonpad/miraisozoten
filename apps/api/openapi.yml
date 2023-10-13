@@ -39,7 +39,25 @@ paths:
   /weapons/pages:
     get:
       operationId: WeaponsController_getAllWeaponsWithPages
-      parameters: []
+      parameters:
+        - name: page
+          required: false
+          in: query
+          example: 1
+          schema:
+            type: string
+        - name: limit
+          required: false
+          in: query
+          example: 10
+          schema:
+            type: string
+        - name: includePageCount
+          required: false
+          in: query
+          example: 'true'
+          schema:
+            type: string
       responses:
         '200':
           description: ''

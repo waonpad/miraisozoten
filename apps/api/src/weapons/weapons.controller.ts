@@ -11,7 +11,7 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { Weapon } from 'database';
 import { Request } from 'express';
 import { PageNumberPagination } from 'prisma-extension-pagination/dist/types';
@@ -38,12 +38,28 @@ export class WeaponsController {
 
   // :id より上に書かないと:idがpagesとして扱われてしまう
   @Get('pages')
+  @ApiQuery({
+    name: 'page',
+    type: String,
+    example: 1,
+    required: false,
+  })
+  @ApiQuery({
+    name: 'limit',
+    type: String,
+    example: 10,
+    required: false,
+  })
+  @ApiQuery({
+    name: 'includePageCount',
+    type: String,
+    example: 'true',
+    required: false,
+  })
   @HttpCode(200)
   async getAllWeaponsWithPages(
     @Query() options: PageNumberPaginationOptionsDto
   ): Promise<[Weapon[], PageNumberPagination]> {
-    console.log(options);
-
     return this.weaponsService.getAllWeaponsWithPages(options);
   }
 

@@ -1,6 +1,5 @@
 // Generouted, changes to this file will be overriden
 /* eslint-disable */
-/* prettier-ignore */
 
 import { components, hooks, utils } from '@generouted/react-router/client';
 

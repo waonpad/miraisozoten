@@ -1,16 +1,23 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
-import { IsBoolean, IsNumber } from 'class-validator';
+import { IsBoolean, IsNumber, IsOptional } from 'class-validator';
 
 export class PageNumberPaginationOptionsDto {
-  @IsNumber()
+  @ApiProperty({ required: false })
   @Transform(({ value }) => Number(value))
-  page: number;
-
   @IsNumber()
-  @Transform(({ value }) => Number(value))
-  limit: number;
+  @IsOptional()
+  page: number = 1;
 
-  @IsBoolean()
+  @ApiProperty({ required: false })
+  @Transform(({ value }) => Number(value))
+  @IsNumber()
+  @IsOptional()
+  limit: number = 10;
+
+  @ApiProperty({ required: false })
   @Transform(({ value }) => value === 'true')
-  includePageCount: boolean;
+  @IsBoolean()
+  @IsOptional()
+  includePageCount: boolean = true;
 }
