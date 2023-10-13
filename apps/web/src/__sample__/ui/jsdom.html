@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>JS DOM Test</title>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <h1>JS DOM Test</h1>
+    <button id="button">Click Me</button>
+    <div id="message"></div>
+    <script>
+      const button = document.getElementById('button');
+      const message = document.getElementById('message');
+
+      button.addEventListener('click', function () {
+        message.textContent = 'Hello, world!';
+      });
+    </script>
+  </body>
+</html>

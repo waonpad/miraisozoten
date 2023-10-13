@@ -1,0 +1,68 @@
+name: 機能提案
+description: 新しい機能や改善を提案する際に使用してください。
+title: "[Feature Request]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: "### Issueの作成前に、既存のIssuesを確認してください"
+
+  - type: textarea
+    id: feature-summary
+    attributes:
+      label: 機能の要約
+      placeholder: 新しい機能や改善の簡単な説明を記入してください。
+    validations:
+      required: true
+
+  - type: textarea
+    id: detailed-description
+    attributes:
+      label: 詳細な説明
+    validations:
+      required: true
+
+  - type: textarea
+    id: benefits
+    attributes:
+      label: 利益・価値
+    validations:
+      required: false
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: 代替案
+    validations:
+      required: false
+
+  - type: textarea
+    id: related-links
+    attributes:
+      label: 関連する情報やリンク
+    validations:
+      required: false
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: スクリーンショットやモックアップ
+      placeholder: 画像添付,モックアップのURL等を記入してください。
+    validations:
+      required: false
+
+  - type: textarea
+    id: impact
+    attributes:
+      label: 影響範囲
+      placeholder: この機能が影響を及ぼす可能性がある既存の部分や機能について記述してください。
+    validations:
+      required: false
+    
+  - type: textarea
+    id: implementation-suggestions
+    attributes:
+      label: 実装の提案
+      placeholder: 技術的な観点からの機能の実装方法に関する提案や情報を記入してください。
+    validations:
+      required: false

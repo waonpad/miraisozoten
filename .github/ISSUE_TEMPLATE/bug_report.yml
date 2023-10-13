@@ -1,0 +1,60 @@
+name: バグ報告
+description: 新しいバグを報告する際に使用してください。
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: "### Issueの作成前に、既存のIssuesを確認してください"
+
+  - type: textarea
+    id: reproduce-steps
+    attributes:
+      label: 再現方法
+      description: バグが発生する手順を明確に記述してください。
+      placeholder: |
+        1. 〜をクリックする。
+        2. 〜を入力する。
+        3. エラーが発生する。
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual-result
+    attributes:
+      label: 実行結果
+      description: バグの具体的な振る舞いやエラーメッセージを記述してください。
+    validations:
+      required: true
+
+  - type: textarea
+    id: console-output
+    attributes:
+      label: 実行結果(コンソール出力)
+      description: もし可能であれば、コンソール出力のエラーメッセージやスタックトレースをこちらに貼り付けてください。
+    validations:
+      required: false
+
+  - type: textarea
+    id: expected-result
+    attributes:
+      label: 要求される結果
+      description: 正常に動作した場合の期待される結果を記述してください。
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment-info
+    attributes:
+      label: 環境情報
+      description: npx envinfo --system --binaries --browsers の結果を貼り付けてください。
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional-info
+    attributes:
+      label: バグ解決の助けになりそうな情報
+      description: 追加で共有したい情報、スクリーンショット、またはその他の関連情報をこちらに記入してください。
+    validations:
+      required: false

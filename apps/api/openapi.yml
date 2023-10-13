@@ -1,0 +1,152 @@
+openapi: 3.0.0
+paths:
+  /:
+    get:
+      operationId: AppController_getHello
+      parameters: []
+      responses:
+        '200':
+          description: ''
+  /danger:
+    get:
+      operationId: AppController_getDanger
+      parameters: []
+      responses:
+        '200':
+          description: ''
+  /weapons:
+    get:
+      operationId: WeaponsController_getAllWeapons
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags: &ref_0
+        - weapons
+    post:
+      operationId: WeaponsController_create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateWeaponDto'
+      responses:
+        '201':
+          description: ''
+      tags: *ref_0
+  /weapons/pages:
+    get:
+      operationId: WeaponsController_getAllWeaponsWithPages
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags: *ref_0
+  /weapons/{id}:
+    get:
+      operationId: WeaponsController_getWeapon
+      parameters:
+        - name: id
+          required: true
+          in: path
+          example: 1
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+      tags: *ref_0
+    put:
+      operationId: WeaponsController_update
+      parameters:
+        - name: id
+          required: true
+          in: path
+          example: 1
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateWeaponDto'
+      responses:
+        '200':
+          description: ''
+      tags: *ref_0
+    delete:
+      operationId: WeaponsController_delete
+      parameters:
+        - name: id
+          required: true
+          in: path
+          example: 1
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+      tags: *ref_0
+  /auth/login:
+    post:
+      operationId: AuthController_login
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags: &ref_1
+        - auth
+  /auth/me:
+    get:
+      operationId: AuthController_me
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags: *ref_1
+info:
+  title: DQ Weapons API
+  description: The DQ Weapons API description
+  version: '1.0'
+  contact: {}
+tags: []
+servers: []
+components:
+  schemas:
+    CreateWeaponDto:
+      type: object
+      properties:
+        name:
+          type: string
+        attackPower:
+          type: number
+        attribute:
+          type: string
+          enum:
+            - sword
+            - bow
+            - spear
+            - axe
+            - dagger
+      required:
+        - name
+        - attackPower
+        - attribute
+    UpdateWeaponDto:
+      type: object
+      properties:
+        name:
+          type: string
+        attackPower:
+          type: number
+        attribute:
+          type: string
+          enum:
+            - sword
+            - bow
+            - spear
+            - axe
+            - dagger

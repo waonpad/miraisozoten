@@ -1,0 +1,29 @@
+{
+  "name": "react-turbo",
+  "version": "0.0.0",
+  "packageManager": "yarn@1.22.19",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "nps dev",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx}\"",
+    "test": "nps test",
+    "prepare": "echo Please husky install"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.7.2",
+    "@commitlint/config-conventional": "^17.7.0",
+    "dotenv": "^16.3.1",
+    "husky": "^8.0.0",
+    "lint-staged": "^14.0.1",
+    "prettier": "^3.0.3",
+    "stylelint": "^15.10.3",
+    "stylelint-config": "*",
+    "turbo": "1.10.15"
+  }
+}

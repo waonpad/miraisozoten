@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client-js"
+  // デプロイ先のマシンに合わせてbinaryTargetsを変更する
+  binaryTargets = ["native", "debian-openssl-1.1.x", "debian-openssl-3.0.x"]
+}
+
+datasource db {
+  // mysqlの場合、長いデータには@db.Textをつける
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+  // relationMode: デフォルトはforeignKeys
+  // planetscaleの場合はprisma
+  // モデルの@@indexもplanetscaleのために必要
+  relationMode = "prisma"
+}
+
+model User {
+  id            String    @id @default(uuid())
+  name          String?
+  email         String?   @unique
+  emailVerified Boolean   @default(false)
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Post {
+  id       Int    @id @default(autoincrement())
+  title    String
+  content String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Weapon {
+  id          Int      @id @default(autoincrement())
+  name        String
+  attackPower Int
+  attribute   String // sqliteはenumをサポートしていないのでStringで代用
+}
