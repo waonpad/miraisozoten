@@ -1,4 +1,4 @@
-import Axios, { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+import Axios, { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
 import { COOKIE_NAMES } from '@/constants/cookie-names';
 import { env } from '@/constants/env';
@@ -21,8 +21,9 @@ axios.interceptors.response.use(
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return response.data;
   },
-  (error) => {
-    console.log(error);
+  (error: AxiosError) => {
+    // error.response?.data の中身がバックから送られてきたエラーの本体
+    console.log(error.response?.data);
 
     return Promise.reject(error);
   }

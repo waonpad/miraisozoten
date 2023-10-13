@@ -1,14 +1,14 @@
 import { useState } from 'react';
 
 import { useUpdateWeapon } from '../api/update-weapon';
+import { UpdateWeaponInput } from '../entity/weapon.entity';
 
-import type { UpdateWeaponDTO } from '../api/update-weapon';
 import type { Weapon } from 'database';
 
 export const UpdateWeapon = ({ weapon }: { weapon: Weapon }) => {
   const updateWeaponMutation = useUpdateWeapon();
 
-  const [weaponForm, setWeapon] = useState<UpdateWeaponDTO['data']>(weapon);
+  const [weaponForm, setWeapon] = useState<UpdateWeaponInput>(weapon);
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();

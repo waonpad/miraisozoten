@@ -22,6 +22,7 @@
     "database": "*",
     "dayjs": "^1.11.10",
     "jwt-decode": "^3.1.2",
+    "nestjs-zod": "^3.0.0",
     "postcss": "^8.4.31",
     "prisma-extension-pagination": "^0.5.0",
     "react": "^18.2.0",

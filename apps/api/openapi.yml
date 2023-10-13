@@ -21,6 +21,36 @@ paths:
       responses:
         '200':
           description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  name:
+                    type: string
+                  attackPower:
+                    type: number
+                  attribute:
+                    type: string
+                    enum:
+                      - sword
+                      - bow
+                      - spear
+                      - axe
+                      - dagger
+                    x-enumNames:
+                      - Sword
+                      - Bow
+                      - Spear
+                      - Axe
+                      - Dagger
+                required:
+                  - id
+                  - name
+                  - attackPower
+                  - attribute
       tags: &ref_0
         - weapons
     post:
@@ -31,36 +61,122 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateWeaponDto'
+              type: object
+              properties:
+                name:
+                  type: string
+                attackPower:
+                  type: number
+                attribute:
+                  type: string
+                  enum:
+                    - sword
+                    - bow
+                    - spear
+                    - axe
+                    - dagger
+                  x-enumNames:
+                    - Sword
+                    - Bow
+                    - Spear
+                    - Axe
+                    - Dagger
+              required:
+                - name
+                - attackPower
+                - attribute
       responses:
-        '201':
+        '200':
           description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  name:
+                    type: string
+                  attackPower:
+                    type: number
+                  attribute:
+                    type: string
+                    enum:
+                      - sword
+                      - bow
+                      - spear
+                      - axe
+                      - dagger
+                    x-enumNames:
+                      - Sword
+                      - Bow
+                      - Spear
+                      - Axe
+                      - Dagger
+                required:
+                  - id
+                  - name
+                  - attackPower
+                  - attribute
       tags: *ref_0
   /weapons/pages:
     get:
       operationId: WeaponsController_getAllWeaponsWithPages
       parameters:
-        - name: page
-          required: false
+        - name: ''
+          required: true
           in: query
-          example: 1
           schema:
-            type: string
-        - name: limit
-          required: false
-          in: query
-          example: 10
-          schema:
-            type: string
-        - name: includePageCount
-          required: false
-          in: query
-          example: 'true'
-          schema:
-            type: string
+            type: object
+            properties:
+              page:
+                oneOf:
+                  - type: number
+                  - type: string
+                default: 1
+              limit:
+                oneOf:
+                  - type: number
+                  - type: string
+                default: 10
+              includePageCount:
+                oneOf:
+                  - type: boolean
+                  - type: string
+                default: true
       responses:
         '200':
           description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  name:
+                    type: string
+                  attackPower:
+                    type: number
+                  attribute:
+                    type: string
+                    enum:
+                      - sword
+                      - bow
+                      - spear
+                      - axe
+                      - dagger
+                    x-enumNames:
+                      - Sword
+                      - Bow
+                      - Spear
+                      - Axe
+                      - Dagger
+                required:
+                  - id
+                  - name
+                  - attackPower
+                  - attribute
       tags: *ref_0
   /weapons/{id}:
     get:
@@ -90,10 +206,63 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateWeaponDto'
+              type: object
+              properties:
+                name:
+                  type: string
+                attackPower:
+                  type: number
+                attribute:
+                  type: string
+                  enum:
+                    - sword
+                    - bow
+                    - spear
+                    - axe
+                    - dagger
+                  x-enumNames:
+                    - Sword
+                    - Bow
+                    - Spear
+                    - Axe
+                    - Dagger
+              required:
+                - name
+                - attackPower
+                - attribute
       responses:
         '200':
           description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  name:
+                    type: string
+                  attackPower:
+                    type: number
+                  attribute:
+                    type: string
+                    enum:
+                      - sword
+                      - bow
+                      - spear
+                      - axe
+                      - dagger
+                    x-enumNames:
+                      - Sword
+                      - Bow
+                      - Spear
+                      - Axe
+                      - Dagger
+                required:
+                  - id
+                  - name
+                  - attackPower
+                  - attribute
       tags: *ref_0
     delete:
       operationId: WeaponsController_delete
@@ -107,6 +276,36 @@ paths:
       responses:
         '200':
           description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  name:
+                    type: string
+                  attackPower:
+                    type: number
+                  attribute:
+                    type: string
+                    enum:
+                      - sword
+                      - bow
+                      - spear
+                      - axe
+                      - dagger
+                    x-enumNames:
+                      - Sword
+                      - Bow
+                      - Spear
+                      - Axe
+                      - Dagger
+                required:
+                  - id
+                  - name
+                  - attackPower
+                  - attribute
       tags: *ref_0
   /auth/login:
     post:
@@ -126,45 +325,11 @@ paths:
           description: ''
       tags: *ref_1
 info:
-  title: DQ Weapons API
-  description: The DQ Weapons API description
+  title: API Doc
+  description: API Doc Description
   version: '1.0'
   contact: {}
 tags: []
 servers: []
 components:
-  schemas:
-    CreateWeaponDto:
-      type: object
-      properties:
-        name:
-          type: string
-        attackPower:
-          type: number
-        attribute:
-          type: string
-          enum:
-            - sword
-            - bow
-            - spear
-            - axe
-            - dagger
-      required:
-        - name
-        - attackPower
-        - attribute
-    UpdateWeaponDto:
-      type: object
-      properties:
-        name:
-          type: string
-        attackPower:
-          type: number
-        attribute:
-          type: string
-          enum:
-            - sword
-            - bow
-            - spear
-            - axe
-            - dagger
+  schemas: {}

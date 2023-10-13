@@ -4,12 +4,15 @@ import { Weapon } from 'database';
 import { axios } from '@/lib/axios';
 import { queryClient, type MutationConfig, QUERY_KEYS } from '@/lib/react-query';
 
-export type UpdateWeaponDTO = {
-  data: Weapon;
-  id: Weapon['id'];
-};
+import { UpdateWeaponInput, WeaponResponse } from '../entity/weapon.entity';
 
-export const updateWeapon = ({ data, id }: UpdateWeaponDTO): Promise<Weapon> => {
+export const updateWeapon = ({
+  data,
+  id,
+}: {
+  data: UpdateWeaponInput;
+  id: Weapon['id'];
+}): Promise<WeaponResponse> => {
   return axios.put(`/weapons/${id}`, data);
 };
 
