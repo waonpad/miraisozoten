@@ -1,4 +1,3 @@
-import { Weapon } from 'database';
 import {
   PageNumberPagination,
   PageNumberPaginationOptions,
@@ -12,11 +11,13 @@ import {
   type InfiniteQueryConfig,
 } from '@/lib/react-query';
 
+import { WeaponResponse } from '../entity/weapon.entity';
+
 export const getWeapons = ({
   pageParam = 1,
 }: {
   pageParam: number;
-}): Promise<[Weapon[], PageNumberPagination]> => {
+}): Promise<[WeaponResponse[], PageNumberPagination]> => {
   const params: PageNumberPaginationOptions = {
     page: pageParam,
     limit: 10,

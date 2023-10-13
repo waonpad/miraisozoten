@@ -15,20 +15,24 @@ export type ReactHookFormValidationRules<T extends FieldValues> = Record<
 >;
 
 export type ErrorResponse = {
-  error: {
-    code: number;
-    message: string;
-    // type?:
-  };
+  statusCode: number;
+  message: string;
 };
 
+// error: AxiosError
+// issue: {
+//   code: string;
+//   message: string;
+//   path: (string | number)[];
+//   validation: string;
+// }
 export type ValidationError<T> = {
-  validation: {
-    [key in keyof T]?: string;
-  };
-};
+  code: string;
+  message: string;
+  path: (string | number)[];
+  validation: keyof T;
+}[];
 
-// param.subParamのように、ネストしている場合はピリオドでつなげて返ってくることを想定している
-export type MutationErrorResponse<T> = {
-  error: ErrorResponse['error'] & ValidationError<T>;
+export type MutationErrorResponse<T> = ErrorResponse & {
+  errors: ValidationError<T>;
 };

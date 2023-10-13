@@ -1,19 +1,20 @@
 import { useState } from 'react';
 
 import { useCreateWeapon } from '../api/create-weapon';
-
-import type { CreateWeaponDTO } from '../api/create-weapon';
+import { CreateWeaponInput } from '../entity/weapon.entity';
 
 export const CreateWeapon = () => {
   const createWeaponMutaion = useCreateWeapon();
 
-  const weaponFormDefault: CreateWeaponDTO['data'] = {
+  const errors = createWeaponMutaion.error?.response?.data?.errors;
+
+  const weaponFormDefault: CreateWeaponInput = {
     name: 'test-weapon',
     attackPower: 0,
     attribute: 'sword',
   };
 
-  const [weapon, setWeapon] = useState<CreateWeaponDTO['data']>(weaponFormDefault);
+  const [weapon, setWeapon] = useState<CreateWeaponInput>(weaponFormDefault);
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
@@ -37,6 +38,14 @@ export const CreateWeapon = () => {
           className="border"
           required
         />
+        {/* エラーを表示する */}
+        {(errors ?? [])
+          .filter((error) => error.path[0] === 'name')
+          .map((error) => (
+            <div key={error.message} className="text-red-500">
+              {error.message}
+            </div>
+          ))}
       </div>
       <div>
         <label htmlFor="attackPower">attackPower:</label>
@@ -47,6 +56,14 @@ export const CreateWeapon = () => {
           required
           type="number"
         />
+        {/* エラーを表示する */}
+        {(errors ?? [])
+          .filter((error) => error.path[0] === 'attackPower')
+          .map((error) => (
+            <div key={error.message} className="text-red-500">
+              {error.message}
+            </div>
+          ))}
       </div>
       <div>
         <label htmlFor="attribute">attribute:</label>
@@ -56,6 +73,14 @@ export const CreateWeapon = () => {
           className="border"
           required
         />
+        {/* エラーを表示する */}
+        {(errors ?? [])
+          .filter((error) => error.path[0] === 'attribute')
+          .map((error) => (
+            <div key={error.message} className="text-red-500">
+              {error.message}
+            </div>
+          ))}
       </div>
       <div>
         <button type="submit" className="rounded-lg bg-blue-500 px-2 py-1 text-white">
