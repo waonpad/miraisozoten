@@ -1,8 +1,8 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { NextFunction, Request, Response } from 'express';
 import jet_decode, { InvalidTokenError } from 'jwt-decode';
+import { JwtDecodedUser } from 'schema/src/user';
 import { Env } from 'src/config/environments/env.service';
-import { JwtDecodedUser } from './jwt-decoded-user';
 
 @Injectable()
 export class UserMiddleware implements NestMiddleware {
