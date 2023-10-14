@@ -1,7 +1,6 @@
-import {
-  PageNumberPagination,
-  PageNumberPaginationOptions,
-} from 'prisma-extension-pagination/dist/types';
+import { PageNumberPagination } from 'prisma-extension-pagination/dist/types';
+import { PageNumberPaginationOptions } from 'schema/dist/common/pagination';
+import { WeaponResponse } from 'schema/dist/weapon';
 
 import { axios } from '@/lib/axios';
 import {
@@ -10,8 +9,6 @@ import {
   type ExtractFnReturnType,
   type InfiniteQueryConfig,
 } from '@/lib/react-query';
-
-import { WeaponResponse } from '../entity/weapon.entity';
 
 export const getWeapons = ({
   pageParam = 1,

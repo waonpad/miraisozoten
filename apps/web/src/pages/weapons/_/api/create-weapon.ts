@@ -1,7 +1,7 @@
+import { CreateWeaponInput, WeaponResponse } from 'schema/dist/weapon';
+
 import { axios } from '@/lib/axios';
 import { MutationConfig, queryClient, QUERY_KEYS, useMutation } from '@/lib/react-query';
-
-import { CreateWeaponInput, WeaponResponse } from '../entity/weapon.entity';
 
 export const createWeapon = ({ data }: { data: CreateWeaponInput }): Promise<WeaponResponse> => {
   return axios.post('weapons', data);

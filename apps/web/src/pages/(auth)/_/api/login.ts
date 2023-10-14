@@ -1,4 +1,4 @@
-import { User } from 'database';
+import { UserResponse } from 'schema/dist/user';
 
 import { axios } from '@/lib/axios';
 import { queryClient, type MutationConfig, useMutation, QUERY_KEYS } from '@/lib/react-query';
@@ -7,8 +7,8 @@ export type LoginCredentialsDTO = {
   authToken: string;
 };
 
-export const login = ({ authToken }: LoginCredentialsDTO): Promise<User> => {
-  return axios.post<{ token: string }, User>(`/auth/login`, null, {
+export const login = ({ authToken }: LoginCredentialsDTO): Promise<UserResponse> => {
+  return axios.post<{ token: string }, UserResponse>(`/auth/login`, null, {
     headers: {
       Authorization: `Bearer ${authToken}`,
     },

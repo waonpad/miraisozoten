@@ -1,10 +1,10 @@
-import { User } from 'database';
+import { UserResponse } from 'schema/dist/user';
 
 import { axios } from '@/lib/axios';
 import { QueryConfig, ExtractFnReturnType, useQuery, QUERY_KEYS } from '@/lib/react-query';
 
-export const getAuthUser = async (): Promise<User> => {
-  return axios.get<null, User>(`/auth/me`);
+export const getAuthUser = async (): Promise<UserResponse> => {
+  return axios.get(`/auth/me`);
 };
 
 type QueryFnType = typeof getAuthUser;
@@ -13,7 +13,7 @@ type UseModelCourseOptions = {
   config?: QueryConfig<QueryFnType>;
 };
 
-export const useAuthUser = ({ config }: UseModelCourseOptions) => {
+export const useAuthUser = ({ config }: UseModelCourseOptions = {}) => {
   return useQuery<ExtractFnReturnType<QueryFnType>>({
     ...config,
     queryKey: [QUERY_KEYS.AUTH_USER],

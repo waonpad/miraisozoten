@@ -1,7 +1,8 @@
 import { useState } from 'react';
 
+import { UpdateWeaponInput } from 'schema/dist/weapon';
+
 import { useUpdateWeapon } from '../api/update-weapon';
-import { UpdateWeaponInput } from '../entity/weapon.entity';
 
 import type { Weapon } from 'database';
 
