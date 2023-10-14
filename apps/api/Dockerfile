@@ -32,4 +32,4 @@ COPY --from=sourcer /app/ .
 # そもそも別でデータベースは触った方がいいね～
 
 # CMD [ "sh", "-c", "yarn prisma migrate deploy && node apps/api/dist/main.js" ]
-CMD [ "sh", "-c", "yarn prisma db push && node apps/api/dist/src/main.js" ]
+CMD [ "sh", "-c", "yarn prisma db push && node apps/api/dist/main.js" ]
