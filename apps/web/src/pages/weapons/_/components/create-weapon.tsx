@@ -1,7 +1,8 @@
 import { useState } from 'react';
 
+import { CreateWeaponInput } from 'schema/dist/weapon';
+
 import { useCreateWeapon } from '../api/create-weapon';
-import { CreateWeaponInput } from '../entity/weapon.entity';
 
 export const CreateWeapon = () => {
   const createWeaponMutaion = useCreateWeapon();

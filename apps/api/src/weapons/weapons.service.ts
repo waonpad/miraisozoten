@@ -3,8 +3,8 @@ import {
   PageNumberPagination,
   PageNumberPaginationOptions,
 } from 'prisma-extension-pagination/dist/types';
+import { CreateWeaponInputDto, UpdateWeaponInputDto, WeaponResponse } from 'schema/dist/weapon';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { CreateWeaponInputDto, UpdateWeaponInputDto, WeaponResponse } from './entity/weapon.entity';
 
 @Injectable()
 export class WeaponsService {

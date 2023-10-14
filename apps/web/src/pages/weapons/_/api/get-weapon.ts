@@ -1,9 +1,8 @@
 import { Weapon } from 'database';
+import { WeaponResponse } from 'schema/dist/weapon';
 
 import { axios } from '@/lib/axios';
 import { QueryConfig, ExtractFnReturnType, useQuery, QUERY_KEYS } from '@/lib/react-query';
-
-import { WeaponResponse } from '../entity/weapon.entity';
 
 export const getWeapon = ({ id }: { id: Weapon['id'] }): Promise<WeaponResponse> => {
   return axios.get(`/weapons/${id}`);

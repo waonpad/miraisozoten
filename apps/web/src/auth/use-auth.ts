@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 
 import { CredentialResponse } from '@react-oauth/google';
-import { User } from 'database';
+import { UserResponse } from 'schema/dist/user';
 
 import { COOKIE_NAMES } from '@/constants/cookie-names';
-import { axios } from '@/lib/axios';
 import { useCookies } from '@/lib/react-cookie';
+import { useAuthUser } from '@/pages/(auth)/_/api/get-auth-user';
 import { useLogin } from '@/pages/(auth)/_/api/login';
 import { createCtx } from '@/utils/create-ctx';
 
@@ -20,9 +20,11 @@ export const useAuthCtx = () => {
 
   const [isLoading, setIsLoading] = useState(true);
 
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<UserResponse>();
 
   const loginMutation = useLogin();
+
+  const authUserQuery = useAuthUser();
 
   const handleGoogleLogin = async (credentialResponse: CredentialResponse) => {
     // トークンを取得できなかった場合
@@ -48,13 +50,14 @@ export const useAuthCtx = () => {
 
   const logout = () => {
     // ユーザー情報をstateから削除
-    setUser(null);
+    setUser(undefined);
 
     // cookieからトークンを削除
     removeCookie(COOKIE_NAMES.AUTH_TOKEN);
   };
 
   useEffect(() => {
+    // TODO: 冗長なので, 後で直す
     (async () => {
       const authToken = cookies[COOKIE_NAMES.AUTH_TOKEN];
 
@@ -65,11 +68,7 @@ export const useAuthCtx = () => {
         return;
       }
 
-      const resUser = await axios.get<null, User>(`/auth/me`, {
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
-      });
+      const resUser = authUserQuery.data;
 
       console.log('Already Logged in', resUser);
 
@@ -78,7 +77,7 @@ export const useAuthCtx = () => {
 
     setIsLoading(false);
     // 何かしらのCookieが変更された場合に再度実行される
-  }, [cookies]);
+  }, [authUserQuery.data, cookies]);
 
   return {
     isLoading,

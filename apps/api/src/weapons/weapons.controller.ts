@@ -13,11 +13,10 @@ import {
 import { ApiBody, ApiOkResponse, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { zodToOpenAPI } from 'nestjs-zod';
 import { PageNumberPagination } from 'prisma-extension-pagination/dist/types';
-import { AuthGuard } from 'src/auth/auth.guard';
 import {
   PageNumberPaginationOptionsDto,
   PageNumberPaginationOptionsSchema,
-} from 'src/common/dto/page-number-pagination-options.dto';
+} from 'schema/dist/common/pagination';
 import {
   CreateWeaponInputDto,
   CreateWeaponInputSchema,
@@ -25,7 +24,8 @@ import {
   UpdateWeaponInputSchema,
   WeaponResponse,
   WeaponResponseSchema,
-} from './entity/weapon.entity';
+} from 'schema/dist/weapon';
+import { AuthGuard } from 'src/auth/auth.guard';
 import { WeaponsService } from './weapons.service';
 
 @Controller('weapons')

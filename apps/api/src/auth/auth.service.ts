@@ -1,13 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { User } from 'database';
+import { UserResponse, JwtDecodedUser } from 'schema/dist/user';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { JwtDecodedUser } from 'src/user/jwt-decoded-user';
 
 @Injectable()
 export class AuthService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async login(user: JwtDecodedUser): Promise<User> {
+  async login(user: JwtDecodedUser): Promise<UserResponse> {
+    // スキーマどう使うんだ
+
     const userRecord = await this.prisma.user.upsert({
       where: { id: user.sub },
       update: {
@@ -28,7 +29,11 @@ export class AuthService {
     return userRecord;
   }
 
-  async me(user: JwtDecodedUser): Promise<User | null> {
+  async me(user: JwtDecodedUser): Promise<UserResponse | null> {
+    if (!user) {
+      return null;
+    }
+
     const userRecord = await this.prisma.user.findUnique({
       where: { id: user.sub },
     });

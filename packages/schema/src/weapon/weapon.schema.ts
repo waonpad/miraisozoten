@@ -1,9 +1,15 @@
 import { createZodDto } from 'nestjs-zod';
 import { z } from 'nestjs-zod/z';
 
-import { WeaponAttribute } from '../constants/weapon-attribute.enum';
-
 import type { Prisma, Weapon } from 'database';
+
+export enum WeaponAttribute {
+  Sword = 'sword',
+  Bow = 'bow',
+  Spear = 'spear',
+  Axe = 'axe',
+  Dagger = 'dagger',
+}
 
 const WeaponShema = z.object({
   id: z.number(),
