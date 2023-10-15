@@ -35,7 +35,8 @@
     "tailwind-config": "*",
     "tailwindcss": "^3.3.3",
     "web-vitals": "^3.5.0",
-    "zod": "^3.22.4"
+    "zod": "^3.22.4",
+    "ui": "*"
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.22.5",
