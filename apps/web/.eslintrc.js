@@ -6,5 +6,4 @@ module.exports = {
     tsconfigRootDir: __dirname,
     sourceType: 'module',
   },
-  ignorePatterns: ['tailwind.config.js'],
 };
