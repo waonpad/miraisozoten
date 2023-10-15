@@ -1,4 +1,4 @@
-import { cn } from '@/utils/classnames';
+import { cn } from 'ui/lib/utils';
 
 const sizes = {
   sm: 'h-4 w-4',

@@ -1,4 +1,4 @@
-import { Button } from '../button';
+import { Button } from 'ui/components/ui/button';
 
 import type { FallbackProps } from 'react-error-boundary';
 
@@ -11,9 +11,7 @@ export const ErrorFallback = ({ error }: FallbackProps) => {
       <h2 className="text-lg font-semibold">Ooops, something went wrong :( </h2>
       <p className="text-sm">{error}</p>
       <p className="text-sm">Please refresh the page</p>
-      <Button className="mt-4" onClick={() => window.location.assign(window.location.origin)}>
-        Refresh
-      </Button>
+      <Button onClick={() => window.location.assign(window.location.origin)}>Refresh</Button>
     </div>
   );
 };
