@@ -25,7 +25,7 @@ module.exports = {
     'public/',
     '.prettierrc.js',
     '.eslintrc.js',
-    'tailwind.config.js',
+    // 'tailwind.config.js',
     'postcss.config.js',
     'jest.config.js',
     'lint-staged.config.js',

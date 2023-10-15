@@ -15,7 +15,6 @@ import { SuspenseFallback } from '@/components/elements/suspense-fallback';
 import { MainLayout } from '@/components/layout/main';
 import { env } from '@/constants/env';
 import { queryClient } from '@/lib/react-query';
-import { ToastProvider } from '@/lib/react-toastify';
 import { Link, useModals, useNavigate } from '@/router';
 
 // import { Link, useModals, useNavigate, useParams } from '../router';
@@ -40,7 +39,6 @@ export default function App() {
             <QueryClientProvider client={queryClient}>
               <AuthProvider>
                 <GoogleOAuthProvider clientId={env.VITE_GOOGLE_CLIENT_ID}>
-                  <ToastProvider />
                   <AuthGuard>
                     <MainLayout>
                       <section style={{ margin: 24 }}>

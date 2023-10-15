@@ -77,7 +77,9 @@ export const useAuthCtx = () => {
 
     setIsLoading(false);
     // 何かしらのCookieが変更された場合に再度実行される
-  }, [authUserQuery.data, cookies]);
+    // authUserQuery.dataを含めると今の書き方だとエラーになるので一時的に回避
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cookies]);
 
   return {
     isLoading,
