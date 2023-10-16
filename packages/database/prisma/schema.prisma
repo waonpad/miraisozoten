@@ -32,9 +32,14 @@ model Post {
   updatedAt DateTime @updatedAt
 }
 
+enum WeaponAttribute {
+  SWORD
+  BOW
+}
+
 model Weapon {
   id          Int      @id @default(autoincrement())
   name        String
   attackPower Int
-  attribute   String // sqliteはenumをサポートしていないのでStringで代用
+  attribute   WeaponAttribute
 }

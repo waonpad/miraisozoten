@@ -14,13 +14,13 @@ const UserShema = z.object({
 });
 
 // id は autoincrement で生成されるので除外する
-export const CreateUserInputSchema: z.ZodType<Prisma.UserCreateInput> = UserShema.omit({
+export const CreateUserInputSchema = UserShema.omit({
   id: true,
-});
+}) satisfies z.ZodType<Prisma.UserCreateInput>;
 
-export const UpdateUserInputSchema: z.ZodType<Prisma.UserCreateInput> = UserShema.omit({
+export const UpdateUserInputSchema = UserShema.omit({
   id: true,
-});
+}) satisfies z.ZodType<Prisma.UserCreateInput>;
 
 export const UserResponseSchema: z.ZodType<User> = UserShema;
 

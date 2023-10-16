@@ -3,10 +3,16 @@
   "version": "0.0.0",
   "packageManager": "yarn@1.22.19",
   "private": true,
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
+  "workspaces": {
+    "packages": [
+      "apps/*",
+      "packages/*"
+    ],
+    "nohoist": [
+      "**/util",
+      "**/util/**"
+    ]
+  },
   "scripts": {
     "build": "turbo run build",
     "dev": "nps dev",
