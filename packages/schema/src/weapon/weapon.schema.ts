@@ -19,15 +19,15 @@ const WeaponShema = z.object({
 });
 
 // id は autoincrement で生成されるので除外する
-export const CreateWeaponInputSchema: z.ZodType<Prisma.WeaponCreateInput> = WeaponShema.omit({
+export const CreateWeaponInputSchema = WeaponShema.omit({
   id: true,
-});
+}) satisfies z.ZodType<Prisma.WeaponCreateInput>;
 
-export const UpdateWeaponInputSchema: z.ZodType<Prisma.WeaponCreateInput> = WeaponShema.omit({
+export const UpdateWeaponInputSchema = WeaponShema.omit({
   id: true,
-});
+}) satisfies z.ZodType<Prisma.WeaponCreateInput>;
 
-export const WeaponResponseSchema: z.ZodType<Weapon> = WeaponShema;
+export const WeaponResponseSchema = WeaponShema satisfies z.ZodType<Weapon>;
 
 export type CreateWeaponInput = z.infer<typeof CreateWeaponInputSchema>;
 
