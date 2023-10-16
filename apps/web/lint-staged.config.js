@@ -1,4 +1,4 @@
 module.exports = {
-  '**/*.{js,jsx,ts,tsx}': ['prettier --write', 'eslint --fix --ignore-path ./src/router.ts'],
+  '**/*.{js,jsx,ts,tsx}': ['prettier --write', 'eslint --fix'],
   '**/*.{css,scss}': ['stylelint --fix'],
 };
