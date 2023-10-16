@@ -4,3 +4,4 @@ dist
 out
 public/
 *.hbs
+apps/web/src/router.ts
