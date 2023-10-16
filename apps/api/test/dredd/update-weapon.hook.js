@@ -6,14 +6,14 @@ const axios = require('axios');
 // 実行部分の引数が無いと動かない
 // doneしないと終了しない
 
-hooks.before('/weapons/{id} > PUT > 200', async (transaction, done) => {
+hooks.before('/weapons/{id} > PATCH > 200', async (transaction, done) => {
   const newWeapon = {
     name: 'new weapon',
     attackPower: 100,
-    attribute: 'sword',
+    attribute: 'SWORD',
   };
 
-  const res = await axios.post('http://localhost:3000/weapons', newWeapon);
+  const res = await axios.post(`http://${process.env.HOST}:${process.env.PORT}/weapons`, newWeapon);
 
   hooks.log('更新されるためのデータを作成しました id: ' + res.data.id);
 
@@ -28,7 +28,9 @@ hooks.before('/weapons/{id} > PUT > 200', async (transaction, done) => {
 hooks.after('/weapons/{id} > PUT > 200', async (transaction, done) => {
   const deleteRequestPath = transaction.fullPath;
 
-  const res = await axios.delete('http://localhost:3000' + deleteRequestPath);
+  const res = await axios.delete(
+    `http://${process.env.HOST}:${process.env.PORT}` + deleteRequestPath
+  );
 
   hooks.log('テスト用データを削除しました id: ' + res.data.id);
 
