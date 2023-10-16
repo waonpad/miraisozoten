@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { WeaponAttribute } from 'schema/dist/weapon';
+import { WeaponAttribute } from 'database';
 import { PrismaService } from '../prisma/prisma.service';
 import { WeaponsService } from './weapons.service';
 
@@ -45,7 +45,7 @@ describe('WeaponsService', () => {
           id: 1,
           name: 'weapon1',
           attackPower: 100,
-          attribute: WeaponAttribute.Sword,
+          attribute: WeaponAttribute.SWORD,
         },
       ];
       (prismaService.weapon.findMany as jest.Mock).mockResolvedValue(weapons);
@@ -63,7 +63,7 @@ describe('WeaponsService', () => {
         id: 1,
         name: 'weapon1',
         attackPower: 100,
-        attribute: WeaponAttribute.Sword,
+        attribute: WeaponAttribute.SWORD,
       };
       (prismaService.weapon.findUnique as jest.Mock).mockResolvedValue(weapon);
 
@@ -79,7 +79,7 @@ describe('WeaponsService', () => {
       const weapon = {
         name: 'weapon1',
         attackPower: 100,
-        attribute: WeaponAttribute.Sword,
+        attribute: WeaponAttribute.SWORD,
       };
       (prismaService.weapon.create as jest.Mock).mockResolvedValue(weapon);
 
@@ -95,14 +95,14 @@ describe('WeaponsService', () => {
       const updateWeaponDto = {
         name: 'weapon2',
         attackPower: 200,
-        attribute: WeaponAttribute.Axe,
+        attribute: WeaponAttribute.BOW,
       };
 
       const updatedWeapon = {
         id: 1,
         name: 'weapon2',
         attackPower: 200,
-        attribute: WeaponAttribute.Axe,
+        attribute: WeaponAttribute.BOW,
       };
       (prismaService.weapon.update as jest.Mock).mockResolvedValue(updatedWeapon);
 
@@ -122,7 +122,7 @@ describe('WeaponsService', () => {
         id: 1,
         name: 'weapon1',
         attackPower: 100,
-        attribute: WeaponAttribute.Sword,
+        attribute: WeaponAttribute.BOW,
       };
       (prismaService.weapon.delete as jest.Mock).mockResolvedValue(weapon);
 
