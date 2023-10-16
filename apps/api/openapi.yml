@@ -35,23 +35,14 @@ paths:
                   attribute:
                     type: string
                     enum:
-                      - sword
-                      - bow
-                      - spear
-                      - axe
-                      - dagger
-                    x-enumNames:
-                      - Sword
-                      - Bow
-                      - Spear
-                      - Axe
-                      - Dagger
+                      - SWORD
+                      - BOW
                 required:
                   - id
                   - name
                   - attackPower
                   - attribute
-      tags: &ref_0
+      tags: &ref_1
         - weapons
     post:
       operationId: WeaponsController_create
@@ -69,24 +60,15 @@ paths:
                   type: number
                 attribute:
                   type: string
-                  enum:
-                    - sword
-                    - bow
-                    - spear
-                    - axe
-                    - dagger
-                  x-enumNames:
-                    - Sword
-                    - Bow
-                    - Spear
-                    - Axe
-                    - Dagger
+                  enum: &ref_0
+                    - SWORD
+                    - BOW
               required:
                 - name
                 - attackPower
                 - attribute
       responses:
-        '200':
+        '201':
           description: ''
           content:
             application/json:
@@ -101,49 +83,35 @@ paths:
                     type: number
                   attribute:
                     type: string
-                    enum:
-                      - sword
-                      - bow
-                      - spear
-                      - axe
-                      - dagger
-                    x-enumNames:
-                      - Sword
-                      - Bow
-                      - Spear
-                      - Axe
-                      - Dagger
+                    enum: *ref_0
                 required:
                   - id
                   - name
                   - attackPower
                   - attribute
-      tags: *ref_0
+      tags: *ref_1
   /weapons/pages:
     get:
       operationId: WeaponsController_getAllWeaponsWithPages
       parameters:
-        - name: ''
+        - name: includePageCount
           required: true
           in: query
+          example: 'true'
           schema:
-            type: object
-            properties:
-              page:
-                oneOf:
-                  - type: number
-                  - type: string
-                default: 1
-              limit:
-                oneOf:
-                  - type: number
-                  - type: string
-                default: 10
-              includePageCount:
-                oneOf:
-                  - type: boolean
-                  - type: string
-                default: true
+            type: string
+        - name: limit
+          required: true
+          in: query
+          example: '10'
+          schema:
+            type: string
+        - name: page
+          required: true
+          in: query
+          example: '1'
+          schema:
+            type: string
       responses:
         '200':
           description: ''
@@ -161,23 +129,14 @@ paths:
                   attribute:
                     type: string
                     enum:
-                      - sword
-                      - bow
-                      - spear
-                      - axe
-                      - dagger
-                    x-enumNames:
-                      - Sword
-                      - Bow
-                      - Spear
-                      - Axe
-                      - Dagger
+                      - SWORD
+                      - BOW
                 required:
                   - id
                   - name
                   - attackPower
                   - attribute
-      tags: *ref_0
+      tags: *ref_1
   /weapons/{id}:
     get:
       operationId: WeaponsController_getWeapon
@@ -185,14 +144,14 @@ paths:
         - name: id
           required: true
           in: path
-          example: 1
+          example: '1'
           schema:
-            type: number
+            type: string
       responses:
         '200':
           description: ''
-      tags: *ref_0
-    put:
+      tags: *ref_1
+    patch:
       operationId: WeaponsController_update
       parameters:
         - name: id
@@ -214,18 +173,9 @@ paths:
                   type: number
                 attribute:
                   type: string
-                  enum:
-                    - sword
-                    - bow
-                    - spear
-                    - axe
-                    - dagger
-                  x-enumNames:
-                    - Sword
-                    - Bow
-                    - Spear
-                    - Axe
-                    - Dagger
+                  enum: &ref_2
+                    - SWORD
+                    - BOW
               required:
                 - name
                 - attackPower
@@ -246,24 +196,13 @@ paths:
                     type: number
                   attribute:
                     type: string
-                    enum:
-                      - sword
-                      - bow
-                      - spear
-                      - axe
-                      - dagger
-                    x-enumNames:
-                      - Sword
-                      - Bow
-                      - Spear
-                      - Axe
-                      - Dagger
+                    enum: *ref_2
                 required:
                   - id
                   - name
                   - attackPower
                   - attribute
-      tags: *ref_0
+      tags: *ref_1
     delete:
       operationId: WeaponsController_delete
       parameters:
@@ -274,7 +213,7 @@ paths:
           schema:
             type: number
       responses:
-        '200':
+        '204':
           description: ''
           content:
             application/json:
@@ -290,23 +229,14 @@ paths:
                   attribute:
                     type: string
                     enum:
-                      - sword
-                      - bow
-                      - spear
-                      - axe
-                      - dagger
-                    x-enumNames:
-                      - Sword
-                      - Bow
-                      - Spear
-                      - Axe
-                      - Dagger
+                      - SWORD
+                      - BOW
                 required:
                   - id
                   - name
                   - attackPower
                   - attribute
-      tags: *ref_0
+      tags: *ref_1
   /auth/login:
     post:
       operationId: AuthController_login
@@ -314,7 +244,7 @@ paths:
       responses:
         '200':
           description: ''
-      tags: &ref_1
+      tags: &ref_3
         - auth
   /auth/me:
     get:
@@ -323,7 +253,7 @@ paths:
       responses:
         '200':
           description: ''
-      tags: *ref_1
+      tags: *ref_3
 info:
   title: API Doc
   description: API Doc Description
