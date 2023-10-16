@@ -1,0 +1,161 @@
+import { Test, TestingModule } from '@nestjs/testing';
+import { PrismaService } from '../prisma/prisma.service';
+import { {{pascalCase name}}Service } from './{{kebabCase name}}.service';
+
+describe('{{pascalCase name}}Service', () => {
+  let service: {{pascalCase name}}Service;
+  let prismaService: PrismaService;
+
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [
+        {{pascalCase name}}Service,
+        {
+          provide: PrismaService,
+          useValue: {
+            {{camelCase name}}: {
+              findMany: jest.fn(),
+              paginate: jest.fn().mockReturnThis(),
+              withPages: jest.fn(),
+              findUnique: jest.fn(),
+              create: jest.fn(),
+              update: jest.fn(),
+              delete: jest.fn(),
+            },
+            pg: jest.fn().mockReturnThis(),
+          },
+        },
+      ],
+    }).compile();
+
+    service = module.get<{{pascalCase name}}Service>({{pascalCase name}}Service);
+    prismaService = module.get<PrismaService>(PrismaService);
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should be defined', () => {
+    expect(service).toBeDefined();
+  });
+
+  describe('getAll{{pascalCase name}}', () => {
+    it('should return an array of {{pascalCase name}}', async () => {
+      const {{camelCase name}}s = [
+        {
+          // ...
+        },
+      ];
+
+      (prismaService.{{camelCase name}}.findMany as jest.Mock).mockResolvedValue({{camelCase name}}s);
+
+      const result = await service.getAll{{pascalCase name}}();
+
+      expect(result).toEqual({{camelCase name}}s);
+      expect(prismaService.{{camelCase name}}.findMany).toHaveBeenCalled();
+    });
+  });
+
+  describe('getAll{{pascalCase name}}WithPages', () => {
+    it('should return an array of {{pascalCase name}} with pagination', async () => {
+      const {{camelCase name}}s = [
+        {
+          // ...
+        },
+      ];
+
+      const paginationOptions = {
+        page: 1,
+        limit: 10,
+      };
+
+      const pagination = {
+        isFirstPage: true,
+        isLastPage: false,
+        currentPage: 1,
+        previousPage: null,
+        nextPage: 2,
+      };
+
+      (prismaService.pg().{{camelCase name}}.paginate().withPages as jest.Mock).mockResolvedValue([
+        {{camelCase name}}s,
+        pagination,
+      ]);
+
+      const result = await service.getAll{{pascalCase name}}WithPages(paginationOptions);
+
+      expect(result).toEqual([{{camelCase name}}s, pagination]);
+      expect(prismaService.pg().{{camelCase name}}.paginate().withPages).toHaveBeenCalledWith(
+        paginationOptions
+      );
+    });
+  });
+
+  describe('get{{pascalCase name}}', () => {
+    it('should return a {{pascalCase name}}', async () => {
+      const {{camelCase name}} = {
+        // ...
+      };
+
+      (prismaService.{{camelCase name}}.findUnique as jest.Mock).mockResolvedValue({{camelCase name}});
+
+      const result = await service.get{{pascalCase name}}(...);
+
+      expect(result).toEqual({{camelCase name}});
+      expect(prismaService.{{camelCase name}}.findUnique).toHaveBeenCalledWith({ where: { id: ... } });
+    });
+  });
+
+  describe('create{{pascalCase name}}', () => {
+    it('should create a {{pascalCase name}}', async () => {
+      const {{camelCase name}} = {
+        // ...
+      };
+
+      (prismaService.{{camelCase name}}.create as jest.Mock).mockResolvedValue({{camelCase name}});
+
+      const result = await service.create{{pascalCase name}}({{camelCase name}});
+
+      expect(result).toEqual({{camelCase name}});
+      expect(prismaService.{{camelCase name}}.create).toHaveBeenCalledWith({ data: {{camelCase name}} });
+    });
+  });
+
+  describe('update{{pascalCase name}}', () => {
+    it('should update a {{pascalCase name}}', async () => {
+      const update{{pascalCase name}}Dto = {
+        // ...
+      };
+
+      const updated{{pascalCase name}} = {
+        // ...
+      };
+
+      (prismaService.{{camelCase name}}.update as jest.Mock).mockResolvedValue(updated{{pascalCase name}});
+
+      const result = await service.update{{pascalCase name}}(..., update{{pascalCase name}}Dto);
+
+      expect(result).toEqual(updated{{pascalCase name}});
+      expect(prismaService.{{camelCase name}}.update).toHaveBeenCalledWith({
+        where: { id: ... },
+        data: update{{pascalCase name}}Dto,
+      });
+    });
+  });
+
+  describe('delete{{pascalCase name}}', () => {
+    it('should delete a {{pascalCase name}}', async () => {
+      const {{camelCase name}} = {
+        // ...
+      };
+
+      (prismaService.{{camelCase name}}.delete as jest.Mock).mockResolvedValue({{camelCase name}});
+
+      const result = await service.delete{{pascalCase name}}(...);
+
+      expect(result).toEqual({{camelCase name}});
+      expect(prismaService.{{camelCase name}}.delete).toHaveBeenCalledWith({ where: { id: ... } });
+    });
+  });
+});

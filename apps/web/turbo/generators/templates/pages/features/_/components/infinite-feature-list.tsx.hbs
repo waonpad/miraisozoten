@@ -1,0 +1,37 @@
+import { useRef } from 'react';
+
+import { Button } from 'ui/components/ui/button';
+
+import { formatInfiniteData } from '@/utils/format';
+import { useIntersectionObserver } from '@/utils/hooks/use-intersection-observer';
+
+import { use{{pascalCase name}}sWithPages } from '../api/get-{{kebabCase name}}s-with-pages';
+
+import { {{pascalCase name}}ListItem } from './{{kebabCase name}}-list-item';
+
+export const {{pascalCase name}}List = () => {
+  const infinite{{camelCase name}}sQuery = use{{pascalCase name}}sWithPages();
+
+  const {{camelCase name}}s = formatInfiniteData(infinite{{camelCase name}}sQuery.data);
+
+  const loadMoreRef = useRef<HTMLButtonElement>(null);
+
+  useIntersectionObserver({
+    target: loadMoreRef,
+    onIntersect: () => infinite{{camelCase name}}sQuery.fetchNextPage(),
+    enabled: infinite{{camelCase name}}sQuery.hasNextPage,
+  });
+
+  return (
+    <>
+      <ul>
+        { {{~camelCase name}}s.map(({{camelCase name}}, index) => (
+          <li key={index}>
+            <{{pascalCase name}}ListItem {{camelCase name}}={ {{~camelCase name~}} } />
+          </li>
+        ))}
+      </ul>
+      <Button ref={loadMoreRef}>Load More</Button>
+    </>
+  );
+};

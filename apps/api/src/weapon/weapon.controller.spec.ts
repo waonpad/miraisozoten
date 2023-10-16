@@ -1,23 +1,23 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PrismaService } from '../prisma/prisma.service';
-import { WeaponsController } from './weapons.controller';
-import { WeaponsService } from './weapons.service';
+import { WeaponController } from './weapon.controller';
+import { WeaponService } from './weapon.service';
 
-describe('WeaponsController', () => {
-  let controller: WeaponsController;
+describe('WeaponController', () => {
+  let controller: WeaponController;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  let service: WeaponsService;
+  let service: WeaponService;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let prismaService: PrismaService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [WeaponsController],
-      providers: [WeaponsService, PrismaService],
+      controllers: [WeaponController],
+      providers: [WeaponService, PrismaService],
     }).compile();
 
-    controller = module.get<WeaponsController>(WeaponsController);
-    service = module.get<WeaponsService>(WeaponsService);
+    controller = module.get<WeaponController>(WeaponController);
+    service = module.get<WeaponService>(WeaponService);
     prismaService = module.get<PrismaService>(PrismaService);
   });
 

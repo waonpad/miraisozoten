@@ -1,0 +1,29 @@
+import { {{pascalCase name}} } from 'database';
+import { Update{{pascalCase name}}Input, {{pascalCase name}}Response } from 'schema/dist/{{kebabCase name}}';
+
+import { axios } from '@/lib/axios';
+import { useMutation, queryClient, type MutationConfig, QUERY_KEYS } from '@/lib/react-query';
+
+export const update{{pascalCase name}} = ({
+  data,
+  id,
+}: {
+  data: Update{{pascalCase name}}Input;
+  id: {{pascalCase name}}['id'];
+}): Promise<{{pascalCase name}}Response> => {
+  return axios.patch(`/{{kebabCase name}}s/${id}`, data);
+};
+
+type UseUpdate{{pascalCase name}}Options = {
+  config?: MutationConfig<typeof update{{pascalCase name}}>;
+};
+
+export const useUpdate{{pascalCase name}} = ({ config }: UseUpdate{{pascalCase name}}Options = {}) => {
+  return useMutation({
+    onSuccess: () => {
+      queryClient.invalidateQueries([QUERY_KEYS.{{constantCase name}}S]);
+    },
+    ...config,
+    mutationFn: update{{pascalCase name}},
+  });
+};

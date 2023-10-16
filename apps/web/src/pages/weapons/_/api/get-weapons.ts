@@ -1,42 +1,27 @@
-import { PageNumberPagination } from 'prisma-extension-pagination/dist/types';
-import { PageNumberPaginationOptions } from 'schema/dist/common/pagination';
 import { WeaponResponse } from 'schema/dist/weapon';
 
 import { axios } from '@/lib/axios';
 import {
   QUERY_KEYS,
-  useInfiniteQuery,
+  useQuery,
   type ExtractFnReturnType,
-  type InfiniteQueryConfig,
+  type QueryConfig,
 } from '@/lib/react-query';
 
-export const getWeapons = ({
-  pageParam = 1,
-}: {
-  pageParam: number;
-}): Promise<[WeaponResponse[], PageNumberPagination]> => {
-  const params: PageNumberPaginationOptions = {
-    page: pageParam,
-    limit: 10,
-    includePageCount: true,
-  };
-
-  return axios.get(`/weapons/pages`, { params });
+export const getWeapons = (): Promise<WeaponResponse[]> => {
+  return axios.get(`/weapons`);
 };
 
 type QueryFnType = typeof getWeapons;
 
 type UseWeaponsOptions = {
-  config?: InfiniteQueryConfig<QueryFnType>;
+  config?: QueryConfig<QueryFnType>;
 };
 
 export const useWeapons = ({ config }: UseWeaponsOptions = {}) => {
-  return useInfiniteQuery<ExtractFnReturnType<QueryFnType>>({
+  return useQuery<ExtractFnReturnType<QueryFnType>>({
     ...config,
     queryKey: [QUERY_KEYS.WEAPONS],
-    queryFn: ({ pageParam }) => getWeapons({ pageParam }),
-    getNextPageParam: (lastPage) => {
-      return lastPage[1].nextPage;
-    },
+    queryFn: getWeapons,
   });
 };

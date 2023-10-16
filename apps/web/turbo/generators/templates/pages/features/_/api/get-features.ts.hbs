@@ -1,0 +1,27 @@
+import { {{pascalCase name}}Response } from 'schema/dist/{{kebabCase name}}';
+
+import { axios } from '@/lib/axios';
+import {
+  QUERY_KEYS,
+  useQuery,
+  type ExtractFnReturnType,
+  type QueryConfig,
+} from '@/lib/react-query';
+
+export const get{{pascalCase name}}s = (): Promise<{{pascalCase name}}Response[]> => {
+  return axios.get(`/{{kebabCase name}}s`);
+};
+
+type QueryFnType = typeof get{{pascalCase name}}s;
+
+type Use{{pascalCase name}}sOptions = {
+  config?: QueryConfig<QueryFnType>;
+};
+
+export const use{{pascalCase name}}s = ({ config }: Use{{pascalCase name}}sOptions = {}) => {
+  return useQuery<ExtractFnReturnType<QueryFnType>>({
+    ...config,
+    queryKey: [QUERY_KEYS.{{constantCase name}}S],
+    queryFn: get{{pascalCase name}}s,
+  });
+};

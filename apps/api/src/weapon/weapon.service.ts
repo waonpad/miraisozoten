@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Weapon } from 'database';
 import {
   PageNumberPagination,
   PageNumberPaginationOptions,
@@ -7,14 +8,20 @@ import { CreateWeaponInputDto, UpdateWeaponInputDto, WeaponResponse } from 'sche
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
-export class WeaponsService {
+export class WeaponService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async getAllWeapons(): Promise<WeaponResponse[]> {
+  async getAllWeapon(): Promise<WeaponResponse[]> {
     return this.prisma.weapon.findMany();
   }
 
-  async getWeapon(id: number): Promise<WeaponResponse | null> {
+  async getAllWeaponWithPages(
+    options: PageNumberPaginationOptions
+  ): Promise<[WeaponResponse[], PageNumberPagination]> {
+    return this.prisma.pg().weapon.paginate().withPages(options);
+  }
+
+  async getWeapon(id: Weapon['id']): Promise<WeaponResponse | null> {
     return this.prisma.weapon.findUnique({ where: { id } });
   }
 
@@ -22,19 +29,11 @@ export class WeaponsService {
     return this.prisma.weapon.create({ data });
   }
 
-  async updateWeapon(id: number, data: UpdateWeaponInputDto): Promise<WeaponResponse> {
+  async updateWeapon(id: Weapon['id'], data: UpdateWeaponInputDto): Promise<WeaponResponse> {
     return this.prisma.weapon.update({ where: { id }, data });
   }
 
-  async deleteWeapon(id: number): Promise<WeaponResponse> {
+  async deleteWeapon(id: Weapon['id']): Promise<WeaponResponse> {
     return this.prisma.weapon.delete({ where: { id } });
-  }
-
-  async getAllWeaponsWithPages(
-    options: PageNumberPaginationOptions
-  ): Promise<[WeaponResponse[], PageNumberPagination]> {
-    const pgWeapons = this.prisma.pg().weapon.paginate().withPages(options);
-
-    return pgWeapons;
   }
 }

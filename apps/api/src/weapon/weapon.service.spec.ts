@@ -1,32 +1,35 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { WeaponAttribute } from 'database';
 import { PrismaService } from '../prisma/prisma.service';
-import { WeaponsService } from './weapons.service';
+import { WeaponService } from './weapon.service';
 
-describe('WeaponsService', () => {
-  let service: WeaponsService;
+describe('WeaponService', () => {
+  let service: WeaponService;
   let prismaService: PrismaService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        WeaponsService,
+        WeaponService,
         {
           provide: PrismaService,
           useValue: {
             weapon: {
               findMany: jest.fn(),
+              paginate: jest.fn().mockReturnThis(),
+              withPages: jest.fn(),
               findUnique: jest.fn(),
               create: jest.fn(),
               update: jest.fn(),
               delete: jest.fn(),
             },
+            pg: jest.fn().mockReturnThis(),
           },
         },
       ],
     }).compile();
 
-    service = module.get<WeaponsService>(WeaponsService);
+    service = module.get<WeaponService>(WeaponService);
     prismaService = module.get<PrismaService>(PrismaService);
   });
 
@@ -38,8 +41,8 @@ describe('WeaponsService', () => {
     expect(service).toBeDefined();
   });
 
-  describe('getAllWeapons', () => {
-    it('should return an array of weapons', async () => {
+  describe('getAllWeapon', () => {
+    it('should return an array of Weapon', async () => {
       const weapons = [
         {
           id: 1,
@@ -48,23 +51,63 @@ describe('WeaponsService', () => {
           attribute: WeaponAttribute.SWORD,
         },
       ];
+
       (prismaService.weapon.findMany as jest.Mock).mockResolvedValue(weapons);
 
-      const result = await service.getAllWeapons();
+      const result = await service.getAllWeapon();
 
       expect(result).toEqual(weapons);
       expect(prismaService.weapon.findMany).toHaveBeenCalled();
     });
   });
 
+  describe('getAllWeaponWithPages', () => {
+    it('should return an array of Weapon with pagination', async () => {
+      const weapons = [
+        {
+          id: 1,
+          name: 'weapon1',
+          attackPower: 100,
+          attribute: WeaponAttribute.SWORD,
+        },
+      ];
+
+      const paginationOptions = {
+        page: 1,
+        limit: 10,
+      };
+
+      const pagination = {
+        isFirstPage: true,
+        isLastPage: false,
+        currentPage: 1,
+        previousPage: null,
+        nextPage: 2,
+      };
+
+      (prismaService.pg().weapon.paginate().withPages as jest.Mock).mockResolvedValue([
+        weapons,
+        pagination,
+      ]);
+
+      const result = await service.getAllWeaponWithPages(paginationOptions);
+
+      expect(result).toEqual([weapons, pagination]);
+      expect(prismaService.pg().weapon.paginate().withPages).toHaveBeenCalledWith(
+        paginationOptions
+      );
+    });
+  });
+
   describe('getWeapon', () => {
-    it('should return a weapon', async () => {
+    it('should return a Weapon', async () => {
       const weapon = {
         id: 1,
         name: 'weapon1',
         attackPower: 100,
         attribute: WeaponAttribute.SWORD,
       };
+
       (prismaService.weapon.findUnique as jest.Mock).mockResolvedValue(weapon);
 
       const result = await service.getWeapon(1);
@@ -75,12 +118,13 @@ describe('WeaponsService', () => {
   });
 
   describe('createWeapon', () => {
-    it('should create a weapon', async () => {
+    it('should create a Weapon', async () => {
       const weapon = {
         name: 'weapon1',
         attackPower: 100,
         attribute: WeaponAttribute.SWORD,
       };
+
       (prismaService.weapon.create as jest.Mock).mockResolvedValue(weapon);
 
       const result = await service.createWeapon(weapon);
@@ -91,7 +135,7 @@ describe('WeaponsService', () => {
   });
 
   describe('updateWeapon', () => {
-    it('should update a weapon', async () => {
+    it('should update a Weapon', async () => {
       const updateWeaponDto = {
         name: 'weapon2',
         attackPower: 200,
@@ -104,6 +148,7 @@ describe('WeaponsService', () => {
         attackPower: 200,
         attribute: WeaponAttribute.BOW,
       };
+
       (prismaService.weapon.update as jest.Mock).mockResolvedValue(updatedWeapon);
 
       const result = await service.updateWeapon(1, updateWeaponDto);
@@ -117,13 +162,14 @@ describe('WeaponsService', () => {
   });
 
   describe('deleteWeapon', () => {
-    it('should delete a weapon', async () => {
+    it('should delete a Weapon', async () => {
       const weapon = {
         id: 1,
         name: 'weapon1',
         attackPower: 100,
         attribute: WeaponAttribute.BOW,
       };
+
       (prismaService.weapon.delete as jest.Mock).mockResolvedValue(weapon);
 
       const result = await service.deleteWeapon(1);

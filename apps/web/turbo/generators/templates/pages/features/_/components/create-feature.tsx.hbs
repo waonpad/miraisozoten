@@ -1,0 +1,27 @@
+import { Create{{pascalCase name}}Input, Create{{pascalCase name}}InputSchema } from 'schema/dist/{{kebabCase name}}';
+import AutoForm, { AutoFormSubmit } from 'ui/components/ui/auto-form';
+import { z } from 'zod';
+
+import { useCreate{{pascalCase name}} } from '../api/create-{{kebabCase name}}';
+
+export const Create{{pascalCase name}} = () => {
+  const create{{pascalCase name}}Mutaion = useCreate{{pascalCase name}}();
+
+  const schema = Create{{pascalCase name}}InputSchema.merge(
+    z.object({
+      // ...
+    })
+  );
+
+  const handleSubmit = async (data: { [x: string]: unknown }) => {
+    await create{{pascalCase name}}Mutaion.mutateAsync({
+      data: data as Create{{pascalCase name}}Input,
+    });
+  };
+
+  return (
+    <AutoForm formSchema={schema} onSubmit={handleSubmit}>
+      <AutoFormSubmit>Create</AutoFormSubmit>
+    </AutoForm>
+  );
+};

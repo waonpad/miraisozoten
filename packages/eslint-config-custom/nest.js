@@ -6,7 +6,7 @@ module.exports = {
     node: true,
     jest: true,
   },
-  ignorePatterns: ['.eslintrc.js', 'test/dredd/**/*.js'],
+  ignorePatterns: ['.eslintrc.js', 'test/dredd/**/*.js', 'turbo/generators/config.ts'],
   rules: {
     '@typescript-eslint/interface-name-prefix': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',

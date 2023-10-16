@@ -1,0 +1,39 @@
+import { Injectable } from '@nestjs/common';
+import { {{pascalCase name}} } from 'database';
+import {
+  PageNumberPagination,
+  PageNumberPaginationOptions,
+} from 'prisma-extension-pagination/dist/types';
+import { Create{{pascalCase name}}InputDto, Update{{pascalCase name}}InputDto, {{pascalCase name}}Response } from 'schema/dist/{{kebabCase name}}';
+import { PrismaService } from 'src/prisma/prisma.service';
+
+@Injectable()
+export class {{pascalCase name}}Service {
+  constructor(private readonly prisma: PrismaService) {}
+
+  async getAll{{pascalCase name}}(): Promise<{{pascalCase name}}Response[]> {
+    return this.prisma.{{kebabCase name}}.findMany();
+  }
+
+  async getAll{{pascalCase name}}WithPages(
+    options: PageNumberPaginationOptions
+  ): Promise<[{{pascalCase name}}Response[], PageNumberPagination]> {
+    return this.prisma.pg().{{kebabCase name}}.paginate().withPages(options);
+  }
+
+  async get{{pascalCase name}}(id: {{pascalCase name}}['id']): Promise<{{pascalCase name}}Response | null> {
+    return this.prisma.{{kebabCase name}}.findUnique({ where: { id } });
+  }
+
+  async create{{pascalCase name}}(data: Create{{pascalCase name}}InputDto): Promise<{{pascalCase name}}Response> {
+    return this.prisma.{{kebabCase name}}.create({ data });
+  }
+
+  async update{{pascalCase name}}(id: {{pascalCase name}}['id'], data: Update{{pascalCase name}}InputDto): Promise<{{pascalCase name}}Response> {
+    return this.prisma.{{kebabCase name}}.update({ where: { id }, data });
+  }
+
+  async delete{{pascalCase name}}(id: {{pascalCase name}}['id']): Promise<{{pascalCase name}}Response> {
+    return this.prisma.{{kebabCase name}}.delete({ where: { id } });
+  }
+}

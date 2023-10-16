@@ -1,8 +1,7 @@
-import { useMutation } from '@tanstack/react-query';
 import { Weapon } from 'database';
 
 import { axios } from '@/lib/axios';
-import { queryClient, type MutationConfig, QUERY_KEYS } from '@/lib/react-query';
+import { useMutation, queryClient, type MutationConfig, QUERY_KEYS } from '@/lib/react-query';
 
 export const deleteWeapon = ({ id }: { id: Weapon['id'] }) => {
   return axios.delete(`/weapons/${id}`);

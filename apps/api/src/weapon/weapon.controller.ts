@@ -3,20 +3,24 @@ import {
   Controller,
   Delete,
   Get,
-  HttpCode,
   Param,
+  Patch,
   Post,
-  Put,
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBody, ApiOkResponse, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiOkResponse,
+  ApiCreatedResponse,
+  ApiNoContentResponse,
+  ApiParam,
+  ApiQuery,
+  ApiTags,
+} from '@nestjs/swagger';
 import { zodToOpenAPI } from 'nestjs-zod';
 import { PageNumberPagination } from 'prisma-extension-pagination/dist/types';
-import {
-  PageNumberPaginationOptionsDto,
-  PageNumberPaginationOptionsSchema,
-} from 'schema/dist/common/pagination';
+import { PageNumberPaginationOptionsDto } from 'schema/dist/common/pagination';
 import {
   CreateWeaponInputDto,
   CreateWeaponInputSchema,
@@ -26,72 +30,80 @@ import {
   WeaponResponseSchema,
 } from 'schema/dist/weapon';
 import { AuthGuard } from 'src/auth/auth.guard';
-import { WeaponsService } from './weapons.service';
+import { WeaponService } from './weapon.service';
 
 @Controller('weapons')
-@ApiTags('weapons') // swagger用のタグを追加
-export class WeaponsController {
-  constructor(private readonly weaponsService: WeaponsService) {}
+@ApiTags('weapons')
+export class WeaponController {
+  constructor(private readonly weaponService: WeaponService) {}
 
   @Get()
-  @HttpCode(200)
   @ApiOkResponse({
     schema: zodToOpenAPI(WeaponResponseSchema),
   })
-  async getAllWeapons(): Promise<WeaponResponse[]> {
-    return this.weaponsService.getAllWeapons();
+  async getAllWeapon(): Promise<WeaponResponse[]> {
+    return this.weaponService.getAllWeapon();
   }
 
-  // :id より上に書かないと:idがpagesとして扱われてしまう
   @Get('pages')
   @ApiQuery({
-    schema: zodToOpenAPI(PageNumberPaginationOptionsSchema),
+    name: 'page',
+    type: String,
+    example: '1',
+  })
+  @ApiQuery({
+    name: 'limit',
+    type: String,
+    example: '10',
+  })
+  @ApiQuery({
+    name: 'includePageCount',
+    type: String,
+    example: 'true',
   })
   @ApiOkResponse({
     schema: zodToOpenAPI(WeaponResponseSchema),
   })
-  @HttpCode(200)
-  async getAllWeaponsWithPages(
+  async getAllWeaponWithPages(
     @Query() options: PageNumberPaginationOptionsDto
   ): Promise<[WeaponResponse[], PageNumberPagination]> {
-    // throw new Error('Not implemented');
-
-    return this.weaponsService.getAllWeaponsWithPages(options);
+    return this.weaponService.getAllWeaponWithPages(options);
   }
 
   @Get(':id')
   @ApiParam({
     name: 'id',
-    type: Number,
-    example: 1,
-  }) // exampleをつけないとdreddに怒られた
+    type: String,
+    example: '1',
+  })
   async getWeapon(
     @Param('id')
     id: string
   ): Promise<WeaponResponse | null> {
-    return this.weaponsService.getWeapon(+id);
+    return this.weaponService.getWeapon(Number(id));
   }
 
-  @UseGuards(AuthGuard)
   @Post()
+  @UseGuards(AuthGuard)
   @ApiBody({
     schema: zodToOpenAPI(CreateWeaponInputSchema),
   })
-  @ApiOkResponse({
+  @ApiCreatedResponse({
     schema: zodToOpenAPI(WeaponResponseSchema),
   })
   async create(
     @Body()
     createWeaponInputDto: CreateWeaponInputDto
   ): Promise<WeaponResponse> {
-    return this.weaponsService.createWeapon(createWeaponInputDto);
+    return this.weaponService.createWeapon(createWeaponInputDto);
   }
 
-  @Put(':id')
+  @Patch(':id')
+  @UseGuards(AuthGuard)
   @ApiParam({
     name: 'id',
     type: Number,
-    example: 1,
+    example: '1',
   })
   @ApiBody({
     schema: zodToOpenAPI(UpdateWeaponInputSchema),
@@ -99,30 +111,29 @@ export class WeaponsController {
   @ApiOkResponse({
     schema: zodToOpenAPI(WeaponResponseSchema),
   })
-  @UseGuards(AuthGuard)
   async update(
     @Param('id')
     id: string,
     @Body()
     updateWeaponInputDto: UpdateWeaponInputDto
   ): Promise<WeaponResponse> {
-    return this.weaponsService.updateWeapon(+id, updateWeaponInputDto);
+    return this.weaponService.updateWeapon(Number(id), updateWeaponInputDto);
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard)
   @ApiParam({
     name: 'id',
-    type: Number,
-    example: 1,
+    type: String,
+    example: '1',
   })
-  @ApiOkResponse({
+  @ApiNoContentResponse({
     schema: zodToOpenAPI(WeaponResponseSchema),
   })
-  @UseGuards(AuthGuard)
   async delete(
     @Param('id')
     id: string
   ): Promise<WeaponResponse> {
-    return this.weaponsService.deleteWeapon(+id);
+    return this.weaponService.deleteWeapon(Number(id));
   }
 }

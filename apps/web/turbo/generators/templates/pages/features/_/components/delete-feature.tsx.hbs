@@ -1,0 +1,14 @@
+import { {{pascalCase name}} } from 'database';
+import { Button } from 'ui/components/ui/button';
+
+import { useDelete{{pascalCase name}} } from '../api/delete-{{kebabCase name}}';
+
+export const Delete{{pascalCase name}} = ({ id }: { id: {{pascalCase name}}['id'] }) => {
+  const delete{{pascalCase name}}Mutation = useDelete{{pascalCase name}}();
+
+  const handleDelete = async () => {
+    await delete{{pascalCase name}}Mutation.mutateAsync({ id });
+  };
+
+  return <Button onClick={handleDelete}>Delete</Button>;
+};

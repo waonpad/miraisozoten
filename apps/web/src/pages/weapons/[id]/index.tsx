@@ -15,16 +15,12 @@ export default function Page() {
   }
 
   return (
-    <div className="m-4">
-      <h1 className="text-lg font-bold">詳細</h1>
-      <p>ID: {weapon.id}</p>
-      <p>名前: {weapon.name}</p>
-      <p>攻撃力: {weapon.attackPower}</p>
-      <p>属性: {weapon.attribute}</p>
+    <>
+      <div>{JSON.stringify(weapon)}</div>
       <DeleteWeapon id={weapon.id} />
       <Link to={`/weapons/:id/update`} params={{ id: String(weapon.id) }}>
         Update
       </Link>
-    </div>
+    </>
   );
 }

@@ -36,6 +36,7 @@ module.exports = {
     '**/*.mjs',
     'babel.config.js',
     'vite.config.ts',
+    'turbo/generators/config.ts',
   ],
   rules: {
     'react-hooks/rules-of-hooks': 'error',
