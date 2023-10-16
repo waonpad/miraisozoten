@@ -9,7 +9,6 @@ import type { Weapon } from 'database';
 export const UpdateWeapon = ({ weapon }: { weapon: Weapon }) => {
   const updateWeaponMutaion = useUpdateWeapon();
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   const schema = CreateWeaponInputSchema.merge(
     z.object({
       // ...

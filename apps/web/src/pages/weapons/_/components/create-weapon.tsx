@@ -4,15 +4,14 @@ import { z } from 'zod';
 
 import { useCreateWeapon } from '../api/create-weapon';
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-call
-const schema = CreateWeaponInputSchema.merge(
-  z.object({
-    // ...
-  })
-);
-
 export const CreateWeapon = () => {
   const createWeaponMutaion = useCreateWeapon();
+
+  const schema = CreateWeaponInputSchema.merge(
+    z.object({
+      // ...
+    })
+  );
 
   const handleSubmit = async (data: { [x: string]: unknown }) => {
     await createWeaponMutaion.mutateAsync({
