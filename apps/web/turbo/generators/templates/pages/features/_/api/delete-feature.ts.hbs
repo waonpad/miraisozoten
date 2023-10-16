@@ -1,0 +1,22 @@
+import { {{pascalCase name}} } from 'database';
+
+import { axios } from '@/lib/axios';
+import { useMutation, queryClient, type MutationConfig, QUERY_KEYS } from '@/lib/react-query';
+
+export const delete{{pascalCase name}} = ({ id }: { id: {{pascalCase name}}['id'] }) => {
+  return axios.delete(`/{{kebabCase name}}s/${id}`);
+};
+
+type UseDelete{{pascalCase name}}Options = {
+  config?: MutationConfig<typeof delete{{pascalCase name}}>;
+};
+
+export const useDelete{{pascalCase name}} = ({ config }: UseDelete{{pascalCase name}}Options = {}) => {
+  return useMutation({
+    onSuccess: () => {
+      queryClient.invalidateQueries([QUERY_KEYS.{{constantCase name}}S]);
+    },
+    ...config,
+    mutationFn: delete{{pascalCase name}},
+  });
+};

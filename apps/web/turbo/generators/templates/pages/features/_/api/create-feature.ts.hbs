@@ -1,0 +1,22 @@
+import { Create{{pascalCase name}}Input, {{pascalCase name}}Response } from 'schema/dist/{{kebabCase name}}';
+
+import { axios } from '@/lib/axios';
+import { useMutation, MutationConfig, queryClient, QUERY_KEYS } from '@/lib/react-query';
+
+export const create{{pascalCase name}} = ({ data }: { data: Create{{pascalCase name}}Input }): Promise<{{pascalCase name}}Response> => {
+  return axios.post('{{kebabCase name}}s', data);
+};
+
+type UseCreate{{pascalCase name}}Options = {
+  config?: MutationConfig<typeof create{{pascalCase name}}>;
+};
+
+export const useCreate{{pascalCase name}} = ({ config }: UseCreate{{pascalCase name}}Options = {}) => {
+  return useMutation({
+    onSuccess: () => {
+      queryClient.invalidateQueries([QUERY_KEYS.{{constantCase name}}S]);
+    },
+    ...config,
+    mutationFn: create{{pascalCase name}},
+  });
+};

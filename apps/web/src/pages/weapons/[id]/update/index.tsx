@@ -13,9 +13,8 @@ export default function Page() {
   }
 
   return (
-    <div className="m-4">
-      <h1 className="text-lg font-bold">武器更新</h1>
+    <>
       <UpdateWeapon weapon={weaponQuery.data} />
-    </div>
+    </>
   );
 }

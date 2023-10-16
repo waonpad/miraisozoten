@@ -1,0 +1,24 @@
+import { {{pascalCase name}} } from 'database';
+import { {{pascalCase name}}Response } from 'schema/dist/{{kebabCase name}}';
+
+import { axios } from '@/lib/axios';
+import { QueryConfig, ExtractFnReturnType, useQuery, QUERY_KEYS } from '@/lib/react-query';
+
+export const get{{pascalCase name}} = ({ id }: { id: {{pascalCase name}}['id'] }): Promise<{{pascalCase name}}Response> => {
+  return axios.get(`/{{kebabCase name}}s/${id}`);
+};
+
+type QueryFnType = typeof get{{pascalCase name}};
+
+type Use{{pascalCase name}}Options = {
+  id: {{pascalCase name}}['id'];
+  config?: QueryConfig<QueryFnType>;
+};
+
+export const use{{pascalCase name}} = ({ id, config }: Use{{pascalCase name}}Options) => {
+  return useQuery<ExtractFnReturnType<QueryFnType>>({
+    ...config,
+    queryKey: [QUERY_KEYS.{{constantCase name}}S, id],
+    queryFn: () => get{{pascalCase name}}({ id }),
+  });
+};

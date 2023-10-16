@@ -1,0 +1,31 @@
+import { Create{{pascalCase name}}Input, Create{{pascalCase name}}InputSchema } from 'schema/dist/{{kebabCase name}}';
+import AutoForm, { AutoFormSubmit } from 'ui/components/ui/auto-form';
+import { z } from 'zod';
+
+import { useUpdate{{pascalCase name}} } from '../api/update-{{kebabCase name}}';
+
+import type { {{pascalCase name}} } from 'database';
+
+export const Update{{pascalCase name}} = ({ {{kebabCase name}} }: { {{kebabCase name}}: {{pascalCase name}} }) => {
+  const update{{pascalCase name}}Mutaion = useUpdate{{pascalCase name}}();
+
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+  const schema = Create{{pascalCase name}}InputSchema.merge(
+    z.object({
+      // ...
+    })
+  );
+
+  const handleSubmit = async (data: { [x: string]: unknown }) => {
+    await update{{pascalCase name}}Mutaion.mutateAsync({
+      id: {{camelCase name}}.id,
+      data: data as Create{{pascalCase name}}Input,
+    });
+  };
+
+  return (
+    <AutoForm formSchema={schema} onSubmit={handleSubmit}>
+      <AutoFormSubmit>Update</AutoFormSubmit>
+    </AutoForm>
+  );
+};

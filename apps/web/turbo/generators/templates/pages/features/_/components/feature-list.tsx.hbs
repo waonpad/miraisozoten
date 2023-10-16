@@ -1,0 +1,19 @@
+import { useWeapons } from '../api/get-{{kebabCase name}}s';
+
+import { WeaponListItem } from './{{kebabCase name}}-list-item';
+
+export const WeaponList = () => {
+  const {{camelCase name}}sQuery = useWeapons();
+
+  return (
+    <>
+      <ul>
+        {({{camelCase name}}sQuery.data || []).map(({{camelCase name}}, index) => (
+          <li key={index}>
+            <WeaponListItem {{camelCase name}}={ {{~camelCase name~}} } />
+          </li>
+        ))}
+      </ul>
+    </>
+  );
+};

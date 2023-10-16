@@ -1,9 +1,8 @@
-import { useMutation } from '@tanstack/react-query';
 import { Weapon } from 'database';
 import { UpdateWeaponInput, WeaponResponse } from 'schema/dist/weapon';
 
 import { axios } from '@/lib/axios';
-import { queryClient, type MutationConfig, QUERY_KEYS } from '@/lib/react-query';
+import { useMutation, queryClient, type MutationConfig, QUERY_KEYS } from '@/lib/react-query';
 
 export const updateWeapon = ({
   data,
@@ -12,7 +11,7 @@ export const updateWeapon = ({
   data: UpdateWeaponInput;
   id: Weapon['id'];
 }): Promise<WeaponResponse> => {
-  return axios.put(`/weapons/${id}`, data);
+  return axios.patch(`/weapons/${id}`, data);
 };
 
 type UseUpdateWeaponOptions = {

@@ -1,0 +1,27 @@
+import { Test, TestingModule } from '@nestjs/testing';
+import { PrismaService } from '../prisma/prisma.service';
+import { {{pascalCase name}}Controller } from './{{kebabCase name}}.controller';
+import { {{pascalCase name}}Service } from './{{kebabCase name}}.service';
+
+describe('{{pascalCase name}}Controller', () => {
+  let controller: {{pascalCase name}}Controller;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  let service: {{pascalCase name}}Service;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  let prismaService: PrismaService;
+
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      controllers: [{{pascalCase name}}Controller],
+      providers: [{{pascalCase name}}Service, PrismaService],
+    }).compile();
+
+    controller = module.get<{{pascalCase name}}Controller>({{pascalCase name}}Controller);
+    service = module.get<{{pascalCase name}}Service>({{pascalCase name}}Service);
+    prismaService = module.get<PrismaService>(PrismaService);
+  });
+
+  it('should be defined', () => {
+    expect(controller).toBeDefined();
+  });
+});

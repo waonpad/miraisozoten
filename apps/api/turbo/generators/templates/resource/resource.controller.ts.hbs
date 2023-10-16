@@ -1,0 +1,139 @@
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
+import {
+  ApiBody,
+  ApiOkResponse,
+  ApiCreatedResponse,
+  ApiNoContentResponse,
+  ApiParam,
+  ApiQuery,
+  ApiTags,
+} from '@nestjs/swagger';
+import { zodToOpenAPI } from 'nestjs-zod';
+import { PageNumberPagination } from 'prisma-extension-pagination/dist/types';
+import { PageNumberPaginationOptionsDto } from 'schema/dist/common/pagination';
+import {
+  Create{{pascalCase name}}InputDto,
+  Create{{pascalCase name}}InputSchema,
+  Update{{pascalCase name}}InputDto,
+  Update{{pascalCase name}}InputSchema,
+  {{pascalCase name}}Response,
+  {{pascalCase name}}ResponseSchema,
+} from 'schema/dist/{{kebabCase name}}';
+import { AuthGuard } from 'src/auth/auth.guard';
+import { {{pascalCase name}}Service } from './{{kebabCase name}}.service';
+
+@Controller('{{kebabCase name}}s')
+@ApiTags('{{kebabCase name}}s')
+export class {{pascalCase name}}Controller {
+  constructor(private readonly {{camelCase name}}Service: {{pascalCase name}}Service) {}
+
+  @Get()
+  @ApiOkResponse({
+    schema: zodToOpenAPI({{pascalCase name}}ResponseSchema),
+  })
+  async getAll{{pascalCase name}}(): Promise<{{pascalCase name}}Response[]> {
+    return this.{{camelCase name}}Service.getAll{{pascalCase name}}();
+  }
+
+  @Get('pages')
+  @ApiQuery({
+    name: 'page',
+    type: String,
+    example: '1',
+  })
+  @ApiQuery({
+    name: 'limit',
+    type: String,
+    example: '10',
+  })
+  @ApiQuery({
+    name: 'includePageCount',
+    type: String,
+    example: 'true',
+  })
+  @ApiOkResponse({
+    schema: zodToOpenAPI({{pascalCase name}}ResponseSchema),
+  })
+  async getAll{{pascalCase name}}WithPages(
+    @Query() options: PageNumberPaginationOptionsDto
+  ): Promise<[{{pascalCase name}}Response[], PageNumberPagination]> {
+    return this.{{camelCase name}}Service.getAll{{pascalCase name}}WithPages(options);
+  }
+
+  @Get(':id')
+  @ApiParam({
+    name: 'id',
+    type: String,
+    example: '1',
+  })
+  async get{{pascalCase name}}(
+    @Param('id')
+    id: string
+  ): Promise<{{pascalCase name}}Response | null> {
+    return this.{{camelCase name}}Service.get{{pascalCase name}}(id);
+  }
+
+  @Post()
+  @UseGuards(AuthGuard)
+  @ApiBody({
+    schema: zodToOpenAPI(Create{{pascalCase name}}InputSchema),
+  })
+  @ApiCreatedResponse({
+    schema: zodToOpenAPI({{pascalCase name}}ResponseSchema),
+  })
+  async create(
+    @Body()
+    create{{pascalCase name}}InputDto: Create{{pascalCase name}}InputDto
+  ): Promise<{{pascalCase name}}Response> {
+    return this.{{camelCase name}}Service.create{{pascalCase name}}(create{{pascalCase name}}InputDto);
+  }
+
+  @Patch(':id')
+  @UseGuards(AuthGuard)
+  @ApiParam({
+    name: 'id',
+    type: Number,
+    example: '1',
+  })
+  @ApiBody({
+    schema: zodToOpenAPI(Update{{pascalCase name}}InputSchema),
+  })
+  @ApiOkResponse({
+    schema: zodToOpenAPI({{pascalCase name}}ResponseSchema),
+  })
+  async update(
+    @Param('id')
+    id: string,
+    @Body()
+    update{{pascalCase name}}InputDto: Update{{pascalCase name}}InputDto
+  ): Promise<{{pascalCase name}}Response> {
+    return this.{{camelCase name}}Service.update{{pascalCase name}}(id, update{{pascalCase name}}InputDto);
+  }
+
+  @Delete(':id')
+  @UseGuards(AuthGuard)
+  @ApiParam({
+    name: 'id',
+    type: String,
+    example: '1',
+  })
+  @ApiNoContentResponse({
+    schema: zodToOpenAPI({{pascalCase name}}ResponseSchema),
+  })
+  async delete(
+    @Param('id')
+    id: string
+  ): Promise<{{pascalCase name}}Response> {
+    return this.{{camelCase name}}Service.delete{{pascalCase name}}(id);
+  }
+}

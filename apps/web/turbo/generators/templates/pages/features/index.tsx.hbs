@@ -1,0 +1,11 @@
+import { Create{{pascalCase name}} } from './_/components/create-{{kebabCase name}}';
+import { {{pascalCase name}}List } from './_/components/{{kebabCase name}}-list';
+
+export default function Page() {
+  return (
+    <>
+      <{{pascalCase name}}List />
+      <Create{{pascalCase name}} />
+    </>
+  );
+}

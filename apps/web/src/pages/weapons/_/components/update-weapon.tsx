@@ -12,28 +12,20 @@ export const UpdateWeapon = ({ weapon }: { weapon: Weapon }) => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   const schema = CreateWeaponInputSchema.merge(
     z.object({
-      // ここでカスタムできる
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-      name: CreateWeaponInputSchema.shape.name.default(weapon.name),
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-      attackPower: CreateWeaponInputSchema.shape.attackPower.default(weapon.attackPower),
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-      attribute: CreateWeaponInputSchema.shape.attribute.default(weapon.attribute),
+      // ...
     })
   );
 
   const handleSubmit = async (data: { [x: string]: unknown }) => {
-    const res = await updateWeaponMutaion.mutateAsync({
+    await updateWeaponMutaion.mutateAsync({
       id: weapon.id,
       data: data as CreateWeaponInput,
     });
-
-    console.log(res);
   };
 
   return (
     <AutoForm formSchema={schema} onSubmit={handleSubmit}>
-      <AutoFormSubmit>更新</AutoFormSubmit>
+      <AutoFormSubmit>Update</AutoFormSubmit>
     </AutoForm>
   );
 };

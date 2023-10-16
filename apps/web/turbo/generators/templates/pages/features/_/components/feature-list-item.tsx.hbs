@@ -1,0 +1,13 @@
+import { {{pascalCase name}}Response } from 'schema/dist/{{kebabCase name}}';
+
+import { Link } from '@/router';
+
+export const {{pascalCase name}}ListItem = ({ {{camelCase name}} }: { {{camelCase name}}: {{pascalCase name}}Response }) => {
+  return (
+    <div>
+      <Link to={`/{{kebabCase name}}s/:id`} params=\{{ id: String({{camelCase name}}.id) }}>
+        {JSON.stringify({{camelCase name}})}
+      </Link>
+    </div>
+  );
+};

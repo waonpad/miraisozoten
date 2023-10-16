@@ -1,0 +1,26 @@
+import { Link, useParams } from '@/router';
+
+import { use{{pascalCase name}} } from '../_/api/get-{{kebabCase name}}';
+import { Delete{{pascalCase name}} } from '../_/components/delete-{{kebabCase name}}';
+
+export default function Page() {
+  const { id } = useParams('/{{kebabCase name}}s/:id');
+
+  const {{camelCase name}}Query = use{{pascalCase name}}({ id: Number(id) });
+
+  const {{camelCase name}} = {{camelCase name}}Query.data;
+
+  if (!{{camelCase name}}) {
+    return <div>Not Found</div>;
+  }
+
+  return (
+    <>
+      <div>{JSON.stringify({{kebabCase name}})}</div>
+      <Delete{{pascalCase name}} id={ {{~kebabCase name}}.id} />
+      <Link to={`/{{kebabCase name}}s/:id/update`} params=\{{ id: String({{camelCase name}}.id) }}>
+        Update
+      </Link>
+    </>
+  );
+}
