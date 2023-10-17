@@ -1,0 +1,31 @@
+name: ドキュメント提案
+description: ドキュメントの作成や更新をリクエストする際に使用してください。
+title: '[Documentation]: '
+labels: ['documentation']
+body:
+  - type: markdown
+    attributes:
+      value: '### Issueの作成前に、既存のIssuesを確認してください'
+
+  - type: textarea
+    id: document-target
+    attributes:
+      label: ドキュメントの対象
+      placeholder: ドキュメントが必要な機能や環境構築方法を記入してください。
+    validations:
+      required: true
+
+  - type: textarea
+    id: document-summary
+    attributes:
+      label: 提案内容
+      placeholder: ドキュメントに記載して欲しい内容を記入してください。
+    validations:
+      required: true
+
+  - type: textarea
+    id: related-links
+    attributes:
+      label: 関連する情報やリンク
+    validations:
+      required: false

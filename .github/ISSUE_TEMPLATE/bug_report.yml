@@ -1,11 +1,11 @@
 name: バグ報告
 description: 新しいバグを報告する際に使用してください。
-title: "[Bug]: "
-labels: ["bug"]
+title: '[Bug]: '
+labels: ['bug']
 body:
   - type: markdown
     attributes:
-      value: "### Issueの作成前に、既存のIssuesを確認してください"
+      value: '### Issueの作成前に、既存のIssuesを確認してください'
 
   - type: textarea
     id: reproduce-steps
@@ -30,8 +30,8 @@ body:
   - type: textarea
     id: console-output
     attributes:
-      label: 実行結果(コンソール出力)
-      description: もし可能であれば、コンソール出力のエラーメッセージやスタックトレースをこちらに貼り付けてください。
+      label: コンソール出力
+      description: コンソール出力のエラーメッセージやスタックトレースをこちらに貼り付けてください。
     validations:
       required: false
 
@@ -50,6 +50,14 @@ body:
       description: npx envinfo --system --binaries --browsers の結果を貼り付けてください。
     validations:
       required: true
+
+  - type: textarea
+    id: bug-report-what-i-did
+    attributes:
+      label: やってみたこと
+      placeholder: 解決のために、やってみたことを記入してください。
+    validations:
+      required: false
 
   - type: textarea
     id: additional-info

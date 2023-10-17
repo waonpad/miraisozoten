@@ -14,13 +14,12 @@ module.exports = {
     'package',
     'perf',
     'refactor',
-    'release',
     'style',
     'test',
   ],
   maxMessageLength: 64,
   minMessageLength: 3,
-  questions: ['type', 'scope', 'subject', 'body', 'breaking', 'issues', 'lerna'],
+  questions: ['type', 'scope', 'subject'],
   scopes: ['なし', 'API', '環境構築', '設定ファイル', '型ファイル'],
   types: {
     chore: {
@@ -54,7 +53,7 @@ module.exports = {
       value: 'fix',
     },
     package: {
-      description: 'パッケージ',
+      description: '依存関係',
       emoji: '📦',
       value: 'package',
     },
@@ -68,13 +67,8 @@ module.exports = {
       emoji: '🔨',
       value: 'refactor',
     },
-    release: {
-      description: 'リリース、公開',
-      emoji: '🏹',
-      value: 'release',
-    },
     style: {
-      description: 'コードのスタイル調整（マークアップ、フォーマット、セミコロン、etc）',
+      description: 'スタイル調整',
       emoji: '👙',
       value: 'style',
     },
@@ -88,8 +82,5 @@ module.exports = {
     type: 'コミットする内容はどの型ですか:',
     scope: 'コミットが影響するスコープを選んでください:',
     subject: '変更内容を簡潔に書いてください:\n',
-    body: '変更内容の詳細があれば書いてください:\n ',
-    breaking: '重要な変更があれば書いてください:\n',
-    issues: 'このコミットで閉じるIssuesがあれば書いてください。例： #123:',
   },
 };
