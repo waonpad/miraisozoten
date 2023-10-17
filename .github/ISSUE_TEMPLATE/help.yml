@@ -1,0 +1,40 @@
+name: 助けて欲しい
+description: 自分では解決できない問題に助けを求める際に使用してください。
+title: '[Help]: '
+labels: ['help wanted']
+body:
+  - type: markdown
+    attributes:
+      value: '### Issueの作成前に、既存のIssuesを確認してください'
+
+  - type: textarea
+    id: help-wanted-target
+    attributes:
+      label: 問題の対象
+      placeholder: 問題の起こっている対象を記入してください。
+    validations:
+      required: true
+
+  - type: textarea
+    id: help-wanted-summary
+    attributes:
+      label: 問題内容
+      placeholder: 問題内容を記入してください。
+    validations:
+      required: true
+
+  - type: textarea
+    id: help-wanted-what-i-did
+    attributes:
+      label: やってみたこと
+      placeholder: 解決のために、自身でやってみたことを記入してください。
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional-info
+    attributes:
+      label: 問題解決の助けになりそうな事前情報
+      description: 追加で共有したい情報、スクリーンショット、またはその他の関連情報をこちらに記入してください。
+    validations:
+      required: false
