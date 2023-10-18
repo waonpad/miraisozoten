@@ -21,7 +21,7 @@ module.exports = {
   scripts: {
     // 事前準備
     prepare: {
-      default: `nps prepare.env prepare.deps prepare.packages prepare.apps`,
+      default: `nps prepare.deps prepare.env prepare.packages prepare.apps`,
       env: {
         default: `node ${root('tool/copy-env.js')} --dir ./ ./apps/* ./packages/*`,
       },

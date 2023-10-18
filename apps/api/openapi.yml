@@ -16,7 +16,7 @@ paths:
           description: ''
   /weapons:
     get:
-      operationId: WeaponsController_getAllWeapons
+      operationId: WeaponController_getAllWeapon
       parameters: []
       responses:
         '200':
@@ -45,7 +45,7 @@ paths:
       tags: &ref_1
         - weapons
     post:
-      operationId: WeaponsController_create
+      operationId: WeaponController_create
       parameters: []
       requestBody:
         required: true
@@ -92,7 +92,7 @@ paths:
       tags: *ref_1
   /weapons/pages:
     get:
-      operationId: WeaponsController_getAllWeaponsWithPages
+      operationId: WeaponController_getAllWeaponWithPages
       parameters:
         - name: includePageCount
           required: true
@@ -139,7 +139,7 @@ paths:
       tags: *ref_1
   /weapons/{id}:
     get:
-      operationId: WeaponsController_getWeapon
+      operationId: WeaponController_getWeapon
       parameters:
         - name: id
           required: true
@@ -152,12 +152,12 @@ paths:
           description: ''
       tags: *ref_1
     patch:
-      operationId: WeaponsController_update
+      operationId: WeaponController_update
       parameters:
         - name: id
           required: true
           in: path
-          example: 1
+          example: '1'
           schema:
             type: number
       requestBody:
@@ -204,14 +204,14 @@ paths:
                   - attribute
       tags: *ref_1
     delete:
-      operationId: WeaponsController_delete
+      operationId: WeaponController_delete
       parameters:
         - name: id
           required: true
           in: path
-          example: 1
+          example: '1'
           schema:
-            type: number
+            type: string
       responses:
         '204':
           description: ''
