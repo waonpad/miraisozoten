@@ -2,10 +2,10 @@
 
 ### 前提条件
 
-yarn, nps, Dredd, [git-cz](https://www.npmjs.com/package//git-cz) glob をインストール
+yarn, nps, Dredd, [git-cz](https://www.npmjs.com/package//git-cz) をインストール
 
 ```
-npm i -g yarn nps dredd git-cz glob
+npm i -g yarn nps dredd git-cz
 ```
 
 💡 Docker, Docker Compose のインストールを確認
