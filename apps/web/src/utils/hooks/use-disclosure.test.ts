@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { renderHook, act } from '@testing-library/react';
 
 import { useDisclosure } from './use-disclosure';
