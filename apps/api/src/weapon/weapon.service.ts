@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { Weapon } from 'database';
 import {
-  PageNumberPagination,
+  PageNumberPaginationMeta,
   PageNumberPaginationOptions,
-} from 'prisma-extension-pagination/dist/types';
+} from 'schema/dist/common/pagination';
 import { CreateWeaponInputDto, UpdateWeaponInputDto, WeaponResponse } from 'schema/dist/weapon';
 import { PrismaService } from 'src/prisma/prisma.service';
 
@@ -17,8 +17,11 @@ export class WeaponService {
 
   async getAllWeaponWithPages(
     options: PageNumberPaginationOptions
-  ): Promise<[WeaponResponse[], PageNumberPagination]> {
-    return this.prisma.pg().weapon.paginate().withPages(options);
+  ): Promise<[WeaponResponse[], PageNumberPaginationMeta]> {
+    return this.prisma
+      .pg()
+      .weapon.paginate()
+      .withPages({ ...options, includePageCount: true });
   }
 
   async getWeapon(id: Weapon['id']): Promise<WeaponResponse | null> {

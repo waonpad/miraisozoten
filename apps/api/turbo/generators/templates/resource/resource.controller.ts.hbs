@@ -19,8 +19,12 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { zodToOpenAPI } from 'nestjs-zod';
-import { PageNumberPagination } from 'prisma-extension-pagination/dist/types';
-import { PageNumberPaginationOptionsDto } from 'schema/dist/common/pagination';
+import { z } from 'nestjs-zod/z';
+import {
+  PageNumberPaginationMeta,
+  PageNumberPaginationMetaResponseSchema,
+  PageNumberPaginationOptionsDto,
+} from 'schema/dist/common/pagination';
 import {
   Create{{pascalCase name}}InputDto,
   Create{{pascalCase name}}InputSchema,
@@ -30,6 +34,7 @@ import {
   {{pascalCase name}}ResponseSchema,
 } from 'schema/dist/{{kebabCase name}}';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { generateApiResponseOptions } from 'src/util';
 import { {{pascalCase name}}Service } from './{{kebabCase name}}.service';
 
 @Controller('{{kebabCase name}}s')
@@ -38,9 +43,7 @@ export class {{pascalCase name}}Controller {
   constructor(private readonly {{camelCase name}}Service: {{pascalCase name}}Service) {}
 
   @Get()
-  @ApiOkResponse({
-    schema: zodToOpenAPI({{pascalCase name}}ResponseSchema),
-  })
+  @ApiOkResponse(generateApiResponseOptions({ schema: {{pascalCase name}}ResponseSchema, isArray: true }))
   async getAll{{pascalCase name}}(): Promise<{{pascalCase name}}Response[]> {
     return this.{{camelCase name}}Service.getAll{{pascalCase name}}();
   }
@@ -56,17 +59,14 @@ export class {{pascalCase name}}Controller {
     type: String,
     example: '10',
   })
-  @ApiQuery({
-    name: 'includePageCount',
-    type: String,
-    example: 'true',
-  })
-  @ApiOkResponse({
-    schema: zodToOpenAPI({{pascalCase name}}ResponseSchema),
-  })
+  @ApiOkResponse(
+    generateApiResponseOptions({
+      schema: z.tuple([z.array({{pascalCase name}}ResponseSchema), PageNumberPaginationMetaResponseSchema]),
+    })
+  )
   async getAll{{pascalCase name}}WithPages(
     @Query() options: PageNumberPaginationOptionsDto
-  ): Promise<[{{pascalCase name}}Response[], PageNumberPagination]> {
+  ): Promise<[{{pascalCase name}}Response[], PageNumberPaginationMeta]> {
     return this.{{camelCase name}}Service.getAll{{pascalCase name}}WithPages(options);
   }
 
@@ -76,6 +76,7 @@ export class {{pascalCase name}}Controller {
     type: String,
     example: '1',
   })
+  @ApiOkResponse(generateApiResponseOptions({ schema: {{pascalCase name}}ResponseSchema }))
   async get{{pascalCase name}}(
     @Param('id')
     id: string
@@ -88,9 +89,7 @@ export class {{pascalCase name}}Controller {
   @ApiBody({
     schema: zodToOpenAPI(Create{{pascalCase name}}InputSchema),
   })
-  @ApiCreatedResponse({
-    schema: zodToOpenAPI({{pascalCase name}}ResponseSchema),
-  })
+  @ApiCreatedResponse(generateApiResponseOptions({ schema: {{pascalCase name}}ResponseSchema }))
   async create(
     @Body()
     create{{pascalCase name}}InputDto: Create{{pascalCase name}}InputDto
@@ -108,9 +107,7 @@ export class {{pascalCase name}}Controller {
   @ApiBody({
     schema: zodToOpenAPI(Update{{pascalCase name}}InputSchema),
   })
-  @ApiOkResponse({
-    schema: zodToOpenAPI({{pascalCase name}}ResponseSchema),
-  })
+  @ApiOkResponse(generateApiResponseOptions({ schema: {{pascalCase name}}ResponseSchema }))
   async update(
     @Param('id')
     id: string,
@@ -127,9 +124,7 @@ export class {{pascalCase name}}Controller {
     type: String,
     example: '1',
   })
-  @ApiNoContentResponse({
-    schema: zodToOpenAPI({{pascalCase name}}ResponseSchema),
-  })
+  @ApiNoContentResponse(generateApiResponseOptions({ schema: {{pascalCase name}}ResponseSchema }))
   async delete(
     @Param('id')
     id: string

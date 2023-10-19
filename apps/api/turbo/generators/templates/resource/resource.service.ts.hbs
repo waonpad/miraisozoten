@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { {{pascalCase name}} } from 'database';
 import {
-  PageNumberPagination,
+  PageNumberPaginationMeta,
   PageNumberPaginationOptions,
-} from 'prisma-extension-pagination/dist/types';
+} from 'schema/dist/common/pagination';
 import { Create{{pascalCase name}}InputDto, Update{{pascalCase name}}InputDto, {{pascalCase name}}Response } from 'schema/dist/{{kebabCase name}}';
 import { PrismaService } from 'src/prisma/prisma.service';
 
@@ -17,23 +17,26 @@ export class {{pascalCase name}}Service {
 
   async getAll{{pascalCase name}}WithPages(
     options: PageNumberPaginationOptions
-  ): Promise<[{{pascalCase name}}Response[], PageNumberPagination]> {
-    return this.prisma.pg().{{kebabCase name}}.paginate().withPages(options);
+  ): Promise<[{{pascalCase name}}Response[], PageNumberPaginationMeta]> {
+    return this.prisma
+      .pg().
+      {{camelCase name}}.paginate().
+      .withPages({ ...options, includePageCount: true });
   }
 
   async get{{pascalCase name}}(id: {{pascalCase name}}['id']): Promise<{{pascalCase name}}Response | null> {
-    return this.prisma.{{kebabCase name}}.findUnique({ where: { id } });
+    return this.prisma.{{camelCase name}}.findUnique({ where: { id } });
   }
 
   async create{{pascalCase name}}(data: Create{{pascalCase name}}InputDto): Promise<{{pascalCase name}}Response> {
-    return this.prisma.{{kebabCase name}}.create({ data });
+    return this.prisma.{{camelCase name}}.create({ data });
   }
 
   async update{{pascalCase name}}(id: {{pascalCase name}}['id'], data: Update{{pascalCase name}}InputDto): Promise<{{pascalCase name}}Response> {
-    return this.prisma.{{kebabCase name}}.update({ where: { id }, data });
+    return this.prisma.{{camelCase name}}.update({ where: { id }, data });
   }
 
   async delete{{pascalCase name}}(id: {{pascalCase name}}['id']): Promise<{{pascalCase name}}Response> {
-    return this.prisma.{{kebabCase name}}.delete({ where: { id } });
+    return this.prisma.{{camelCase name}}.delete({ where: { id } });
   }
 }

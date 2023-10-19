@@ -83,6 +83,8 @@ describe('WeaponService', () => {
         currentPage: 1,
         previousPage: null,
         nextPage: 2,
+        pageCount: 10,
+        totalCount: 100,
       };
 
       (prismaService.pg().weapon.paginate().withPages as jest.Mock).mockResolvedValue([

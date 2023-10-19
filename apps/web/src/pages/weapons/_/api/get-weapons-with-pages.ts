@@ -1,5 +1,7 @@
-import { PageNumberPagination } from 'prisma-extension-pagination/dist/types';
-import { PageNumberPaginationOptions } from 'schema/dist/common/pagination';
+import {
+  PageNumberPaginationMeta,
+  PageNumberPaginationOptions,
+} from 'schema/dist/common/pagination';
 import { WeaponResponse } from 'schema/dist/weapon';
 
 import { axios } from '@/lib/axios';
@@ -14,11 +16,10 @@ export const getWeaponsWithPages = ({
   pageParam = 1,
 }: {
   pageParam: number;
-}): Promise<[WeaponResponse[], PageNumberPagination]> => {
+}): Promise<[WeaponResponse[], PageNumberPaginationMeta]> => {
   const params: PageNumberPaginationOptions = {
     page: pageParam,
     limit: 10,
-    includePageCount: true,
   };
 
   return axios.get(`/weapons/pages`, { params });

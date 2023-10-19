@@ -1,5 +1,7 @@
-import { PageNumberPagination } from 'prisma-extension-pagination/dist/types';
-import { PageNumberPaginationOptions } from 'schema/dist/common/pagination';
+import {
+  PageNumberPaginationMeta,
+  PageNumberPaginationOptions
+} from 'schema/dist/common/pagination';
 import { {{pascalCase name}}Response } from 'schema/dist/{{kebabCase name}}';
 
 import { axios } from '@/lib/axios';
@@ -14,11 +16,10 @@ export const get{{pascalCase name}}sWithPages = ({
   pageParam = 1,
 }: {
   pageParam: number;
-}): Promise<[{{pascalCase name}}Response[], PageNumberPagination]> => {
+}): Promise<[{{pascalCase name}}Response[], PageNumberPaginationMeta]> => {
   const params: PageNumberPaginationOptions = {
     page: pageParam,
     limit: 10,
-    includePageCount: true,
   };
 
   return axios.get(`/{{kebabCase name}}s/pages`, { params });

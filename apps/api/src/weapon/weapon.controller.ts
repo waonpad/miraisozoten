@@ -19,8 +19,12 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { zodToOpenAPI } from 'nestjs-zod';
-import { PageNumberPagination } from 'prisma-extension-pagination/dist/types';
-import { PageNumberPaginationOptionsDto } from 'schema/dist/common/pagination';
+import { z } from 'nestjs-zod/z';
+import {
+  PageNumberPaginationMeta,
+  PageNumberPaginationMetaResponseSchema,
+  PageNumberPaginationOptionsDto,
+} from 'schema/dist/common/pagination';
 import {
   CreateWeaponInputDto,
   CreateWeaponInputSchema,
@@ -30,6 +34,7 @@ import {
   WeaponResponseSchema,
 } from 'schema/dist/weapon';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { generateApiResponseOptions } from 'src/util';
 import { WeaponService } from './weapon.service';
 
 @Controller('weapons')
@@ -38,9 +43,7 @@ export class WeaponController {
   constructor(private readonly weaponService: WeaponService) {}
 
   @Get()
-  @ApiOkResponse({
-    schema: zodToOpenAPI(WeaponResponseSchema),
-  })
+  @ApiOkResponse(generateApiResponseOptions({ schema: WeaponResponseSchema, isArray: true }))
   async getAllWeapon(): Promise<WeaponResponse[]> {
     return this.weaponService.getAllWeapon();
   }
@@ -56,17 +59,14 @@ export class WeaponController {
     type: String,
     example: '10',
   })
-  @ApiQuery({
-    name: 'includePageCount',
-    type: String,
-    example: 'true',
-  })
-  @ApiOkResponse({
-    schema: zodToOpenAPI(WeaponResponseSchema),
-  })
+  @ApiOkResponse(
+    generateApiResponseOptions({
+      schema: z.tuple([z.array(WeaponResponseSchema), PageNumberPaginationMetaResponseSchema]),
+    })
+  )
   async getAllWeaponWithPages(
     @Query() options: PageNumberPaginationOptionsDto
-  ): Promise<[WeaponResponse[], PageNumberPagination]> {
+  ): Promise<[WeaponResponse[], PageNumberPaginationMeta]> {
     return this.weaponService.getAllWeaponWithPages(options);
   }
 
@@ -76,6 +76,7 @@ export class WeaponController {
     type: String,
     example: '1',
   })
+  @ApiOkResponse(generateApiResponseOptions({ schema: WeaponResponseSchema }))
   async getWeapon(
     @Param('id')
     id: string
@@ -88,9 +89,7 @@ export class WeaponController {
   @ApiBody({
     schema: zodToOpenAPI(CreateWeaponInputSchema),
   })
-  @ApiCreatedResponse({
-    schema: zodToOpenAPI(WeaponResponseSchema),
-  })
+  @ApiCreatedResponse(generateApiResponseOptions({ schema: WeaponResponseSchema }))
   async create(
     @Body()
     createWeaponInputDto: CreateWeaponInputDto
@@ -108,9 +107,7 @@ export class WeaponController {
   @ApiBody({
     schema: zodToOpenAPI(UpdateWeaponInputSchema),
   })
-  @ApiOkResponse({
-    schema: zodToOpenAPI(WeaponResponseSchema),
-  })
+  @ApiOkResponse(generateApiResponseOptions({ schema: WeaponResponseSchema }))
   async update(
     @Param('id')
     id: string,
@@ -127,9 +124,7 @@ export class WeaponController {
     type: String,
     example: '1',
   })
-  @ApiNoContentResponse({
-    schema: zodToOpenAPI(WeaponResponseSchema),
-  })
+  @ApiNoContentResponse(generateApiResponseOptions({ schema: WeaponResponseSchema }))
   async delete(
     @Param('id')
     id: string
