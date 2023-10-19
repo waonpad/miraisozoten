@@ -75,6 +75,7 @@ describe('WeaponService', () => {
       const paginationOptions = {
         page: 1,
         limit: 10,
+        includePageCount: true,
       };
 
       const pagination = {
