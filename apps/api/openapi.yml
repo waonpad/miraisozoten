@@ -20,28 +20,30 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: number
-                  name:
-                    type: string
-                  attackPower:
-                    type: number
-                  attribute:
-                    type: string
-                    enum:
-                      - SWORD
-                      - BOW
-                required:
-                  - id
-                  - name
-                  - attackPower
-                  - attribute
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                    name:
+                      type: string
+                    attackPower:
+                      type: number
+                    attribute:
+                      type: string
+                      enum:
+                        - SWORD
+                        - BOW
+                  required:
+                    - id
+                    - name
+                    - attackPower
+                    - attribute
+          description: ''
       tags: &ref_1
         - weapons
     post:
@@ -69,9 +71,8 @@ paths:
                 - attribute
       responses:
         '201':
-          description: ''
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 type: object
                 properties:
@@ -89,17 +90,12 @@ paths:
                   - name
                   - attackPower
                   - attribute
+          description: ''
       tags: *ref_1
   /weapons/pages:
     get:
       operationId: WeaponController_getAllWeaponWithPages
       parameters:
-        - name: includePageCount
-          required: true
-          in: query
-          example: 'true'
-          schema:
-            type: string
         - name: limit
           required: true
           in: query
@@ -114,9 +110,74 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
           content:
-            application/json:
+            application/json; charset=utf-8:
+              schema:
+                type: array
+                items:
+                  oneOf:
+                    - type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                          name:
+                            type: string
+                          attackPower:
+                            type: number
+                          attribute:
+                            type: string
+                            enum:
+                              - SWORD
+                              - BOW
+                        required:
+                          - id
+                          - name
+                          - attackPower
+                          - attribute
+                    - type: object
+                      properties:
+                        isFirstPage:
+                          type: boolean
+                        isLastPage:
+                          type: boolean
+                        currentPage:
+                          type: number
+                        previousPage:
+                          type: number
+                          nullable: true
+                        nextPage:
+                          type: number
+                          nullable: true
+                        pageCount:
+                          type: number
+                        totalCount:
+                          type: number
+                      required:
+                        - isFirstPage
+                        - isLastPage
+                        - currentPage
+                        - previousPage
+                        - nextPage
+                        - pageCount
+                        - totalCount
+          description: ''
+      tags: *ref_1
+  /weapons/{id}:
+    get:
+      operationId: WeaponController_getWeapon
+      parameters:
+        - name: id
+          required: true
+          in: path
+          example: '1'
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json; charset=utf-8:
               schema:
                 type: object
                 properties:
@@ -136,19 +197,6 @@ paths:
                   - name
                   - attackPower
                   - attribute
-      tags: *ref_1
-  /weapons/{id}:
-    get:
-      operationId: WeaponController_getWeapon
-      parameters:
-        - name: id
-          required: true
-          in: path
-          example: '1'
-          schema:
-            type: string
-      responses:
-        '200':
           description: ''
       tags: *ref_1
     patch:
@@ -182,9 +230,8 @@ paths:
                 - attribute
       responses:
         '200':
-          description: ''
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 type: object
                 properties:
@@ -202,6 +249,7 @@ paths:
                   - name
                   - attackPower
                   - attribute
+          description: ''
       tags: *ref_1
     delete:
       operationId: WeaponController_delete
@@ -214,9 +262,8 @@ paths:
             type: string
       responses:
         '204':
-          description: ''
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 type: object
                 properties:
@@ -236,6 +283,7 @@ paths:
                   - name
                   - attackPower
                   - attribute
+          description: ''
       tags: *ref_1
   /auth/login:
     post:

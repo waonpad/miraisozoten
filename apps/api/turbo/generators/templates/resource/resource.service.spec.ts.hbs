@@ -68,6 +68,7 @@ describe('{{pascalCase name}}Service', () => {
       const paginationOptions = {
         page: 1,
         limit: 10,
+        includePageCount: true,
       };
 
       const pagination = {
@@ -76,6 +77,8 @@ describe('{{pascalCase name}}Service', () => {
         currentPage: 1,
         previousPage: null,
         nextPage: 2,
+        pageCount: 10,
+        totalCount: 100,
       };
 
       (prismaService.pg().{{camelCase name}}.paginate().withPages as jest.Mock).mockResolvedValue([
