@@ -31,6 +31,7 @@
 - `packages`
   - `database`: `api`, `web` で使われる, PrismaClientのラッパー
   - `eslint-config-custom`: `.eslintrc.js` で使われる, eslintの設定
+  - `schema`: `api`, `web` で共有している, 主にAPIでやり取りする時の型情報
   - `stylelint-config`: `.stylelintrc.js` で使われる, stylelintの設定
   - `tailwind-config`: `globals.css`, `postcss.config.js`, `tailwind.config.js` で使われる, tailwindまわりの設定
   - `tsconfig`: `tsconfig.json` で使われる, TypeScriptの設定
