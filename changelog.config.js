@@ -20,7 +20,7 @@ module.exports = {
   maxMessageLength: 64,
   minMessageLength: 3,
   questions: ['type', 'scope', 'subject'],
-  scopes: ['なし', 'API', '環境構築', '設定ファイル', '型ファイル'],
+  scopes: ['none', 'api', 'web', 'design', 'env', 'config', 'types'],
   types: {
     chore: {
       description: 'ビルド関連や補助ツールの変更',
