@@ -1,0 +1,29 @@
+import { createZodDto } from 'nestjs-zod';
+import { z } from 'nestjs-zod/z';
+
+import type { Prisma, {{pascalCase name}} } from 'database';
+
+const {{pascalCase name}}Shema = z.object({
+  id: z.string(),
+  // ...
+});
+
+export const Create{{pascalCase name}}InputSchema = {{pascalCase name}}Shema.omit({
+  id: true,
+}) satisfies z.ZodType<Prisma.{{pascalCase name}}CreateInput>;
+
+export const Update{{pascalCase name}}InputSchema = {{pascalCase name}}Shema.omit({
+  id: true,
+}) satisfies z.ZodType<Prisma.{{pascalCase name}}UpdateInput>;
+
+export const {{pascalCase name}}ResponseSchema: z.ZodType<{{pascalCase name}}> = {{pascalCase name}}Shema;
+
+export type Create{{pascalCase name}}Input = z.infer<typeof Create{{pascalCase name}}InputSchema>;
+
+export type Update{{pascalCase name}}Input = z.infer<typeof Update{{pascalCase name}}InputSchema>;
+
+export type {{pascalCase name}}Response = z.infer<typeof {{pascalCase name}}ResponseSchema>;
+
+export class Create{{pascalCase name}}InputDto extends createZodDto(Create{{pascalCase name}}InputSchema) {}
+
+export class Update{{pascalCase name}}InputDto extends createZodDto(Update{{pascalCase name}}InputSchema) {}
