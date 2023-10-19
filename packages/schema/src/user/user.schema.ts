@@ -20,7 +20,7 @@ export const CreateUserInputSchema = UserShema.omit({
 
 export const UpdateUserInputSchema = UserShema.omit({
   id: true,
-}) satisfies z.ZodType<Prisma.UserCreateInput>;
+}) satisfies z.ZodType<Prisma.UserUpdateInput>;
 
 export const UserResponseSchema: z.ZodType<User> = UserShema;
 

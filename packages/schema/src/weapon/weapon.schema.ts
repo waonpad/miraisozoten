@@ -16,7 +16,7 @@ export const CreateWeaponInputSchema = WeaponShema.omit({
 
 export const UpdateWeaponInputSchema = WeaponShema.omit({
   id: true,
-}) satisfies z.ZodType<Prisma.WeaponCreateInput>;
+}) satisfies z.ZodType<Prisma.WeaponUpdateInput>;
 
 export const WeaponResponseSchema = WeaponShema satisfies z.ZodType<Weapon>;
 
