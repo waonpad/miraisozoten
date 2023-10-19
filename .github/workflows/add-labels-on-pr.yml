@@ -1,0 +1,40 @@
+name: PR Labeler
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  add-labels-on-pr:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Get commit types and scopes
+      id: commit_types_and_scopes
+      run: |
+        PR_NUMBER=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
+        labels=""
+        
+        while read -r message; do
+          type=$(echo "$message" | awk -F'(' '{print $1}')
+          scope=$(echo "$message" | awk -F'[()]' '{print $2}')
+          
+          labels="$labels'type: $type',"
+          
+          # If scope is not 'none', add it to the list of scopes
+          if [ "$scope" != "none" ]; then
+            labels="$labels'scope: $scope',"
+          fi
+        done < <(gh pr view $PR_NUMBER --json commits --jq '.commits[].messageHeadline | split(":")[0]')
+        
+        # Remove the trailing commas
+        labels=${labels%,}
+        
+        eval "gh pr edit $PR_NUMBER --add-label $labels"
+
+      env:
+        GH_TOKEN: ${{ secrets.TOKEN }}
