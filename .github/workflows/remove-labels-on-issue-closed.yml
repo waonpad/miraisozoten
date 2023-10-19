@@ -1,0 +1,29 @@
+name: Remove "in progress" label on Issue close
+
+on:
+  issues:
+    types:
+      - closed
+
+jobs:
+  remove-label:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: Remove "wip" label
+      run: |
+        ISSUE_NUMBER=${{ github.event.issue.number }}
+        
+        while read -r message; do
+          label=$(echo "$message")
+
+          if [ "$label" == "wip" ]; then
+            gh issue edit $ISSUE_NUMBER --remove-label "wip"
+          fi
+        done < <(gh issue view $ISSUE_NUMBER --json labels --jq '.labels[].name')
+
+      env:
+        GH_TOKEN: ${{ secrets.TOKEN }}
