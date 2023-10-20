@@ -18,7 +18,6 @@ export class AuthController {
   }
 
   @Get('me')
-  // @UseGuards(AuthGuard)
   async me(@User() user: JwtDecodedUser): Promise<UserResponse | null> {
     return this.authService.me(user);
   }

@@ -1,4 +1,3 @@
-// import { Modals } from '@generouted/react-router';
 import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 
@@ -17,12 +16,14 @@ import { env } from '@/constants/env';
 import { queryClient } from '@/lib/react-query';
 import { Link, useModals, useNavigate } from '@/router';
 
-// import { Link, useModals, useNavigate, useParams } from '../router';
 import { Modals } from '../routes';
 
 export default function App() {
   const navigate = useNavigate();
   const modals = useModals();
+
+  // Generoutedの使用例
+
   // const { id, pid } = useParams('/posts/:id/:pid?');
 
   // const a = () => navigate('/posts/:id', { params: { id: 'a' } });

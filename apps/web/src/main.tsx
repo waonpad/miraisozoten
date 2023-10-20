@@ -1,8 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
-// import { Routes } from '@generouted/react-router';
-
 import reportWebVitals from './report-web-vitals';
 import { Routes } from './routes';
 import './index.css';
