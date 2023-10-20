@@ -7,8 +7,6 @@ export class AuthService {
   constructor(private readonly prisma: PrismaService) {}
 
   async login(user: JwtDecodedUser): Promise<UserResponse> {
-    // スキーマどう使うんだ
-
     const userRecord = await this.prisma.user.upsert({
       where: { id: user.sub },
       update: {

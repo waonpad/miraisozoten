@@ -3,6 +3,8 @@
 // import { useParams } from '@/router';
 
 export default function Id() {
+  // Generoutedの使用例
+
   // const { params } = useMatch('/posts/$id')
   // const { id } = useParams('/posts/:id');
   // const match = useMatch('/posts/:id');

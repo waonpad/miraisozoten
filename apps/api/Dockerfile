@@ -26,10 +26,4 @@ FROM node:18.18.0-alpine as runner
 WORKDIR /app
 COPY --from=sourcer /app/ .
 
-# CMD [ "node", "apps/api/dist/main.js" ]
-
-# planetscale使う場合migrateじゃなくてdb pushじゃないといけない
-# そもそも別でデータベースは触った方がいいね～
-
-# CMD [ "sh", "-c", "yarn prisma migrate deploy && node apps/api/dist/main.js" ]
 CMD [ "sh", "-c", "yarn prisma db push && node apps/api/dist/main.js" ]

@@ -24,8 +24,7 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     env:
-      # DATABASE_URL: 'postgresql://test:test@localhost:5432/pm'
-      DATABASE_URL: 'mysql://root:root@localhost:3306/pm'
+      DATABASE_URL: 'mysql://root:root@localhost:3306/mydb?schema=public'
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     strategy:
@@ -56,5 +55,5 @@ jobs:
 
       - run: yarn global add turbo
       - run: npx nps prepare.ci.api
-      - run: npx nps build.ci.api # databaseも勝手にbuildされる
+      - run: npx nps build.ci.api
       - run: npx nps test.ci.api

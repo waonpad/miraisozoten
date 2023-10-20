@@ -1,38 +1,10 @@
 version: '3.8'
 
 services:
-  # 面倒なので、nginxは使わない
-
-  # reverse-proxy:
-  #   image: nginx:latest
-  #   container_name: nginx_container_turbotest
-  #   ports:
-  #     - 80:80
-  #   depends_on:
-  #     - postgres
-  #   volumes:
-  #     - ./packages/nginx-config/nginx.conf:/etc/nginx/nginx.conf
-  #   extra_hosts:
-  #     - 'host.docker.internal:host-gateway'
-
-  # postgres:
-  #   image: postgres:15
-  #   environment:
-  #     - POSTGRES_DB=mydb
-  #     - POSTGRES_USER=test
-  #     - POSTGRES_PASSWORD=test
-  #   volumes:
-  #     - db_data_postgres:/var/lib/postgresql/data
-  #   ports:
-  #     - '5432:5432'
-
   mysql:
     image: mysql:latest
     environment:
-      # root以外だと権限付与が面倒なので、rootでやる
       - MYSQL_DATABASE=mydb
-      # - MYSQL_USER=root
-      # - MYSQL_PASSWORD=root
       - MYSQL_ROOT_PASSWORD=root
     volumes:
       - db_data_mysql:/var/lib/mysql
@@ -40,5 +12,4 @@ services:
       - '3306:3306'
 
 volumes:
-  # db_data_postgres:
   db_data_mysql:

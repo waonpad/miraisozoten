@@ -9,7 +9,6 @@ const WeaponShema = z.object({
   attribute: z.enum(['SWORD', 'BOW']),
 });
 
-// id は autoincrement で生成されるので除外する
 export const CreateWeaponInputSchema = WeaponShema.omit({
   id: true,
 }) satisfies z.ZodType<Prisma.WeaponCreateInput>;

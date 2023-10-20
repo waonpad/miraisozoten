@@ -18,8 +18,6 @@ on:
   workflow_dispatch:
 
 env:
-  # 環境変数を使うにはここで設定する
-  # https://docs.github.com/ja/actions/learn-github-actions/variables
   # t3-envがCI環境でも動くため、ダミーでエラーを回避する
   VITE_APP_ENV: production
   VITE_API_URL: http://localhost:3000
@@ -60,5 +58,5 @@ jobs:
 
       - run: yarn global add turbo
       - run: npx nps prepare.ci.web
-      - run: npx nps build.ci.web # databaseも勝手にbuildされる
+      - run: npx nps build.ci.web
       - run: npx nps test.ci.web
