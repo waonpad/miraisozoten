@@ -13,7 +13,6 @@ import {
   ApiBody,
   ApiOkResponse,
   ApiCreatedResponse,
-  ApiNoContentResponse,
   ApiParam,
   ApiQuery,
   ApiTags,
@@ -124,7 +123,7 @@ export class WeaponController {
     type: String,
     example: '1',
   })
-  @ApiNoContentResponse(generateApiResponseOptions({ schema: WeaponResponseSchema }))
+  @ApiOkResponse(generateApiResponseOptions({ schema: WeaponResponseSchema }))
   async delete(
     @Param('id')
     id: string
