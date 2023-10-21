@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
   Patch,
   Post,
@@ -39,6 +40,12 @@ import { {{pascalCase name}}Service } from './{{kebabCase name}}.service';
 @ApiTags('{{kebabCase name}}s')
 export class {{pascalCase name}}Controller {
   constructor(private readonly {{camelCase name}}Service: {{pascalCase name}}Service) {}
+
+  @Get('-schema-')
+  @ApiOkResponse(generateApiResponseOptions({ schema: {{pascalCase name}}ResponseSchema }))
+  async openApiSchema(): Promise<void> {
+    return Promise.reject(new NotFoundException());
+  }
 
   @Get()
   @ApiOkResponse(generateApiResponseOptions({ schema: {{pascalCase name}}ResponseSchema, isArray: true }))

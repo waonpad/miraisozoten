@@ -14,6 +14,48 @@ paths:
       responses:
         '200':
           description: ''
+  /weapons/-schema-:
+    get:
+      operationId: WeaponController_openApiSchema
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                    nullable: false
+                    description: The id of the weapon
+                    example: 1
+                  name:
+                    type: string
+                    description: The name of the weapon
+                    example: Sword
+                  attackPower:
+                    type: number
+                    nullable: false
+                    description: The attack power of the weapon
+                    example: 10
+                  attribute:
+                    type: string
+                    enum:
+                      - SWORD
+                      - BOW
+                    description: The attribute of the weapon
+                    example: SWORD
+                required:
+                  - id
+                  - name
+                  - attackPower
+                  - attribute
+                title: WeaponSchma
+                description: The weapon schema
+          description: ''
+      tags: &ref_0
+        - weapons
   /weapons:
     get:
       operationId: WeaponController_getAllWeapon
@@ -56,8 +98,7 @@ paths:
                   title: WeaponSchma
                   description: The weapon schema
           description: ''
-      tags: &ref_0
-        - weapons
+      tags: *ref_0
     post:
       operationId: WeaponController_create
       parameters: []
