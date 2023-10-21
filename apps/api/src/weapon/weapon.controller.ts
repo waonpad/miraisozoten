@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
   Patch,
   Post,
@@ -39,6 +40,12 @@ import { WeaponService } from './weapon.service';
 @ApiTags('weapons')
 export class WeaponController {
   constructor(private readonly weaponService: WeaponService) {}
+
+  @Get('-schema-')
+  @ApiOkResponse(generateApiResponseOptions({ schema: WeaponResponseSchema }))
+  async openApiSchema(): Promise<void> {
+    return Promise.reject(new NotFoundException());
+  }
 
   @Get()
   @ApiOkResponse(generateApiResponseOptions({ schema: WeaponResponseSchema, isArray: true }))
