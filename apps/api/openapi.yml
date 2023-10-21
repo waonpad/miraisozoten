@@ -261,7 +261,7 @@ paths:
           schema:
             type: string
       responses:
-        '204':
+        '200':
           content:
             application/json; charset=utf-8:
               schema:
