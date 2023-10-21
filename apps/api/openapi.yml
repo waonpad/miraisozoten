@@ -29,22 +29,34 @@ paths:
                   properties:
                     id:
                       type: number
+                      nullable: false
+                      description: The id of the weapon
+                      example: 1
                     name:
                       type: string
+                      description: The name of the weapon
+                      example: Sword
                     attackPower:
                       type: number
+                      nullable: false
+                      description: The attack power of the weapon
+                      example: 10
                     attribute:
                       type: string
                       enum:
                         - SWORD
                         - BOW
+                      description: The attribute of the weapon
+                      example: SWORD
                   required:
                     - id
                     - name
                     - attackPower
                     - attribute
+                  title: WeaponSchma
+                  description: The weapon schema
           description: ''
-      tags: &ref_1
+      tags: &ref_0
         - weapons
     post:
       operationId: WeaponController_create
@@ -58,13 +70,20 @@ paths:
               properties:
                 name:
                   type: string
+                  description: The name of the weapon
+                  example: Sword
                 attackPower:
                   type: number
+                  nullable: false
+                  description: The attack power of the weapon
+                  example: 10
                 attribute:
                   type: string
-                  enum: &ref_0
+                  enum:
                     - SWORD
                     - BOW
+                  description: The attribute of the weapon
+                  example: SWORD
               required:
                 - name
                 - attackPower
@@ -78,20 +97,34 @@ paths:
                 properties:
                   id:
                     type: number
+                    nullable: false
+                    description: The id of the weapon
+                    example: 1
                   name:
                     type: string
+                    description: The name of the weapon
+                    example: Sword
                   attackPower:
                     type: number
+                    nullable: false
+                    description: The attack power of the weapon
+                    example: 10
                   attribute:
                     type: string
-                    enum: *ref_0
+                    enum:
+                      - SWORD
+                      - BOW
+                    description: The attribute of the weapon
+                    example: SWORD
                 required:
                   - id
                   - name
                   - attackPower
                   - attribute
+                title: WeaponSchma
+                description: The weapon schema
           description: ''
-      tags: *ref_1
+      tags: *ref_0
   /weapons/pages:
     get:
       operationId: WeaponController_getAllWeaponWithPages
@@ -112,58 +145,9 @@ paths:
         '200':
           content:
             application/json; charset=utf-8:
-              schema:
-                type: array
-                items:
-                  oneOf:
-                    - type: array
-                      items:
-                        type: object
-                        properties:
-                          id:
-                            type: number
-                          name:
-                            type: string
-                          attackPower:
-                            type: number
-                          attribute:
-                            type: string
-                            enum:
-                              - SWORD
-                              - BOW
-                        required:
-                          - id
-                          - name
-                          - attackPower
-                          - attribute
-                    - type: object
-                      properties:
-                        isFirstPage:
-                          type: boolean
-                        isLastPage:
-                          type: boolean
-                        currentPage:
-                          type: number
-                        previousPage:
-                          type: number
-                          nullable: true
-                        nextPage:
-                          type: number
-                          nullable: true
-                        pageCount:
-                          type: number
-                        totalCount:
-                          type: number
-                      required:
-                        - isFirstPage
-                        - isLastPage
-                        - currentPage
-                        - previousPage
-                        - nextPage
-                        - pageCount
-                        - totalCount
+              schema: {}
           description: ''
-      tags: *ref_1
+      tags: *ref_0
   /weapons/{id}:
     get:
       operationId: WeaponController_getWeapon
@@ -183,22 +167,34 @@ paths:
                 properties:
                   id:
                     type: number
+                    nullable: false
+                    description: The id of the weapon
+                    example: 1
                   name:
                     type: string
+                    description: The name of the weapon
+                    example: Sword
                   attackPower:
                     type: number
+                    nullable: false
+                    description: The attack power of the weapon
+                    example: 10
                   attribute:
                     type: string
                     enum:
                       - SWORD
                       - BOW
+                    description: The attribute of the weapon
+                    example: SWORD
                 required:
                   - id
                   - name
                   - attackPower
                   - attribute
+                title: WeaponSchma
+                description: The weapon schema
           description: ''
-      tags: *ref_1
+      tags: *ref_0
     patch:
       operationId: WeaponController_update
       parameters:
@@ -217,13 +213,20 @@ paths:
               properties:
                 name:
                   type: string
+                  description: The name of the weapon
+                  example: Sword
                 attackPower:
                   type: number
+                  nullable: false
+                  description: The attack power of the weapon
+                  example: 10
                 attribute:
                   type: string
-                  enum: &ref_2
+                  enum:
                     - SWORD
                     - BOW
+                  description: The attribute of the weapon
+                  example: SWORD
               required:
                 - name
                 - attackPower
@@ -237,20 +240,34 @@ paths:
                 properties:
                   id:
                     type: number
+                    nullable: false
+                    description: The id of the weapon
+                    example: 1
                   name:
                     type: string
+                    description: The name of the weapon
+                    example: Sword
                   attackPower:
                     type: number
+                    nullable: false
+                    description: The attack power of the weapon
+                    example: 10
                   attribute:
                     type: string
-                    enum: *ref_2
+                    enum:
+                      - SWORD
+                      - BOW
+                    description: The attribute of the weapon
+                    example: SWORD
                 required:
                   - id
                   - name
                   - attackPower
                   - attribute
+                title: WeaponSchma
+                description: The weapon schema
           description: ''
-      tags: *ref_1
+      tags: *ref_0
     delete:
       operationId: WeaponController_delete
       parameters:
@@ -269,22 +286,34 @@ paths:
                 properties:
                   id:
                     type: number
+                    nullable: false
+                    description: The id of the weapon
+                    example: 1
                   name:
                     type: string
+                    description: The name of the weapon
+                    example: Sword
                   attackPower:
                     type: number
+                    nullable: false
+                    description: The attack power of the weapon
+                    example: 10
                   attribute:
                     type: string
                     enum:
                       - SWORD
                       - BOW
+                    description: The attribute of the weapon
+                    example: SWORD
                 required:
                   - id
                   - name
                   - attackPower
                   - attribute
+                title: WeaponSchma
+                description: The weapon schema
           description: ''
-      tags: *ref_1
+      tags: *ref_0
   /auth/login:
     post:
       operationId: AuthController_login
@@ -292,7 +321,7 @@ paths:
       responses:
         '200':
           description: ''
-      tags: &ref_3
+      tags: &ref_1
         - auth
   /auth/me:
     get:
@@ -301,7 +330,7 @@ paths:
       responses:
         '200':
           description: ''
-      tags: *ref_3
+      tags: *ref_1
 info:
   title: API Doc
   description: API Doc Description
