@@ -1,6 +1,6 @@
 import { ApiResponseOptions } from '@nestjs/swagger';
-import { zodToOpenAPI } from 'nestjs-zod';
 import { z } from 'nestjs-zod/z';
+import { generateSchema } from './generate-schema.util';
 
 export const generateApiResponseOptions = ({
   schema,
@@ -12,7 +12,7 @@ export const generateApiResponseOptions = ({
   const options: ApiResponseOptions = {
     content: {
       'application/json; charset=utf-8': {
-        schema: isArray ? { type: 'array', items: zodToOpenAPI(schema) } : zodToOpenAPI(schema),
+        schema: isArray ? { type: 'array', items: generateSchema(schema) } : generateSchema(schema),
       },
     },
   };

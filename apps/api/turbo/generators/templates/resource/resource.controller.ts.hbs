@@ -17,7 +17,6 @@ import {
   ApiQuery,
   ApiTags,
 } from '@nestjs/swagger';
-import { zodToOpenAPI } from 'nestjs-zod';
 import { z } from 'nestjs-zod/z';
 import {
   PageNumberPaginationMeta,
@@ -33,7 +32,7 @@ import {
   {{pascalCase name}}ResponseSchema,
 } from 'schema/dist/{{kebabCase name}}';
 import { AuthGuard } from 'src/auth/auth.guard';
-import { generateApiResponseOptions } from 'src/util';
+import { generateSchema, generateApiResponseOptions } from 'src/util';
 import { {{pascalCase name}}Service } from './{{kebabCase name}}.service';
 
 @Controller('{{kebabCase name}}s')
@@ -86,7 +85,7 @@ export class {{pascalCase name}}Controller {
   @Post()
   @UseGuards(AuthGuard)
   @ApiBody({
-    schema: zodToOpenAPI(Create{{pascalCase name}}InputSchema),
+    schema: generateSchema(Create{{pascalCase name}}InputSchema),
   })
   @ApiCreatedResponse(generateApiResponseOptions({ schema: {{pascalCase name}}ResponseSchema }))
   async create(
@@ -104,7 +103,7 @@ export class {{pascalCase name}}Controller {
     example: '1',
   })
   @ApiBody({
-    schema: zodToOpenAPI(Update{{pascalCase name}}InputSchema),
+    schema: generateSchema(Update{{pascalCase name}}InputSchema),
   })
   @ApiOkResponse(generateApiResponseOptions({ schema: {{pascalCase name}}ResponseSchema }))
   async update(
