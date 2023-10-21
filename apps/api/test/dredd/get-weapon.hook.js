@@ -6,9 +6,9 @@ const axios = require('axios');
 require('dotenv').config({ path: '.env' });
 require('dotenv').config({ path: '.env.test.local' });
 
-hooks.before('/weapons/{id} > PATCH > 200', async (transaction, done) => {
+hooks.before('/weapons/{id} > GET > 200', async (transaction, done) => {
   const newWeapon = {
-    name: 'update weapon',
+    name: 'new weapon',
     attackPower: 100,
     attribute: 'SWORD',
   };
@@ -23,15 +23,15 @@ hooks.before('/weapons/{id} > PATCH > 200', async (transaction, done) => {
     }
   );
 
-  const updateRequestPath = `/weapons/${res.data.id}`;
+  const getRequestPath = `/weapons/${res.data.id}`;
 
-  transaction.request.uri = updateRequestPath;
-  transaction.fullPath = updateRequestPath;
+  transaction.request.uri = getRequestPath;
+  transaction.fullPath = getRequestPath;
 
   done();
 });
 
-hooks.after('/weapons/{id} > PATCH > 200', async (transaction, done) => {
+hooks.after('/weapons/{id} > GET > 200', async (transaction, done) => {
   const deleteRequestPath = transaction.fullPath;
 
   const res = await axios.delete(
