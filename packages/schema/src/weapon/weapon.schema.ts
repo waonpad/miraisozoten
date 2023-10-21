@@ -1,13 +1,30 @@
+import { extendZodWithOpenApi } from '@anatine/zod-openapi';
 import { type Prisma, type Weapon } from 'database';
 import { createZodDto } from 'nestjs-zod';
 import { z } from 'nestjs-zod/z';
+import { SchemaObject } from 'openapi3-ts/oas31';
+import { z as zod } from 'zod';
 
-const WeaponShema = z.object({
-  id: z.coerce.number(),
-  name: z.string(),
-  attackPower: z.coerce.number(),
-  attribute: z.enum(['SWORD', 'BOW']),
-});
+extendZodWithOpenApi(z as typeof zod);
+
+const WeaponShema = z
+  .object({
+    id: z.coerce.number().openapi({
+      description: 'The id of the weapon',
+      example: 1,
+      nullable: false,
+    } as SchemaObject),
+    name: z.string().openapi({ description: 'The name of the weapon', example: 'Sword' }),
+    attackPower: z.coerce.number().openapi({
+      description: 'The attack power of the weapon',
+      example: 10,
+      nullable: false,
+    } as SchemaObject),
+    attribute: z
+      .enum(['SWORD', 'BOW'])
+      .openapi({ description: 'The attribute of the weapon', example: 'SWORD' }),
+  })
+  .openapi({ title: 'WeaponSchma', description: 'The weapon schema' });
 
 export const CreateWeaponInputSchema = WeaponShema.omit({
   id: true,

@@ -17,7 +17,6 @@ import {
   ApiQuery,
   ApiTags,
 } from '@nestjs/swagger';
-import { zodToOpenAPI } from 'nestjs-zod';
 import { z } from 'nestjs-zod/z';
 import {
   PageNumberPaginationMeta,
@@ -33,7 +32,7 @@ import {
   WeaponResponseSchema,
 } from 'schema/dist/weapon';
 import { AuthGuard } from 'src/auth/auth.guard';
-import { generateApiResponseOptions } from 'src/util';
+import { generateSchema, generateApiResponseOptions } from 'src/util';
 import { WeaponService } from './weapon.service';
 
 @Controller('weapons')
@@ -86,7 +85,7 @@ export class WeaponController {
   @Post()
   @UseGuards(AuthGuard)
   @ApiBody({
-    schema: zodToOpenAPI(CreateWeaponInputSchema),
+    schema: generateSchema(CreateWeaponInputSchema),
   })
   @ApiCreatedResponse(generateApiResponseOptions({ schema: WeaponResponseSchema }))
   async create(
@@ -104,7 +103,7 @@ export class WeaponController {
     example: '1',
   })
   @ApiBody({
-    schema: zodToOpenAPI(UpdateWeaponInputSchema),
+    schema: generateSchema(UpdateWeaponInputSchema),
   })
   @ApiOkResponse(generateApiResponseOptions({ schema: WeaponResponseSchema }))
   async update(
