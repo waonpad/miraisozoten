@@ -5,9 +5,7 @@ import { AxiosError } from 'axios';
 
 import { MutationErrorResponse } from '@/types';
 
-export const queryConfig: DefaultOptions<
-  AxiosError<ErrorResponse | MutationErrorResponse<unknown>>
-> = {
+export const queryConfig: DefaultOptions<AxiosError<ErrorResponse | MutationErrorResponse>> = {
   queries: {
     useErrorBoundary: true,
     refetchOnWindowFocus: false,
@@ -15,7 +13,7 @@ export const queryConfig: DefaultOptions<
     suspense: true,
   },
   mutations: {
-    useErrorBoundary: (error: AxiosError<ErrorResponse | MutationErrorResponse<unknown>>) => {
+    useErrorBoundary: (error: AxiosError<ErrorResponse | MutationErrorResponse>) => {
       // Custom error handling
       return error.response?.status !== 422;
     },
