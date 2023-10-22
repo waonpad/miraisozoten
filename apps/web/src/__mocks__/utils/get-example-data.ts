@@ -1,4 +1,4 @@
-import yml from '../../../../api/openapi.yml';
+import { openapi } from './get-openapi';
 
 export const getMockData = <T>(
   schemaPath: string,
@@ -10,7 +10,7 @@ export const getMockData = <T>(
 ): T => {
   const properties =
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    yml.paths[`/${schemaPath}/-schema-`].get.responses['200'].content[
+    openapi.paths[`/${schemaPath}/-schema-`].get.responses['200'].content[
       'application/json; charset=utf-8'
     ].schema.properties;
 
