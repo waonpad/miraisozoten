@@ -3,7 +3,7 @@ import { UserResponse } from 'schema/dist/user';
 import { axios } from '@/lib/axios';
 import { QueryConfig, ExtractFnReturnType, useQuery, QUERY_KEYS } from '@/lib/react-query';
 
-export const getAuthUser = async (): Promise<UserResponse> => {
+export const getAuthUser = async (): Promise<UserResponse | null> => {
   return axios.get(`/auth/me`);
 };
 
