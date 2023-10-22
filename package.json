@@ -13,9 +13,6 @@
       "**/util/**"
     ]
   },
-  "resolutions": {
-    "clone-deep": "4.0.1"
-  },
   "scripts": {
     "build": "turbo run build",
     "dev": "nps dev",
