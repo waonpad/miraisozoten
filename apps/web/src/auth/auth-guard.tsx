@@ -6,7 +6,7 @@ import type { Path } from '@/router';
 const PRIVATE: Path[] = ['/private', '/about'];
 const PUBLIC: Path[] = ['/login'];
 
-export const AuthGuard = ({ children }: { children: JSX.Element | JSX.Element[] }) => {
+export const AuthGuard = ({ children }: { children: React.ReactNode | React.ReactNode[] }) => {
   const { user } = useAuth();
   const location = useLocation();
   const marches = useMatches();

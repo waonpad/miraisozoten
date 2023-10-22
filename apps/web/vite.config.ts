@@ -8,6 +8,10 @@ const createEnv = require('./src/constants/env/createEnv').createEnv;
 // https://vitejs.dev/config/
 export default ({ mode }) => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
+  process.env =
+    process.env.VITE_APP_ENV !== 'production'
+      ? { ...process.env, ...loadEnv('test.local', process.cwd()) }
+      : process.env;
 
   // Env Variables Validation
   createEnv({ runtimeEnv: process.env });
