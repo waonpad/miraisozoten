@@ -58,22 +58,30 @@ export const useAuthCtx = () => {
 
   useEffect(() => {
     // TODO: 冗長なので, 後で直す
-    (async () => {
-      const authToken = cookies[COOKIE_NAMES.AUTH_TOKEN];
+    const authToken = cookies[COOKIE_NAMES.AUTH_TOKEN];
 
-      // cookieにトークンが存在しない場合
-      if (!authToken) {
-        setIsLoading(false);
+    // cookieにトークンが存在しない場合
+    if (!authToken) {
+      console.log('Auth cookie is not found');
 
-        return;
-      }
+      setIsLoading(false);
 
-      const resUser = authUserQuery.data;
+      return;
+    }
 
-      console.log('Already Logged in', resUser);
+    const resUser = authUserQuery.data;
 
-      setUser(resUser);
-    })();
+    if (!resUser) {
+      console.log('Auth user is not found');
+
+      setIsLoading(false);
+
+      return;
+    }
+
+    console.log('Already Logged in', resUser);
+
+    setUser(resUser);
 
     setIsLoading(false);
     // 何かしらのCookieが変更された場合に再度実行される
