@@ -16,11 +16,15 @@ export const userMiddleware = (req: RestRequest): RestRequest => {
     return req;
   }
 
-  const decoded = jwtDecode<JwtDecodedUser>(token);
+  try {
+    const decoded = jwtDecode<JwtDecodedUser>(token);
 
-  req.user = decoded;
+    req.user = decoded;
 
-  return req;
+    return req;
+  } catch (error) {
+    return req;
+  }
 };
 
 export const authGuard = (request: RestRequest): RestRequest => {

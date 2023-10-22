@@ -23,6 +23,6 @@ export type InfiniteQueryConfig<QueryFnType extends (...args: any) => any> = Omi
 
 export type MutationConfig<MutationFnType extends (...args: any) => any> = UseMutationOptions<
   ExtractFnReturnType<MutationFnType>,
-  AxiosError<MutationErrorResponse<Parameters<MutationFnType>[0]['data']>>,
+  AxiosError<MutationErrorResponse>,
   Parameters<MutationFnType>[0]
 >;

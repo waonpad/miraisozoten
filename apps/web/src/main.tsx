@@ -9,12 +9,15 @@ import { Routes } from './routes';
 
 import './index.css';
 
-const initMocks = (): Promise<void> => {
+const initMocks = async (): Promise<void> => {
   if (env.VITE_APP_ENV !== 'production') {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const { initMocks } = require('./__mocks__/server');
-
-    return initMocks;
+    // importの中で定義するとビルドにパスの指定先が含まれてしまうため、変数として渡す
+    // dynamic importやrequire(pluginあり)でもなぜかビルドしようとしてしまう
+    // 要検証
+    const _ = './__mocks__/server';
+    const { initMocks } = await import(/* @vite-ignore */ _);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+    await initMocks();
   }
   return Promise.resolve();
 };

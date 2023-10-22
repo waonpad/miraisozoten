@@ -2,6 +2,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { DefaultBodyType, MockedRequest, RestHandler, rest } from 'msw';
+import { CreateWeaponInputSchema, UpdateWeaponInputSchema } from 'schema/dist/weapon';
+import { ZodError } from 'zod';
 
 import { env } from '@/constants/env';
 
@@ -72,6 +74,18 @@ export const weaponHandlers: RestHandler<MockedRequest<DefaultBodyType>>[] = [
   }),
   rest.post(`${env.VITE_API_URL}/weapons`, async (req, _res, ctx) => {
     authGuard(userMiddleware(req));
+
+    try {
+      CreateWeaponInputSchema.parse(req.body);
+    } catch (error: any) {
+      if (!(error instanceof ZodError)) throw error;
+
+      return delayedResponse(
+        ctx.status(422),
+        ctx.json({ message: 'Validation failed', errors: error.issues })
+      );
+    }
+
     try {
       const body = await req.json();
 
@@ -92,6 +106,18 @@ export const weaponHandlers: RestHandler<MockedRequest<DefaultBodyType>>[] = [
   }),
   rest.patch(`${env.VITE_API_URL}/weapons/:id`, async (req, _res, ctx) => {
     authGuard(userMiddleware(req));
+
+    try {
+      UpdateWeaponInputSchema.parse(req.body);
+    } catch (error: any) {
+      if (!(error instanceof ZodError)) throw error;
+
+      return delayedResponse(
+        ctx.status(422),
+        ctx.json({ message: 'Validation failed', errors: error.issues })
+      );
+    }
+
     try {
       const id = Number(req.params.id);
       const body = await req.json();

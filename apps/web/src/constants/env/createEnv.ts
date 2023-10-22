@@ -14,7 +14,7 @@ export const createEnv = ({ runtimeEnv }: { runtimeEnv: NodeJS.ProcessEnv }) => 
       VITE_GOOGLE_CLIENT_ID: z.string(),
 
       ...(runtimeEnv.VITE_APP_ENV !== 'production' && {
-        VITE_API_MOCKING: z.coerce.boolean(),
+        VITE_API_MOCKING: z.enum(['true', 'false']),
         VITE_VALID_TOKEN: z.string(),
         VITE_INVALID_TOKEN: z.string(),
       }),
