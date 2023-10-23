@@ -24,6 +24,8 @@ env:
   VITE_APP_NAME: 'VITE APP'
   VITE_HOST_URL: http://localhost:8080
   VITE_GOOGLE_CLIENT_ID: 'dummy'
+  VITE_SENTRY_ENABLED: false
+  VITE_SENTRY_DSN: 'http://localhost:3000/dummy-url'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
