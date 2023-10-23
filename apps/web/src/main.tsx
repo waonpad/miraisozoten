@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom/client';
 
 import { env } from '@/constants/env';
 
+import { initSentry } from './lib/sentry';
 import reportWebVitals from './report-web-vitals';
 import { Routes } from './routes';
 
@@ -23,6 +24,8 @@ const initMocks = async (): Promise<void> => {
 };
 
 initMocks().then(() => {
+  initSentry();
+
   ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
       <Routes />
