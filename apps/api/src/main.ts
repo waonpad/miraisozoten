@@ -2,6 +2,7 @@ import { writeFileSync } from 'fs';
 import * as path from 'path';
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import * as Sentry from '@sentry/node';
 import { dump } from 'js-yaml';
 import { AppModule } from './app.module';
 import { Env } from './config/environments/env.service';
@@ -10,6 +11,13 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const env: Env = app.get(Env);
+
+  if (env.SentryDsn && (env.isProduction() || env.SentryEnabled)) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+    Sentry.init({
+      dsn: env.SentryDsn,
+    });
+  }
 
   app.enableCors({
     origin: '*',

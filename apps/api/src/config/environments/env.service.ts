@@ -24,4 +24,12 @@ export class Env {
   get Port(): number {
     return this.configService.get('PORT') as number;
   }
+
+  get SentryDsn(): string {
+    return this.configService.get('SENTRY_DSN') as string;
+  }
+
+  get SentryEnabled(): boolean {
+    return this.configService.get('SENTRY_ENABLED') as boolean;
+  }
 }

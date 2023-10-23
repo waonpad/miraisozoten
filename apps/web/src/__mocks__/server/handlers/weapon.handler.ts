@@ -73,7 +73,11 @@ export const weaponHandlers: RestHandler<MockedRequest<DefaultBodyType>>[] = [
     }
   }),
   rest.post(`${env.VITE_API_URL}/weapons`, async (req, _res, ctx) => {
-    authGuard(userMiddleware(req));
+    const authenticatedReq = authGuard(userMiddleware(req));
+
+    if (authenticatedReq instanceof Error) {
+      return delayedResponse(ctx.status(401), ctx.json({ message: authenticatedReq.message }));
+    }
 
     try {
       CreateWeaponInputSchema.parse(req.body);
@@ -105,7 +109,11 @@ export const weaponHandlers: RestHandler<MockedRequest<DefaultBodyType>>[] = [
     }
   }),
   rest.patch(`${env.VITE_API_URL}/weapons/:id`, async (req, _res, ctx) => {
-    authGuard(userMiddleware(req));
+    const authenticatedReq = authGuard(userMiddleware(req));
+
+    if (authenticatedReq instanceof Error) {
+      return delayedResponse(ctx.status(401), ctx.json({ message: authenticatedReq.message }));
+    }
 
     try {
       UpdateWeaponInputSchema.parse(req.body);
@@ -142,7 +150,12 @@ export const weaponHandlers: RestHandler<MockedRequest<DefaultBodyType>>[] = [
     }
   }),
   rest.delete(`${env.VITE_API_URL}/weapons/:id`, async (req, _res, ctx) => {
-    authGuard(userMiddleware(req));
+    const authenticatedReq = authGuard(userMiddleware(req));
+
+    if (authenticatedReq instanceof Error) {
+      return delayedResponse(ctx.status(401), ctx.json({ message: authenticatedReq.message }));
+    }
+
     try {
       const id = Number(req.params.id);
 

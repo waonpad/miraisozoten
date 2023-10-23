@@ -5,3 +5,4 @@ out
 public/
 *.hbs
 apps/web/src/router.ts
+apps/web/public/mockServiceWorker.js
