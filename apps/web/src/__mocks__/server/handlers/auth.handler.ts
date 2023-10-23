@@ -14,6 +14,10 @@ export const authHandlers: RestHandler<MockedRequest<DefaultBodyType>>[] = [
     const userReq = userMiddleware(req);
     const authenticatedReq = authGuard(userReq);
 
+    if (authenticatedReq instanceof Error) {
+      return delayedResponse(ctx.status(401), ctx.json({ message: authenticatedReq.message }));
+    }
+
     const reqUser = authenticatedReq.user as JwtDecodedUser;
     try {
       const existingUser = db.user.findFirst({

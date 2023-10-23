@@ -27,9 +27,10 @@ export const userMiddleware = (req: RestRequest): RestRequest => {
   }
 };
 
-export const authGuard = (request: RestRequest): RestRequest => {
+export const authGuard = (request: RestRequest): RestRequest | Error => {
   if (!request.user) {
-    throw new Error('Unauthorized');
+    const error = new Error('Unauthorized');
+    return error;
   }
 
   return request;
