@@ -1,0 +1,19 @@
+{
+  "name": "prefecture",
+  "type": "commonjs",
+  "version": "0.0.0",
+  "license": "UNLICENSED",
+  "scripts": {
+    "dev": "tsup --watch",
+    "build": "tsup",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^8.45.0",
+    "eslint-config-custom": "*",
+    "tsconfig": "*",
+    "tsup": "^7.2.0",
+    "typescript": "^5.1.3"
+  }
+}
