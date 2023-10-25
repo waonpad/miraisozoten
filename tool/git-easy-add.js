@@ -37,7 +37,8 @@ const main = async () => {
   ]);
 
   if (answers.selectedFiles.length > 0) {
-    execSync(`git add ${answers.selectedFiles.join(' ')}`);
+    const files = answers.selectedFiles.map((file) => `"${file}"`).join(' ');
+    execSync(`git add ${files}`);
     console.log(`Added files: ${answers.selectedFiles.join(', ')}`);
   } else {
     console.log('No files selected.');
