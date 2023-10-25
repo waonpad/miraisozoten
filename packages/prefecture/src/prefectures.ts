@@ -314,7 +314,7 @@ export const Prefectures = {
     kana: 'ヤマグチケン',
     en: 'yamaguchi',
     area: Areas[5],
-    neighbors: [32, 34],
+    neighbors: [32, 34, 40],
   },
   36: {
     id: 36,
@@ -359,7 +359,7 @@ export const Prefectures = {
     kana: 'フクオカケン',
     en: 'fukuoka',
     area: Areas[6],
-    neighbors: [41, 43, 44],
+    neighbors: [35, 41, 43, 44],
   },
   41: {
     id: 41,
