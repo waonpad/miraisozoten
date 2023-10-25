@@ -1,13 +1,13 @@
-import { PrefectureId, Prefectures } from 'prefecture/dist';
+import { Prefecture, Prefectures } from 'prefecture/dist';
 import { getPrefectureNeighbors } from 'prefecture/dist/utils';
 import { Button } from 'ui/components/ui/button';
 import { Dialog, DialogContent, DialogFooter } from 'ui/components/ui/dialog';
 
 export type PrefectureOverviewDialogProps = {
-  id: PrefectureId | null;
+  id: Prefecture['id'] | null;
   open: boolean;
   handleOpenChange: (open: boolean) => void;
-  handleSelect: (id: PrefectureId) => void;
+  handleSelect: (id: Prefecture['id']) => void;
 };
 
 export const PrefectureOverviewDialog = ({
@@ -34,7 +34,14 @@ export const PrefectureOverviewDialog = ({
           <div>人口: </div>
           <div>面積: </div>
           <DialogFooter>
-            <Button onClick={() => handleSelect(id)}>Select</Button>
+            <Button
+              onClick={() => {
+                handleSelect(id);
+                handleOpenChange(false);
+              }}
+            >
+              この都道府県にする
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
