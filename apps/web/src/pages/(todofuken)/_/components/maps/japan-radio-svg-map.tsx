@@ -1,30 +1,41 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect } from 'react';
+
 import Japan from '@svg-maps/japan';
 import { Prefecture } from 'prefecture/dist';
 import { SVGMap, SVGMapProps } from 'react-svg-map';
 import 'react-svg-map/lib/index.css';
 
 export type JapanRadioSVGMapProps = Omit<SVGMapProps, 'map'> & {
-  handleSelect: (e: { target: { id: Prefecture['en'] } }) => void;
+  selected?: Prefecture['en'];
+  disabled?: boolean;
 };
 
 export const JapanRadioSVGMap = (props: JapanRadioSVGMapProps) => {
-  const handleClick = (e: any) => {
-    // svg-map__locationのクラスのある要素を全てaria-checked="false"にする
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+  // 選択された県だけ色を変える
+  const handleSelect = (select: Prefecture['en']) => {
     const locations = document.querySelectorAll('.svg-map__location');
     locations.forEach((location) => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
       location.setAttribute('aria-checked', 'false');
     });
 
-    // aria-checked="true"をつける
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-    e.target.setAttribute('aria-checked', 'true');
+    const target = document.getElementById(select);
 
-    // ハンドラーを呼び出す
-    props.handleSelect(e);
+    target && target.setAttribute('aria-checked', 'true');
   };
 
-  return <SVGMap {...props} map={Japan} onLocationClick={handleClick} />;
+  // props.selectedが変更されたら色を変える
+  useEffect(() => {
+    if (props.selected) {
+      handleSelect(props.selected);
+    }
+  }, [props.selected]);
+
+  return (
+    <SVGMap
+      {...props}
+      map={Japan}
+      onLocationClick={props.disabled ? undefined : props.onLocationClick}
+    />
+  );
 };

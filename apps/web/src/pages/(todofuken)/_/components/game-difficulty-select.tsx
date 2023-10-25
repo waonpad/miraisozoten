@@ -1,20 +1,15 @@
 import { Button } from 'ui/components/ui/button';
 
-import { Game } from '../config/game';
-import { GameDifficulties } from '../config/game-difficulty';
-
-import type { GameDifficulty } from '../config/game-difficulty';
+import { Game, GameDifficulties } from '../config/game';
 
 export type GameDifficultySelectProps = {
   game: Game;
-  handleSelectDifficulty: (gameDifficulty: GameDifficulty) => void;
-  handleSelectDataVisibility: (dataVisibility: boolean) => void;
+  handleSelectDifficulty: (gameDifficulty: Game['difficulty']) => void;
 };
 
 export const GameDifficultySelect = ({
   game,
   handleSelectDifficulty,
-  handleSelectDataVisibility,
 }: GameDifficultySelectProps) => {
   return (
     <>
@@ -27,18 +22,6 @@ export const GameDifficultySelect = ({
           {mode}
         </Button>
       ))}
-      <Button
-        onClick={() => handleSelectDataVisibility(true)}
-        {...(!game.hideData && { variant: 'destructive' })}
-      >
-        データ表示
-      </Button>
-      <Button
-        onClick={() => handleSelectDataVisibility(false)}
-        {...(game.hideData && { variant: 'destructive' })}
-      >
-        データ非表示
-      </Button>
     </>
   );
 };

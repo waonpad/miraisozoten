@@ -1,13 +1,11 @@
 import { Button } from 'ui/components/ui/button';
 
 import { Game } from '../config/game';
-import { GameModes } from '../config/game-mode';
-
-import type { GameMode } from '../config/game-mode';
+import { GameModes } from '../config/game';
 
 export type GameModeSelectProps = {
   game: Game;
-  handleSelect: (gameMode: GameMode) => void;
+  handleSelect: (gameMode: Game['mode']) => void;
 };
 
 export const GameModeSelect = ({ game, handleSelect }: GameModeSelectProps) => {
