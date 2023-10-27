@@ -2,6 +2,8 @@
 
 ## 概要
 
+こみっとれんしゅう
+
 - ✅ [Turborepo](https://turbo.build/repo/docs)
 - ✅ [NestJS](https://docs.nestjs.com)
   - ✅ Prisma
