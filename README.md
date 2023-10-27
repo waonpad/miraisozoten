@@ -2,7 +2,7 @@
 
 ## 概要
 
-こみっとれんしゅう
+こみっとれんしゅうだよだよ
 
 - ✅ [Turborepo](https://turbo.build/repo/docs)
 - ✅ [NestJS](https://docs.nestjs.com)
