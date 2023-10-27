@@ -251,7 +251,7 @@ export const Prefectures = {
     kana: 'ヒョウゴケン',
     en: 'hyogo',
     area: Areas[4],
-    neighbors: [26, 27, 31, 33],
+    neighbors: [26, 27, 31, 33, 36],
   },
   29: {
     id: 29,
@@ -296,7 +296,7 @@ export const Prefectures = {
     kana: 'オカヤマケン',
     en: 'okayama',
     area: Areas[5],
-    neighbors: [28, 31, 34],
+    neighbors: [28, 31, 34, 37],
   },
   34: {
     id: 34,
@@ -305,7 +305,7 @@ export const Prefectures = {
     kana: 'ヒロシマケン',
     en: 'hiroshima',
     area: Areas[5],
-    neighbors: [31, 32, 33, 35],
+    neighbors: [31, 32, 33, 35, 38],
   },
   35: {
     id: 35,
@@ -323,7 +323,7 @@ export const Prefectures = {
     kana: 'トクシマケン',
     en: 'tokushima',
     area: Areas[5],
-    neighbors: [37, 38, 39],
+    neighbors: [28, 37, 38, 39],
   },
   37: {
     id: 37,
@@ -332,7 +332,7 @@ export const Prefectures = {
     kana: 'カガワケン',
     en: 'kagawa',
     area: Areas[5],
-    neighbors: [36, 38],
+    neighbors: [33, 36, 38],
   },
   38: {
     id: 38,
@@ -341,7 +341,7 @@ export const Prefectures = {
     kana: 'エヒメケン',
     en: 'ehime',
     area: Areas[5],
-    neighbors: [36, 37, 39],
+    neighbors: [34, 36, 37, 39],
   },
   39: {
     id: 39,
