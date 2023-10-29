@@ -1,15 +1,16 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Weapon } from 'database';
 import {
   PageNumberPaginationMeta,
   PageNumberPaginationOptions,
 } from 'schema/dist/common/pagination';
 import { CreateWeaponInputDto, UpdateWeaponInputDto, WeaponResponse } from 'schema/dist/weapon';
+import { InjectionToken } from 'src/config/environments/constants/injection-token.enum';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class WeaponService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(@Inject(InjectionToken.PRISMA_SERVICE) private readonly prisma: PrismaService) {}
 
   async getAllWeapon(): Promise<WeaponResponse[]> {
     return this.prisma.weapon.findMany();
