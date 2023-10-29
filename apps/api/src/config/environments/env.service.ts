@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { AppEnvEnum } from './constants/app-env.enum';
+import { BooleanEnum } from './constants/boolean.enum';
+import { HostEnum } from './constants/host.enum';
 
 @Injectable()
 export class Env {
@@ -13,12 +16,12 @@ export class Env {
     return this.configService;
   }
 
-  get AppEnv(): string {
-    return this.configService.get('APP_ENV') as string;
+  get AppEnv(): AppEnvEnum {
+    return this.configService.get('APP_ENV') as AppEnvEnum;
   }
 
-  get Host(): string {
-    return this.configService.get('HOST') as string;
+  get Host(): HostEnum {
+    return this.configService.get('HOST') as HostEnum;
   }
 
   get Port(): number {
@@ -29,7 +32,7 @@ export class Env {
     return this.configService.get('SENTRY_DSN') as string;
   }
 
-  get SentryEnabled(): boolean {
-    return this.configService.get('SENTRY_ENABLED') as boolean;
+  get SentryEnabled(): BooleanEnum {
+    return this.configService.get('SENTRY_ENABLED') as BooleanEnum;
   }
 }
