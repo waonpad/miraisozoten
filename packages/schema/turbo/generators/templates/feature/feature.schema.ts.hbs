@@ -3,7 +3,7 @@ import { z } from 'nestjs-zod/z';
 
 import type { Prisma, {{pascalCase name}} } from 'database';
 
-const {{pascalCase name}}Shema = z.object({
+export const {{pascalCase name}}Shema = z.object({
   id: z.string(),
   // ...
 });

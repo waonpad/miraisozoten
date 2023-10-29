@@ -7,7 +7,7 @@ import { z as zod } from 'zod';
 
 extendZodWithOpenApi(z as typeof zod);
 
-const WeaponShema = z
+export const WeaponShema = z
   .object({
     id: z.coerce.number().openapi({
       description: 'The id of the weapon',
