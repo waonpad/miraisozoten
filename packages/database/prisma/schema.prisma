@@ -1,13 +1,13 @@
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   // デプロイ先のマシンに合わせてbinaryTargetsを変更する
   binaryTargets = ["native", "debian-openssl-1.1.x", "debian-openssl-3.0.x"]
 }
 
 datasource db {
   // mysqlの場合、長いデータには@db.Textをつける
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
   // relationMode: デフォルトはforeignKeys
   // planetscaleの場合はprisma
   // モデルの@@indexもplanetscaleのために必要
@@ -15,19 +15,20 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(uuid())
+  id            String   @id @default(uuid())
   name          String
   email         String   @unique
-  emailVerified Boolean   @default(false)
+  emailVerified Boolean  @default(false)
   image         String
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  games         Game[]
 }
 
 model Post {
-  id       Int    @id @default(autoincrement())
-  title    String
-  content String
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -38,8 +39,108 @@ enum WeaponAttribute {
 }
 
 model Weapon {
-  id          Int      @id @default(autoincrement())
+  id          Int             @id @default(autoincrement())
   name        String
   attackPower Int
   attribute   WeaponAttribute
+}
+
+model Prefecture {
+  id         Int              @id
+  name       String
+  short      String
+  kana       String
+  en         String
+  neighborBy Prefecture[]     @relation("NeighborPrefecture")
+  neighbors  Prefecture[]     @relation("NeighborPrefecture")
+  region     Region           @relation(fields: [regionId], references: [id])
+  regionId   Int
+  games      Game[]
+  asOpponent GameLog[]
+  stats      PrefectureStats?
+
+  @@index([regionId])
+}
+
+enum PrefectureStatsName {
+  POPULATION
+  AREA
+}
+
+model PrefectureStats {
+  id           Int        @id
+  population   Int
+  area         Float
+  prefecture   Prefecture @relation(fields: [prefectureId], references: [id])
+  prefectureId Int       @unique
+}
+
+model Region {
+  id          Int          @id
+  name        String
+  prefectures Prefecture[]
+}
+
+enum GameState {
+  STARTING
+  PREPARING
+  ACTING
+  FINISHED
+}
+
+enum GameDifficulty {
+  EASY
+  NORMAL
+  HIDDEN_NORMAL
+  HARD
+}
+
+enum GameMode {
+  NATIONWIDE
+  REGIONAL
+}
+
+enum GameResult {
+  WIN
+  DRAW
+  LOSE
+}
+
+enum HighLow {
+  HIGH
+  LOW
+}
+
+model Game {
+  id           String         @id @default(uuid())
+  state        GameState
+  difficulty   GameDifficulty
+  mode         GameMode
+  prefecture   Prefecture     @relation(fields: [prefectureId], references: [id])
+  prefectureId Int
+  user         User           @relation(fields: [userId], references: [id])
+  userId       String
+  logs         GameLog[]
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  @@index([prefectureId])
+  @@index([userId])
+}
+
+model GameLog {
+  id         Int                @id @default(autoincrement())
+  game       Game               @relation(fields: [gameId], references: [id])
+  gameId     String
+  highLow    HighLow
+  // factorNameはprefectureのstats
+  factorName PrefectureStatsName
+  opponent   Prefecture         @relation(fields: [opponentId], references: [id])
+  opponentId Int
+  result     GameResult
+  createdAt  DateTime           @default(now())
+  updatedAt  DateTime           @updatedAt
+
+  @@index([gameId])
+  @@index([opponentId])
 }
