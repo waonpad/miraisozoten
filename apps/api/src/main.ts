@@ -12,7 +12,9 @@ async function bootstrap() {
 
   const env: Env = app.get(Env);
 
-  if (env.SentryDsn && (env.isProduction() || env.SentryEnabled)) {
+  if (env.SentryDsn && (env.isProduction() || env.SentryEnabled) === 'true') {
+    console.log('Sentry enabled');
+
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     Sentry.init({
       dsn: env.SentryDsn,

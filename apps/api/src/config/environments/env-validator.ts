@@ -1,7 +1,8 @@
 import { plainToClass } from 'class-transformer';
-import { IsBoolean, IsEnum, IsNotEmpty, IsNumber, IsString, IsUrl } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsNumber, IsString, IsUrl } from 'class-validator';
 import { validateSync } from 'class-validator';
 import { AppEnvEnum } from './constants/app-env.enum';
+import { BooleanEnum } from './constants/boolean.enum';
 import { HostEnum } from './constants/host.enum';
 
 export class EnvValidator {
@@ -23,8 +24,8 @@ export class EnvValidator {
   SENTRY_DSN!: string;
 
   @IsNotEmpty()
-  @IsBoolean()
-  SENTRY_ENABLED!: boolean;
+  @IsEnum(BooleanEnum)
+  SENTRY_ENABLED!: BooleanEnum;
 }
 
 /**

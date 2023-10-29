@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { WeaponAttribute } from 'database';
-import { PrismaService } from '../prisma/prisma.service';
+import { InjectionToken } from 'src/config/environments/constants/injection-token.enum';
+import { BasePrismaService, PrismaService } from '../prisma/prisma.service';
 import { WeaponService } from './weapon.service';
 
 describe('WeaponService', () => {
@@ -12,7 +13,10 @@ describe('WeaponService', () => {
       providers: [
         WeaponService,
         {
-          provide: PrismaService,
+          provide: InjectionToken.PRISMA_SERVICE,
+          useFactory: () => {
+            return new BasePrismaService().withExtensions();
+          },
           useValue: {
             weapon: {
               findMany: jest.fn(),
@@ -30,7 +34,7 @@ describe('WeaponService', () => {
     }).compile();
 
     service = module.get<WeaponService>(WeaponService);
-    prismaService = module.get<PrismaService>(PrismaService);
+    prismaService = module.get<PrismaService>(InjectionToken.PRISMA_SERVICE);
   });
 
   afterEach(() => {

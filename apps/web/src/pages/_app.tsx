@@ -28,6 +28,7 @@ export default function App() {
             <Link to="/">Home</Link>
             <Link to={{ pathname: '/about' }}>About</Link>
             <Link to="/weapons">Weapons</Link>
+            <Link to="/game">Game</Link>
             <Link to="/posts">Posts</Link>
             <Link to="/posts/:id/:pid?" params={{ id: '1', pid: '2' }}>
               Posts by id/pid

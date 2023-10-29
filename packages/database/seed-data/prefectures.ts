@@ -1,4 +1,4 @@
-import { Areas } from './areas';
+import { Regions } from './regions';
 
 export const Prefectures = {
   1: {
@@ -7,7 +7,7 @@ export const Prefectures = {
     short: '北海道',
     kana: 'ホッカイドウ',
     en: 'hokkaido',
-    area: Areas[1],
+    region: Regions[1],
     neighbors: [2],
   },
   2: {
@@ -16,7 +16,7 @@ export const Prefectures = {
     short: '青森',
     kana: 'アオモリケン',
     en: 'aomori',
-    area: Areas[1],
+    region: Regions[1],
     neighbors: [1, 3, 5],
   },
   3: {
@@ -25,7 +25,7 @@ export const Prefectures = {
     short: '岩手',
     kana: 'イワテケン',
     en: 'iwate',
-    area: Areas[1],
+    region: Regions[1],
     neighbors: [2, 4, 5],
   },
   4: {
@@ -34,7 +34,7 @@ export const Prefectures = {
     short: '宮城',
     kana: 'ミヤギケン',
     en: 'miyagi',
-    area: Areas[1],
+    region: Regions[1],
     neighbors: [3, 5, 6, 7],
   },
   5: {
@@ -43,7 +43,7 @@ export const Prefectures = {
     short: '秋田',
     kana: 'アキタケン',
     en: 'akita',
-    area: Areas[1],
+    region: Regions[1],
     neighbors: [2, 3, 4, 6],
   },
   6: {
@@ -52,7 +52,7 @@ export const Prefectures = {
     short: '山形',
     kana: 'ヤマガタケン',
     en: 'yamagata',
-    area: Areas[1],
+    region: Regions[1],
     neighbors: [4, 5, 7, 15],
   },
   7: {
@@ -61,7 +61,7 @@ export const Prefectures = {
     short: '福島',
     kana: 'フクシマケン',
     en: 'fukushima',
-    area: Areas[1],
+    region: Regions[1],
     neighbors: [4, 6, 8, 9, 10, 15],
   },
   8: {
@@ -70,7 +70,7 @@ export const Prefectures = {
     short: '茨城',
     kana: 'イバラキケン',
     en: 'ibaraki',
-    area: Areas[2],
+    region: Regions[2],
     neighbors: [7, 9, 11, 12],
   },
   9: {
@@ -79,7 +79,7 @@ export const Prefectures = {
     short: '栃木',
     kana: 'トチギケン',
     en: 'tochigi',
-    area: Areas[2],
+    region: Regions[2],
     neighbors: [7, 8, 10, 11],
   },
   10: {
@@ -88,7 +88,7 @@ export const Prefectures = {
     short: '群馬',
     kana: 'グンマケン',
     en: 'gunma',
-    area: Areas[2],
+    region: Regions[2],
     neighbors: [7, 9, 11, 15, 20],
   },
   11: {
@@ -97,7 +97,7 @@ export const Prefectures = {
     short: '埼玉',
     kana: 'サイタマケン',
     en: 'saitama',
-    area: Areas[2],
+    region: Regions[2],
     neighbors: [8, 9, 10, 12, 13, 19, 20],
   },
   12: {
@@ -106,7 +106,7 @@ export const Prefectures = {
     short: '千葉',
     kana: 'チバケン',
     en: 'chiba',
-    area: Areas[2],
+    region: Regions[2],
     neighbors: [9, 11, 13],
   },
   13: {
@@ -115,7 +115,7 @@ export const Prefectures = {
     short: '東京',
     kana: 'トウキョウト',
     en: 'tokyo',
-    area: Areas[2],
+    region: Regions[2],
     neighbors: [11, 12, 14, 19],
   },
   14: {
@@ -124,7 +124,7 @@ export const Prefectures = {
     short: '神奈川',
     kana: 'カナガワケン',
     en: 'kanagawa',
-    area: Areas[2],
+    region: Regions[2],
     neighbors: [13, 19, 22],
   },
   15: {
@@ -133,7 +133,7 @@ export const Prefectures = {
     short: '新潟',
     kana: 'ニイガタケン',
     en: 'niigata',
-    area: Areas[3],
+    region: Regions[3],
     neighbors: [6, 7, 10, 16, 20],
   },
   16: {
@@ -142,7 +142,7 @@ export const Prefectures = {
     short: '富山',
     kana: 'トヤマケン',
     en: 'toyama',
-    area: Areas[3],
+    region: Regions[3],
     neighbors: [15, 17, 20, 21],
   },
   17: {
@@ -151,7 +151,7 @@ export const Prefectures = {
     short: '石川',
     kana: 'イシカワケン',
     en: 'ishikawa',
-    area: Areas[3],
+    region: Regions[3],
     neighbors: [16, 18, 21],
   },
   18: {
@@ -160,7 +160,7 @@ export const Prefectures = {
     short: '福井',
     kana: 'フクイケン',
     en: 'fukui',
-    area: Areas[3],
+    region: Regions[3],
     neighbors: [17, 21, 25, 26],
   },
   19: {
@@ -169,7 +169,7 @@ export const Prefectures = {
     short: '山梨',
     kana: 'ヤマナシケン',
     en: 'yamanashi',
-    area: Areas[3],
+    region: Regions[3],
     neighbors: [11, 13, 14, 20, 22],
   },
   20: {
@@ -178,7 +178,7 @@ export const Prefectures = {
     short: '長野',
     kana: 'ナガノケン',
     en: 'nagano',
-    area: Areas[3],
+    region: Regions[3],
     neighbors: [10, 11, 15, 16, 19, 21, 22, 23],
   },
   21: {
@@ -187,7 +187,7 @@ export const Prefectures = {
     short: '岐阜',
     kana: 'ギフケン',
     en: 'gifu',
-    area: Areas[3],
+    region: Regions[3],
     neighbors: [16, 17, 18, 20, 23, 24, 25],
   },
   22: {
@@ -196,7 +196,7 @@ export const Prefectures = {
     short: '静岡',
     kana: 'シズオカケン',
     en: 'shizuoka',
-    area: Areas[3],
+    region: Regions[3],
     neighbors: [14, 19, 20, 23],
   },
   23: {
@@ -205,7 +205,7 @@ export const Prefectures = {
     short: '愛知',
     kana: 'アイチケン',
     en: 'aichi',
-    area: Areas[3],
+    region: Regions[3],
     neighbors: [20, 21, 22, 24],
   },
   24: {
@@ -214,7 +214,7 @@ export const Prefectures = {
     short: '三重',
     kana: 'ミエケン',
     en: 'mie',
-    area: Areas[4],
+    region: Regions[4],
     neighbors: [21, 23, 24, 25, 26, 29, 30],
   },
   25: {
@@ -223,7 +223,7 @@ export const Prefectures = {
     short: '滋賀',
     kana: 'シガケン',
     en: 'shiga',
-    area: Areas[4],
+    region: Regions[4],
     neighbors: [18, 21, 24, 26],
   },
   26: {
@@ -232,7 +232,7 @@ export const Prefectures = {
     short: '京都',
     kana: 'キョウトフ',
     en: 'kyoto',
-    area: Areas[4],
+    region: Regions[4],
     neighbors: [18, 24, 25, 27, 28, 29],
   },
   27: {
@@ -241,7 +241,7 @@ export const Prefectures = {
     short: '大阪',
     kana: 'オオサカフ',
     en: 'osaka',
-    area: Areas[4],
+    region: Regions[4],
     neighbors: [26, 28, 29, 30],
   },
   28: {
@@ -250,7 +250,7 @@ export const Prefectures = {
     short: '兵庫',
     kana: 'ヒョウゴケン',
     en: 'hyogo',
-    area: Areas[4],
+    region: Regions[4],
     neighbors: [26, 27, 31, 33, 36],
   },
   29: {
@@ -259,7 +259,7 @@ export const Prefectures = {
     short: '奈良',
     kana: 'ナラケン',
     en: 'nara',
-    area: Areas[4],
+    region: Regions[4],
     neighbors: [24, 26, 27, 30],
   },
   30: {
@@ -268,7 +268,7 @@ export const Prefectures = {
     short: '和歌山',
     kana: 'ワカヤマケン',
     en: 'wakayama',
-    area: Areas[4],
+    region: Regions[4],
     neighbors: [24, 27, 29],
   },
   31: {
@@ -277,7 +277,7 @@ export const Prefectures = {
     short: '鳥取',
     kana: 'トットリケン',
     en: 'tottori',
-    area: Areas[5],
+    region: Regions[5],
     neighbors: [28, 32, 33, 34],
   },
   32: {
@@ -286,7 +286,7 @@ export const Prefectures = {
     short: '島根',
     kana: 'シマネケン',
     en: 'shimane',
-    area: Areas[5],
+    region: Regions[5],
     neighbors: [31, 34, 35],
   },
   33: {
@@ -295,7 +295,7 @@ export const Prefectures = {
     short: '岡山',
     kana: 'オカヤマケン',
     en: 'okayama',
-    area: Areas[5],
+    region: Regions[5],
     neighbors: [28, 31, 34, 37],
   },
   34: {
@@ -304,7 +304,7 @@ export const Prefectures = {
     short: '広島',
     kana: 'ヒロシマケン',
     en: 'hiroshima',
-    area: Areas[5],
+    region: Regions[5],
     neighbors: [31, 32, 33, 35, 38],
   },
   35: {
@@ -313,7 +313,7 @@ export const Prefectures = {
     short: '山口',
     kana: 'ヤマグチケン',
     en: 'yamaguchi',
-    area: Areas[5],
+    region: Regions[5],
     neighbors: [32, 34, 40],
   },
   36: {
@@ -322,7 +322,7 @@ export const Prefectures = {
     short: '徳島',
     kana: 'トクシマケン',
     en: 'tokushima',
-    area: Areas[5],
+    region: Regions[5],
     neighbors: [28, 37, 38, 39],
   },
   37: {
@@ -331,7 +331,7 @@ export const Prefectures = {
     short: '香川',
     kana: 'カガワケン',
     en: 'kagawa',
-    area: Areas[5],
+    region: Regions[5],
     neighbors: [33, 36, 38],
   },
   38: {
@@ -340,7 +340,7 @@ export const Prefectures = {
     short: '愛媛',
     kana: 'エヒメケン',
     en: 'ehime',
-    area: Areas[5],
+    region: Regions[5],
     neighbors: [34, 36, 37, 39],
   },
   39: {
@@ -349,7 +349,7 @@ export const Prefectures = {
     short: '高知',
     kana: 'コウチケン',
     en: 'kochi',
-    area: Areas[5],
+    region: Regions[5],
     neighbors: [36, 38],
   },
   40: {
@@ -358,7 +358,7 @@ export const Prefectures = {
     short: '福岡',
     kana: 'フクオカケン',
     en: 'fukuoka',
-    area: Areas[6],
+    region: Regions[6],
     neighbors: [35, 41, 43, 44],
   },
   41: {
@@ -367,7 +367,7 @@ export const Prefectures = {
     short: '佐賀',
     kana: 'サガケン',
     en: 'saga',
-    area: Areas[6],
+    region: Regions[6],
     neighbors: [40, 42],
   },
   42: {
@@ -376,7 +376,7 @@ export const Prefectures = {
     short: '長崎',
     kana: 'ナガサキケン',
     en: 'nagasaki',
-    area: Areas[6],
+    region: Regions[6],
     neighbors: [41],
   },
   43: {
@@ -385,7 +385,7 @@ export const Prefectures = {
     short: '熊本',
     kana: 'クマモトケン',
     en: 'kumamoto',
-    area: Areas[6],
+    region: Regions[6],
     neighbors: [40, 44, 45, 46],
   },
   44: {
@@ -394,7 +394,7 @@ export const Prefectures = {
     short: '大分',
     kana: 'オオイタケン',
     en: 'oita',
-    area: Areas[6],
+    region: Regions[6],
     neighbors: [40, 43, 45],
   },
   45: {
@@ -403,7 +403,7 @@ export const Prefectures = {
     short: '宮崎',
     kana: 'ミヤザキケン',
     en: 'miyazaki',
-    area: Areas[6],
+    region: Regions[6],
     neighbors: [43, 44, 46],
   },
   46: {
@@ -412,7 +412,7 @@ export const Prefectures = {
     short: '鹿児島',
     kana: 'カゴシマケン',
     en: 'kagoshima',
-    area: Areas[6],
+    region: Regions[6],
     neighbors: [43, 45, 47],
   },
   47: {
@@ -421,7 +421,7 @@ export const Prefectures = {
     short: '沖縄',
     kana: 'オキナワケン',
     en: 'okinawa',
-    area: Areas[6],
+    region: Regions[6],
     neighbors: [46],
   },
 } as const;

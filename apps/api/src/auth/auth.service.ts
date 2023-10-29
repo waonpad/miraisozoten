@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { UserResponse, JwtDecodedUser } from 'schema/dist/user';
+import { InjectionToken } from 'src/config/environments/constants/injection-token.enum';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(@Inject(InjectionToken.PRISMA_SERVICE) private readonly prisma: PrismaService) {}
 
   async login(user: JwtDecodedUser): Promise<UserResponse> {
     const userRecord = await this.prisma.user.upsert({

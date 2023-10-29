@@ -1,35 +1,62 @@
-import { Prefecture } from 'prefecture/dist';
+import { Prefecture } from 'database';
+import { PrefectureStatsConf, PrefectureStatsName } from 'schema/dist/prefecture';
 import { Button } from 'ui/components/ui/button';
 
 import { usePrefectureStats } from '../../api/get-prefecture-stats';
-import { PrefectureStat } from '../../config/game';
+import { PickCount } from '../../config/game';
 import { useGame } from '../../hooks/use-game';
 
 export const GameSelectFactor = () => {
-  const game = useGame();
+  const { game, changeScreenNext, setTurnAct } = useGame();
 
-  // TODO: 倒した相手の要素も表示する (どう吸収するの？)
-  // TODO: 既に取得している要素もある
+  if (!game) throw new Error('game is not found');
+
+  // 都道府県のデータを取得
   const prefectureStatsQuery = usePrefectureStats({
-    id: game.data.prefecture?.id as Prefecture['id'],
-    hideData: game.data.hideData,
+    id: game?.prefecture?.id as Prefecture['id'],
+    config: {
+      // hideDataがtrueの場合データを取得する必要がない
+      enabled: game?.hideData === false,
+    },
   });
 
-  // TODO: easyなら3つ、normalなら4つ、hardなら6つ、ランダムで抽出する
-  const factors = Object.values(prefectureStatsQuery.data ?? {});
+  // データを隠す目的はセキュリティのためではないため、JSで簡易的に隠してしまう
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const prefectureStats = game?.hideData ? null : prefectureStatsQuery.data;
 
-  const handleClickChangeState = (factor: PrefectureStat) => {
-    game.turn.setFactor(factor);
+  // データを表示しなくてもどんなデータがあるかは必要なので、
+  // 別で定義したオブジェクトに対して実際のデータをマッピングする
+  // データを表示しない場合はnullのままで問題ない
+  const factors = Object.values(PrefectureStatsConf)
+    .map((conf) => {
+      const stats = prefectureStats?.[conf.camel];
 
-    game.changeStateNext();
+      return {
+        name: conf.name,
+        label: conf.label,
+        value: stats,
+        unit: conf.unit,
+      };
+    })
+    // シャッフルしてから必要な数だけ取得
+    .sort(() => Math.random() - 0.5)
+    .slice(0, PickCount[game.difficulty]);
+
+  const handleClcikSelectFactor = (factorName: PrefectureStatsName) => {
+    setTurnAct((prev) => ({
+      ...prev,
+      factorName,
+    }));
+
+    changeScreenNext();
   };
 
   return (
     <div>
       {factors.map((factor, index) => (
-        <Button key={index} onClick={() => handleClickChangeState(factor)}>
-          {factor.name}
-          {!game.data.hideData && (
+        <Button key={index} onClick={() => handleClcikSelectFactor(factor.name)}>
+          {factor.label}
+          {!game.hideData && (
             <div>
               {factor.value}
               {factor.unit}

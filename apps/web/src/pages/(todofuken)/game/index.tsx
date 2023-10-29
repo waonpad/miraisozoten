@@ -1,8 +1,8 @@
-import { GameScreens } from '../_/config/game';
+import { GameScreen } from '../_/config/game';
 import { useGame } from '../_/hooks/use-game';
 
 export default function Page() {
-  const game = useGame();
+  const { screen } = useGame();
 
-  return GameScreens[game.data.state];
+  return GameScreen[screen];
 }

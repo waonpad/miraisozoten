@@ -3,7 +3,7 @@ import { z } from 'nestjs-zod/z';
 
 import type { Prisma, User } from 'database';
 
-const UserShema = z.object({
+export const UserShema = z.object({
   id: z.string(),
   name: z.string(),
   email: z.string(),

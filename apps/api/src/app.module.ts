@@ -9,12 +9,22 @@ import { EnvModule } from './config/environments/env.module';
 import { ZodValidationExceptionFilter } from './filters/zod-validation-exception.filter';
 import { LoggerInterceptor } from './interceptors/logging.inspector';
 import { LoggerModule } from './logger/logger.module';
+import { PrefectureModule } from './prefecture/prefecture.module';
+import { GameModule } from './todofuken/game/game.module';
 import { UserMiddleware } from './user/user.middleware';
 import { WeaponModule } from './weapon/weapon.module';
 
 @Module({
   //importsは他のModuleでexportされたProviderを自身のModule内で使えるようにする
-  imports: [WeaponModule, LoggerModule, EnvModule, AuthModule, RavenModule],
+  imports: [
+    WeaponModule,
+    LoggerModule,
+    EnvModule,
+    AuthModule,
+    RavenModule,
+    PrefectureModule,
+    GameModule,
+  ],
   //インスタンス化して、Controllerが何かを定義している
   controllers: [AppController],
   //インスタンス化して、このModule内で使用する可能性のあるproviderを定義している

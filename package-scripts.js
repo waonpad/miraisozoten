@@ -30,7 +30,7 @@ module.exports = {
       deps: `yarn install --frozen-lockfile && yarn husky install`,
       docker: `docker compose up -d`,
       packages: `nps prepare.database prepare.schema prepare.prefecture`,
-      database: `docker compose up -d && nps prisma.generate prisma.migrate.dev prisma.build`,
+      database: `docker compose up -d && nps prisma.generate prisma.migrate.dev prisma.seed prisma.build`,
       schema: `cd ${schemaPath} && yarn build`,
       prefecture: `cd ${prefecturePath} && yarn build`,
       apps: ``,
@@ -62,6 +62,7 @@ module.exports = {
       migrate: {
         dev: `cd ${databasePath} && npx prisma migrate dev`,
       },
+      seed: `cd ${databasePath} && yarn seed`,
       build: {
         default: `cd ${databasePath} && yarn build`,
       },

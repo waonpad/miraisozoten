@@ -1,4 +1,4 @@
-export const Areas = {
+export const Regions = {
   1: {
     id: 1,
     name: '北海道・東北',
