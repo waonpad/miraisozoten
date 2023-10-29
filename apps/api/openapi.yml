@@ -372,6 +372,1544 @@ paths:
         '200':
           description: ''
       tags: *ref_1
+  /prefectures/-schema-:
+    get:
+      operationId: PrefectureController_openApiSchema
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  name:
+                    type: string
+                  short:
+                    type: string
+                  kana:
+                    type: string
+                  en:
+                    type: string
+                  regionId:
+                    type: number
+                  region:
+                    type: object
+                    properties:
+                      id:
+                        type: number
+                      name:
+                        type: string
+                    required:
+                      - id
+                      - name
+                required:
+                  - id
+                  - name
+                  - short
+                  - kana
+                  - en
+                  - regionId
+                  - region
+          description: ''
+      tags: &ref_2
+        - prefectures
+  /prefectures:
+    get:
+      operationId: PrefectureController_getAllPrefecture
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                    name:
+                      type: string
+                    short:
+                      type: string
+                    kana:
+                      type: string
+                    en:
+                      type: string
+                    regionId:
+                      type: number
+                    region:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                        name:
+                          type: string
+                      required:
+                        - id
+                        - name
+                  required:
+                    - id
+                    - name
+                    - short
+                    - kana
+                    - en
+                    - regionId
+                    - region
+          description: ''
+      tags: *ref_2
+  /prefectures/{id}:
+    get:
+      operationId: PrefectureController_getPrefecture
+      parameters:
+        - name: id
+          required: true
+          in: path
+          example: '1'
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  name:
+                    type: string
+                  short:
+                    type: string
+                  kana:
+                    type: string
+                  en:
+                    type: string
+                  regionId:
+                    type: number
+                  region:
+                    type: object
+                    properties:
+                      id:
+                        type: number
+                      name:
+                        type: string
+                    required:
+                      - id
+                      - name
+                required:
+                  - id
+                  - name
+                  - short
+                  - kana
+                  - en
+                  - regionId
+                  - region
+          description: ''
+      tags: *ref_2
+  /prefectures/{id}/stats:
+    get:
+      operationId: PrefectureController_getPrefectureStats
+      parameters:
+        - name: id
+          required: true
+          in: path
+          example: '1'
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  population:
+                    type: number
+                  area:
+                    type: number
+                  prefectureId:
+                    type: number
+                required:
+                  - id
+                  - population
+                  - area
+                  - prefectureId
+          description: ''
+      tags: *ref_2
+  /prefectures/{id}/neighbors:
+    get:
+      operationId: PrefectureController_getPrefectureNeighbors
+      parameters:
+        - name: id
+          required: true
+          in: path
+          example: '1'
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                    name:
+                      type: string
+                    short:
+                      type: string
+                    kana:
+                      type: string
+                    en:
+                      type: string
+                    regionId:
+                      type: number
+                    region:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                        name:
+                          type: string
+                      required:
+                        - id
+                        - name
+                  required:
+                    - id
+                    - name
+                    - short
+                    - kana
+                    - en
+                    - regionId
+                    - region
+          description: ''
+      tags: *ref_2
+  /games/-schema-:
+    get:
+      operationId: GameController_openApiSchema
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  state:
+                    type: string
+                    enum:
+                      - STARTING
+                      - PREPARING
+                      - ACTING
+                      - FINISHED
+                  difficulty:
+                    type: string
+                    enum:
+                      - EASY
+                      - NORMAL
+                      - HIDDEN_NORMAL
+                      - HARD
+                  mode:
+                    type: string
+                    enum:
+                      - NATIONWIDE
+                      - REGIONAL
+                  prefectureId:
+                    type: number
+                  userId:
+                    type: string
+                  createdAt:
+                    type: string
+                    format: date-time
+                  updatedAt:
+                    type: string
+                    format: date-time
+                  prefecture:
+                    type: object
+                    properties:
+                      id:
+                        type: number
+                      name:
+                        type: string
+                      short:
+                        type: string
+                      kana:
+                        type: string
+                      en:
+                        type: string
+                      regionId:
+                        type: number
+                      region:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                          name:
+                            type: string
+                        required:
+                          - id
+                          - name
+                    required:
+                      - id
+                      - name
+                      - short
+                      - kana
+                      - en
+                      - regionId
+                      - region
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      email:
+                        type: string
+                      emailVerified:
+                        type: boolean
+                      image:
+                        type: string
+                      createdAt:
+                        type: string
+                        format: date-time
+                      updatedAt:
+                        type: string
+                        format: date-time
+                    required:
+                      - id
+                      - name
+                      - email
+                      - emailVerified
+                      - image
+                      - createdAt
+                      - updatedAt
+                  logs:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                        gameId:
+                          type: string
+                          format: uuid
+                        highLow:
+                          type: string
+                          enum:
+                            - HIGH
+                            - LOW
+                        factorName:
+                          type: string
+                          enum:
+                            - POPULATION
+                            - AREA
+                        opponentId:
+                          type: number
+                        result:
+                          type: string
+                          enum:
+                            - WIN
+                            - DRAW
+                            - LOSE
+                        createdAt:
+                          type: string
+                          format: date-time
+                        updatedAt:
+                          type: string
+                          format: date-time
+                        opponent:
+                          type: object
+                          properties:
+                            id:
+                              type: number
+                            name:
+                              type: string
+                            short:
+                              type: string
+                            kana:
+                              type: string
+                            en:
+                              type: string
+                            regionId:
+                              type: number
+                            region:
+                              type: object
+                              properties:
+                                id:
+                                  type: number
+                                name:
+                                  type: string
+                              required:
+                                - id
+                                - name
+                          required:
+                            - id
+                            - name
+                            - short
+                            - kana
+                            - en
+                            - regionId
+                            - region
+                      required:
+                        - id
+                        - gameId
+                        - highLow
+                        - factorName
+                        - opponentId
+                        - result
+                        - createdAt
+                        - updatedAt
+                        - opponent
+                  hideData:
+                    type: boolean
+                  conquereds:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                        name:
+                          type: string
+                        short:
+                          type: string
+                        kana:
+                          type: string
+                        en:
+                          type: string
+                        regionId:
+                          type: number
+                      required:
+                        - id
+                        - name
+                        - short
+                        - kana
+                        - en
+                        - regionId
+                  neighbors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                        name:
+                          type: string
+                        short:
+                          type: string
+                        kana:
+                          type: string
+                        en:
+                          type: string
+                        regionId:
+                          type: number
+                      required:
+                        - id
+                        - name
+                        - short
+                        - kana
+                        - en
+                        - regionId
+                required:
+                  - id
+                  - state
+                  - difficulty
+                  - mode
+                  - prefectureId
+                  - userId
+                  - createdAt
+                  - updatedAt
+                  - prefecture
+                  - user
+                  - logs
+                  - hideData
+                  - conquereds
+                  - neighbors
+          description: ''
+      tags: &ref_3
+        - games
+  /games/{id}:
+    get:
+      operationId: GameController_getGame
+      parameters:
+        - name: id
+          required: true
+          in: path
+          example: uuid-uuid-uuid-uuid
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  state:
+                    type: string
+                    enum:
+                      - STARTING
+                      - PREPARING
+                      - ACTING
+                      - FINISHED
+                  difficulty:
+                    type: string
+                    enum:
+                      - EASY
+                      - NORMAL
+                      - HIDDEN_NORMAL
+                      - HARD
+                  mode:
+                    type: string
+                    enum:
+                      - NATIONWIDE
+                      - REGIONAL
+                  prefectureId:
+                    type: number
+                  userId:
+                    type: string
+                  createdAt:
+                    type: string
+                    format: date-time
+                  updatedAt:
+                    type: string
+                    format: date-time
+                  prefecture:
+                    type: object
+                    properties:
+                      id:
+                        type: number
+                      name:
+                        type: string
+                      short:
+                        type: string
+                      kana:
+                        type: string
+                      en:
+                        type: string
+                      regionId:
+                        type: number
+                      region:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                          name:
+                            type: string
+                        required:
+                          - id
+                          - name
+                    required:
+                      - id
+                      - name
+                      - short
+                      - kana
+                      - en
+                      - regionId
+                      - region
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      email:
+                        type: string
+                      emailVerified:
+                        type: boolean
+                      image:
+                        type: string
+                      createdAt:
+                        type: string
+                        format: date-time
+                      updatedAt:
+                        type: string
+                        format: date-time
+                    required:
+                      - id
+                      - name
+                      - email
+                      - emailVerified
+                      - image
+                      - createdAt
+                      - updatedAt
+                  logs:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                        gameId:
+                          type: string
+                          format: uuid
+                        highLow:
+                          type: string
+                          enum:
+                            - HIGH
+                            - LOW
+                        factorName:
+                          type: string
+                          enum:
+                            - POPULATION
+                            - AREA
+                        opponentId:
+                          type: number
+                        result:
+                          type: string
+                          enum:
+                            - WIN
+                            - DRAW
+                            - LOSE
+                        createdAt:
+                          type: string
+                          format: date-time
+                        updatedAt:
+                          type: string
+                          format: date-time
+                        opponent:
+                          type: object
+                          properties:
+                            id:
+                              type: number
+                            name:
+                              type: string
+                            short:
+                              type: string
+                            kana:
+                              type: string
+                            en:
+                              type: string
+                            regionId:
+                              type: number
+                            region:
+                              type: object
+                              properties:
+                                id:
+                                  type: number
+                                name:
+                                  type: string
+                              required:
+                                - id
+                                - name
+                          required:
+                            - id
+                            - name
+                            - short
+                            - kana
+                            - en
+                            - regionId
+                            - region
+                      required:
+                        - id
+                        - gameId
+                        - highLow
+                        - factorName
+                        - opponentId
+                        - result
+                        - createdAt
+                        - updatedAt
+                        - opponent
+                  hideData:
+                    type: boolean
+                  conquereds:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                        name:
+                          type: string
+                        short:
+                          type: string
+                        kana:
+                          type: string
+                        en:
+                          type: string
+                        regionId:
+                          type: number
+                      required:
+                        - id
+                        - name
+                        - short
+                        - kana
+                        - en
+                        - regionId
+                  neighbors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                        name:
+                          type: string
+                        short:
+                          type: string
+                        kana:
+                          type: string
+                        en:
+                          type: string
+                        regionId:
+                          type: number
+                      required:
+                        - id
+                        - name
+                        - short
+                        - kana
+                        - en
+                        - regionId
+                required:
+                  - id
+                  - state
+                  - difficulty
+                  - mode
+                  - prefectureId
+                  - userId
+                  - createdAt
+                  - updatedAt
+                  - prefecture
+                  - user
+                  - logs
+                  - hideData
+                  - conquereds
+                  - neighbors
+          description: ''
+      tags: *ref_3
+    patch:
+      operationId: GameController_update
+      parameters:
+        - name: id
+          required: true
+          in: path
+          example: uuid-uuid-uuid-uuid
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                state:
+                  type: string
+                  enum:
+                    - STARTING
+                    - PREPARING
+                    - ACTING
+                    - FINISHED
+              required:
+                - state
+      responses:
+        '200':
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  state:
+                    type: string
+                    enum:
+                      - STARTING
+                      - PREPARING
+                      - ACTING
+                      - FINISHED
+                  difficulty:
+                    type: string
+                    enum:
+                      - EASY
+                      - NORMAL
+                      - HIDDEN_NORMAL
+                      - HARD
+                  mode:
+                    type: string
+                    enum:
+                      - NATIONWIDE
+                      - REGIONAL
+                  prefectureId:
+                    type: number
+                  userId:
+                    type: string
+                  createdAt:
+                    type: string
+                    format: date-time
+                  updatedAt:
+                    type: string
+                    format: date-time
+                  prefecture:
+                    type: object
+                    properties:
+                      id:
+                        type: number
+                      name:
+                        type: string
+                      short:
+                        type: string
+                      kana:
+                        type: string
+                      en:
+                        type: string
+                      regionId:
+                        type: number
+                      region:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                          name:
+                            type: string
+                        required:
+                          - id
+                          - name
+                    required:
+                      - id
+                      - name
+                      - short
+                      - kana
+                      - en
+                      - regionId
+                      - region
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      email:
+                        type: string
+                      emailVerified:
+                        type: boolean
+                      image:
+                        type: string
+                      createdAt:
+                        type: string
+                        format: date-time
+                      updatedAt:
+                        type: string
+                        format: date-time
+                    required:
+                      - id
+                      - name
+                      - email
+                      - emailVerified
+                      - image
+                      - createdAt
+                      - updatedAt
+                  logs:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                        gameId:
+                          type: string
+                          format: uuid
+                        highLow:
+                          type: string
+                          enum:
+                            - HIGH
+                            - LOW
+                        factorName:
+                          type: string
+                          enum:
+                            - POPULATION
+                            - AREA
+                        opponentId:
+                          type: number
+                        result:
+                          type: string
+                          enum:
+                            - WIN
+                            - DRAW
+                            - LOSE
+                        createdAt:
+                          type: string
+                          format: date-time
+                        updatedAt:
+                          type: string
+                          format: date-time
+                        opponent:
+                          type: object
+                          properties:
+                            id:
+                              type: number
+                            name:
+                              type: string
+                            short:
+                              type: string
+                            kana:
+                              type: string
+                            en:
+                              type: string
+                            regionId:
+                              type: number
+                            region:
+                              type: object
+                              properties:
+                                id:
+                                  type: number
+                                name:
+                                  type: string
+                              required:
+                                - id
+                                - name
+                          required:
+                            - id
+                            - name
+                            - short
+                            - kana
+                            - en
+                            - regionId
+                            - region
+                      required:
+                        - id
+                        - gameId
+                        - highLow
+                        - factorName
+                        - opponentId
+                        - result
+                        - createdAt
+                        - updatedAt
+                        - opponent
+                  hideData:
+                    type: boolean
+                  conquereds:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                        name:
+                          type: string
+                        short:
+                          type: string
+                        kana:
+                          type: string
+                        en:
+                          type: string
+                        regionId:
+                          type: number
+                      required:
+                        - id
+                        - name
+                        - short
+                        - kana
+                        - en
+                        - regionId
+                  neighbors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                        name:
+                          type: string
+                        short:
+                          type: string
+                        kana:
+                          type: string
+                        en:
+                          type: string
+                        regionId:
+                          type: number
+                      required:
+                        - id
+                        - name
+                        - short
+                        - kana
+                        - en
+                        - regionId
+                required:
+                  - id
+                  - state
+                  - difficulty
+                  - mode
+                  - prefectureId
+                  - userId
+                  - createdAt
+                  - updatedAt
+                  - prefecture
+                  - user
+                  - logs
+                  - hideData
+                  - conquereds
+                  - neighbors
+          description: ''
+      tags: *ref_3
+  /games:
+    post:
+      operationId: GameController_create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                difficulty:
+                  type: string
+                  enum:
+                    - EASY
+                    - NORMAL
+                    - HIDDEN_NORMAL
+                    - HARD
+                mode:
+                  type: string
+                  enum:
+                    - NATIONWIDE
+                    - REGIONAL
+                prefectureId:
+                  type: number
+              required:
+                - difficulty
+                - mode
+                - prefectureId
+      responses:
+        '201':
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  state:
+                    type: string
+                    enum:
+                      - STARTING
+                      - PREPARING
+                      - ACTING
+                      - FINISHED
+                  difficulty:
+                    type: string
+                    enum:
+                      - EASY
+                      - NORMAL
+                      - HIDDEN_NORMAL
+                      - HARD
+                  mode:
+                    type: string
+                    enum:
+                      - NATIONWIDE
+                      - REGIONAL
+                  prefectureId:
+                    type: number
+                  userId:
+                    type: string
+                  createdAt:
+                    type: string
+                    format: date-time
+                  updatedAt:
+                    type: string
+                    format: date-time
+                  prefecture:
+                    type: object
+                    properties:
+                      id:
+                        type: number
+                      name:
+                        type: string
+                      short:
+                        type: string
+                      kana:
+                        type: string
+                      en:
+                        type: string
+                      regionId:
+                        type: number
+                      region:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                          name:
+                            type: string
+                        required:
+                          - id
+                          - name
+                    required:
+                      - id
+                      - name
+                      - short
+                      - kana
+                      - en
+                      - regionId
+                      - region
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      email:
+                        type: string
+                      emailVerified:
+                        type: boolean
+                      image:
+                        type: string
+                      createdAt:
+                        type: string
+                        format: date-time
+                      updatedAt:
+                        type: string
+                        format: date-time
+                    required:
+                      - id
+                      - name
+                      - email
+                      - emailVerified
+                      - image
+                      - createdAt
+                      - updatedAt
+                  logs:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                        gameId:
+                          type: string
+                          format: uuid
+                        highLow:
+                          type: string
+                          enum:
+                            - HIGH
+                            - LOW
+                        factorName:
+                          type: string
+                          enum:
+                            - POPULATION
+                            - AREA
+                        opponentId:
+                          type: number
+                        result:
+                          type: string
+                          enum:
+                            - WIN
+                            - DRAW
+                            - LOSE
+                        createdAt:
+                          type: string
+                          format: date-time
+                        updatedAt:
+                          type: string
+                          format: date-time
+                        opponent:
+                          type: object
+                          properties:
+                            id:
+                              type: number
+                            name:
+                              type: string
+                            short:
+                              type: string
+                            kana:
+                              type: string
+                            en:
+                              type: string
+                            regionId:
+                              type: number
+                            region:
+                              type: object
+                              properties:
+                                id:
+                                  type: number
+                                name:
+                                  type: string
+                              required:
+                                - id
+                                - name
+                          required:
+                            - id
+                            - name
+                            - short
+                            - kana
+                            - en
+                            - regionId
+                            - region
+                      required:
+                        - id
+                        - gameId
+                        - highLow
+                        - factorName
+                        - opponentId
+                        - result
+                        - createdAt
+                        - updatedAt
+                        - opponent
+                  hideData:
+                    type: boolean
+                  conquereds:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                        name:
+                          type: string
+                        short:
+                          type: string
+                        kana:
+                          type: string
+                        en:
+                          type: string
+                        regionId:
+                          type: number
+                      required:
+                        - id
+                        - name
+                        - short
+                        - kana
+                        - en
+                        - regionId
+                  neighbors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                        name:
+                          type: string
+                        short:
+                          type: string
+                        kana:
+                          type: string
+                        en:
+                          type: string
+                        regionId:
+                          type: number
+                      required:
+                        - id
+                        - name
+                        - short
+                        - kana
+                        - en
+                        - regionId
+                required:
+                  - id
+                  - state
+                  - difficulty
+                  - mode
+                  - prefectureId
+                  - userId
+                  - createdAt
+                  - updatedAt
+                  - prefecture
+                  - user
+                  - logs
+                  - hideData
+                  - conquereds
+                  - neighbors
+          description: ''
+      tags: *ref_3
+  /games/{id}/logging/turn-act:
+    post:
+      operationId: GameController_loggingTurnAct
+      parameters:
+        - name: id
+          required: true
+          in: path
+          example: uuid-uuid-uuid-uuid
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                highLow:
+                  type: string
+                  enum:
+                    - HIGH
+                    - LOW
+                factorName:
+                  type: string
+                  enum:
+                    - POPULATION
+                    - AREA
+                opponentId:
+                  type: number
+              required:
+                - highLow
+                - factorName
+                - opponentId
+      responses:
+        '200':
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  state:
+                    type: string
+                    enum:
+                      - STARTING
+                      - PREPARING
+                      - ACTING
+                      - FINISHED
+                  difficulty:
+                    type: string
+                    enum:
+                      - EASY
+                      - NORMAL
+                      - HIDDEN_NORMAL
+                      - HARD
+                  mode:
+                    type: string
+                    enum:
+                      - NATIONWIDE
+                      - REGIONAL
+                  prefectureId:
+                    type: number
+                  userId:
+                    type: string
+                  createdAt:
+                    type: string
+                    format: date-time
+                  updatedAt:
+                    type: string
+                    format: date-time
+                  prefecture:
+                    type: object
+                    properties:
+                      id:
+                        type: number
+                      name:
+                        type: string
+                      short:
+                        type: string
+                      kana:
+                        type: string
+                      en:
+                        type: string
+                      regionId:
+                        type: number
+                      region:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                          name:
+                            type: string
+                        required:
+                          - id
+                          - name
+                    required:
+                      - id
+                      - name
+                      - short
+                      - kana
+                      - en
+                      - regionId
+                      - region
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      email:
+                        type: string
+                      emailVerified:
+                        type: boolean
+                      image:
+                        type: string
+                      createdAt:
+                        type: string
+                        format: date-time
+                      updatedAt:
+                        type: string
+                        format: date-time
+                    required:
+                      - id
+                      - name
+                      - email
+                      - emailVerified
+                      - image
+                      - createdAt
+                      - updatedAt
+                  logs:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                        gameId:
+                          type: string
+                          format: uuid
+                        highLow:
+                          type: string
+                          enum:
+                            - HIGH
+                            - LOW
+                        factorName:
+                          type: string
+                          enum:
+                            - POPULATION
+                            - AREA
+                        opponentId:
+                          type: number
+                        result:
+                          type: string
+                          enum:
+                            - WIN
+                            - DRAW
+                            - LOSE
+                        createdAt:
+                          type: string
+                          format: date-time
+                        updatedAt:
+                          type: string
+                          format: date-time
+                        opponent:
+                          type: object
+                          properties:
+                            id:
+                              type: number
+                            name:
+                              type: string
+                            short:
+                              type: string
+                            kana:
+                              type: string
+                            en:
+                              type: string
+                            regionId:
+                              type: number
+                            region:
+                              type: object
+                              properties:
+                                id:
+                                  type: number
+                                name:
+                                  type: string
+                              required:
+                                - id
+                                - name
+                          required:
+                            - id
+                            - name
+                            - short
+                            - kana
+                            - en
+                            - regionId
+                            - region
+                      required:
+                        - id
+                        - gameId
+                        - highLow
+                        - factorName
+                        - opponentId
+                        - result
+                        - createdAt
+                        - updatedAt
+                        - opponent
+                  hideData:
+                    type: boolean
+                  conquereds:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                        name:
+                          type: string
+                        short:
+                          type: string
+                        kana:
+                          type: string
+                        en:
+                          type: string
+                        regionId:
+                          type: number
+                      required:
+                        - id
+                        - name
+                        - short
+                        - kana
+                        - en
+                        - regionId
+                  neighbors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                        name:
+                          type: string
+                        short:
+                          type: string
+                        kana:
+                          type: string
+                        en:
+                          type: string
+                        regionId:
+                          type: number
+                      required:
+                        - id
+                        - name
+                        - short
+                        - kana
+                        - en
+                        - regionId
+                required:
+                  - id
+                  - state
+                  - difficulty
+                  - mode
+                  - prefectureId
+                  - userId
+                  - createdAt
+                  - updatedAt
+                  - prefecture
+                  - user
+                  - logs
+                  - hideData
+                  - conquereds
+                  - neighbors
+          description: ''
+      tags: *ref_3
 info:
   title: API Doc
   description: API Doc Description
