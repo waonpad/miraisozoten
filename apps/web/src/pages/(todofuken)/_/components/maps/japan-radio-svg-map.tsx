@@ -2,12 +2,12 @@
 import { useEffect } from 'react';
 
 import Japan from '@svg-maps/japan';
-import { Prefecture } from 'prefecture/dist';
+import { Prefecture } from 'database';
 import { SVGMap, SVGMapProps } from 'react-svg-map';
 import 'react-svg-map/lib/index.css';
 
 export type JapanRadioSVGMapProps = Omit<SVGMapProps, 'map'> & {
-  selected?: Prefecture['en'];
+  selected?: Prefecture['en'] | null;
   disabled?: boolean;
 };
 

@@ -1,23 +1,20 @@
+import { GameDifficulty } from 'schema/dist/todofuken/game';
 import { Button } from 'ui/components/ui/button';
 
-import { Game, GameDifficulties } from '../config/game';
+import { useGame } from '../hooks/use-game';
 
-export type GameDifficultySelectProps = {
-  game: Game;
-  handleSelectDifficulty: (gameDifficulty: Game['difficulty']) => void;
-};
+export const GameDifficultySelect = () => {
+  const { gameSettings, setGameSettings } = useGame();
 
-export const GameDifficultySelect = ({
-  game,
-  handleSelectDifficulty,
-}: GameDifficultySelectProps) => {
   return (
     <>
-      {GameDifficulties.map((mode) => (
+      {GameDifficulty.map((mode) => (
         <Button
           key={mode}
-          onClick={() => handleSelectDifficulty(mode)}
-          {...(game.difficulty === mode && { variant: 'destructive' })}
+          onClick={() => {
+            setGameSettings({ ...gameSettings, difficulty: mode });
+          }}
+          {...(gameSettings.difficulty === mode && { variant: 'destructive' })}
         >
           {mode}
         </Button>

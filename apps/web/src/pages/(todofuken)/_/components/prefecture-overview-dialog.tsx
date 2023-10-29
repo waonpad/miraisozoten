@@ -1,13 +1,15 @@
-import { Prefecture, Prefectures } from 'prefecture/dist';
-import { getPrefectureNeighbors } from 'prefecture/dist/utils';
+import { Prefecture } from 'database';
 import { Button } from 'ui/components/ui/button';
 import { Dialog, DialogContent, DialogFooter } from 'ui/components/ui/dialog';
 
+import { usePrefecture } from '../api/get-prefecture';
+import { usePrefectureNeighbors } from '../api/get-prefecture-neighbors';
+
 export type PrefectureOverviewDialogProps = {
-  id: Prefecture['id'] | null;
+  id: Prefecture['id'];
   open: boolean;
   handleOpenChange: (open: boolean) => void;
-  handleSelect: (id: Prefecture['id']) => void;
+  handleSelect: (prefecture: Prefecture) => void;
 };
 
 export const PrefectureOverviewDialog = ({
@@ -16,19 +18,28 @@ export const PrefectureOverviewDialog = ({
   handleOpenChange,
   handleSelect,
 }: PrefectureOverviewDialogProps) => {
-  if (!id) return null;
+  const prefectureQuery = usePrefecture({ id });
 
-  const prefecture = getPrefectureNeighbors([Prefectures[id]])[0];
+  const neighborsQuery = usePrefectureNeighbors({ id });
+
+  const prefecture = prefectureQuery.data;
+
+  const neighbors = neighborsQuery.data;
+
+  // ロードされるまでnullを返す
+  if (!prefecture || !neighbors) {
+    return null;
+  }
 
   return (
     <>
       <Dialog open={open} onOpenChange={handleOpenChange}>
         <DialogContent>
           <div>svgを配置</div>
-          <div>{prefecture.name}</div>
-          <div>{prefecture.area.name}</div>
+          <div>{prefecture?.name}</div>
+          <div>{prefecture?.region?.name}</div>
           <div>隣接</div>
-          <div>{prefecture.neighbors.map((neighbor) => neighbor.name).join(', ')}</div>
+          <div>{(neighbors ?? []).map((neighbor) => neighbor.name).join(', ')}</div>
           <div>基本データ</div>
           <div>基本データを表示</div>
           <div>人口: </div>
@@ -36,7 +47,7 @@ export const PrefectureOverviewDialog = ({
           <DialogFooter>
             <Button
               onClick={() => {
-                handleSelect(id);
+                handleSelect(prefecture);
                 handleOpenChange(false);
               }}
             >

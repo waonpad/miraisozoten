@@ -1,11 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-import { Prefectures } from 'prefecture/dist';
-import { getPrefectureNeighbors } from 'prefecture/dist/utils';
+import { CreateGameInput, CreateGameInputSchema } from 'schema/dist/todofuken/game';
+import { CreateGameLogInput, CreateGameLogInputSchema } from 'schema/dist/todofuken/game/log';
 
+import { COOKIE_NAMES } from '@/constants/cookie-names';
+import { QUERY_KEYS, queryClient } from '@/lib/react-query';
+import { getCookie } from '@/utils/cookie/get-cookie';
+import { removeCookie } from '@/utils/cookie/remove-cookie';
+import { setCookie } from '@/utils/cookie/set-cookie';
 import { createCtx } from '@/utils/create-ctx';
 
-import { Game, GameLog, GameStates } from '../config/game';
+import { useGame as useGameQuery } from '../api/get-game';
+import { useStartGame } from '../api/start-game';
+import { useSubmitGameTurnAct } from '../api/submit-game-turn-act';
+import { GameScreenKey } from '../config/game';
 
 const [createdUseGame, SetGameProvider] = createCtx<ReturnType<typeof useGameCtx>>();
 
@@ -14,175 +22,114 @@ export { SetGameProvider };
 export const useGame = createdUseGame;
 
 export const useGameCtx = () => {
-  const [game, setGame] = useState<Game>({
-    prefecture: null,
-    conqueredPrefectures: [],
-    state: 'lobby',
-    difficulty: null,
-    mode: null,
-    isSettingCompleted: false,
-    turn: {},
-    logs: [],
-    factors: [],
+  const gameIdCookie = getCookie(COOKIE_NAMES.CURRENT_TODOFUKEN_GAME_ID);
+
+  const [gameId, setGameId] = useState<string | null>(gameIdCookie);
+
+  const gameQuery = useGameQuery({
+    id: gameId as string,
+    // ゲームを作成してIDが返ってきたらクエリを有効化する
+    config: { enabled: !!gameId },
   });
 
-  const hideData = ['hiddenNormal', 'hard'].includes(game.difficulty || '');
+  const startGameMutation = useStartGame();
 
-  // prefectureとconqueredPrefecturesの全ての隣接県を取得し、マージする
-  // 同じ県が含まれている場合は、重複を削除する
-  // prefectureとconqueredPrefecturesの県を除外する
-  // モードがareaの場合は、areaがprefectureと同じもの以外を除外する
-  const neighboringPrefectures = [
-    ...(game.prefecture?.neighbors || []),
-    ...game.conqueredPrefectures.flatMap((prefecture) => {
-      return prefecture ? prefecture.neighbors : [];
-    }),
-  ].filter((prefecture, index, array) => {
-    return (
-      (game.mode === 'area'
-        ? prefecture.area.id === game.prefecture?.area.id
-          ? true
-          : false
-        : true) &&
-      array.indexOf(prefecture) === index &&
-      prefecture?.id !== game.prefecture?.id &&
-      !game.conqueredPrefectures.some(
-        (conqueredPrefecture) => conqueredPrefecture?.id === prefecture?.id
-      )
-    );
-  });
+  const submitGameTurnActMutation = useSubmitGameTurnAct();
 
-  // 都道府県の設定
-  const changePrefecture = (id: NonNullable<Game['prefecture']>['id'] | null) => {
-    !id
-      ? setGame((prev) => ({ ...prev, prefecture: null }))
-      : setGame((prev) => ({ ...prev, prefecture: getPrefectureNeighbors([Prefectures[id]])[0] }));
+  // TODO: stateがFINISHEDでcookieから取得したゲームを開いた場合、結果画面に飛ばさないといけない
+  const [screen, setScreen] = useState<GameScreenKey>(!!gameIdCookie ? 'highLow' : 'lobby');
+
+  // ゲーム開始前の設定
+  const [gameSettings, setGameSettings] = useState<Partial<CreateGameInput>>({});
+
+  // ターンのアクション
+  // 毎ターン初期化する
+  const [turnAct, setTurnAct] = useState<Partial<CreateGameLogInput>>({});
+
+  const changeScreen = (screen: GameScreenKey) => {
+    setScreen(screen);
   };
 
-  // ゲームの状態の変更
-  const changeState = (state: Game['state']) => {
-    setGame((prev) => ({ ...prev, state }));
+  const changeScreenNext = () => {
+    setScreen((screen) => GameScreenKey[GameScreenKey.indexOf(screen) + 1]);
   };
 
-  // ゲームの状態を次に進める
-  const changeStateNext = () => {
-    setGame((prev) => ({ ...prev, state: GameStates[GameStates.indexOf(prev.state) + 1] }));
+  // ゲームのstateを変えないといけない！
+  const changeScreenNextTurn = () => {
+    // 初期化
+    setTurnAct({});
+
+    setScreen('highLow');
   };
 
-  /**
-   * そのターンのログを記録して、次のターンに進める
-   */
-  const changeStateNextTurn = () => {
-    turn.logging();
-    turn.init();
+  // ゲームのstateを変えないといけない！
+  const changeScreenResult = () => {
+    // リザルトに行ったらもうゲームに戻ることはないが、一応初期化
+    setTurnAct({});
+    // cookieから削除する
+    removeCookie(COOKIE_NAMES.CURRENT_TODOFUKEN_GAME_ID);
 
-    setGame((prev) => ({ ...prev, state: 'highLow' }));
+    setScreen('result');
   };
 
-  /**
-   * そのターンのログを記録して、結果画面に進める
-   */
-  const changeStateResult = () => {
-    turn.logging();
-    turn.init();
+  // ログインしていない場合どうする？
+  const startGame = async () => {
+    // バリデーション
+    const data = CreateGameInputSchema.parse(gameSettings);
 
-    setGame((prev) => ({ ...prev, state: 'result' }));
+    // ゲームを作成
+    const res = await startGameMutation.mutateAsync({ data });
+
+    if (res) {
+      // ゲームIDを保存して、ゲームを取得するクエリを有効化する
+      setGameId(res.id);
+      // ここで初めてゲームIDが発行されるので、cookieに保存する
+      // ゲームの設定段階では、状態を保存していない(バックエンドに何も送っていないので)
+      setCookie(COOKIE_NAMES.CURRENT_TODOFUKEN_GAME_ID, res.id);
+
+      // ゲームのデータ取得を明示的に行い、待機する
+      await queryClient.invalidateQueries([QUERY_KEYS.TODOFUKEN_GAMES, res.id]);
+
+      // ゲームのデータが取得できたら画面を遷移する
+      changeScreen('highLow');
+    } else {
+      throw new Error('ゲームの作成に失敗しました');
+    }
   };
 
-  // 難易度の変更
-  const changeDifficulty = (difficulty: Game['difficulty']) => {
-    setGame((prev) => ({ ...prev, difficulty }));
+  const submitTurnAct = async () => {
+    // バリデーション
+    const data = CreateGameLogInputSchema.parse(turnAct);
+
+    // ターンのアクションを送信
+    const res = await submitGameTurnActMutation.mutateAsync({
+      id: gameQuery.data?.id as string,
+      data,
+    });
+
+    if (res) {
+      // ゲームのデータ取得を明示的に行い、待機する
+      await queryClient.invalidateQueries([QUERY_KEYS.TODOFUKEN_GAMES, res.gameId]);
+
+      // ゲームのデータが取得できたら画面を遷移する
+      changeScreen('battle');
+    } else {
+      throw new Error('ターンのアクションの送信に失敗しました');
+    }
   };
-
-  // モードの変更
-  const changeMode = (mode: Game['mode']) => {
-    setGame((prev) => ({ ...prev, mode }));
-  };
-
-  // 設定の完了
-  const settingCompolete = () => {
-    setGame((prev) => ({ ...prev, isSettingCompleted: true }));
-  };
-
-  /**
-   * ターンの情報を記録するための関数一覧
-   */
-  const turn = {
-    init: () => {
-      setGame((prev) => ({ ...prev, turn: {} }));
-    },
-    logging: () => {
-      // 完全に情報が入っていることを確認する xod
-
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      setGame((prev) => ({ ...prev, logs: [...prev.logs, prev.turn] }));
-    },
-    setHighLow: (highLow: GameLog['highLow']) => {
-      setGame((prev) => ({ ...prev, turn: { ...prev.turn, highLow } }));
-    },
-    setFactor: (factor: GameLog['factor']) => {
-      setGame((prev) => ({ ...prev, turn: { ...prev.turn, factor } }));
-    },
-    setOpportunity: (opportunity: GameLog['opportunity']) => {
-      setGame((prev) => ({ ...prev, turn: { ...prev.turn, opportunity } }));
-    },
-    setResult: (result: GameLog['result']) => {
-      setGame((prev) => ({
-        ...prev,
-        turn: { ...prev.turn, result },
-        // 勝利していたら、征服した都道府県配列に追加する
-        ...(result === 'win' && {
-          conqueredPrefectures: Array.from(
-            new Map(
-              [
-                ...prev.conqueredPrefectures,
-                prev.turn.opportunity as Game['conqueredPrefectures'][number],
-              ].map((prefecture) => [prefecture?.id, prefecture])
-            ).values()
-          ),
-          // 勝利していたら、自分がこのターンで利用した要素を記録する
-          // TODO: 相手の要素も取り込むが、ここの処理は後で考える
-          factors: Array.from(
-            new Map(
-              [...prev.factors, prev.turn.factor as Game['factors'][number]].map((factor) => [
-                factor,
-                factor,
-              ])
-            ).values()
-          ),
-        }),
-      }));
-    },
-  };
-
-  // デバッグ用
-  useEffect(
-    () => {
-      console.log({
-        ...game,
-        hideData,
-        neighboringPrefectures,
-      });
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [game]
-  );
 
   return {
-    data: {
-      ...game,
-      hideData,
-      neighboringPrefectures,
-    },
-    turn,
-    changePrefecture,
-    changeState,
-    changeStateNext,
-    changeStateNextTurn,
-    changeStateResult,
-    changeDifficulty,
-    changeMode,
-    settingCompolete,
+    game: gameQuery.data,
+    screen,
+    gameSettings,
+    turnAct,
+    changeScreen,
+    changeScreenNext,
+    changeScreenNextTurn,
+    changeScreenResult,
+    setGameSettings,
+    startGame,
+    setTurnAct,
+    submitTurnAct,
   };
 };
