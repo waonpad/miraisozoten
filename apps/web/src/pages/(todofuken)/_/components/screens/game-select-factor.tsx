@@ -1,5 +1,6 @@
 import { Prefecture } from 'database';
-import { PrefectureStatsConf, PrefectureStatsName } from 'schema/dist/prefecture';
+import { PrefectureStatsName, PrefectureStatsConfig } from 'schema/dist/prefecture/stats';
+import { GameDifficulty, GameDifficultyConfig } from 'schema/dist/todofuken/game';
 import { Button } from 'ui/components/ui/button';
 
 import { usePrefectureStats } from '../../api/get-prefecture-stats';
@@ -22,12 +23,24 @@ export const GameSelectFactor = () => {
 
   // データを隠す目的はセキュリティのためではないため、JSで簡易的に隠してしまう
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const prefectureStats = game?.hideData ? null : prefectureStatsQuery.data;
+  const prefectureStats = game.hideData ? null : prefectureStatsQuery.data;
 
   // データを表示しなくてもどんなデータがあるかは必要なので、
   // 別で定義したオブジェクトに対して実際のデータをマッピングする
   // データを表示しない場合はnullのままで問題ない
-  const factors = Object.values(PrefectureStatsConf)
+  const factors = Object.values(PrefectureStatsConfig)
+    .filter((conf) => {
+      // そのデータを表示する最低難易度が、設定配列のどのindexにあるかを取得
+      const prefectureStatsLowestEnableDifficultyIndex = GameDifficulty.indexOf(
+        GameDifficultyConfig.prefectureStatsLowestEnableDifficulty[conf.name]
+      );
+
+      // ゲームの難易度が、設定配列のどのindexにあるかを取得
+      const gameDifficultyIndex = GameDifficulty.indexOf(game.difficulty);
+
+      // 表示する最低難易度が、ゲームの難易度以下なら表示する
+      return prefectureStatsLowestEnableDifficultyIndex <= gameDifficultyIndex;
+    })
     .map((conf) => {
       const stats = prefectureStats?.[conf.camel];
 

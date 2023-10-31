@@ -5,7 +5,8 @@ import { z } from 'nestjs-zod/z';
 // import { SchemaObject } from 'openapi3-ts/oas31';
 import { z as zod } from 'zod';
 
-import { PrefectureShema, PrefectureStatsName } from '../../../prefecture';
+import { PrefectureShema } from '../../../prefecture';
+import { PrefectureStatsName } from '../../../prefecture/stats';
 import { GameResult, HighLow } from '../game.enum';
 
 extendZodWithOpenApi(z as typeof zod);
