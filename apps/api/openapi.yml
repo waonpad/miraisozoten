@@ -405,6 +405,43 @@ paths:
                     required:
                       - id
                       - name
+                  neighbors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                        name:
+                          type: string
+                        short:
+                          type: string
+                        kana:
+                          type: string
+                        en:
+                          type: string
+                        regionId:
+                          type: number
+                      required:
+                        - id
+                        - name
+                        - short
+                        - kana
+                        - en
+                        - regionId
+                  stats:
+                    type: object
+                    properties:
+                      id:
+                        type: number
+                      population:
+                        type: number
+                      area:
+                        type: number
+                    required:
+                      - id
+                      - population
+                      - area
                 required:
                   - id
                   - name
@@ -413,6 +450,8 @@ paths:
                   - en
                   - regionId
                   - region
+                  - neighbors
+                  - stats
           description: ''
       tags: &ref_2
         - prefectures
@@ -451,6 +490,43 @@ paths:
                       required:
                         - id
                         - name
+                    neighbors:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                          name:
+                            type: string
+                          short:
+                            type: string
+                          kana:
+                            type: string
+                          en:
+                            type: string
+                          regionId:
+                            type: number
+                        required:
+                          - id
+                          - name
+                          - short
+                          - kana
+                          - en
+                          - regionId
+                    stats:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                        population:
+                          type: number
+                        area:
+                          type: number
+                      required:
+                        - id
+                        - population
+                        - area
                   required:
                     - id
                     - name
@@ -459,6 +535,8 @@ paths:
                     - en
                     - regionId
                     - region
+                    - neighbors
+                    - stats
           description: ''
       tags: *ref_2
   /prefectures/{id}:
@@ -500,6 +578,43 @@ paths:
                     required:
                       - id
                       - name
+                  neighbors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                        name:
+                          type: string
+                        short:
+                          type: string
+                        kana:
+                          type: string
+                        en:
+                          type: string
+                        regionId:
+                          type: number
+                      required:
+                        - id
+                        - name
+                        - short
+                        - kana
+                        - en
+                        - regionId
+                  stats:
+                    type: object
+                    properties:
+                      id:
+                        type: number
+                      population:
+                        type: number
+                      area:
+                        type: number
+                    required:
+                      - id
+                      - population
+                      - area
                 required:
                   - id
                   - name
@@ -508,6 +623,8 @@ paths:
                   - en
                   - regionId
                   - region
+                  - neighbors
+                  - stats
           description: ''
       tags: *ref_2
   /prefectures/{id}/stats:
@@ -533,13 +650,10 @@ paths:
                     type: number
                   area:
                     type: number
-                  prefectureId:
-                    type: number
                 required:
                   - id
                   - population
                   - area
-                  - prefectureId
           description: ''
       tags: *ref_2
   /prefectures/{id}/neighbors:
@@ -583,6 +697,43 @@ paths:
                       required:
                         - id
                         - name
+                    neighbors:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                          name:
+                            type: string
+                          short:
+                            type: string
+                          kana:
+                            type: string
+                          en:
+                            type: string
+                          regionId:
+                            type: number
+                        required:
+                          - id
+                          - name
+                          - short
+                          - kana
+                          - en
+                          - regionId
+                    stats:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                        population:
+                          type: number
+                        area:
+                          type: number
+                      required:
+                        - id
+                        - population
+                        - area
                   required:
                     - id
                     - name
@@ -591,6 +742,8 @@ paths:
                     - en
                     - regionId
                     - region
+                    - neighbors
+                    - stats
           description: ''
       tags: *ref_2
   /games/-schema-:
