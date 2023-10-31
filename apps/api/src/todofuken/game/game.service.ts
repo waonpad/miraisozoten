@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Game } from 'database';
 
-import { PrefectureStatsConf } from 'schema/dist/prefecture';
+import { PrefectureStatsConfig } from 'schema/dist/prefecture/stats';
 import {
   CreateGameInputDto,
   UpdateGameInputDto,
@@ -82,20 +82,20 @@ export class GameService {
 
     const factors = await this.prisma.prefectureStats.findMany({
       where: {
-        OR: [{ prefectureId }, { prefectureId: data.opponentId }],
+        OR: [{ id: prefectureId }, { id: data.opponentId }],
       },
       select: {
-        prefectureId: true,
-        [PrefectureStatsConf[data.factorName].camel]: true,
+        id: true,
+        [PrefectureStatsConfig[data.factorName].camel]: true,
       },
     });
 
     // factorsの2つを比較しで、勝敗を決める
-    const prefectureFactor = factors.find((f) => f.prefectureId === prefectureId)?.[
-      PrefectureStatsConf[data.factorName].camel
+    const prefectureFactor = factors.find((f) => f.id === prefectureId)?.[
+      PrefectureStatsConfig[data.factorName].camel
     ];
-    const opponentFactor = factors.find((f) => f.prefectureId === data.opponentId)?.[
-      PrefectureStatsConf[data.factorName].camel
+    const opponentFactor = factors.find((f) => f.id === data.opponentId)?.[
+      PrefectureStatsConfig[data.factorName].camel
     ];
 
     const result: GameResult =
