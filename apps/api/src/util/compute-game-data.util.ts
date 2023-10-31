@@ -1,10 +1,10 @@
-import { Game, Prefecture, Region } from 'database';
+import { Game, GameLog, Prefecture, Region } from 'database';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 export const computeGameData = async <
   T extends Game & {
     prefecture: Prefecture & { region: Region };
-    logs: { opponent: Prefecture & { region: Region } }[];
+    logs: (GameLog & { opponent: Prefecture & { region: Region } })[];
   },
 >({
   game,
@@ -18,7 +18,9 @@ export const computeGameData = async <
     neighbors: Prefecture[];
   }
 > => {
-  const conquereds = game.logs.map((log) => log.opponent) || [];
+  // 勝利したログの相手のみを抽出
+  const conquereds =
+    game.logs.filter((log) => log.result === 'WIN').map((log) => log.opponent) || [];
 
   const neighbors = game.prefecture.id
     ? // 隣席県をfaltMapで取得しているので、重複を除外する

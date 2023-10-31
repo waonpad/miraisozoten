@@ -21,8 +21,8 @@ export const GameBattle = () => {
       fun: changeScreenResult,
     },
     DRAW: {
-      label: '引き分け！？！？！？',
-      fun: () => console.log('引き分け時にどうするのか決める'),
+      label: '引き分け 次の対戦へ',
+      fun: changeScreenNextTurn,
     },
   } satisfies { [key in GameResult]: unknown };
 
