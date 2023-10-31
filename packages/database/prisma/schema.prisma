@@ -46,7 +46,7 @@ model Weapon {
 }
 
 model Prefecture {
-  id         Int              @id
+  id         Int              @id @unique
   name       String
   short      String
   kana       String
@@ -57,7 +57,7 @@ model Prefecture {
   regionId   Int
   games      Game[]
   asOpponent GameLog[]
-  stats      PrefectureStats?
+  stats      PrefectureStats @relation(fields: [id], references: [id])
 
   @@index([regionId])
 }
@@ -68,11 +68,10 @@ enum PrefectureStatsName {
 }
 
 model PrefectureStats {
-  id           Int        @id
+  id           Int        @id @unique
   population   Int
   area         Float
-  prefecture   Prefecture @relation(fields: [prefectureId], references: [id])
-  prefectureId Int       @unique
+  prefecture   Prefecture?
 }
 
 model Region {
