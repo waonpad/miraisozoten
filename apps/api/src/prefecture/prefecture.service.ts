@@ -26,7 +26,7 @@ export class PrefectureService {
 
   async getPrefectureStats(id: Prefecture['id']): Promise<PrefectureStatsResponse | null> {
     return await this.prisma.prefectureStats.findUnique({
-      where: { prefectureId: id },
+      where: { id },
     });
   }
 
