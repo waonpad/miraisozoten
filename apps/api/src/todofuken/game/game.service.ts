@@ -105,13 +105,22 @@ export class GameService {
         ? 'WIN'
         : 'LOSE';
 
-    // ゲームの状態を更新する
-    await this.prisma.game.update({
+    const game = await this.prisma.game.findUniqueOrThrow({
       where: { id, userId: user.sub },
-      data: {
-        state: result === 'LOSE' ? 'FINISHED' : 'ACTING',
-      },
+      include: gameDefaultInclude,
     });
+
+    const computedGame = computeGameData({ game, prisma: this.prisma });
+
+    // 隣接県が無いということは、全ての県を回りきったということなので、ゲームを終了する
+    if ((await computedGame).neighbors.length === 0) {
+      await this.prisma.game.update({
+        where: { id, userId: user.sub },
+        data: {
+          state: 'FINISHED',
+        },
+      });
+    }
 
     return this.prisma.gameLog.create({
       data: {

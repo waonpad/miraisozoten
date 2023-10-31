@@ -23,31 +23,32 @@ export const GameBattle = () => {
   const resultSwitcher = {
     WIN: {
       label: '勝利 次の対戦へ',
-      fun: changeScreenNextTurn,
+      fn: changeScreenNextTurn,
     },
     LOSE: {
-      label: '敗北 結果を見る',
-      fun: changeScreenResult,
+      label: '敗北 次の対戦へ',
+      fn: changeScreenNextTurn,
     },
     DRAW: {
       label: '引き分け 次の対戦へ',
-      fun: changeScreenNextTurn,
+      fn: changeScreenNextTurn,
     },
   } satisfies { [key in GameResult]: unknown };
 
   const handleClickChangeScreen = () => {
-    resultSwitcher[currentTurn.result].fun();
+    resultSwitcher[currentTurn.result].fn();
   };
 
   return (
     <>
       <GameBattleDisplay prefecture={currentTurnAllyPrefecture} opponent={currentTurn.opponent} />
-      {currentTurn.result && (
+      {game.state === 'FINISHED' ? (
+        <Button onClick={changeScreenResult}>おめでとう！結果を見る！</Button>
+      ) : (
         <Button onClick={handleClickChangeScreen}>
           {resultSwitcher[currentTurn.result].label}
         </Button>
       )}
-      {/* Factorの選択と対戦相手の選択は同じ画面で行う？ */}
     </>
   );
 };
