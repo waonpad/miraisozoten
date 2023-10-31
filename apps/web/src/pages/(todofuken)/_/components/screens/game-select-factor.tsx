@@ -1,3 +1,4 @@
+import { Prefecture } from 'database';
 import { PrefectureResponse } from 'schema/dist/prefecture';
 import { PrefectureStatsName, PrefectureStatsConfig } from 'schema/dist/prefecture/stats';
 import { GameDifficulty, GameDifficultyConfig, GameResponse } from 'schema/dist/todofuken/game';
@@ -21,9 +22,13 @@ export const GameSelectFactor = () => {
 
   const factors = getAllFactors(prefecturesQuery.data, game);
 
-  const handleClcikSelectFactor = (factorName: PrefectureStatsName) => {
+  const handleClcikSelectFactor = (
+    factorPrefectureId: Prefecture['id'],
+    factorName: PrefectureStatsName
+  ) => {
     setTurnAct((prev) => ({
       ...prev,
+      factorPrefectureId,
       factorName,
     }));
 
@@ -33,8 +38,11 @@ export const GameSelectFactor = () => {
   return (
     <div>
       {factors.map((factor, index) => (
-        <Button key={index} onClick={() => handleClcikSelectFactor(factor.name)}>
-          {factor.prefectureName}
+        <Button
+          key={index}
+          onClick={() => handleClcikSelectFactor(factor.prefecture.id, factor.name)}
+        >
+          {factor.prefecture.name}
           {factor.label}
           {!game.hideData && (
             <div>
@@ -128,7 +136,7 @@ const computeFactors = (
       const stats = prefecture.stats?.[conf.camel];
 
       return {
-        prefectureName: prefecture.name,
+        prefecture: prefecture,
         name: conf.name,
         label: conf.label,
         // データを隠す目的はセキュリティのためではないため、JSで簡易的に隠してしまう

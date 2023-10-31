@@ -70,19 +70,12 @@ export class GameService {
     data: CreateGameLogInputDto,
     user: JwtDecodedUser
   ): Promise<GameLogResponse> {
-    const game = await this.prisma.game.findUnique({
-      // りクエストユーザーがゲームの所持者でない場合、ここでエラーになる
-      where: { id, userId: user.sub },
-      select: {
-        prefecture: true,
-      },
-    });
-
-    const prefectureId = game?.prefecture.id;
+    // どの都道府県のデータを使うのか
+    const allyPrefectureId = data.factorPrefectureId;
 
     const factors = await this.prisma.prefectureStats.findMany({
       where: {
-        OR: [{ id: prefectureId }, { id: data.opponentId }],
+        OR: [{ id: allyPrefectureId }, { id: data.opponentId }],
       },
       select: {
         id: true,
@@ -91,7 +84,7 @@ export class GameService {
     });
 
     // factorsの2つを比較しで、勝敗を決める
-    const prefectureFactor = factors.find((f) => f.id === prefectureId)?.[
+    const prefectureFactor = factors.find((f) => f.id === allyPrefectureId)?.[
       PrefectureStatsConfig[data.factorName].camel
     ];
     const opponentFactor = factors.find((f) => f.id === data.opponentId)?.[
@@ -124,6 +117,9 @@ export class GameService {
       data: {
         result,
         highLow: data.highLow,
+        factorPrefecture: {
+          connect: { id: data.factorPrefectureId },
+        },
         factorName: data.factorName,
         opponent: {
           connect: { id: data.opponentId },

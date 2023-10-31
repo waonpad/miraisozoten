@@ -7,7 +7,7 @@ import { QueryConfig, ExtractFnReturnType, useQuery, QUERY_KEYS } from '@/lib/re
 export const getPrefectureStats = ({
   id,
 }: {
-  id: PrefectureStats['prefectureId'];
+  id: PrefectureStats['id'];
 }): Promise<PrefectureStatsResponse | null> => {
   return axios.get(`/prefectures/${id}/stats`);
 };
@@ -15,7 +15,7 @@ export const getPrefectureStats = ({
 type QueryFnType = typeof getPrefectureStats;
 
 type UsePrefectureStatsOptions = {
-  id: PrefectureStats['prefectureId'];
+  id: PrefectureStats['id'];
   config?: QueryConfig<QueryFnType>;
 };
 

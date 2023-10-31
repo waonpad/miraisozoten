@@ -15,6 +15,7 @@ export const GameLogShema = z.object({
   id: z.number(),
   gameId: z.string().uuid(),
   highLow: z.enum(HighLow),
+  factorPrefectureId: z.number(),
   factorName: z.enum(PrefectureStatsName),
   opponentId: z.number(),
   result: z.enum(GameResult),
@@ -24,9 +25,12 @@ export const GameLogShema = z.object({
 
 export const CreateGameLogInputSchema = GameLogShema.pick({
   highLow: true,
+  factorPrefectureId: true,
   factorName: true,
   opponentId: true,
-}) satisfies z.ZodType<Omit<Prisma.GameLogCreateInput, 'result' | 'game' | 'opponent'>>;
+}) satisfies z.ZodType<
+  Omit<Prisma.GameLogCreateInput, 'result' | 'game' | 'factorPrefecture' | 'opponent'>
+>;
 
 export const GameLogResponseSchema = GameLogShema.merge(
   z.object({
