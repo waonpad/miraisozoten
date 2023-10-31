@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Game } from 'database';
 
-import { PrefectureStatsConf } from 'schema/dist/prefecture';
+import { PrefectureStatsConfig } from 'schema/dist/prefecture/stats';
 import {
   CreateGameInputDto,
   UpdateGameInputDto,
@@ -70,32 +70,25 @@ export class GameService {
     data: CreateGameLogInputDto,
     user: JwtDecodedUser
   ): Promise<GameLogResponse> {
-    const game = await this.prisma.game.findUnique({
-      // りクエストユーザーがゲームの所持者でない場合、ここでエラーになる
-      where: { id, userId: user.sub },
-      select: {
-        prefecture: true,
-      },
-    });
-
-    const prefectureId = game?.prefecture.id;
+    // どの都道府県のデータを使うのか
+    const allyPrefectureId = data.factorPrefectureId;
 
     const factors = await this.prisma.prefectureStats.findMany({
       where: {
-        OR: [{ prefectureId }, { prefectureId: data.opponentId }],
+        OR: [{ id: allyPrefectureId }, { id: data.opponentId }],
       },
       select: {
-        prefectureId: true,
-        [PrefectureStatsConf[data.factorName].camel]: true,
+        id: true,
+        [PrefectureStatsConfig[data.factorName].camel]: true,
       },
     });
 
     // factorsの2つを比較しで、勝敗を決める
-    const prefectureFactor = factors.find((f) => f.prefectureId === prefectureId)?.[
-      PrefectureStatsConf[data.factorName].camel
+    const prefectureFactor = factors.find((f) => f.id === allyPrefectureId)?.[
+      PrefectureStatsConfig[data.factorName].camel
     ];
-    const opponentFactor = factors.find((f) => f.prefectureId === data.opponentId)?.[
-      PrefectureStatsConf[data.factorName].camel
+    const opponentFactor = factors.find((f) => f.id === data.opponentId)?.[
+      PrefectureStatsConfig[data.factorName].camel
     ];
 
     const result: GameResult =
@@ -124,6 +117,9 @@ export class GameService {
       data: {
         result,
         highLow: data.highLow,
+        factorPrefecture: {
+          connect: { id: data.factorPrefectureId },
+        },
         factorName: data.factorName,
         opponent: {
           connect: { id: data.opponentId },

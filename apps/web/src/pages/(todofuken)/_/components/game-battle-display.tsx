@@ -1,7 +1,8 @@
+import { PrefectureResponse } from 'schema/dist/prefecture';
 import { GameResponse } from 'schema/dist/todofuken/game';
 
 export type GameBattleVSProps = {
-  prefecture: GameResponse['prefecture'];
+  prefecture: PrefectureResponse;
   opponent: GameResponse['logs'][number]['opponent'];
 };
 

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import { Prefecture } from 'database';
+import { PrefectureResponse } from 'schema/dist/prefecture';
 import { Button } from 'ui/components/ui/button';
 
 import { usePrefectures } from '../../api/get-prefectures';
@@ -20,28 +21,34 @@ export const GameLobby = () => {
   const [canSelectPrefectures, setCanSelectPrefectures] = useState(false);
 
   // 実際に現在選択している都道府県
-  const [selectedPrefecture, setSelectedPrefecture] = useState<Prefecture | null>(null);
+  const [selectedPrefecture, setSelectedPrefecture] = useState<PrefectureResponse | null>(null);
 
   // ダイアログに表示している都道府県のID
-  const [dialogPrefectureId, setDialogPrefectureId] = useState<Prefecture['id'] | null>(null);
+  const [dialogPrefecture, setDialogPrefecture] = useState<PrefectureResponse | null>(null);
 
   // ダイアログの開閉状態
   const [dialogOpen, setDialogOpen] = useState(false);
 
-  // ダイアログで隣接県を表示するために毎回リクエストを飛ばしているので、
-  // ここで一括で取得したほうが負荷的にもUX的にも良さそう
+  // ダイアログで隣接県を表示するために毎回リクエストを飛ばすのは遅いので、ここで一括で取得しておく
+  // region, neighbors, stats を取得している
   const prefecturesQuery = usePrefectures();
 
+  if (!prefecturesQuery.data) {
+    return <div>loading...</div>;
+  }
+
   const handleClickPrefecture = async (e: { target: { id: Prefecture['en'] } }) => {
-    const prefectureId = prefecturesQuery.data?.find(
+    const prefectureId = prefecturesQuery.data.find(
       (prefecture) => prefecture.en === e.target.id // svgのidには英語の都道府県名が入っている
     )?.id as number; // 確実に存在することがわかっている
 
-    setDialogPrefectureId(prefectureId);
+    setDialogPrefecture(
+      prefecturesQuery.data.find((prefecture) => prefecture.id === prefectureId) ?? null
+    );
     setDialogOpen(true);
   };
 
-  const handleClickSelectPrefecture = (prefecture: Prefecture) => {
+  const handleClickSelectPrefecture = (prefecture: PrefectureResponse) => {
     setSelectedPrefecture(prefecture);
 
     setGameSettings((prev) => ({
@@ -80,9 +87,9 @@ export const GameLobby = () => {
         disabled={!canSelectPrefectures}
       />
 
-      {dialogPrefectureId && (
+      {dialogPrefecture && (
         <PrefectureOverviewDialog
-          id={dialogPrefectureId}
+          prefecture={dialogPrefecture}
           open={dialogOpen}
           handleOpenChange={setDialogOpen}
           handleSelect={handleClickSelectPrefecture}

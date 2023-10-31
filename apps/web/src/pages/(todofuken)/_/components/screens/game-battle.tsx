@@ -1,6 +1,7 @@
 import { GameResult } from 'schema/dist/todofuken/game';
 import { Button } from 'ui/components/ui/button';
 
+import { usePrefectures } from '../../api/get-prefectures';
 import { useGame } from '../../hooks/use-game';
 import { GameBattleDisplay } from '../game-battle-display';
 
@@ -9,7 +10,15 @@ export const GameBattle = () => {
 
   if (!game) throw new Error('game is not found');
 
+  const prefecturesQuery = usePrefectures();
+
+  if (!prefecturesQuery.data) return <div>Loading...</div>;
+
   const currentTurn = game.logs[game.logs.length - 1];
+
+  const currentTurnAllyPrefecture = prefecturesQuery.data.find(
+    (prefecture) => prefecture.id === currentTurn.factorPrefectureId
+  ) as (typeof prefecturesQuery.data)[number];
 
   const resultSwitcher = {
     WIN: {
@@ -32,7 +41,7 @@ export const GameBattle = () => {
 
   return (
     <>
-      <GameBattleDisplay prefecture={game.prefecture} opponent={currentTurn.opponent} />
+      <GameBattleDisplay prefecture={currentTurnAllyPrefecture} opponent={currentTurn.opponent} />
       {currentTurn.result && (
         <Button onClick={handleClickChangeScreen}>
           {resultSwitcher[currentTurn.result].label}

@@ -46,18 +46,19 @@ model Weapon {
 }
 
 model Prefecture {
-  id         Int              @id
+  id         Int             @id @unique
   name       String
   short      String
   kana       String
   en         String
-  neighborBy Prefecture[]     @relation("NeighborPrefecture")
-  neighbors  Prefecture[]     @relation("NeighborPrefecture")
-  region     Region           @relation(fields: [regionId], references: [id])
+  neighborBy Prefecture[]    @relation("NeighborPrefecture")
+  neighbors  Prefecture[]    @relation("NeighborPrefecture")
+  region     Region          @relation(fields: [regionId], references: [id])
   regionId   Int
   games      Game[]
-  asOpponent GameLog[]
-  stats      PrefectureStats?
+  asFactor   GameLog[]       @relation("FactorGameLog")
+  asOpponent GameLog[]       @relation("OpponentGameLog")
+  stats      PrefectureStats @relation(fields: [id], references: [id])
 
   @@index([regionId])
 }
@@ -68,11 +69,10 @@ enum PrefectureStatsName {
 }
 
 model PrefectureStats {
-  id           Int        @id
-  population   Int
-  area         Float
-  prefecture   Prefecture @relation(fields: [prefectureId], references: [id])
-  prefectureId Int       @unique
+  id         Int         @id @unique
+  population Int
+  area       Float
+  prefecture Prefecture?
 }
 
 model Region {
@@ -129,18 +129,21 @@ model Game {
 }
 
 model GameLog {
-  id         Int                @id @default(autoincrement())
-  game       Game               @relation(fields: [gameId], references: [id])
-  gameId     String
-  highLow    HighLow
+  id                 Int                 @id @default(autoincrement())
+  game               Game                @relation(fields: [gameId], references: [id])
+  gameId             String
+  highLow            HighLow
+  factorPrefecture   Prefecture          @relation(fields: [factorPrefectureId], references: [id], name: "FactorGameLog")
+  factorPrefectureId Int
   // factorNameはprefectureのstats
-  factorName PrefectureStatsName
-  opponent   Prefecture         @relation(fields: [opponentId], references: [id])
-  opponentId Int
-  result     GameResult
-  createdAt  DateTime           @default(now())
-  updatedAt  DateTime           @updatedAt
+  factorName         PrefectureStatsName
+  opponent           Prefecture          @relation(fields: [opponentId], references: [id], name: "OpponentGameLog")
+  opponentId         Int
+  result             GameResult
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
 
   @@index([gameId])
   @@index([opponentId])
+  @@index([factorPrefectureId])
 }

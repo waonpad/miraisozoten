@@ -14,6 +14,19 @@ async function main() {
     });
   }
 
+  // Create Stats
+  for (const prefecture of Object.values(Prefectures)) {
+    await prisma.prefectureStats.upsert({
+      where: { id: prefecture.id },
+      update: {},
+      create: {
+        id: prefecture.id,
+        population: Math.floor(Math.random() * 1000000),
+        area: Math.floor(Math.random() * 10000),
+      },
+    });
+  }
+
   // Create Prefectures
   for (const prefecture of Object.values(Prefectures)) {
     await prisma.prefecture.upsert({
@@ -26,19 +39,7 @@ async function main() {
         kana: prefecture.kana,
         en: prefecture.en,
         // おかしくない範囲でランダムに適当な値を入れておく
-        stats: {
-          connectOrCreate: {
-            where: { id: prefecture.id },
-            create: {
-              id: prefecture.id,
-              population: Math.floor(Math.random() * 1000000),
-              area: Math.floor(Math.random() * 10000),
-            },
-          },
-        },
-        region: {
-          connect: { id: prefecture.region.id },
-        },
+        regionId: prefecture.region.id,
       },
     });
   }
