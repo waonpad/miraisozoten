@@ -1,3 +1,4 @@
+import { GameStatus } from '../components/game-status';
 import { GameBattle } from '../components/screens/game-battle';
 import { GameLobby } from '../components/screens/game-lobby';
 import { GameResult } from '../components/screens/game-result';
@@ -18,10 +19,30 @@ export type GameScreenKey = (typeof GameScreenKey)[number];
 
 export const GameScreen = {
   lobby: <GameLobby />,
-  highLow: <GameSelectHighLow />,
-  selectFactor: <GameSelectFactor />,
-  selectOppo: <GameSelectOpponent />,
-  battle: <GameBattle />,
+  highLow: (
+    <>
+      <GameStatus />
+      <GameSelectHighLow />
+    </>
+  ),
+  selectFactor: (
+    <>
+      <GameStatus />
+      <GameSelectFactor />
+    </>
+  ),
+  selectOppo: (
+    <>
+      <GameStatus />
+      <GameSelectOpponent />
+    </>
+  ),
+  battle: (
+    <>
+      <GameStatus />
+      <GameBattle />
+    </>
+  ),
   result: <GameResult />,
 } satisfies { [key in GameScreenKey]: JSX.Element };
 
