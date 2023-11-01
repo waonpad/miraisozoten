@@ -29,10 +29,9 @@ module.exports = {
       },
       deps: `yarn install --frozen-lockfile && yarn husky install`,
       docker: `docker compose up -d`,
-      packages: `nps prepare.database prepare.schema prepare.prefecture`,
+      packages: `nps prepare.database prepare.schema`,
       database: `docker compose up -d && nps prisma.generate prisma.migrate.dev prisma.seed prisma.build`,
       schema: `cd ${schemaPath} && yarn build`,
-      prefecture: `cd ${prefecturePath} && yarn build`,
       apps: ``,
       ci: {
         web: `npx turbo prune web && cd out && yarn install --frozen-lockfile`,
