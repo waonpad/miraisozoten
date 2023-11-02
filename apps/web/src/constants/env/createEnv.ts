@@ -11,10 +11,13 @@ export const createEnv = ({ runtimeEnv }: { runtimeEnv: NodeJS.ProcessEnv }) => 
       VITE_APP_NAME: z.string(),
       VITE_HOST_URL: z.string().url(),
 
-      VITE_GOOGLE_CLIENT_ID: z.string(),
-
       VITE_SENTRY_ENABLED: z.enum(['true', 'false']),
       VITE_SENTRY_DSN: z.string().url(),
+
+      VITE_FIREBASE_API_KEY: z.string(),
+      VITE_FIREBASE_AUTH_DOMAIN: z.string(),
+      VITE_FIREBASE_PROJECT_ID: z.string(),
+      VITE_FIREBASE_APP_ID: z.string(),
 
       ...(runtimeEnv.VITE_APP_ENV !== 'production' && {
         VITE_API_MOCKING: z.enum(['true', 'false']),

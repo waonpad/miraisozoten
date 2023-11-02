@@ -6,9 +6,9 @@ import type { Prisma, User } from 'database';
 export const UserShema = z.object({
   id: z.string(),
   name: z.string(),
-  email: z.string(),
+  email: z.string().nullable(),
   emailVerified: z.boolean(),
-  image: z.string(),
+  image: z.string().nullable(),
   createdAt: z.date(),
   updatedAt: z.date(),
 });
