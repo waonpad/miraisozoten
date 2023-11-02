@@ -4,7 +4,9 @@ import { useAuth } from '@/auth/use-auth';
 import type { Path } from '@/router';
 
 const PRIVATE: Path[] = ['/private', '/about'];
-const PUBLIC: Path[] = ['/login'];
+const PUBLIC: Path[] = []; // 匿名ログインから実際のアカウントに切り替える場合があるため、/loginにアクセスできるようにする
+
+export const RETURN_TO = 'returnTo';
 
 export const AuthGuard = ({ children }: { children: React.ReactNode | React.ReactNode[] }) => {
   const { user } = useAuth();
@@ -17,7 +19,7 @@ export const AuthGuard = ({ children }: { children: React.ReactNode | React.Reac
 
   if (authedOnPublicPath) return <Navigate to="/" replace />;
   if (unAuthedOnPrivatePath)
-    return <Navigate to={`/login?returnTo=${encodeURIComponent(location.pathname)}`} replace />;
+    return <Navigate to={`/login?${RETURN_TO}=${encodeURIComponent(location.pathname)}`} replace />;
 
   return <>{children}</>;
 };

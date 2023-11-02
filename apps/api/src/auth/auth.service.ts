@@ -8,6 +8,22 @@ export class AuthService {
   constructor(@Inject(InjectionToken.PRISMA_SERVICE) private readonly prisma: PrismaService) {}
 
   async login(user: JwtDecodedUser): Promise<UserResponse> {
+    // 匿名ログインの場合
+    if (user.provider_id === 'anonymous') {
+      user.name = 'ゲスト';
+      user.email = `${user.sub}@example.com`;
+      user.email_verified = false;
+    }
+
+    // 匿名ログインからソーシャルアカウントにリンクした場合
+    // ソーシャルアカウントのデータがマウントされないので、プロバイダーのデータから取り出してくる
+    // Google以外の場合を検証していない
+    // Googleログイン以外をすることを想定していないので、providerData[0]としている
+    if (!user.name) {
+      user.name = user.userRecord.providerData[0].displayName;
+      user.picture = user.userRecord.providerData[0].photoURL;
+    }
+
     const userRecord = await this.prisma.user.upsert({
       where: { id: user.sub },
       update: {

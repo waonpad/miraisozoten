@@ -831,10 +831,12 @@ paths:
                         type: string
                       email:
                         type: string
+                        nullable: true
                       emailVerified:
                         type: boolean
                       image:
                         type: string
+                        nullable: true
                       createdAt:
                         type: string
                         format: date-time
@@ -1088,10 +1090,12 @@ paths:
                         type: string
                       email:
                         type: string
+                        nullable: true
                       emailVerified:
                         type: boolean
                       image:
                         type: string
+                        nullable: true
                       createdAt:
                         type: string
                         format: date-time
@@ -1359,10 +1363,12 @@ paths:
                         type: string
                       email:
                         type: string
+                        nullable: true
                       emailVerified:
                         type: boolean
                       image:
                         type: string
+                        nullable: true
                       createdAt:
                         type: string
                         format: date-time
@@ -1634,10 +1640,12 @@ paths:
                         type: string
                       email:
                         type: string
+                        nullable: true
                       emailVerified:
                         type: boolean
                       image:
                         type: string
+                        nullable: true
                       createdAt:
                         type: string
                         format: date-time
@@ -1916,10 +1924,12 @@ paths:
                         type: string
                       email:
                         type: string
+                        nullable: true
                       emailVerified:
                         type: boolean
                       image:
                         type: string
+                        nullable: true
                       createdAt:
                         type: string
                         format: date-time

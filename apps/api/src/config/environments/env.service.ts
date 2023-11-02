@@ -35,4 +35,16 @@ export class Env {
   get SentryEnabled(): BooleanEnum {
     return this.configService.get('SENTRY_ENABLED') as BooleanEnum;
   }
+
+  get firebaseProjectId(): string {
+    return this.configService.get('FIREBASE_PROJECT_ID') as string;
+  }
+
+  get firebasePrivateKey(): string {
+    return this.configService.get('FIREBASE_PRIVATE_KEY') as string;
+  }
+
+  get firebaseClientEmail(): string {
+    return this.configService.get('FIREBASE_CLIENT_EMAIL') as string;
+  }
 }

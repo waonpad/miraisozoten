@@ -18,6 +18,7 @@
   "devDependencies": {
     "eslint": "^8.45.0",
     "eslint-config-custom": "*",
+    "firebase-admin": "^11.11.0",
     "openapi3-ts": "^4.1.2",
     "tsconfig": "*",
     "tsup": "^7.2.0",

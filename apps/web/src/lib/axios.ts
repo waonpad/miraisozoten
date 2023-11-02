@@ -1,13 +1,14 @@
 import Axios, { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
-import { COOKIE_NAMES } from '@/constants/cookie-names';
 import { env } from '@/constants/env';
-import { getCookie } from '@/utils/cookie/get-cookie';
+
+import { firebaseAuth } from './firebase';
 
 function authRequestInterceptor(config: InternalAxiosRequestConfig) {
   config.headers.Accept = config.headers.Accept || 'application/json';
   config.headers.Authorization =
-    config.headers.Authorization || `Bearer ${getCookie(COOKIE_NAMES.AUTH_TOKEN)}`;
+    config.headers.Authorization ||
+    (firebaseAuth.currentUser ? `Bearer ${firebaseAuth.currentUser.getIdToken()}` : undefined);
   return config;
 }
 

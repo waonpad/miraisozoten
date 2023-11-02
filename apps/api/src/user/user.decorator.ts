@@ -6,7 +6,7 @@ export const User = createParamDecorator((data: keyof JwtDecodedUser, ctx: Execu
   const request: Request = ctx.switchToHttp().getRequest();
   if (data) {
     const user = request.user as JwtDecodedUser;
-    return user ? user[data] : null;
+    return user ?? null;
   }
   return request.user as JwtDecodedUser;
 });
