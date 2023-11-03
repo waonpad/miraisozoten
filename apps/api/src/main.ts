@@ -15,20 +15,20 @@ async function bootstrap() {
   const env: Env = app.get(Env);
 
   // Sentry
-  if (env.SentryDsn && (env.isProduction() || env.SentryEnabled) === 'true') {
+  if (env.get('SENTRY_DSN') && (env.isProduction() || env.get('SENTRY_ENABLED'))) {
     console.log('Sentry enabled');
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     Sentry.init({
-      dsn: env.SentryDsn,
+      dsn: env.get('SENTRY_DSN'),
     });
   }
 
   // Firebase Admin SDK
   const adminConfig: ServiceAccount = {
-    projectId: env.firebaseProjectId,
-    privateKey: env.firebasePrivateKey.replace(/\\n/g, '\n'),
-    clientEmail: env.firebaseClientEmail,
+    projectId: env.get('FIREBASE_PROJECT_ID'),
+    privateKey: env.get('FIREBASE_PRIVATE_KEY').replace(/\\n/g, '\n'),
+    clientEmail: env.get('FIREBASE_CLIENT_EMAIL'),
   };
   admin.initializeApp({
     credential: admin.credential.cert(adminConfig),
@@ -57,6 +57,6 @@ async function bootstrap() {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   writeFileSync(openApiOutputPath, dump(document, {}));
 
-  await app.listen(env.Port, env.Host);
+  await app.listen(env.get('PORT'), env.get('HOST'));
 }
 bootstrap();

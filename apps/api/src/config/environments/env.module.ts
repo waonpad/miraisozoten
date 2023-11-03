@@ -1,6 +1,5 @@
 import { Global, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { validate } from './env-validator';
 import { Env } from './env.service';
 
 @Global()
@@ -8,7 +7,6 @@ import { Env } from './env.service';
   imports: [
     ConfigModule.forRoot({
       envFilePath: ['.env'],
-      validate,
       isGlobal: true,
     }),
   ],
