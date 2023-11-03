@@ -4,11 +4,13 @@ import { env } from '@/constants/env';
 
 import { firebaseAuth } from './firebase';
 
-function authRequestInterceptor(config: InternalAxiosRequestConfig) {
+async function authRequestInterceptor(config: InternalAxiosRequestConfig) {
   config.headers.Accept = config.headers.Accept || 'application/json';
   config.headers.Authorization =
     config.headers.Authorization ||
-    (firebaseAuth.currentUser ? `Bearer ${firebaseAuth.currentUser.getIdToken()}` : undefined);
+    (firebaseAuth.currentUser
+      ? `Bearer ${await firebaseAuth.currentUser.getIdToken()}`
+      : undefined);
   return config;
 }
 
