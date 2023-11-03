@@ -36,15 +36,15 @@ Docker アプリの起動を確認し, 以下のコマンドで,
 nps prepare
 ```
 
-#### OAuth認証の準備
+#### Firebase認証の準備
 
-Google CloudでOAuth認証をセットアップする
-
-1. [ココ](https://console.cloud.google.com/apis/credentials)にアクセス
-2. `+ CREATE CREDENTIALS` をクリック
-3. `OAuth client ID` を選択
-4. `Application type` に `Web application` を選択
-5. `Authorized JavaScript origins` に `http://localhost:8080`, `http://localhost` を追加
-6. `Authorized redirect URIs` に `http://localhost:8080`, `http://localhost` を追加
-7. `CREATE` をクリックし, 作成が完了するとClient IDとClient secretが表示される
-8. Client ID を `<rootDir>/apps/web/.env` の対応する行に設定
+1. [ココ](https://console.firebase.google.com/u/0/)にアクセス
+2. `プロジェクトを追加` をクリックして, 適当なプロジェクト名をつけてそのまま画面の通りに手順を進め, プロジェクトを作成
+3. 作成が完了したら, `続行` をクリックして, プロジェクトのページへ
+4. 左側のドロワーの `構築` 内の `Authentication` をクリック, `始める`
+5. ログインプロバイダ一覧から, `Google` を選択, `有効にする` をクリックして, 公開名とサポートメールを設定して, `保存`
+6. `新しいプロバイダを追加` をクリックして, `匿名` をクリック, `有効にする` をクリックして, `保存`
+7. 左側のドロワーの `プロジェクトの概要` 右側の歯車マークをクリックして, `プロジェクトの設定` をクリック
+8. `マイアプリ` の `</>` をクリックし, アプリのニックネームをつけて, `登録`, 表示されたコンフィグの, `apiKey`, `authDomain`, `projectId`, `appId` を, apps/web/.env の該当環境変数にそれぞれ設定
+9. `サービス アカウント` をクリックしてタブを切り替え, `新しい秘密鍵を作成` をクリック (jsonがダウンロードされる)
+10. ダウンロードされたjsonを開き, `project_id`, `private_key`, `client_email` を, apps/api/.env の該当環境変数にそれぞれ設定
