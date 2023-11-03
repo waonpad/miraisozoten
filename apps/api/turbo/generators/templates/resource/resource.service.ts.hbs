@@ -1,15 +1,16 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { {{pascalCase name}} } from 'database';
 import {
   PageNumberPaginationMeta,
   PageNumberPaginationOptions,
 } from 'schema/dist/common/pagination';
 import { Create{{pascalCase name}}InputDto, Update{{pascalCase name}}InputDto, {{pascalCase name}}Response } from 'schema/dist/{{kebabCase name}}';
+import { InjectionToken } from 'src/config/environments/constants/injection-token.enum';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class {{pascalCase name}}Service {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(@Inject(InjectionToken.PRISMA_SERVICE) private readonly prisma: PrismaService) {}
 
   async getAll{{pascalCase name}}(): Promise<{{pascalCase name}}Response[]> {
     return this.prisma.{{kebabCase name}}.findMany();

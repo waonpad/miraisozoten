@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PrismaService } from '../prisma/prisma.service';
+import { InjectionToken } from 'src/config/environments/constants/injection-token.enum';
+import { BasePrismaService, PrismaService } from '../prisma/prisma.service';
 import { {{pascalCase name}}Service } from './{{kebabCase name}}.service';
 
 describe('{{pascalCase name}}Service', () => {
@@ -11,7 +12,10 @@ describe('{{pascalCase name}}Service', () => {
       providers: [
         {{pascalCase name}}Service,
         {
-          provide: PrismaService,
+          provide: InjectionToken.PRISMA_SERVICE,
+          useFactory: () => {
+            return new BasePrismaService().withExtensions();
+          },
           useValue: {
             {{camelCase name}}: {
               findMany: jest.fn(),
@@ -29,7 +33,7 @@ describe('{{pascalCase name}}Service', () => {
     }).compile();
 
     service = module.get<{{pascalCase name}}Service>({{pascalCase name}}Service);
-    prismaService = module.get<PrismaService>(PrismaService);
+    prismaService = module.get<PrismaService>(InjectionToken.PRISMA_SERVICE);
   });
 
   afterEach(() => {
