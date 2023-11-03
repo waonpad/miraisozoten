@@ -12,17 +12,26 @@ export const createEnv = ({ runtimeEnv }: { runtimeEnv: NodeJS.ProcessEnv }) => 
       VITE_HOST_URL: z.string().url(),
 
       VITE_SENTRY_ENABLED: z.enum(['true', 'false']),
-      VITE_SENTRY_DSN: z.string().url(),
+      // Sentryを有効にするならDSNが必須
+      ...((runtimeEnv.VITE_APP_ENV === 'production' ||
+        runtimeEnv.VITE_SENTRY_ENABLED === 'true') && {
+        VITE_SENTRY_DSN: z.string().url(),
+      }),
 
       VITE_FIREBASE_API_KEY: z.string(),
       VITE_FIREBASE_AUTH_DOMAIN: z.string(),
       VITE_FIREBASE_PROJECT_ID: z.string(),
       VITE_FIREBASE_APP_ID: z.string(),
 
+      // productionでないならモックを有効にするかの指定が必須
       ...(runtimeEnv.VITE_APP_ENV !== 'production' && {
         VITE_API_MOCKING: z.enum(['true', 'false']),
-        VITE_VALID_TOKEN: z.string(),
-        VITE_INVALID_TOKEN: z.string(),
+
+        // モックを有効にするなら有効なトークンと無効なトークンが必須
+        ...(runtimeEnv.VITE_API_MOCKING === 'true' && {
+          VITE_VALID_TOKEN: z.string(),
+          VITE_INVALID_TOKEN: z.string(),
+        }),
       }),
     },
     runtimeEnv: runtimeEnv,
