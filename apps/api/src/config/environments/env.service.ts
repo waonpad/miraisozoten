@@ -1,50 +1,47 @@
 import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { AppEnvEnum } from './constants/app-env.enum';
-import { BooleanEnum } from './constants/boolean.enum';
-import { HostEnum } from './constants/host.enum';
+import { createEnv as createT3Env } from '@t3-oss/env-core';
+import { z } from 'nestjs-zod/z';
 
 @Injectable()
 export class Env {
-  constructor(private configService: ConfigService) {}
+  constructor() {
+    this.env = this.createEnv();
+  }
+
+  private env: ReturnType<typeof this.createEnv>;
+
+  private createEnv = (
+    { runtimeEnv }: { runtimeEnv: NodeJS.ProcessEnv } = { runtimeEnv: process.env }
+  ) => {
+    return createT3Env({
+      server: {
+        APP_ENV: z.enum(['development', 'production', 'test']),
+        HOST: z.enum(['localhost', '0.0.0.0']),
+        PORT: z.coerce.number(),
+        DATABASE_URL: z.string().url(),
+
+        SENTRY_ENABLED: z.coerce.boolean(),
+        // Sentryを有効にするならDSNが必須
+        ...((runtimeEnv.APP_ENV === 'production' || runtimeEnv.SENTRY_ENABLED === 'true') && {
+          SENTRY_DSN: z.string().url(),
+        }),
+
+        FIREBASE_PROJECT_ID: z.string(),
+        FIREBASE_PRIVATE_KEY: z.string(),
+        FIREBASE_CLIENT_EMAIL: z.string(),
+      },
+      clientPrefix: '',
+      client: {},
+      runtimeEnv: runtimeEnv,
+      emptyStringAsUndefined: true,
+    });
+  };
+
+  get<T extends keyof typeof Env.prototype.env>(key: T): (typeof Env.prototype.env)[T] {
+    return this.env[key];
+  }
 
   isProduction(): boolean {
-    return this.configService.get('APP_ENV') === 'production';
-  }
-
-  get service() {
-    return this.configService;
-  }
-
-  get AppEnv(): AppEnvEnum {
-    return this.configService.get('APP_ENV') as AppEnvEnum;
-  }
-
-  get Host(): HostEnum {
-    return this.configService.get('HOST') as HostEnum;
-  }
-
-  get Port(): number {
-    return this.configService.get('PORT') as number;
-  }
-
-  get SentryDsn(): string {
-    return this.configService.get('SENTRY_DSN') as string;
-  }
-
-  get SentryEnabled(): BooleanEnum {
-    return this.configService.get('SENTRY_ENABLED') as BooleanEnum;
-  }
-
-  get firebaseProjectId(): string {
-    return this.configService.get('FIREBASE_PROJECT_ID') as string;
-  }
-
-  get firebasePrivateKey(): string {
-    return this.configService.get('FIREBASE_PRIVATE_KEY') as string;
-  }
-
-  get firebaseClientEmail(): string {
-    return this.configService.get('FIREBASE_CLIENT_EMAIL') as string;
+    return this.env.APP_ENV === 'production';
   }
 }
