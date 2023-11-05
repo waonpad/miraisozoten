@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { useErrorBoundary } from 'react-error-boundary';
 import { UserResponse } from 'schema/dist/user';
 
+import { COOKIE_NAMES } from '@/constants/cookie-names';
 import {
   firebaseAuth,
   firebaseAuthProviders,
@@ -18,6 +19,7 @@ import {
 } from '@/lib/firebase';
 import { useLogin } from '@/pages/(auth)/_/api/login';
 import { Path, useNavigate } from '@/router';
+import { removeCookie } from '@/utils/cookie/remove-cookie';
 import { createCtx } from '@/utils/create-ctx';
 
 import { RETURN_TO } from './auth-guard';
@@ -88,6 +90,10 @@ export const useAuthCtx = () => {
     return onAuthStateChanged(firebaseAuth, async (firebaseUser) => {
       if (!firebaseUser) {
         console.log('ログインしていない');
+
+        // ゲームにアクセスする権限はゲームの作成ユーザーにしかないため、ログアウトされたらcookieを削除する
+        removeCookie(COOKIE_NAMES.CURRENT_TODOFUKEN_GAME_ID);
+
         // 匿名ログインはfirebaseの設定画面から有効にしないとできない
         await signInAnonymously(firebaseAuth);
         // signInAnonymouslyが実行されると、onAuthStateChangedが再発火する

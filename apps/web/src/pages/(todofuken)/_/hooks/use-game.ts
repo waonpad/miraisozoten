@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { CreateGameInput, CreateGameInputSchema } from 'schema/dist/todofuken/game';
 import { CreateGameLogInput, CreateGameLogInputSchema } from 'schema/dist/todofuken/game/log';
@@ -22,9 +22,12 @@ export { SetGameProvider };
 export const useGame = createdUseGame;
 
 export const useGameCtx = () => {
-  const gameIdCookie = getCookie(COOKIE_NAMES.CURRENT_TODOFUKEN_GAME_ID);
+  const [gameId, setGameId] = useState<string | null>(
+    getCookie(COOKIE_NAMES.CURRENT_TODOFUKEN_GAME_ID)
+  );
 
-  const [gameId, setGameId] = useState<string | null>(gameIdCookie);
+  // ゲームを1度でも取得したか判別するフラグ
+  const [isFetched, setIsFetched] = useState(false);
 
   const gameQuery = useGameQuery({
     id: gameId as string,
@@ -36,8 +39,7 @@ export const useGameCtx = () => {
 
   const submitGameTurnActMutation = useSubmitGameTurnAct();
 
-  // TODO: stateがFINISHEDでcookieから取得したゲームを開いた場合、結果画面に飛ばさないといけない
-  const [screen, setScreen] = useState<GameScreenKey>(!!gameIdCookie ? 'highLow' : 'lobby');
+  const [screen, setScreen] = useState<GameScreenKey | null>(!gameId ? 'lobby' : null);
 
   // ゲーム開始前の設定
   const [gameSettings, setGameSettings] = useState<Partial<CreateGameInput>>({});
@@ -51,7 +53,11 @@ export const useGameCtx = () => {
   };
 
   const changeScreenNext = () => {
-    setScreen((screen) => GameScreenKey[GameScreenKey.indexOf(screen) + 1]);
+    setScreen((screen) => {
+      if (!screen) throw new Error();
+
+      return GameScreenKey[GameScreenKey.indexOf(screen) + 1];
+    });
   };
 
   // ゲームのstateを変えないといけない！
@@ -118,7 +124,35 @@ export const useGameCtx = () => {
     }
   };
 
+  useEffect(() => {
+    // フェッチは成功したが、ゲームが存在しない場合
+    // cookieをクライアントが触るか、一度ログアウトしないといけないため、ここで削除する
+    if (gameQuery.isSuccess && !gameQuery.data) {
+      removeCookie(COOKIE_NAMES.CURRENT_TODOFUKEN_GAME_ID);
+
+      throw new Error('Game not found');
+    }
+
+    // 初めてゲームを取得したとき
+    if (gameQuery.data && !isFetched) {
+      setScreen(
+        // 終了していたら結果画面に飛ばす
+        gameQuery.data.state === 'FINISHED'
+          ? 'result'
+          : // 途中だったらそこから
+          ['PREPARING', 'ACTING'].includes(gameQuery.data.state)
+          ? 'highLow'
+          : // どれでもなければロビー(どれでも無い場合は今のところ起こらない)
+            'lobby'
+      );
+
+      // ゲームを1度でも取得したことを記録
+      setIsFetched(true);
+    }
+  }, [gameQuery.data, gameQuery.isSuccess, isFetched]);
+
   return {
+    enabled: !!screen, // プロバイダを有効化するフラグ
     game: gameQuery.data,
     screen,
     gameSettings,
