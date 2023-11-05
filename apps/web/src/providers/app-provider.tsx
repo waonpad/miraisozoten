@@ -8,6 +8,7 @@ import { AuthGuard } from '@/auth/auth-guard';
 import { AuthProvider } from '@/auth/auth-provider';
 import { ErrorFallback } from '@/components/elements/error-fallback';
 import { SuspenseFallback } from '@/components/elements/suspense-fallback';
+import { WatchUnhandledError } from '@/lib/react-error-boundary';
 import { queryClient } from '@/lib/react-query';
 import * as Sentry from '@/lib/sentry';
 
@@ -16,15 +17,17 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     // SentryのErrorBoundaryで捕まえるので、react-error-boundaryのfallbackは空にしておく
     <ErrorBoundary fallbackRender={() => <></>}>
       <Sentry.ErrorBoundary fallback={ErrorFallback}>
-        <Suspense fallback={<SuspenseFallback />}>
-          <HelmetProvider>
-            <QueryClientProvider client={queryClient}>
-              <AuthProvider>
-                <AuthGuard>{children}</AuthGuard>
-              </AuthProvider>
-            </QueryClientProvider>
-          </HelmetProvider>
-        </Suspense>
+        <WatchUnhandledError>
+          <Suspense fallback={<SuspenseFallback />}>
+            <HelmetProvider>
+              <QueryClientProvider client={queryClient}>
+                <AuthProvider>
+                  <AuthGuard>{children}</AuthGuard>
+                </AuthProvider>
+              </QueryClientProvider>
+            </HelmetProvider>
+          </Suspense>
+        </WatchUnhandledError>
       </Sentry.ErrorBoundary>
     </ErrorBoundary>
   );
