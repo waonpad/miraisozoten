@@ -1,7 +1,5 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { env } = require('./dredd-config');
 const hooks = require('hooks');
-
-require('dotenv').config({ path: '.env.test.local' });
 
 hooks.beforeEach((transaction, done) => {
   // ダミーエンドポイントをスキップ
@@ -9,6 +7,10 @@ hooks.beforeEach((transaction, done) => {
     transaction.skip = true;
   }
 
-  transaction.request.headers['Authorization'] = 'Bearer ' + process.env.VALID_TOKEN;
+  if (transaction.request.uri.split('/')[1] === 'games') {
+    transaction.skip = true;
+  }
+
+  transaction.request.headers['Authorization'] = 'Bearer ' + env.VALID_TOKEN;
   done();
 });

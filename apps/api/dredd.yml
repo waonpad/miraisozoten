@@ -1,6 +1,6 @@
 color: true
 dry-run: null
-hookfiles: ./test/dredd/*.hook.js
+hookfiles: ./test/dredd/**/*.hook.js
 language: nodejs
 require: null
 server: yarn start
