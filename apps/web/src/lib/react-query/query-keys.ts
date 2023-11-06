@@ -4,4 +4,5 @@ export const QUERY_KEYS = {
   WEAPONS: 'weapons',
   PREFECTURES: 'prefectures',
   TODOFUKEN_GAMES: 'todofuken-games',
+  PREFECTURE_STATS_METADATA: 'prefecture-stats-metadata',
 } as const;
