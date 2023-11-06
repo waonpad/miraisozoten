@@ -10,6 +10,7 @@ import { ZodValidationExceptionFilter } from './filters/zod-validation-exception
 import { LoggerInterceptor } from './interceptors/logging.inspector';
 import { LoggerModule } from './logger/logger.module';
 import { PrefectureModule } from './prefecture/prefecture.module';
+import { PrefectureStatsMetadataModule } from './prefecture-stats-metadata/prefecture-stats-metadata.module';
 import { GameModule } from './todofuken/game/game.module';
 import { UserMiddleware } from './user/user.middleware';
 import { WeaponModule } from './weapon/weapon.module';
@@ -23,6 +24,7 @@ import { WeaponModule } from './weapon/weapon.module';
     AuthModule,
     RavenModule,
     PrefectureModule,
+    PrefectureStatsMetadataModule,
     GameModule,
   ],
   //インスタンス化して、Controllerが何かを定義している

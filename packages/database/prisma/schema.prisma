@@ -75,6 +75,17 @@ model PrefectureStats {
   prefecture Prefecture?
 }
 
+model PrefectureStatsMetadata {
+  id         Int         @id @default(autoincrement())
+  name       PrefectureStatsName
+  label      String
+  unit       String
+  sourceSiteName String
+  sourceUrlTitle String
+  sourceUrl  String
+  retrievedAt DateTime
+}
+
 model Region {
   id          Int          @id
   name        String
