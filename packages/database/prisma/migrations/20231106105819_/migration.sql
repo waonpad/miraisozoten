@@ -2,9 +2,9 @@
 CREATE TABLE `User` (
     `id` VARCHAR(191) NOT NULL,
     `name` VARCHAR(191) NOT NULL,
-    `email` VARCHAR(191) NOT NULL,
+    `email` VARCHAR(191) NULL,
     `emailVerified` BOOLEAN NOT NULL DEFAULT false,
-    `image` VARCHAR(191) NOT NULL,
+    `image` VARCHAR(191) NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
@@ -42,6 +42,7 @@ CREATE TABLE `Prefecture` (
     `en` VARCHAR(191) NOT NULL,
     `regionId` INTEGER NOT NULL,
 
+    UNIQUE INDEX `Prefecture_id_key`(`id`),
     INDEX `Prefecture_regionId_idx`(`regionId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -51,9 +52,22 @@ CREATE TABLE `PrefectureStats` (
     `id` INTEGER NOT NULL,
     `population` INTEGER NOT NULL,
     `area` DOUBLE NOT NULL,
-    `prefectureId` INTEGER NOT NULL,
 
-    UNIQUE INDEX `PrefectureStats_prefectureId_key`(`prefectureId`),
+    UNIQUE INDEX `PrefectureStats_id_key`(`id`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `PrefectureStatsMetadata` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `name` ENUM('POPULATION', 'AREA') NOT NULL,
+    `label` VARCHAR(191) NOT NULL,
+    `unit` VARCHAR(191) NOT NULL,
+    `sourceSiteName` VARCHAR(191) NOT NULL,
+    `sourceUrlTitle` VARCHAR(191) NOT NULL,
+    `sourceUrl` VARCHAR(191) NOT NULL,
+    `retrievedAt` DATETIME(3) NOT NULL,
+
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -86,6 +100,7 @@ CREATE TABLE `GameLog` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `gameId` VARCHAR(191) NOT NULL,
     `highLow` ENUM('HIGH', 'LOW') NOT NULL,
+    `factorPrefectureId` INTEGER NOT NULL,
     `factorName` ENUM('POPULATION', 'AREA') NOT NULL,
     `opponentId` INTEGER NOT NULL,
     `result` ENUM('WIN', 'DRAW', 'LOSE') NOT NULL,
@@ -94,6 +109,7 @@ CREATE TABLE `GameLog` (
 
     INDEX `GameLog_gameId_idx`(`gameId`),
     INDEX `GameLog_opponentId_idx`(`opponentId`),
+    INDEX `GameLog_factorPrefectureId_idx`(`factorPrefectureId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 

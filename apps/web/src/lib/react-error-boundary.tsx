@@ -1,6 +1,6 @@
 import { useErrorBoundary } from 'react-error-boundary';
 
-import { useWindowEvent } from '@/utils/hooks/useWindowEvent';
+import { useWindowEvent } from '@/utils/hooks/use-window-event';
 
 /**
  * 拾い忘れたエラー, 非同期処理, イベントハンドラ内のエラーをキャッチする

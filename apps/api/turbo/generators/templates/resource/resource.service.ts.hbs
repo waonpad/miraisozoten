@@ -13,7 +13,7 @@ export class {{pascalCase name}}Service {
   constructor(@Inject(InjectionToken.PRISMA_SERVICE) private readonly prisma: PrismaService) {}
 
   async getAll{{pascalCase name}}(): Promise<{{pascalCase name}}Response[]> {
-    return this.prisma.{{kebabCase name}}.findMany();
+    return this.prisma.{{camelCase name}}.findMany();
   }
 
   async getAll{{pascalCase name}}WithPages(

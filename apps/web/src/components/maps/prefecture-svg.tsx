@@ -207,6 +207,7 @@ export const PrefectureSVG = ({ prefectureNameEn }: PrefectureSVGProps) => {
   return (
     <div>
       <svg
+        // eslint-disable-next-line tailwindcss/no-custom-classname
         className="svg-map"
         viewBox={`0 0 ${(mixMax.maxBeforeCommas - mixMax.minBeforeCommas) * 10} ${
           (mixMax.maxAfterCommas - mixMax.minAfterCommas) * 10
@@ -222,6 +223,7 @@ export const PrefectureSVG = ({ prefectureNameEn }: PrefectureSVGProps) => {
           id={pre.preId}
           name={pre.preName}
           d={pre.prePath}
+          // eslint-disable-next-line tailwindcss/no-custom-classname
           className="svg-map__location"
         ></path>
       </svg>

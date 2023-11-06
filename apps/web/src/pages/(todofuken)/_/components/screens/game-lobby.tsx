@@ -4,7 +4,9 @@ import { Prefecture } from 'database';
 import { PrefectureResponse } from 'schema/dist/prefecture';
 import { Button } from 'ui/components/ui/button';
 
-import { usePrefectures } from '../../api/get-prefectures';
+import { JapanRadioSVGMap } from '@/components/maps/japan-radio-svg-map';
+import { usePrefectures } from '@/pages/(prefectures)/_/api/get-prefectures';
+
 import { GameDifficultySelect } from '../../components/game-difficulty-select';
 import { GameModeSelect } from '../../components/game-mode-select';
 import { PrefectureOverviewDialog } from '../../components/prefecture-overview-dialog';
@@ -12,7 +14,6 @@ import { useGame } from '../../hooks/use-game';
 import { GameDifficultyInfo } from '../game-difficulty-info';
 import { GameModeInfo } from '../game-mode-info';
 import { GameSettingSubmit } from '../game-setting-submit';
-import { JapanRadioSVGMap } from '../maps/japan-radio-svg-map';
 
 export const GameLobby = () => {
   const { gameSettings, setGameSettings, startGame } = useGame();

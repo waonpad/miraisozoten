@@ -1,7 +1,8 @@
 import { GameResult } from 'schema/dist/todofuken/game';
 import { Button } from 'ui/components/ui/button';
 
-import { usePrefectures } from '../../api/get-prefectures';
+import { usePrefectures } from '@/pages/(prefectures)/_/api/get-prefectures';
+
 import { useGame } from '../../hooks/use-game';
 import { GameBattleDisplay } from '../game-battle-display';
 
