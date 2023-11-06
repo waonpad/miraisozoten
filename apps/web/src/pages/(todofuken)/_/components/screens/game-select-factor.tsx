@@ -4,7 +4,8 @@ import { PrefectureStatsName, PrefectureStatsConfig } from 'schema/dist/prefectu
 import { GameDifficulty, GameDifficultyConfig, GameResponse } from 'schema/dist/todofuken/game';
 import { Button } from 'ui/components/ui/button';
 
-import { usePrefectures } from '../../api/get-prefectures';
+import { usePrefectures } from '@/pages/(prefectures)/_/api/get-prefectures';
+
 import { PickCount } from '../../config/game';
 import { useGame } from '../../hooks/use-game';
 
