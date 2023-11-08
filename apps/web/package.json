@@ -23,6 +23,7 @@
     "database": "*",
     "dayjs": "^1.11.10",
     "firebase": "^10.5.2",
+    "lodash": "^4.17.21",
     "postcss": "^8.4.31",
     "prisma-extension-pagination": "^0.5.0",
     "react": "18.2.0",
