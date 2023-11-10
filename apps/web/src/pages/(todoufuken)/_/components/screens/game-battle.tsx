@@ -1,4 +1,4 @@
-import { GameResult } from 'schema/dist/todofuken/game';
+import { GameResult } from 'schema/dist/todoufuken/game';
 import { Button } from 'ui/components/ui/button';
 
 import { usePrefectures } from '@/pages/(prefectures)/_/api/get-prefectures';

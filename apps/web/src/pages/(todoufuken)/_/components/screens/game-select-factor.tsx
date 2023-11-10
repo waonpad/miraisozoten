@@ -1,7 +1,7 @@
 import { Prefecture } from 'database';
 import { PrefectureResponse } from 'schema/dist/prefecture';
 import { PrefectureStatsName, PrefectureStatsConfig } from 'schema/dist/prefecture/stats';
-import { GameDifficulty, GameDifficultyConfig, GameResponse } from 'schema/dist/todofuken/game';
+import { GameDifficulty, GameDifficultyConfig, GameResponse } from 'schema/dist/todoufuken/game';
 import { Button } from 'ui/components/ui/button';
 
 import { usePrefectures } from '@/pages/(prefectures)/_/api/get-prefectures';

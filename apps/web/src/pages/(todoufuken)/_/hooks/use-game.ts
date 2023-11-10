@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import { CreateGameInput, CreateGameInputSchema } from 'schema/dist/todofuken/game';
-import { CreateGameLogInput, CreateGameLogInputSchema } from 'schema/dist/todofuken/game/log';
+import { CreateGameInput, CreateGameInputSchema } from 'schema/dist/todoufuken/game';
+import { CreateGameLogInput, CreateGameLogInputSchema } from 'schema/dist/todoufuken/game/log';
 
 import { COOKIE_NAMES } from '@/constants/cookie-names';
 import { QUERY_KEYS, queryClient } from '@/lib/react-query';
@@ -23,7 +23,7 @@ export const useGame = createdUseGame;
 
 export const useGameCtx = () => {
   const [gameId, setGameId] = useState<string | null>(
-    getCookie(COOKIE_NAMES.CURRENT_TODOFUKEN_GAME_ID)
+    getCookie(COOKIE_NAMES.CURRENT_todoufuken_GAME_ID)
   );
 
   // ゲームを1度でも取得したか判別するフラグ
@@ -73,7 +73,7 @@ export const useGameCtx = () => {
     // リザルトに行ったらもうゲームに戻ることはないが、一応初期化
     setTurnAct({});
     // cookieから削除する
-    removeCookie(COOKIE_NAMES.CURRENT_TODOFUKEN_GAME_ID);
+    removeCookie(COOKIE_NAMES.CURRENT_todoufuken_GAME_ID);
 
     setScreen('result');
   };
@@ -91,10 +91,10 @@ export const useGameCtx = () => {
       setGameId(res.id);
       // ここで初めてゲームIDが発行されるので、cookieに保存する
       // ゲームの設定段階では、状態を保存していない(バックエンドに何も送っていないので)
-      setCookie(COOKIE_NAMES.CURRENT_TODOFUKEN_GAME_ID, res.id);
+      setCookie(COOKIE_NAMES.CURRENT_todoufuken_GAME_ID, res.id);
 
       // ゲームのデータ取得を明示的に行い、待機する
-      await queryClient.invalidateQueries([QUERY_KEYS.TODOFUKEN_GAMES, res.id]);
+      await queryClient.invalidateQueries([QUERY_KEYS.TODOUFUKEN_GAMES, res.id]);
 
       // ゲームのデータが取得できたら画面を遷移する
       changeScreen('highLow');
@@ -115,7 +115,7 @@ export const useGameCtx = () => {
 
     if (res) {
       // ゲームのデータ取得を明示的に行い、待機する
-      await queryClient.invalidateQueries([QUERY_KEYS.TODOFUKEN_GAMES, res.gameId]);
+      await queryClient.invalidateQueries([QUERY_KEYS.TODOUFUKEN_GAMES, res.gameId]);
 
       // ゲームのデータが取得できたら画面を遷移する
       changeScreen('battle');
@@ -128,7 +128,7 @@ export const useGameCtx = () => {
     // フェッチは成功したが、ゲームが存在しない場合
     // cookieをクライアントが触るか、一度ログアウトしないといけないため、ここで削除する
     if (gameQuery.isSuccess && !gameQuery.data) {
-      removeCookie(COOKIE_NAMES.CURRENT_TODOFUKEN_GAME_ID);
+      removeCookie(COOKIE_NAMES.CURRENT_todoufuken_GAME_ID);
 
       throw new Error('Game not found');
     }

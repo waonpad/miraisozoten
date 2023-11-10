@@ -1,4 +1,4 @@
-import { GameMode } from 'schema/dist/todofuken/game';
+import { GameMode } from 'schema/dist/todoufuken/game';
 import { Button } from 'ui/components/ui/button';
 
 import { useGame } from '../hooks/use-game';

@@ -92,7 +92,7 @@ export const useAuthCtx = () => {
         console.log('ログインしていない');
 
         // ゲームにアクセスする権限はゲームの作成ユーザーにしかないため、ログアウトされたらcookieを削除する
-        removeCookie(COOKIE_NAMES.CURRENT_TODOFUKEN_GAME_ID);
+        removeCookie(COOKIE_NAMES.CURRENT_todoufuken_GAME_ID);
 
         // 匿名ログインはfirebaseの設定画面から有効にしないとできない
         await signInAnonymously(firebaseAuth);

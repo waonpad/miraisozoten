@@ -1,4 +1,4 @@
-import { GameDifficulty } from 'schema/dist/todofuken/game';
+import { GameDifficulty } from 'schema/dist/todoufuken/game';
 import { Button } from 'ui/components/ui/button';
 
 import { useGame } from '../hooks/use-game';

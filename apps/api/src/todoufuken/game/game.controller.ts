@@ -17,12 +17,12 @@ import {
   UpdateGameInputSchema,
   GameResponse,
   GameResponseSchema,
-} from 'schema/dist/todofuken/game';
+} from 'schema/dist/todoufuken/game';
 import {
   CreateGameLogInputDto,
   CreateGameLogInputSchema,
   GameLogResponse,
-} from 'schema/dist/todofuken/game/log';
+} from 'schema/dist/todoufuken/game/log';
 import { JwtDecodedUser } from 'schema/dist/user';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { User } from 'src/user/user.decorator';
