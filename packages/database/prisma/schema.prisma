@@ -64,14 +64,14 @@ model Prefecture {
 }
 
 enum PrefectureStatsName {
-  POPULATION
   AREA
+  POPULATION
 }
 
 model PrefectureStats {
   id         Int         @id @unique
+  area Float
   population Int
-  area       Float
   prefecture Prefecture?
 }
 

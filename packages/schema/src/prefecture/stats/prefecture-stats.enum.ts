@@ -1,3 +1,3 @@
-export const PrefectureStatsName = ['POPULATION', 'AREA'] as const;
+export const PrefectureStatsName = ['AREA', 'POPULATION'] as const;
 
 export type PrefectureStatsName = (typeof PrefectureStatsName)[number];

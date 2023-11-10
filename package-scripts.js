@@ -133,6 +133,7 @@ module.exports = {
       },
     },
     util: {
+      pstatsref: `yarn ts-node ${root('tool/post-update-prefecture-stats-data.ts')}`,
       gensec: `node ${root('tool/gen-secret.js')}`,
       upnxsec: `node ${root('tool/update-nextauth-secret.js')}`,
       pkill: {
