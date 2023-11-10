@@ -83,7 +83,7 @@ CREATE TABLE `Region` (
 CREATE TABLE `Game` (
     `id` VARCHAR(191) NOT NULL,
     `state` ENUM('STARTING', 'PREPARING', 'ACTING', 'FINISHED') NOT NULL,
-    `difficulty` ENUM('EASY', 'NORMAL', 'HIDDEN_NORMAL', 'HARD') NOT NULL,
+    `difficulty` ENUM('EASY', 'NORMAL', 'VERY_HARD', 'HARD') NOT NULL,
     `mode` ENUM('NATIONWIDE', 'REGIONAL') NOT NULL,
     `prefectureId` INTEGER NOT NULL,
     `userId` VARCHAR(191) NOT NULL,

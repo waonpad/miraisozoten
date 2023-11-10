@@ -16,7 +16,7 @@ export class BasePrismaService extends PrismaClient implements OnModuleInit {
           hideData: {
             needs: { difficulty: true },
             compute(data) {
-              return (['HIDDEN_NORMAL', 'HARD'] satisfies GameDifficulty[]).some(
+              return (['HARD', 'VERY_HARD'] satisfies GameDifficulty[]).some(
                 (d) => d === data.difficulty
               );
             },

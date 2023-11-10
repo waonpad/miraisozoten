@@ -49,6 +49,6 @@ export const GameScreen = {
 export const PickCount = {
   EASY: 3,
   NORMAL: 4,
-  HIDDEN_NORMAL: 4,
-  HARD: 6,
+  HARD: 4,
+  VERY_HARD: 6,
 };
