@@ -1,5 +1,5 @@
 export const GameState = ['STARTING', 'PREPARING', 'ACTING', 'FINISHED'] as const;
-export const GameDifficulty = ['EASY', 'NORMAL', 'HIDDEN_NORMAL', 'HARD'] as const;
+export const GameDifficulty = ['EASY', 'NORMAL', 'HARD', 'VERY_HARD'] as const;
 export const GameMode = ['NATIONWIDE', 'REGIONAL'] as const;
 export const GameResult = ['WIN', 'DRAW', 'LOSE'] as const;
 export const HighLow = ['HIGH', 'LOW'] as const;

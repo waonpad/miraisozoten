@@ -746,6 +746,193 @@ paths:
                     - stats
           description: ''
       tags: *ref_2
+  /prefecture-stats-metadata/-schema-:
+    get:
+      operationId: PrefectureStatsMetadataController_openApiSchema
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  name:
+                    type: string
+                    enum:
+                      - POPULATION
+                      - AREA
+                  label:
+                    type: string
+                  unit:
+                    type: string
+                  sourceSiteName:
+                    type: string
+                  sourceUrlTitle:
+                    type: string
+                  sourceUrl:
+                    type: string
+                    format: uri
+                  retrievedAt:
+                    type: string
+                    format: date-time
+                required:
+                  - id
+                  - name
+                  - label
+                  - unit
+                  - sourceSiteName
+                  - sourceUrlTitle
+                  - sourceUrl
+                  - retrievedAt
+          description: ''
+      tags: &ref_3
+        - prefecture-stats-metadata
+  /prefecture-stats-metadata:
+    get:
+      operationId: PrefectureStatsMetadataController_getAllPrefectureStatsMetadata
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                    name:
+                      type: string
+                      enum:
+                        - POPULATION
+                        - AREA
+                    label:
+                      type: string
+                    unit:
+                      type: string
+                    sourceSiteName:
+                      type: string
+                    sourceUrlTitle:
+                      type: string
+                    sourceUrl:
+                      type: string
+                      format: uri
+                    retrievedAt:
+                      type: string
+                      format: date-time
+                  required:
+                    - id
+                    - name
+                    - label
+                    - unit
+                    - sourceSiteName
+                    - sourceUrlTitle
+                    - sourceUrl
+                    - retrievedAt
+          description: ''
+      tags: *ref_3
+  /prefecture-stats-metadata/name/{name}:
+    get:
+      operationId: PrefectureStatsMetadataController_getPrefectureStatsMetadataByName
+      parameters:
+        - name: name
+          required: true
+          in: path
+          example: POPULATION
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  name:
+                    type: string
+                    enum:
+                      - POPULATION
+                      - AREA
+                  label:
+                    type: string
+                  unit:
+                    type: string
+                  sourceSiteName:
+                    type: string
+                  sourceUrlTitle:
+                    type: string
+                  sourceUrl:
+                    type: string
+                    format: uri
+                  retrievedAt:
+                    type: string
+                    format: date-time
+                required:
+                  - id
+                  - name
+                  - label
+                  - unit
+                  - sourceSiteName
+                  - sourceUrlTitle
+                  - sourceUrl
+                  - retrievedAt
+          description: ''
+      tags: *ref_3
+  /prefecture-stats-metadata/{id}:
+    get:
+      operationId: PrefectureStatsMetadataController_getPrefectureStatsMetadata
+      parameters:
+        - name: id
+          required: true
+          in: path
+          example: '1'
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  name:
+                    type: string
+                    enum:
+                      - POPULATION
+                      - AREA
+                  label:
+                    type: string
+                  unit:
+                    type: string
+                  sourceSiteName:
+                    type: string
+                  sourceUrlTitle:
+                    type: string
+                  sourceUrl:
+                    type: string
+                    format: uri
+                  retrievedAt:
+                    type: string
+                    format: date-time
+                required:
+                  - id
+                  - name
+                  - label
+                  - unit
+                  - sourceSiteName
+                  - sourceUrlTitle
+                  - sourceUrl
+                  - retrievedAt
+          description: ''
+      tags: *ref_3
   /games/-schema-:
     get:
       operationId: GameController_openApiSchema
@@ -772,8 +959,8 @@ paths:
                     enum:
                       - EASY
                       - NORMAL
-                      - HIDDEN_NORMAL
                       - HARD
+                      - VERY_HARD
                   mode:
                     type: string
                     enum:
@@ -997,7 +1184,7 @@ paths:
                   - conquereds
                   - neighbors
           description: ''
-      tags: &ref_3
+      tags: &ref_4
         - games
   /games/{id}:
     get:
@@ -1031,8 +1218,8 @@ paths:
                     enum:
                       - EASY
                       - NORMAL
-                      - HIDDEN_NORMAL
                       - HARD
+                      - VERY_HARD
                   mode:
                     type: string
                     enum:
@@ -1256,7 +1443,7 @@ paths:
                   - conquereds
                   - neighbors
           description: ''
-      tags: *ref_3
+      tags: *ref_4
     patch:
       operationId: GameController_update
       parameters:
@@ -1304,8 +1491,8 @@ paths:
                     enum:
                       - EASY
                       - NORMAL
-                      - HIDDEN_NORMAL
                       - HARD
+                      - VERY_HARD
                   mode:
                     type: string
                     enum:
@@ -1529,7 +1716,7 @@ paths:
                   - conquereds
                   - neighbors
           description: ''
-      tags: *ref_3
+      tags: *ref_4
   /games:
     post:
       operationId: GameController_create
@@ -1546,8 +1733,8 @@ paths:
                   enum:
                     - EASY
                     - NORMAL
-                    - HIDDEN_NORMAL
                     - HARD
+                    - VERY_HARD
                 mode:
                   type: string
                   enum:
@@ -1581,8 +1768,8 @@ paths:
                     enum:
                       - EASY
                       - NORMAL
-                      - HIDDEN_NORMAL
                       - HARD
+                      - VERY_HARD
                   mode:
                     type: string
                     enum:
@@ -1806,7 +1993,7 @@ paths:
                   - conquereds
                   - neighbors
           description: ''
-      tags: *ref_3
+      tags: *ref_4
   /games/{id}/logging/turn-act:
     post:
       operationId: GameController_loggingTurnAct
@@ -1865,8 +2052,8 @@ paths:
                     enum:
                       - EASY
                       - NORMAL
-                      - HIDDEN_NORMAL
                       - HARD
+                      - VERY_HARD
                   mode:
                     type: string
                     enum:
@@ -2090,7 +2277,7 @@ paths:
                   - conquereds
                   - neighbors
           description: ''
-      tags: *ref_3
+      tags: *ref_4
 info:
   title: API Doc
   description: API Doc Description
