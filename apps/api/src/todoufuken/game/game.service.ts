@@ -7,8 +7,8 @@ import {
   UpdateGameInputDto,
   GameResponse,
   GameResult,
-} from 'schema/dist/todofuken/game';
-import { CreateGameLogInputDto, GameLogResponse } from 'schema/dist/todofuken/game/log';
+} from 'schema/dist/todoufuken/game';
+import { CreateGameLogInputDto, GameLogResponse } from 'schema/dist/todoufuken/game/log';
 import { JwtDecodedUser } from 'schema/dist/user';
 import { InjectionToken } from 'src/config/environments/constants/injection-token.enum';
 import { PrismaService } from 'src/prisma/prisma.service';

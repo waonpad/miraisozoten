@@ -1,4 +1,4 @@
-import { CreateGameInput, GameResponse } from 'schema/dist/todofuken/game';
+import { CreateGameInput, GameResponse } from 'schema/dist/todoufuken/game';
 
 import { axios } from '@/lib/axios';
 import { useMutation, MutationConfig } from '@/lib/react-query';
@@ -14,7 +14,7 @@ type UseStartGameOptions = {
 export const useStartGame = ({ config }: UseStartGameOptions = {}) => {
   return useMutation({
     // onSuccess: (res) => {
-    //   queryClient.invalidateQueries([QUERY_KEYS.TODOFUKEN_GAMES, res.id]);
+    //   queryClient.invalidateQueries([QUERY_KEYS.TODOUFUKEN_GAMES, res.id]);
     // },
     ...config,
     mutationFn: startGame,

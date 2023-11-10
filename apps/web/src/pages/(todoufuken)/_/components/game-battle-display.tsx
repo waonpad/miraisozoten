@@ -1,5 +1,5 @@
 import { PrefectureResponse } from 'schema/dist/prefecture';
-import { GameResponse } from 'schema/dist/todofuken/game';
+import { GameResponse } from 'schema/dist/todoufuken/game';
 
 export type GameBattleVSProps = {
   prefecture: PrefectureResponse;

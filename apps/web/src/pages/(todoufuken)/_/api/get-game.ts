@@ -1,5 +1,5 @@
 import { Game } from 'database';
-import { GameResponse } from 'schema/dist/todofuken/game';
+import { GameResponse } from 'schema/dist/todoufuken/game';
 
 import { axios } from '@/lib/axios';
 import { QueryConfig, ExtractFnReturnType, useQuery, QUERY_KEYS } from '@/lib/react-query';
@@ -18,7 +18,7 @@ type UseGameOptions = {
 export const useGame = ({ id, config }: UseGameOptions) => {
   return useQuery<ExtractFnReturnType<QueryFnType>>({
     ...config,
-    queryKey: [QUERY_KEYS.TODOFUKEN_GAMES, id],
+    queryKey: [QUERY_KEYS.TODOUFUKEN_GAMES, id],
     queryFn: () => getGame({ id }),
   });
 };

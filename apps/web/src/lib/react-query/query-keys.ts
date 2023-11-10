@@ -3,6 +3,6 @@ export const QUERY_KEYS = {
   AUTH_USER: 'auth-user',
   WEAPONS: 'weapons',
   PREFECTURES: 'prefectures',
-  TODOFUKEN_GAMES: 'todofuken-games',
+  TODOUFUKEN_GAMES: 'todoufuken-games',
   PREFECTURE_STATS_METADATA: 'prefecture-stats-metadata',
 } as const;
