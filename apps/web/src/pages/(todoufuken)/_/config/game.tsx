@@ -1,3 +1,5 @@
+import { GameDifficulty, GameMode } from 'schema/dist/todoufuken/game';
+
 import { GameStatus } from '../components/game-status';
 import { GameBattle } from '../components/screens/game-battle';
 import { GameLobby } from '../components/screens/game-lobby';
@@ -45,6 +47,18 @@ export const GameScreen = {
   ),
   result: <GameResult />,
 } satisfies { [key in GameScreenKey]: JSX.Element };
+
+export const LabeledGameDifficulty = {
+  EASY: 'easy',
+  NORMAL: 'normal',
+  HARD: 'hard',
+  VERY_HARD: 'very hard',
+} as const satisfies Record<GameDifficulty, string>;
+
+export const LabeledGameMode = {
+  REGIONAL: '地方制覇',
+  NATIONWIDE: '全国制覇',
+} as const satisfies Record<GameMode, string>;
 
 export const PickCount = {
   EASY: 3,
