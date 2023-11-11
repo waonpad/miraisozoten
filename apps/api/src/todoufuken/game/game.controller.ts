@@ -117,4 +117,21 @@ export class GameController {
   ): Promise<GameLogResponse> {
     return this.gameService.submitGameTurnAct(id, createGameLogInputDto, user);
   }
+
+  @Patch(':id/give-up')
+  @UseGuards(AuthGuard)
+  @ApiParam({
+    name: 'id',
+    type: String,
+    example: 'uuid-uuid-uuid-uuid',
+  })
+  @ApiOkResponse(generateApiResponseOptions({ schema: GameResponseSchema }))
+  async giveUp(
+    @Param('id')
+    id: string,
+    @User()
+    user: JwtDecodedUser
+  ): Promise<GameResponse> {
+    return this.gameService.giveUpGame(id, user);
+  }
 }

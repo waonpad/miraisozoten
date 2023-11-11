@@ -33,7 +33,7 @@ export class GameService {
   async createGame(data: CreateGameInputDto, user: JwtDecodedUser): Promise<GameResponse> {
     const game = await this.prisma.game.create({
       data: {
-        state: 'PREPARING', // 作成した時点でターンのサイクルに入るので、STARTINGではなくPREPARING
+        state: 'PLAYING',
         difficulty: data.difficulty,
         mode: data.mode,
         prefecture: {
@@ -141,5 +141,17 @@ export class GameService {
         opponent: true,
       },
     });
+  }
+
+  async giveUpGame(id: Game['id'], user: JwtDecodedUser): Promise<GameResponse> {
+    const game = await this.prisma.game.update({
+      where: { id, userId: user.sub },
+      data: {
+        state: 'GIVEN_UP',
+      },
+      include: gameDefaultInclude,
+    });
+
+    return computeGameData({ game, prisma: this.prisma });
   }
 }

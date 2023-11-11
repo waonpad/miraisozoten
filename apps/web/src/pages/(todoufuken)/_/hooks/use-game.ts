@@ -132,7 +132,7 @@ export const useGameCtx = () => {
         gameQuery.data.state === 'FINISHED'
           ? 'result'
           : // 途中だったらそこから
-          ['PREPARING', 'ACTING'].includes(gameQuery.data.state)
+          gameQuery.data.state === 'PLAYING'
           ? 'turnAction'
           : // どれでもなければロビー(どれでも無い場合は今のところ起こらない)
             'lobby'
