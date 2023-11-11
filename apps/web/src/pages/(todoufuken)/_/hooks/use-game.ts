@@ -42,11 +42,8 @@ export const useGameCtx = () => {
   const [screen, setScreen] = useState<GameScreenKey | null>(!gameId ? 'lobby' : null);
 
   // ゲーム開始前の設定
+  // これもここで持っておく必要はなさそう
   const [gameSettings, setGameSettings] = useState<Partial<CreateGameInput>>({});
-
-  // ターンのアクション
-  // 毎ターン初期化する
-  const [turnAct, setTurnAct] = useState<Partial<CreateGameLogInput>>({});
 
   const changeScreen = (screen: GameScreenKey) => {
     setScreen(screen);
@@ -62,16 +59,11 @@ export const useGameCtx = () => {
 
   // ゲームのstateを変えないといけない！
   const changeScreenNextTurn = () => {
-    // 初期化
-    setTurnAct({});
-
-    setScreen('highLow');
+    setScreen('turnAction');
   };
 
   // ゲームのstateを変えないといけない！
   const changeScreenResult = () => {
-    // リザルトに行ったらもうゲームに戻ることはないが、一応初期化
-    setTurnAct({});
     // cookieから削除する
     removeCookie(COOKIE_NAMES.CURRENT_todoufuken_GAME_ID);
 
@@ -97,13 +89,13 @@ export const useGameCtx = () => {
       await queryClient.invalidateQueries([QUERY_KEYS.TODOUFUKEN_GAMES, res.id]);
 
       // ゲームのデータが取得できたら画面を遷移する
-      changeScreen('highLow');
+      changeScreen('turnAction');
     } else {
       throw new Error('ゲームの作成に失敗しました');
     }
   };
 
-  const submitTurnAct = async () => {
+  const submitTurnAct = async (turnAct: Partial<CreateGameLogInput>) => {
     // バリデーション
     const data = CreateGameLogInputSchema.parse(turnAct);
 
@@ -118,7 +110,7 @@ export const useGameCtx = () => {
       await queryClient.invalidateQueries([QUERY_KEYS.TODOUFUKEN_GAMES, res.gameId]);
 
       // ゲームのデータが取得できたら画面を遷移する
-      changeScreen('battle');
+      changeScreen('turnResult');
     } else {
       throw new Error('ターンのアクションの送信に失敗しました');
     }
@@ -141,7 +133,7 @@ export const useGameCtx = () => {
           ? 'result'
           : // 途中だったらそこから
           ['PREPARING', 'ACTING'].includes(gameQuery.data.state)
-          ? 'highLow'
+          ? 'turnAction'
           : // どれでもなければロビー(どれでも無い場合は今のところ起こらない)
             'lobby'
       );
@@ -156,14 +148,12 @@ export const useGameCtx = () => {
     game: gameQuery.data,
     screen,
     gameSettings,
-    turnAct,
     changeScreen,
     changeScreenNext,
     changeScreenNextTurn,
     changeScreenResult,
     setGameSettings,
     startGame,
-    setTurnAct,
     submitTurnAct,
   };
 };
