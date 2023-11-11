@@ -1,7 +1,16 @@
-export const Loader = () => 'Route loader';
-export const Action = () => 'Route action';
-export const Catch = () => <div>Route errorrrrrr</div>;
+import { Button } from 'ui/components/ui/button';
 
-export default function Home() {
-  return <h1>Home - Basic</h1>;
+import { Link } from '@/router';
+
+export default function Page() {
+  return (
+    <>
+      <div>タイトル</div>
+      <Button asChild>
+        <Link to="/">About</Link>
+      </Button>
+      <div>タイトル画像を配置</div>
+      <div>キャッチコピー</div>
+    </>
+  );
 }
