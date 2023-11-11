@@ -30,7 +30,7 @@ export const GameHeader = () => {
     await giveUpGameMutaiton.mutateAsync({ id: game.id });
 
     // cookieを削除して、次アクセスした時別のゲームを始められるようにする
-    removeCookie(COOKIE_NAMES.CURRENT_todoufuken_GAME_ID);
+    removeCookie(COOKIE_NAMES.CURRENT_TODOUFUKEN_GAME_ID);
 
     // TODO: ギブアップしたら、メニューに戻る
     navigate('/');
