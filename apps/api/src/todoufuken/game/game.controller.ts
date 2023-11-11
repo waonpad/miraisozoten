@@ -6,10 +6,21 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBody, ApiOkResponse, ApiCreatedResponse, ApiParam, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiOkResponse,
+  ApiCreatedResponse,
+  ApiParam,
+  ApiTags,
+  ApiQuery,
+} from '@nestjs/swagger';
 
+import { z } from 'nestjs-zod/z';
+import { PageNumberPaginationMeta } from 'prisma-extension-pagination';
+import { PageNumberPaginationMetaResponseSchema } from 'schema/dist/common/pagination';
 import {
   CreateGameInputDto,
   CreateGameInputSchema,
@@ -17,6 +28,7 @@ import {
   UpdateGameInputSchema,
   GameResponse,
   GameResponseSchema,
+  GetGamesQueryDto,
 } from 'schema/dist/todoufuken/game';
 import {
   CreateGameLogInputDto,
@@ -38,6 +50,48 @@ export class GameController {
   @ApiOkResponse(generateApiResponseOptions({ schema: GameResponseSchema }))
   async openApiSchema(): Promise<void> {
     return Promise.reject(new NotFoundException());
+  }
+
+  @Get()
+  @ApiQuery({
+    name: 'page',
+    type: String,
+    example: '1',
+  })
+  @ApiQuery({
+    name: 'limit',
+    type: String,
+    example: '10',
+  })
+  @ApiQuery({
+    name: 'state',
+    type: String,
+    example: 'PLAYING',
+  })
+  @ApiQuery({
+    name: 'difficulty',
+    type: String,
+    example: 'EASY',
+  })
+  @ApiQuery({
+    name: 'mode',
+    type: String,
+    example: 'NATIONWIDE',
+  })
+  @ApiQuery({
+    name: 'userId',
+    type: String,
+    example: 'uuid-uuid-uuid-uuid',
+  })
+  @ApiOkResponse(
+    generateApiResponseOptions({
+      schema: z.tuple([z.array(GameResponseSchema), PageNumberPaginationMetaResponseSchema]),
+    })
+  )
+  async getAllGame(
+    @Query() query: GetGamesQueryDto
+  ): Promise<[GameResponse[], PageNumberPaginationMeta]> {
+    return this.gameService.getAllGame(query);
   }
 
   @Get(':id')

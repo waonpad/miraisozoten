@@ -1,12 +1,14 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Game } from 'database';
 
+import { PageNumberPaginationMeta } from 'schema/dist/common/pagination';
 import { PrefectureStatsConfig } from 'schema/dist/prefecture/stats';
 import {
   CreateGameInputDto,
   UpdateGameInputDto,
   GameResponse,
   GameResult,
+  GetGamesQueryDto,
 } from 'schema/dist/todoufuken/game';
 import { CreateGameLogInputDto, GameLogResponse } from 'schema/dist/todoufuken/game/log';
 import { JwtDecodedUser } from 'schema/dist/user';
@@ -18,6 +20,23 @@ import { gameDefaultInclude } from './config/game-include-default';
 @Injectable()
 export class GameService {
   constructor(@Inject(InjectionToken.PRISMA_SERVICE) private readonly prisma: PrismaService) {}
+
+  async getAllGame(query: GetGamesQueryDto): Promise<[GameResponse[], PageNumberPaginationMeta]> {
+    const { page, limit, ...rest } = query;
+
+    const games = await this.prisma
+      .pg()
+      .game.paginate({ where: { ...rest }, include: gameDefaultInclude })
+      .withPages({ page, limit, includePageCount: true });
+
+    const computedGames = await Promise.all(
+      games[0].map((game) => computeGameData({ game, prisma: this.prisma }))
+    );
+
+    // NOTICE: なぜか型の補完が行われないが、正常にprismaの拡張によって計算されているため
+    // 型アサーションしている
+    return [computedGames as GameResponse[], games[1]];
+  }
 
   async getGame(id: Game['id'], user: JwtDecodedUser): Promise<GameResponse | null> {
     const game = await this.prisma.game.findUnique({
