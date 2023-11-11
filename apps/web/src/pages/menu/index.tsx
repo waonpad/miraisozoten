@@ -47,7 +47,7 @@ export default function Page() {
 
       <Link to="/game">プレイ</Link>
       {/* TODO: 後で成績ページへのリンクに変える */}
-      <Link to="/">成績</Link>
+      <Link to="/archives">成績</Link>
       {/* TODO: 後でランキングページへのリンクに変える */}
       <Link to="/">ランキング</Link>
 
