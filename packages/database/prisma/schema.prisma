@@ -93,10 +93,9 @@ model Region {
 }
 
 enum GameState {
-  STARTING
-  PREPARING
-  ACTING
+  PLAYING
   FINISHED
+  GIVEN_UP
 }
 
 enum GameDifficulty {
