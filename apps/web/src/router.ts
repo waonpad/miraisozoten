@@ -10,6 +10,7 @@ export type Path =
   | `/game`
   | `/login`
   | `/logout`
+  | `/menu`
   | `/posts`
   | `/posts/:id`
   | `/posts/:id/:pid?`
