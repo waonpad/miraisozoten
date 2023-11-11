@@ -7,7 +7,7 @@ export default function Page() {
     <>
       <div>タイトル</div>
       <Button asChild>
-        <Link to="/">About</Link>
+        <Link to="/menu">開始</Link>
       </Button>
       <div>タイトル画像を配置</div>
       <div>キャッチコピー</div>
