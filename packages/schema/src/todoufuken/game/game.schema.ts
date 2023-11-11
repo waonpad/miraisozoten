@@ -5,6 +5,7 @@ import { z } from 'nestjs-zod/z';
 // import { SchemaObject } from 'openapi3-ts/oas31';
 import { z as zod } from 'zod';
 
+import { PageNumberPaginationOptionsSchema } from '../../common';
 import { PrefectureShema } from '../../prefecture';
 import { RegionShema } from '../../prefecture/region';
 import { UserShema } from '../../user';
@@ -24,6 +25,15 @@ export const GameShema = z.object({
   createdAt: z.date(),
   updatedAt: z.date(),
 });
+
+export const GetGamesQuerySchema = z
+  .object({
+    state: GameShema.shape.state.optional(),
+    difficulty: GameShema.shape.difficulty.optional(),
+    mode: GameShema.shape.mode.optional(),
+    userId: z.string().optional(),
+  })
+  .merge(PageNumberPaginationOptionsSchema);
 
 export const CreateGameInputSchema = GameShema.pick({
   difficulty: true,
@@ -52,11 +62,15 @@ export const GameResponseSchema = GameShema.merge(
   })
 ) satisfies z.ZodType<Game & { prefecture: Prefecture; user: User; logs: GameLog[] }>;
 
+export type GetGamesQuery = z.infer<typeof GetGamesQuerySchema>;
+
 export type CreateGameInput = z.infer<typeof CreateGameInputSchema>;
 
 export type UpdateGameInput = z.infer<typeof UpdateGameInputSchema>;
 
 export type GameResponse = z.infer<typeof GameResponseSchema>;
+
+export class GetGamesQueryDto extends createZodDto(GetGamesQuerySchema) {}
 
 export class CreateGameInputDto extends createZodDto(CreateGameInputSchema) {}
 
