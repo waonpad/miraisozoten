@@ -33,7 +33,7 @@ export const GameHeader = () => {
     removeCookie(COOKIE_NAMES.CURRENT_TODOUFUKEN_GAME_ID);
 
     // TODO: ギブアップしたら、メニューに戻る
-    navigate('/');
+    navigate('/menu');
   };
 
   return (

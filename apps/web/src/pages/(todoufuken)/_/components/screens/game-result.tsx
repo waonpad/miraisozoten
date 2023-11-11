@@ -28,7 +28,7 @@ export const GameResult = () => {
         タイム: {Math.floor(playTime / 60)}分{Math.floor(playTime % 60)}秒
       </div>
       <Button asChild>
-        <Link to={'/'}>トップに戻る</Link>
+        <Link to={'/menu'}>トップに戻る</Link>
       </Button>
     </>
   );
