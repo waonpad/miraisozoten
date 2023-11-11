@@ -22,10 +22,10 @@ export const PrefectureOverviewDialog = ({
           <div>svgを配置</div>
           <div>{prefecture.name}</div>
           <div>{prefecture.region?.name}</div>
-          <div>隣接</div>
-          <div>{(prefecture.neighbors ?? []).map((neighbor) => neighbor.name).join(', ')}</div>
+          {/* スペースが大きくなりすぎる可能性があるため、隣接県は表示しないことにした */}
+          {/* <div>隣接</div>
+          <div>{(prefecture.neighbors ?? []).map((neighbor) => neighbor.name).join(', ')}</div> */}
           <div>基本データ</div>
-          <div>基本データを表示</div>
           <div>人口: </div>
           <div>面積: </div>
           <DialogFooter>

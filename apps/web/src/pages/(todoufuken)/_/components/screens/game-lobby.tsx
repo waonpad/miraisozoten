@@ -6,6 +6,7 @@ import { Button } from 'ui/components/ui/button';
 
 import { JapanRadioSVGMap } from '@/components/maps/japan-radio-svg-map';
 import { usePrefectures } from '@/pages/(prefectures)/_/api/get-prefectures';
+import { Link } from '@/router';
 
 import { GameDifficultySelect } from '../../components/game-difficulty-select';
 import { GameModeSelect } from '../../components/game-mode-select';
@@ -16,7 +17,7 @@ import { GameModeInfo } from '../game-mode-info';
 import { GameSettingSubmit } from '../game-setting-submit';
 
 export const GameLobby = () => {
-  const { gameSettings, setGameSettings, startGame } = useGame();
+  const { gameSettings, startGame } = useGame();
 
   // モードと難易度を決定したら都道府県を選択できるようにする
   const [canSelectPrefectures, setCanSelectPrefectures] = useState(false);
@@ -52,18 +53,17 @@ export const GameLobby = () => {
   const handleClickSelectPrefecture = (prefecture: PrefectureResponse) => {
     setSelectedPrefecture(prefecture);
 
-    setGameSettings((prev) => ({
-      ...prev,
-      prefectureId: prefecture?.id,
-    }));
-  };
-
-  const handleClickStartGame = () => {
-    startGame();
+    // 選択したらゲームを開始するリクエストを送る
+    startGame({
+      ...gameSettings,
+      prefectureId: prefecture.id,
+    });
   };
 
   return (
     <>
+      {/* TODO: プロダクトのロゴを容易して配置する */}
+
       <div>{gameSettings.mode}</div>
       <div>モード</div>
       <GameModeInfo />
@@ -77,10 +77,6 @@ export const GameLobby = () => {
       {/* TODO: 設定を決定しても戻れるようにする
         (現状Submitしてもロックがかからず都道府県を選択する権利が付与される機能のみ) */}
       <GameSettingSubmit handleSubmit={() => setCanSelectPrefectures(true)} />
-
-      <Button onClick={handleClickStartGame} disabled={!selectedPrefecture}>
-        Next
-      </Button>
 
       <JapanRadioSVGMap
         selected={selectedPrefecture?.en}
@@ -96,6 +92,11 @@ export const GameLobby = () => {
           handleSelect={handleClickSelectPrefecture}
         />
       )}
+
+      <Button asChild>
+        {/* TODO: メニュー画面に戻る */}
+        <Link to={'/'}>戻る</Link>
+      </Button>
     </>
   );
 };

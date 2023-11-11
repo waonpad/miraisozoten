@@ -1,48 +1,27 @@
 import { GameDifficulty, GameMode } from 'schema/dist/todoufuken/game';
 
-import { GameStatus } from '../components/game-status';
-import { GameBattle } from '../components/screens/game-battle';
+import { GameHeader } from '../components/game-header';
 import { GameLobby } from '../components/screens/game-lobby';
 import { GameResult } from '../components/screens/game-result';
-import { GameSelectFactor } from '../components/screens/game-select-factor';
-import { GameSelectHighLow } from '../components/screens/game-select-high-low';
-import { GameSelectOpponent } from '../components/screens/game-select-opponent';
+import { GameTurnAction } from '../components/screens/game-turn-action';
+import { GameTurnResult } from '../components/screens/game-turn-result';
 
-export const GameScreenKey = [
-  'lobby',
-  'highLow',
-  'selectFactor',
-  'selectOppo',
-  'battle',
-  'result',
-] as const;
+export const GameScreenKey = ['lobby', 'turnAction', 'turnResult', 'result'] as const;
 
 export type GameScreenKey = (typeof GameScreenKey)[number];
 
 export const GameScreen = {
   lobby: <GameLobby />,
-  highLow: (
+  turnAction: (
     <>
-      <GameStatus />
-      <GameSelectHighLow />
+      <GameHeader />
+      <GameTurnAction />
     </>
   ),
-  selectFactor: (
+  turnResult: (
     <>
-      <GameStatus />
-      <GameSelectFactor />
-    </>
-  ),
-  selectOppo: (
-    <>
-      <GameStatus />
-      <GameSelectOpponent />
-    </>
-  ),
-  battle: (
-    <>
-      <GameStatus />
-      <GameBattle />
+      <GameHeader />
+      <GameTurnResult />
     </>
   ),
   result: <GameResult />,
