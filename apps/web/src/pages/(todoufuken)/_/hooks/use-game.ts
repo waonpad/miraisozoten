@@ -71,7 +71,7 @@ export const useGameCtx = () => {
   };
 
   // ログインしていない場合どうする？
-  const startGame = async () => {
+  const startGame = async (gameSettings: Partial<CreateGameInput>) => {
     // バリデーション
     const data = CreateGameInputSchema.parse(gameSettings);
 

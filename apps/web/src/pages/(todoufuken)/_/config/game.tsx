@@ -1,6 +1,6 @@
 import { GameDifficulty, GameMode } from 'schema/dist/todoufuken/game';
 
-import { GameStatus } from '../components/game-status';
+import { GameHeader } from '../components/game-header';
 import { GameLobby } from '../components/screens/game-lobby';
 import { GameResult } from '../components/screens/game-result';
 import { GameTurnAction } from '../components/screens/game-turn-action';
@@ -14,13 +14,13 @@ export const GameScreen = {
   lobby: <GameLobby />,
   turnAction: (
     <>
-      <GameStatus />
+      <GameHeader />
       <GameTurnAction />
     </>
   ),
   turnResult: (
     <>
-      <GameStatus />
+      <GameHeader />
       <GameTurnResult />
     </>
   ),

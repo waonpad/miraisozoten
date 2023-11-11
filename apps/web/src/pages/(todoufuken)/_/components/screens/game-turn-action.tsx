@@ -43,7 +43,10 @@ export const GameTurnAction = () => {
   // 選択肢一覧を、表示に必要な情報に変換
   const factors = getAllFactors(prefectures, game);
 
+  // TODO: 修正
   // 選択肢を選択したら、ターンの行動が揃うので、バックエンドに送信
+  // 取り敢えず、対戦相手県を先に選択して、その後に選択肢を選択るパターンを想定
+  // 逆の場合は、handleClickSelectOpponentにsubmitTurnActを入れる
   const handleClcikSelectFactor = (factor: ReturnType<typeof getAllFactors>[number]) => {
     submitTurnAct({
       ...turnAct,
@@ -54,11 +57,6 @@ export const GameTurnAction = () => {
 
   return (
     <>
-      {/* 対戦に使う自分側のデータは吸収した県のものになる可能性があるため
-      最初は一番最初に選んだ県を表示しておき、選択肢が他の県のものだった場合
-      その県のsvgを表示するようにする？ */}
-      {/* 相手の県も、選ばれるまでは空白になってしまう
-      どうする？ */}
       {game.neighbors.map((neighbor) => (
         <Button key={neighbor.id} onClick={() => handleClickSelectOpponent(neighbor.id)}>
           {neighbor.name}

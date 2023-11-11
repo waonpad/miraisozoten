@@ -39,7 +39,7 @@ export const GameStatus = () => {
 
   return (
     <>
-      <div>征服済み: {conqueredsCount} / 47</div>
+      <div>制覇数: {conqueredsCount} / 47</div>
       <div>ミス: {missCount}</div>
       {/* 秒ミリ秒を、分秒に変換 */}
       <div>
