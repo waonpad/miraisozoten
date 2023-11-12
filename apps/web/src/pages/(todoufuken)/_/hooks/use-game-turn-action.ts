@@ -10,16 +10,26 @@ import { useSubmitGameTurnAction } from '../api/submit-game-turn-action';
 
 import { useGame } from './use-game';
 
+/**
+ * @description
+ * ターンの行動を管理するフック
+ */
 export const useGameTurnAction = () => {
   const { game, changeScreen } = useGame();
 
   const submitGameTurnActionMutation = useSubmitGameTurnAction();
 
-  // 初期値に勝敗条件を設定して、ターンの行動を記録するステートを作成
+  /**
+   * 初期値に勝敗条件をランダムで設定して、ターンの行動を記録するステートを作成
+   */
   const [turnAction, setTurnAction] = useState<Partial<CreateGameLogInput>>({
     highLow: randomElement([...HighLow]),
   });
 
+  /**
+   * @description
+   * ターンの行動を送信する関数
+   */
   const submitTurnAction = async (turnAction: Partial<CreateGameLogInput>) => {
     // バリデーション
     const data = CreateGameLogInputSchema.parse(turnAction);
@@ -37,7 +47,7 @@ export const useGameTurnAction = () => {
       // ゲームのデータが取得できたら画面を遷移する
       changeScreen('turnResult');
     } else {
-      throw new Error('ターンのアクションの送信に失敗しました');
+      throw new Error();
     }
   };
 

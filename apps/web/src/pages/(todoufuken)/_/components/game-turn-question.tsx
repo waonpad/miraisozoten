@@ -8,6 +8,10 @@ export type GameTurnQuestionProps = {
   opponentPrefecture: PrefectureResponse;
 };
 
+/**
+ * @description
+ * 問題文を表示するコンポーネント
+ */
 export const GameTurnQuestion = ({ highLow, opponentPrefecture }: GameTurnQuestionProps) => {
   return (
     <div>

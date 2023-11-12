@@ -1,6 +1,3 @@
-import { PrefectureResponse } from 'schema/dist/prefecture';
-import { PrefectureStatsName } from 'schema/dist/prefecture/stats';
-import { GameResponse } from 'schema/dist/todoufuken/game';
 import { Button } from 'ui/components/ui/button';
 
 import { usePrefectures } from '@/pages/(prefectures)/_/api/get-prefectures';
@@ -8,18 +5,33 @@ import { assert } from '@/utils/asset';
 
 import { LabeledTurnResult } from '../../config/game';
 import { useGame } from '../../hooks/use-game';
-import { computeFactors } from '../../utils/compute-factors';
+import { getTurnFactor } from '../../utils/get-turn-factor';
 import { GameBattleDisplay } from '../game-battle-display';
 
+/**
+ * @description
+ * ターンの結果を表示する画面 \
+ * 勝敗結果と、自分と相手のデータを表示する
+ */
 export const GameTurnResult = () => {
   const { game, changeScreenNextTurn, changeScreenResult } = useGame();
   assert(game);
 
+  // 都道府県のデータを取得
   const prefecturesQuery = usePrefectures();
   const prefectures = prefecturesQuery.data!;
 
-  const currentTurn: GameResponse['logs'][number] = game.logs[game.logs.length - 1];
+  /**
+   * @description
+   * 現在のターンの情報 \
+   * ターンの行動を送信した後にゲームの状態が更新されるため、最後のログは現在のターンの情報
+   */
+  const currentTurn = game.logs[game.logs.length - 1];
 
+  /**
+   * @description
+   * 現在のターンに自分が使用した都道府県
+   */
   const currentTurnAllyPrefecture = prefectures.find(
     (prefecture) => prefecture.id === currentTurn.factorPrefectureId
   )!;
@@ -28,16 +40,24 @@ export const GameTurnResult = () => {
 
   const handleClickChangeScreenResult = () => changeScreenResult();
 
+  /**
+   * @description
+   * 現在のターンに自分が使用した統計データ
+   */
   const allyFactor = getTurnFactor({
     factorName: currentTurn.factorName,
     prefectures,
-    prefectureId: currentTurn.factorPrefectureId,
+    prefectureId: currentTurn.factorPrefectureId, // 自分の都道府県ID
   });
 
+  /**
+   * @description
+   * 現在のターンに使用した統計データの相手県側のデータ
+   */
   const opponentFactor = getTurnFactor({
     factorName: currentTurn.factorName,
     prefectures,
-    prefectureId: currentTurn.opponentId,
+    prefectureId: currentTurn.opponentId, // 相手の都道府県ID
   });
 
   return (
@@ -73,25 +93,4 @@ export const GameTurnResult = () => {
       </div>
     </>
   );
-};
-
-const getTurnFactor = ({
-  factorName,
-  prefectures,
-  prefectureId,
-}: {
-  factorName: PrefectureStatsName;
-  prefectures: PrefectureResponse[];
-  prefectureId: PrefectureResponse['id'];
-}) => {
-  return computeFactors(
-    prefectures.find((prefecture) => prefecture.id === prefectureId)!,
-    {
-      difficulty: 'VERY_HARD',
-      hideData: false,
-    } as GameResponse, // HACK: 関数をハックしている
-    {
-      selectFactorNames: [factorName],
-    }
-  )[0];
 };

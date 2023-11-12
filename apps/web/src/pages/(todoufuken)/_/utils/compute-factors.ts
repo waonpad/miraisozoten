@@ -4,10 +4,7 @@ import { GameResponse, GameDifficultyConfig, GameDifficulty } from 'schema/dist/
 
 /**
  * @description
- * 1. 表示するデータの名前が指定されている場合は、そのデータのみを選択する
- * 2. そうでない場合、全てのデータを選択する
- * 3. ゲームの難易度によって、表示するデータを制限する
- * 4. データをマッピングして返す
+ * 統計データをマッピングする関数
  */
 export const computeFactors = (
   prefecture: PrefectureResponse,
@@ -18,12 +15,19 @@ export const computeFactors = (
     selectFactorNames?: PrefectureStatsName[];
   } = {}
 ) => {
+  /**
+   * @description
+   * 表示するデータの名前が指定されている場合は、そのデータのみを選択する \
+   * そうでない場合、全てのデータを選択する
+   */
   const selectedPrefectureStatsConfig = Object.values(PrefectureStatsConfig).filter((conf) => {
-    // 選択するデータの名前が指定されている場合は、そのデータのみを選択する
-    // そうでない場合、全てのデータを選択する
     return selectFactorNames ? selectFactorNames.includes(conf.name) : true;
   });
 
+  /**
+   * 1. ゲームの難易度によって、表示するデータを制限する
+   * 2. データをマッピングして返す
+   */
   return selectedPrefectureStatsConfig
     .filter((conf) => {
       // そのデータを表示する最低難易度が、設定配列のどのindexにあるかを取得

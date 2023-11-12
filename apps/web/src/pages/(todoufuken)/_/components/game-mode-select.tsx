@@ -10,6 +10,10 @@ export type GameModeSelectProps = {
   handleClickGameMode: (mode: GameMode) => void;
 };
 
+/**
+ * @description
+ * ゲームのモードの選択肢を表示するコンポーネント
+ */
 export const GameModeSelect = ({ mode: currentMode, handleClickGameMode }: GameModeSelectProps) => {
   return (
     <>

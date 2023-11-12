@@ -17,18 +17,33 @@ import { GameDifficultyInfo } from '../game-difficulty-info';
 import { GameModeInfo } from '../game-mode-info';
 import { GameSettingSubmit } from '../game-setting-submit';
 
+/**
+ * @description
+ * ゲームの設定を行う画面
+ */
 export const GameLobby = () => {
   const { gameSettings, setGameSettings, startGame } = useGameSettings();
 
-  // モードと難易度を決定したら都道府県を選択できるようにする
+  /**
+   * @description
+   * 都道府県の選択可否を管理するフラグ
+   * モードと難易度を決定したら有効になる
+   */
   const [canSelectPrefectures, setCanSelectPrefectures] = useState(false);
 
-  // ダイアログに表示している都道府県のID
+  /**
+   * @description
+   * ダイアログに表示する都道府県
+   */
   const [dialogPrefecture, setDialogPrefecture] = useState<PrefectureResponse>();
 
-  // ダイアログで隣接県を表示するために毎回リクエストを飛ばすのは遅いので、ここで一括で取得しておく
+  /**
+   * @description
+   * このクエリで、ゲーム中に必要な全ての静的データが取得される \
+   * これ以降はキャッシュから取得されるため、静的データを参照する際のローディングが発生しない
+   */
   const prefecturesQuery = usePrefectures();
-  const prefectures = prefecturesQuery.data!;
+  const prefectures = prefecturesQuery.data!; // Suspenseでローディングを表示しているため、存在が保証されている
 
   /**
    * @description

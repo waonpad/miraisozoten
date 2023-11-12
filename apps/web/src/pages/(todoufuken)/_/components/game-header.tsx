@@ -12,6 +12,10 @@ import { ConfirmGiveUpDialog } from './confirm-give-up-dialog';
 import { GameStatus } from './game-status';
 import { GiveUpIconButton } from './give-up-icon-button';
 
+/**
+ * @description
+ * ゲーム中。画面上部に表示されるコンポーネント
+ */
 export const GameHeader = () => {
   const { game } = useGame();
   assert(game);
@@ -24,13 +28,16 @@ export const GameHeader = () => {
 
   const handleClickGiveUpDialogOpen = () => setIsGiveUpDialogOpen(true);
 
+  /**
+   * @description
+   * ギブアップする関数 \
+   * cookieを削除して、メニュー画面に遷移する
+   */
   const handleGiveUp = async () => {
     await giveUpGameMutaiton.mutateAsync({ id: game.id });
 
-    // cookieを削除して、次アクセスした時別のゲームを始められるようにする
     removeCookie(COOKIE_NAMES.CURRENT_TODOUFUKEN_GAME_ID);
 
-    // TODO: ギブアップしたら、メニューに戻る
     navigate('/menu');
   };
 

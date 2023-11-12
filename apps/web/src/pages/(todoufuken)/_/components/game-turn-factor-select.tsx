@@ -10,6 +10,11 @@ export type GameTurnFactorSelectProps = {
   handleClickSelectFactor: (factor: ReturnType<typeof getAllFactors>[number]) => void;
 };
 
+/**
+ * @description
+ * ターンに使用する統計データ一覧を表示するコンポーネント \
+ * ゲームの難易度によって、データの中身を表示するかを分岐している
+ */
 export const GameTurnFactorSelect = ({
   factors,
   handleClickSelectFactor,
