@@ -17,6 +17,7 @@ export type Path =
   | `/posts/:id/:pid?`
   | `/posts/:id/deep`
   | `/private`
+  | `/ranking`
   | `/splat/*`
   | `/weapons`
   | `/weapons/:id`

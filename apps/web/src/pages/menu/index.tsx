@@ -46,10 +46,8 @@ export default function Page() {
       </Dialog>
 
       <Link to="/game">プレイ</Link>
-      {/* TODO: 後で成績ページへのリンクに変える */}
       <Link to="/archives">成績</Link>
-      {/* TODO: 後でランキングページへのリンクに変える */}
-      <Link to="/">ランキング</Link>
+      <Link to="/ranking">ランキング</Link>
 
       <Link to="/attribution">使用データの出典</Link>
     </>
