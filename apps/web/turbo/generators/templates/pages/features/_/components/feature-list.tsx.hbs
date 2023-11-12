@@ -1,16 +1,16 @@
-import { useWeapons } from '../api/get-{{kebabCase name}}s';
+import { use{{pascalCase name}}s } from '../api/get-{{kebabCase name}}s';
 
-import { WeaponListItem } from './{{kebabCase name}}-list-item';
+import { {{pascalCase name}}ListItem } from './{{kebabCase name}}-list-item';
 
-export const WeaponList = () => {
-  const {{camelCase name}}sQuery = useWeapons();
+export const {{pascalCase name}}List = () => {
+  const {{camelCase name}}sQuery = use{{pascalCase name}}s();
 
   return (
     <>
       <ul>
         {({{camelCase name}}sQuery.data || []).map(({{camelCase name}}, index) => (
           <li key={index}>
-            <WeaponListItem {{camelCase name}}={ {{~camelCase name~}} } />
+            <{{pascalCase name}}ListItem {{camelCase name}}={ {{~camelCase name~}} } />
           </li>
         ))}
       </ul>

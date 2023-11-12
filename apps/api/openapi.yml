@@ -14,347 +14,6 @@ paths:
       responses:
         '200':
           description: ''
-  /weapons/-schema-:
-    get:
-      operationId: WeaponController_openApiSchema
-      parameters: []
-      responses:
-        '200':
-          content:
-            application/json; charset=utf-8:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: number
-                    nullable: false
-                    description: The id of the weapon
-                    example: 1
-                  name:
-                    type: string
-                    description: The name of the weapon
-                    example: Sword
-                  attackPower:
-                    type: number
-                    nullable: false
-                    description: The attack power of the weapon
-                    example: 10
-                  attribute:
-                    type: string
-                    enum:
-                      - SWORD
-                      - BOW
-                    description: The attribute of the weapon
-                    example: SWORD
-                required:
-                  - id
-                  - name
-                  - attackPower
-                  - attribute
-                title: WeaponSchma
-                description: The weapon schema
-          description: ''
-      tags: &ref_0
-        - weapons
-  /weapons:
-    get:
-      operationId: WeaponController_getAllWeapon
-      parameters: []
-      responses:
-        '200':
-          content:
-            application/json; charset=utf-8:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: number
-                      nullable: false
-                      description: The id of the weapon
-                      example: 1
-                    name:
-                      type: string
-                      description: The name of the weapon
-                      example: Sword
-                    attackPower:
-                      type: number
-                      nullable: false
-                      description: The attack power of the weapon
-                      example: 10
-                    attribute:
-                      type: string
-                      enum:
-                        - SWORD
-                        - BOW
-                      description: The attribute of the weapon
-                      example: SWORD
-                  required:
-                    - id
-                    - name
-                    - attackPower
-                    - attribute
-                  title: WeaponSchma
-                  description: The weapon schema
-          description: ''
-      tags: *ref_0
-    post:
-      operationId: WeaponController_create
-      parameters: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: The name of the weapon
-                  example: Sword
-                attackPower:
-                  type: number
-                  nullable: false
-                  description: The attack power of the weapon
-                  example: 10
-                attribute:
-                  type: string
-                  enum:
-                    - SWORD
-                    - BOW
-                  description: The attribute of the weapon
-                  example: SWORD
-              required:
-                - name
-                - attackPower
-                - attribute
-      responses:
-        '201':
-          content:
-            application/json; charset=utf-8:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: number
-                    nullable: false
-                    description: The id of the weapon
-                    example: 1
-                  name:
-                    type: string
-                    description: The name of the weapon
-                    example: Sword
-                  attackPower:
-                    type: number
-                    nullable: false
-                    description: The attack power of the weapon
-                    example: 10
-                  attribute:
-                    type: string
-                    enum:
-                      - SWORD
-                      - BOW
-                    description: The attribute of the weapon
-                    example: SWORD
-                required:
-                  - id
-                  - name
-                  - attackPower
-                  - attribute
-                title: WeaponSchma
-                description: The weapon schema
-          description: ''
-      tags: *ref_0
-  /weapons/pages:
-    get:
-      operationId: WeaponController_getAllWeaponWithPages
-      parameters:
-        - name: limit
-          required: true
-          in: query
-          example: '10'
-          schema:
-            type: string
-        - name: page
-          required: true
-          in: query
-          example: '1'
-          schema:
-            type: string
-      responses:
-        '200':
-          content:
-            application/json; charset=utf-8:
-              schema: {}
-          description: ''
-      tags: *ref_0
-  /weapons/{id}:
-    get:
-      operationId: WeaponController_getWeapon
-      parameters:
-        - name: id
-          required: true
-          in: path
-          example: '1'
-          schema:
-            type: string
-      responses:
-        '200':
-          content:
-            application/json; charset=utf-8:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: number
-                    nullable: false
-                    description: The id of the weapon
-                    example: 1
-                  name:
-                    type: string
-                    description: The name of the weapon
-                    example: Sword
-                  attackPower:
-                    type: number
-                    nullable: false
-                    description: The attack power of the weapon
-                    example: 10
-                  attribute:
-                    type: string
-                    enum:
-                      - SWORD
-                      - BOW
-                    description: The attribute of the weapon
-                    example: SWORD
-                required:
-                  - id
-                  - name
-                  - attackPower
-                  - attribute
-                title: WeaponSchma
-                description: The weapon schema
-          description: ''
-      tags: *ref_0
-    patch:
-      operationId: WeaponController_update
-      parameters:
-        - name: id
-          required: true
-          in: path
-          example: '1'
-          schema:
-            type: number
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: The name of the weapon
-                  example: Sword
-                attackPower:
-                  type: number
-                  nullable: false
-                  description: The attack power of the weapon
-                  example: 10
-                attribute:
-                  type: string
-                  enum:
-                    - SWORD
-                    - BOW
-                  description: The attribute of the weapon
-                  example: SWORD
-              required:
-                - name
-                - attackPower
-                - attribute
-      responses:
-        '200':
-          content:
-            application/json; charset=utf-8:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: number
-                    nullable: false
-                    description: The id of the weapon
-                    example: 1
-                  name:
-                    type: string
-                    description: The name of the weapon
-                    example: Sword
-                  attackPower:
-                    type: number
-                    nullable: false
-                    description: The attack power of the weapon
-                    example: 10
-                  attribute:
-                    type: string
-                    enum:
-                      - SWORD
-                      - BOW
-                    description: The attribute of the weapon
-                    example: SWORD
-                required:
-                  - id
-                  - name
-                  - attackPower
-                  - attribute
-                title: WeaponSchma
-                description: The weapon schema
-          description: ''
-      tags: *ref_0
-    delete:
-      operationId: WeaponController_delete
-      parameters:
-        - name: id
-          required: true
-          in: path
-          example: '1'
-          schema:
-            type: string
-      responses:
-        '200':
-          content:
-            application/json; charset=utf-8:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: number
-                    nullable: false
-                    description: The id of the weapon
-                    example: 1
-                  name:
-                    type: string
-                    description: The name of the weapon
-                    example: Sword
-                  attackPower:
-                    type: number
-                    nullable: false
-                    description: The attack power of the weapon
-                    example: 10
-                  attribute:
-                    type: string
-                    enum:
-                      - SWORD
-                      - BOW
-                    description: The attribute of the weapon
-                    example: SWORD
-                required:
-                  - id
-                  - name
-                  - attackPower
-                  - attribute
-                title: WeaponSchma
-                description: The weapon schema
-          description: ''
-      tags: *ref_0
   /auth/login:
     post:
       operationId: AuthController_login
@@ -362,7 +21,7 @@ paths:
       responses:
         '200':
           description: ''
-      tags: &ref_1
+      tags: &ref_0
         - auth
   /auth/me:
     get:
@@ -371,7 +30,7 @@ paths:
       responses:
         '200':
           description: ''
-      tags: *ref_1
+      tags: *ref_0
   /prefectures/-schema-:
     get:
       operationId: PrefectureController_openApiSchema
@@ -453,7 +112,7 @@ paths:
                   - neighbors
                   - stats
           description: ''
-      tags: &ref_2
+      tags: &ref_1
         - prefectures
   /prefectures:
     get:
@@ -538,7 +197,7 @@ paths:
                     - neighbors
                     - stats
           description: ''
-      tags: *ref_2
+      tags: *ref_1
   /prefectures/{id}:
     get:
       operationId: PrefectureController_getPrefecture
@@ -626,7 +285,7 @@ paths:
                   - neighbors
                   - stats
           description: ''
-      tags: *ref_2
+      tags: *ref_1
   /prefectures/{id}/stats:
     get:
       operationId: PrefectureController_getPrefectureStats
@@ -655,7 +314,7 @@ paths:
                   - area
                   - population
           description: ''
-      tags: *ref_2
+      tags: *ref_1
   /prefectures/{id}/neighbors:
     get:
       operationId: PrefectureController_getPrefectureNeighbors
@@ -745,7 +404,7 @@ paths:
                     - neighbors
                     - stats
           description: ''
-      tags: *ref_2
+      tags: *ref_1
   /prefecture-stats-metadata/-schema-:
     get:
       operationId: PrefectureStatsMetadataController_openApiSchema
@@ -788,7 +447,7 @@ paths:
                   - sourceUrl
                   - retrievedAt
           description: ''
-      tags: &ref_3
+      tags: &ref_2
         - prefecture-stats-metadata
   /prefecture-stats-metadata:
     get:
@@ -834,7 +493,7 @@ paths:
                     - sourceUrl
                     - retrievedAt
           description: ''
-      tags: *ref_3
+      tags: *ref_2
   /prefecture-stats-metadata/name/{name}:
     get:
       operationId: PrefectureStatsMetadataController_getPrefectureStatsMetadataByName
@@ -883,7 +542,7 @@ paths:
                   - sourceUrl
                   - retrievedAt
           description: ''
-      tags: *ref_3
+      tags: *ref_2
   /prefecture-stats-metadata/{id}:
     get:
       operationId: PrefectureStatsMetadataController_getPrefectureStatsMetadata
@@ -932,7 +591,7 @@ paths:
                   - sourceUrl
                   - retrievedAt
           description: ''
-      tags: *ref_3
+      tags: *ref_2
   /games/-schema-:
     get:
       operationId: GameController_openApiSchema
@@ -1183,7 +842,7 @@ paths:
                   - conquereds
                   - neighbors
           description: ''
-      tags: &ref_4
+      tags: &ref_3
         - games
   /games:
     get:
@@ -1231,7 +890,7 @@ paths:
             application/json; charset=utf-8:
               schema: {}
           description: ''
-      tags: *ref_4
+      tags: *ref_3
     post:
       operationId: GameController_create
       parameters: []
@@ -1506,7 +1165,7 @@ paths:
                   - conquereds
                   - neighbors
           description: ''
-      tags: *ref_4
+      tags: *ref_3
   /games/{id}:
     get:
       operationId: GameController_getGame
@@ -1763,7 +1422,7 @@ paths:
                   - conquereds
                   - neighbors
           description: ''
-      tags: *ref_4
+      tags: *ref_3
     patch:
       operationId: GameController_update
       parameters:
@@ -2034,7 +1693,7 @@ paths:
                   - conquereds
                   - neighbors
           description: ''
-      tags: *ref_4
+      tags: *ref_3
   /games/{id}/logging/turn-action:
     post:
       operationId: GameController_loggingTurnAction
@@ -2317,7 +1976,7 @@ paths:
                   - conquereds
                   - neighbors
           description: ''
-      tags: *ref_4
+      tags: *ref_3
   /games/{id}/give-up:
     patch:
       operationId: GameController_giveUp
@@ -2574,7 +2233,7 @@ paths:
                   - conquereds
                   - neighbors
           description: ''
-      tags: *ref_4
+      tags: *ref_3
 info:
   title: API Doc
   description: API Doc Description
