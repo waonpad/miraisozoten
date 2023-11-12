@@ -2035,9 +2035,9 @@ paths:
                   - neighbors
           description: ''
       tags: *ref_4
-  /games/{id}/logging/turn-act:
+  /games/{id}/logging/turn-action:
     post:
-      operationId: GameController_loggingTurnAct
+      operationId: GameController_loggingTurnAction
       parameters:
         - name: id
           required: true

@@ -5,26 +5,26 @@ import { CreateGameLogInput } from 'schema/dist/todoufuken/game/log';
 import { axios } from '@/lib/axios';
 import { useMutation, MutationConfig } from '@/lib/react-query';
 
-export const submitGameTurnAct = ({
+export const submitGameTurnAction = ({
   id,
   data,
 }: {
   id: Game['id'];
   data: CreateGameLogInput;
 }): Promise<GameLogResponse> => {
-  return axios.post(`games/${id}/logging/turn-act`, data);
+  return axios.post(`games/${id}/logging/turn-action`, data);
 };
 
-type UseSubmitGameLogTurnActOptions = {
-  config?: MutationConfig<typeof submitGameTurnAct>;
+type UseSubmitGameLogTurnActionOptions = {
+  config?: MutationConfig<typeof submitGameTurnAction>;
 };
 
-export const useSubmitGameTurnAct = ({ config }: UseSubmitGameLogTurnActOptions = {}) => {
+export const useSubmitGameTurnAction = ({ config }: UseSubmitGameLogTurnActionOptions = {}) => {
   return useMutation({
     // onSuccess: (res) => {
     //   queryClient.invalidateQueries([QUERY_KEYS.TODOUFUKEN_GAMES, res.gameId]);
     // },
     ...config,
-    mutationFn: submitGameTurnAct,
+    mutationFn: submitGameTurnAction,
   });
 };

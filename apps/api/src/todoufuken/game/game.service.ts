@@ -84,7 +84,7 @@ export class GameService {
 
   // TODO: 複数回りクエストが送られてきても、1ターンに1回しか処理されないようにする
   // TODO: 隣接県の整合性がとれているかどうかをチェックする
-  async submitGameTurnAct(
+  async submitGameTurnAction(
     id: Game['id'],
     data: CreateGameLogInputDto,
     user: JwtDecodedUser

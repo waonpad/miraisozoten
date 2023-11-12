@@ -148,9 +148,8 @@ export class GameController {
     return this.gameService.updateGame(id, updateGameInputDto, user);
   }
 
-  // メソッド名を後でいい感じにする
   // 別の方法でもログを書かないといけない可能性があるので、Dtoを複数作った方がよさそう
-  @Post(':id/logging/turn-act')
+  @Post(':id/logging/turn-action')
   @UseGuards(AuthGuard)
   @ApiParam({
     name: 'id',
@@ -161,7 +160,7 @@ export class GameController {
     schema: generateSchema(CreateGameLogInputSchema),
   })
   @ApiOkResponse(generateApiResponseOptions({ schema: GameResponseSchema }))
-  async loggingTurnAct(
+  async loggingTurnAction(
     @Param('id')
     id: string,
     @Body()
@@ -169,7 +168,7 @@ export class GameController {
     @User()
     user: JwtDecodedUser
   ): Promise<GameLogResponse> {
-    return this.gameService.submitGameTurnAct(id, createGameLogInputDto, user);
+    return this.gameService.submitGameTurnAction(id, createGameLogInputDto, user);
   }
 
   @Patch(':id/give-up')
