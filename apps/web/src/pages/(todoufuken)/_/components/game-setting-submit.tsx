@@ -1,21 +1,20 @@
 import { Button } from 'ui/components/ui/button';
 
-import { useGame } from '../hooks/use-game';
+import { useGameSettings } from '../hooks/use-game-settings';
 
 export type GameSettingSubmitProps = {
+  settings: ReturnType<typeof useGameSettings>['gameSettings'];
   handleSubmit: () => void;
 };
 
-export const GameSettingSubmit = ({ handleSubmit }: GameSettingSubmitProps) => {
-  const { gameSettings } = useGame();
-
+export const GameSettingSubmit = ({ settings, handleSubmit }: GameSettingSubmitProps) => {
   return (
     <>
-      <Button disabled={!gameSettings?.difficulty || !gameSettings.mode} onClick={handleSubmit}>
+      <Button disabled={!settings.difficulty || !settings.mode} onClick={handleSubmit}>
         都道府県選択へ
       </Button>
-      {!gameSettings?.difficulty && <div>難易度を選択してください</div>}
-      {!gameSettings?.mode && <div>モードを選択してください</div>}
+      {!settings.difficulty && <div>難易度を選択してください</div>}
+      {!settings.mode && <div>モードを選択してください</div>}
     </>
   );
 };

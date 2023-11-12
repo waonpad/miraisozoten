@@ -1,23 +1,15 @@
 import { Button } from 'ui/components/ui/button';
 
 import { Link } from '@/router';
+import { assert } from '@/utils/asset';
 
 import { useGame } from '../../hooks/use-game';
 
 export const GameResult = () => {
   const { game } = useGame();
+  assert(game);
 
-  if (!game) throw new Error('game is not found');
-
-  const conqueredsCount = game.conquereds.length;
-
-  const missCount = game.logs.filter((log) => log.result === 'LOSE').length;
-
-  const startTime = new Date(game.createdAt).getTime();
-
-  const lastLogTime = new Date(game.logs[game.logs.length - 1].createdAt).getTime();
-
-  const playTime = (lastLogTime - startTime) / 1000;
+  const { conqueredsCount, missCount, playTime } = game;
 
   return (
     <>

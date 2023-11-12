@@ -1,64 +1,44 @@
-import { GameResponse, GameResult } from 'schema/dist/todoufuken/game';
+import { PrefectureResponse } from 'schema/dist/prefecture';
+import { PrefectureStatsName } from 'schema/dist/prefecture/stats';
+import { GameResponse } from 'schema/dist/todoufuken/game';
 import { Button } from 'ui/components/ui/button';
 
 import { usePrefectures } from '@/pages/(prefectures)/_/api/get-prefectures';
+import { assert } from '@/utils/asset';
 
+import { LabeledTurnResult } from '../../config/game';
 import { useGame } from '../../hooks/use-game';
 import { computeFactors } from '../../utils/compute-factors';
 import { GameBattleDisplay } from '../game-battle-display';
 
-const LabeledTurnResult = {
-  WIN: 'WIN',
-  LOSE: 'LOSE',
-  DRAW: 'DRAW',
-} satisfies { [key in GameResult]: string };
-
 export const GameTurnResult = () => {
   const { game, changeScreenNextTurn, changeScreenResult } = useGame();
-
-  if (!game) throw new Error('game is not found');
+  assert(game);
 
   const prefecturesQuery = usePrefectures();
-
-  const prefectures = prefecturesQuery.data;
-
-  if (!prefectures) return <div>Loading...</div>;
+  const prefectures = prefecturesQuery.data!;
 
   const currentTurn: GameResponse['logs'][number] = game.logs[game.logs.length - 1];
 
   const currentTurnAllyPrefecture = prefectures.find(
     (prefecture) => prefecture.id === currentTurn.factorPrefectureId
-  ) as (typeof prefectures)[number];
+  )!;
 
-  const handleClickNextTurn = () => {
-    changeScreenNextTurn();
-  };
+  const handleClickNextTurn = () => changeScreenNextTurn();
 
-  const handleClickChangeScreenResult = () => {
-    changeScreenResult();
-  };
+  const handleClickChangeScreenResult = () => changeScreenResult();
 
-  const allyFactor = computeFactors(
-    prefectures.find((prefecture) => prefecture.id === currentTurn.factorPrefectureId)!,
-    {
-      difficulty: 'VERY_HARD',
-      hideData: false,
-    } as GameResponse, // 関数をハックしているため、リファクタリングが必要
-    {
-      selectFactorNames: [currentTurn.factorName],
-    }
-  )[0];
+  const allyFactor = getTurnFactor({
+    factorName: currentTurn.factorName,
+    prefectures,
+    prefectureId: currentTurn.factorPrefectureId,
+  });
 
-  const opponentFactor = computeFactors(
-    prefectures.find((prefecture) => prefecture.id === currentTurn.opponentId)!,
-    {
-      difficulty: 'VERY_HARD',
-      hideData: false,
-    } as GameResponse, // 関数をハックしているため、リファクタリングが必要
-    {
-      selectFactorNames: [currentTurn.factorName],
-    }
-  )[0];
+  const opponentFactor = getTurnFactor({
+    factorName: currentTurn.factorName,
+    prefectures,
+    prefectureId: currentTurn.opponentId,
+  });
 
   return (
     <>
@@ -93,4 +73,25 @@ export const GameTurnResult = () => {
       </div>
     </>
   );
+};
+
+const getTurnFactor = ({
+  factorName,
+  prefectures,
+  prefectureId,
+}: {
+  factorName: PrefectureStatsName;
+  prefectures: PrefectureResponse[];
+  prefectureId: PrefectureResponse['id'];
+}) => {
+  return computeFactors(
+    prefectures.find((prefecture) => prefecture.id === prefectureId)!,
+    {
+      difficulty: 'VERY_HARD',
+      hideData: false,
+    } as GameResponse, // HACK: 関数をハックしている
+    {
+      selectFactorNames: [factorName],
+    }
+  )[0];
 };

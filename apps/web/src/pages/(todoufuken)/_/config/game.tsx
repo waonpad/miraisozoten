@@ -1,4 +1,9 @@
-import { GameDifficulty, GameMode } from 'schema/dist/todoufuken/game';
+import {
+  GameDifficulty,
+  GameMode,
+  HighLow,
+  GameResult as GameResultType,
+} from 'schema/dist/todoufuken/game';
 
 import { GameHeader } from '../components/game-header';
 import { GameLobby } from '../components/screens/game-lobby';
@@ -27,6 +32,13 @@ export const GameScreen = {
   result: <GameResult />,
 } satisfies { [key in GameScreenKey]: JSX.Element };
 
+export const PickCount = {
+  EASY: 3,
+  NORMAL: 4,
+  HARD: 4,
+  VERY_HARD: 6,
+};
+
 export const LabeledGameDifficulty = {
   EASY: 'easy',
   NORMAL: 'normal',
@@ -39,9 +51,14 @@ export const LabeledGameMode = {
   NATIONWIDE: '全国制覇',
 } as const satisfies Record<GameMode, string>;
 
-export const PickCount = {
-  EASY: 3,
-  NORMAL: 4,
-  HARD: 4,
-  VERY_HARD: 6,
-};
+// 問題文に表示するために勝敗条件をマッピング
+export const LabeledHighLow = {
+  HIGH: '多い',
+  LOW: '少ない',
+} satisfies Record<(typeof HighLow)[number], string>;
+
+export const LabeledTurnResult = {
+  WIN: 'WIN',
+  LOSE: 'LOSE',
+  DRAW: 'DRAW',
+} satisfies { [key in GameResultType]: string };
