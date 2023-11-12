@@ -4,22 +4,23 @@ import { Button } from 'ui/components/ui/button';
 import { strictEntries } from '@/utils/strict-entries';
 
 import { LabeledGameDifficulty } from '../config/game';
-import { useGame } from '../hooks/use-game';
 
-export const GameDifficultySelect = () => {
-  const { gameSettings, setGameSettings } = useGame();
+export type GameDifficultySelectProps = {
+  difficulty?: GameDifficulty;
+  handleClickGameDifficulty: (difficulty: GameDifficulty) => void;
+};
 
-  const handleClickGameDifficulty = (difficulty: GameDifficulty) => {
-    setGameSettings({ ...gameSettings, difficulty });
-  };
-
+export const GameDifficultySelect = ({
+  difficulty: currentDifficulty,
+  handleClickGameDifficulty,
+}: GameDifficultySelectProps) => {
   return (
     <>
       {strictEntries(LabeledGameDifficulty).map(([difficulty, label]) => (
         <Button
           key={difficulty}
           onClick={() => handleClickGameDifficulty(difficulty)}
-          {...(gameSettings.difficulty === difficulty && { variant: 'destructive' })}
+          {...(difficulty === currentDifficulty && { variant: 'destructive' })}
         >
           {label}
         </Button>

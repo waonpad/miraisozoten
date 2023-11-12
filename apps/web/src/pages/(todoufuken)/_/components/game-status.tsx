@@ -1,19 +1,16 @@
 import { useEffect, useState } from 'react';
 
+import { assert } from '@/utils/asset';
+
 import { useGame } from '../hooks/use-game';
 
 export const GameStatus = () => {
   const { game } = useGame();
+  assert(game);
 
-  if (!game) throw new Error('game is not defined');
+  const { startTime, conqueredsCount, missCount, playTime: loggedPlayTime } = game;
 
   const [playTime, setPlayTime] = useState(0);
-
-  const conqueredsCount = game.conquereds.length;
-
-  const missCount = game.logs.filter((log) => log.result === 'LOSE').length;
-
-  const startTime = new Date(game.createdAt).getTime();
 
   useEffect(() => {
     setPlayTime((new Date().getTime() - startTime) / 1000);
@@ -28,12 +25,7 @@ export const GameStatus = () => {
   useEffect(() => {
     if (playTime === 0) return;
 
-    const latestLogTime =
-      game.logs.length > 0
-        ? new Date(game.logs[game.logs.length - 1].createdAt).getTime()
-        : startTime;
-
-    setPlayTime((latestLogTime - startTime) / 1000);
+    setPlayTime(loggedPlayTime);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [game.logs]);
 

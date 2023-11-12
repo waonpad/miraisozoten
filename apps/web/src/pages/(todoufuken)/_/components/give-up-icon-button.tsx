@@ -1,6 +1,10 @@
 import { Button } from 'ui/components/ui/button';
 
-export const GiveUpIconButton = ({ onClick }: { onClick: () => void }) => {
+export type GiveUpIconButtonProps = {
+  onClick: () => void;
+};
+
+export const GiveUpIconButton = ({ onClick }: GiveUpIconButtonProps) => {
   return (
     // TODO: アイコンボタンにする
     <Button onClick={onClick}>

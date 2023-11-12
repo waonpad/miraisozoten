@@ -1,55 +1,39 @@
-import { useState } from 'react';
-
-import { HighLow } from 'schema/dist/todoufuken/game';
-import { CreateGameLogInput } from 'schema/dist/todoufuken/game/log';
 import { Button } from 'ui/components/ui/button';
 
 import { usePrefectures } from '@/pages/(prefectures)/_/api/get-prefectures';
-import { randomElement } from '@/utils/random';
+import { assert } from '@/utils/asset';
 
 import { useGame } from '../../hooks/use-game';
+import { useGameTurnAction } from '../../hooks/use-game-turn-action';
 import { getAllFactors } from '../../utils/gat-all-factors';
 import { GameBattleDisplay } from '../game-battle-display';
 import { GameTurnFactorSelect } from '../game-turn-factor-select';
 import { GameTurnQuestion } from '../game-turn-question';
 
 export const GameTurnAction = () => {
-  const { game, submitTurnAct } = useGame();
+  const { game } = useGame();
+  assert(game);
 
-  if (!game) throw new Error('game is not found');
-
-  // 初期値に勝敗条件を設定して、ターンの行動を記録するステートを作成
-  const [turnAct, setTurnAct] = useState<Partial<CreateGameLogInput>>({
-    highLow: randomElement([...HighLow]),
-  });
+  const { turnAction, setTurnAction, submitTurnAction } = useGameTurnAction();
 
   // 都道府県のデータを取得
   const prefecturesQuery = usePrefectures();
-
-  const prefectures = prefecturesQuery.data;
-
-  if (!prefectures) {
-    return <div>loading...</div>;
-  }
+  const prefectures = prefecturesQuery.data!;
+  // 選択肢一覧を、表示に必要な情報に変換
+  const factors = getAllFactors(prefectures, game);
 
   // 対戦相手となる都道府県を選択したら、ターンの行動を記録するステートに反映
   const handleClickSelectOpponent = (opponentId: number) => {
-    setTurnAct((prev) => ({
-      ...prev,
-      opponentId,
-    }));
+    setTurnAction((prev) => ({ ...prev, opponentId }));
   };
-
-  // 選択肢一覧を、表示に必要な情報に変換
-  const factors = getAllFactors(prefectures, game);
 
   // TODO: 修正
   // 選択肢を選択したら、ターンの行動が揃うので、バックエンドに送信
   // 取り敢えず、対戦相手県を先に選択して、その後に選択肢を選択るパターンを想定
-  // 逆の場合は、handleClickSelectOpponentにsubmitTurnActを入れる
+  // 逆の場合は、handleClickSelectOpponentにsubmitTurnActionを入れる
   const handleClcikSelectFactor = (factor: ReturnType<typeof getAllFactors>[number]) => {
-    submitTurnAct({
-      ...turnAct,
+    submitTurnAction({
+      ...turnAction,
       factorPrefectureId: factor.prefecture.id,
       factorName: factor.name,
     });
@@ -57,6 +41,7 @@ export const GameTurnAction = () => {
 
   return (
     <>
+      {/* 相手県を選択するエリア */}
       {game.neighbors.map((neighbor) => (
         <Button key={neighbor.id} onClick={() => handleClickSelectOpponent(neighbor.id)}>
           {neighbor.name}
@@ -64,21 +49,22 @@ export const GameTurnAction = () => {
       ))}
       {/* 対戦相手が選択されていない可能性がある */}
       {/* とりあえず選択されるまで非表示にしておく */}
-      {!!turnAct.opponentId && (
+      {!!turnAction.opponentId && (
         <GameBattleDisplay
-          prefecture={findById(prefectures, turnAct.factorPrefectureId ?? game.prefectureId)!}
-          opponent={findById(prefectures, turnAct.opponentId)!}
+          prefecture={findById(prefectures, turnAction.factorPrefectureId ?? game.prefectureId)!}
+          opponent={findById(prefectures, turnAction.opponentId)!}
         />
       )}
       {/* 対戦相手県が選択されていない可能性がある */}
       {/* とりあえず選択されるまで非表示にしておく */}
-      {!!turnAct.opponentId && (
+      {!!turnAction.opponentId && (
         <GameTurnQuestion
-          highLow={turnAct.highLow!}
-          opponentPrefecture={findById(prefectures, turnAct.opponentId)!}
+          highLow={turnAction.highLow!}
+          opponentPrefecture={findById(prefectures, turnAction.opponentId)!}
         />
       )}
-      <GameTurnFactorSelect factors={factors} handleClcikSelectFactor={handleClcikSelectFactor} />
+      {/* 要素を選択するエリア */}
+      <GameTurnFactorSelect factors={factors} handleClickSelectFactor={handleClcikSelectFactor} />
     </>
   );
 };
