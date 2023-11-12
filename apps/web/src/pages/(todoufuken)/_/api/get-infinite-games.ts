@@ -1,9 +1,8 @@
-import { User } from 'database';
 import {
   PageNumberPaginationMeta,
   PageNumberPaginationOptions,
 } from 'schema/dist/common/pagination';
-import { GameResponse } from 'schema/dist/todoufuken/game';
+import { GameResponse, GetGamesQueryDto } from 'schema/dist/todoufuken/game';
 
 import { axios } from '@/lib/axios';
 import {
@@ -32,9 +31,7 @@ export const getInfiniteGames = ({
 type QueryFnType = typeof getInfiniteGames;
 
 type UseInfiniteGamesOptions = {
-  params: {
-    userId: User['id'];
-  };
+  params: Omit<GetGamesQueryDto, 'page' | 'limit'>;
   config?: InfiniteQueryConfig<QueryFnType>;
 };
 
