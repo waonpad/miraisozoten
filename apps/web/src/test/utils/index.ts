@@ -4,11 +4,11 @@ import { FunctionComponent } from 'react';
 
 import { render as rtlRender, screen, waitForElementToBeRemoved } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { User, Weapon } from 'database';
+import { User } from 'database';
 import jwtDecode from 'jwt-decode';
 import { JwtDecodedUser } from 'schema/dist/user';
 
-import { userGenerator, weaponGenerator } from '@/__mocks__/server/data-generators';
+import { userGenerator } from '@/__mocks__/server/data-generators';
 import { db } from '@/__mocks__/server/db';
 import { COOKIE_NAMES } from '@/constants/cookie-names';
 import { env } from '@/constants/env';
@@ -50,12 +50,6 @@ export const createOAuthUser = () => {
 export const loginAsUser = (user: User) => {
   setCookie(COOKIE_NAMES.AUTH_TOKEN, env.VITE_VALID_TOKEN);
   return user;
-};
-
-export const createWeapon = (weaponProperties?: Partial<Weapon>) => {
-  const weapon = weaponGenerator(weaponProperties);
-  db.weapon.create(weapon);
-  return weapon;
 };
 
 export const waitForLoadingToFinish = () =>

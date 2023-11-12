@@ -10,7 +10,7 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
   return (
     <>
       <AppBar />
-      {children}
+      <main>{children}</main>
     </>
   );
 };

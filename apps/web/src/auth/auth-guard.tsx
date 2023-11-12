@@ -3,7 +3,7 @@ import { matchPath, Navigate, useLocation, useMatches } from 'react-router-dom';
 import { useAuth } from '@/auth/use-auth';
 import type { Path } from '@/router';
 
-const PRIVATE: Path[] = ['/private', '/about', '/archives'];
+const PRIVATE: Path[] = ['/game', '/archives'];
 const PUBLIC: Path[] = [];
 
 export const RETURN_TO = 'returnTo';

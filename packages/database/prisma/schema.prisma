@@ -25,26 +25,6 @@ model User {
   games         Game[]
 }
 
-model Post {
-  id        Int      @id @default(autoincrement())
-  title     String
-  content   String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-enum WeaponAttribute {
-  SWORD
-  BOW
-}
-
-model Weapon {
-  id          Int             @id @default(autoincrement())
-  name        String
-  attackPower Int
-  attribute   WeaponAttribute
-}
-
 model Prefecture {
   id         Int             @id @unique
   name       String

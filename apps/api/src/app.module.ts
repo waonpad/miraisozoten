@@ -13,12 +13,10 @@ import { PrefectureModule } from './prefecture/prefecture.module';
 import { PrefectureStatsMetadataModule } from './prefecture-stats-metadata/prefecture-stats-metadata.module';
 import { GameModule } from './todoufuken/game/game.module';
 import { UserMiddleware } from './user/user.middleware';
-import { WeaponModule } from './weapon/weapon.module';
 
 @Module({
   //importsは他のModuleでexportされたProviderを自身のModule内で使えるようにする
   imports: [
-    WeaponModule,
     LoggerModule,
     EnvModule,
     AuthModule,

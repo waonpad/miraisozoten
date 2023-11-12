@@ -3,7 +3,7 @@ import { defineConfig, loadEnv } from 'vite';
 import generouted from '@generouted/react-router/plugin';
 import yaml from '@rollup/plugin-yaml';
 
-const createEnv = require('./src/constants/env/createEnv').createEnv;
+const createEnv = require('./src/constants/env/create-env').createEnv;
 
 // https://vitejs.dev/config/
 export default ({ mode }) => {

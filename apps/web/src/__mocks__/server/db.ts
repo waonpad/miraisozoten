@@ -13,12 +13,6 @@ const models = {
     createdAt: Date,
     updatedAt: Date,
   },
-  weapon: {
-    id: primaryKey(Number),
-    name: String,
-    attackPower: Number,
-    attribute: String,
-  },
 };
 
 export const db = factory(models);

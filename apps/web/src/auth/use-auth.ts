@@ -17,11 +17,11 @@ import {
   OAuthProvider,
   signInWithCredential,
 } from '@/lib/firebase';
-import { useLogin } from '@/pages/(auth)/_/api/login';
 import { Path, useNavigate } from '@/router';
 import { removeCookie } from '@/utils/cookie/remove-cookie';
 import { createCtx } from '@/utils/create-ctx';
 
+import { useLogin } from './api/login';
 import { RETURN_TO } from './auth-guard';
 
 const [createdUseAuth, SetAuthProvider] = createCtx<ReturnType<typeof useAuthCtx>>();
