@@ -10,6 +10,10 @@ import { useStartGame } from '../api/start-game';
 
 import { useGame } from './use-game';
 
+/**
+ * @description
+ * ゲームの設定を管理するフック
+ */
 export const useGameSettings = () => {
   const { setGameId, changeScreen } = useGame();
 
@@ -17,7 +21,10 @@ export const useGameSettings = () => {
 
   const [gameSettings, setGameSettings] = useState<Partial<CreateGameInput>>({});
 
-  // ログインしていない場合どうする？
+  /**
+   * @description
+   * ゲームを開始する関数
+   */
   const startGame = async (gameSettings: Partial<CreateGameInput>) => {
     // バリデーション
     const data = CreateGameInputSchema.parse(gameSettings);
@@ -29,16 +36,15 @@ export const useGameSettings = () => {
       // ゲームIDを保存して、ゲームを取得するクエリを有効化する
       setGameId(res.id);
       // ここで初めてゲームIDが発行されるので、cookieに保存する
-      // ゲームの設定段階では、状態を保存していない(バックエンドに何も送っていないので)
       setCookie(COOKIE_NAMES.CURRENT_TODOUFUKEN_GAME_ID, res.id);
 
-      // ゲームのデータ取得を明示的に行い、待機する
+      // ゲームのデータ取得を明示的に行う
       await queryClient.invalidateQueries([QUERY_KEYS.TODOUFUKEN_GAMES, res.id]);
 
       // ゲームのデータが取得できたら画面を遷移する
       changeScreen('turnAction');
     } else {
-      throw new Error('ゲームの作成に失敗しました');
+      throw new Error();
     }
   };
 

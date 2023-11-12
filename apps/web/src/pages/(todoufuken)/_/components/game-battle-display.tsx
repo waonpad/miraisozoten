@@ -6,6 +6,10 @@ export type GameBattleVSProps = {
   opponent: GameResponse['logs'][number]['opponent'];
 };
 
+/**
+ * @description
+ * 自分側の都道府県と、対戦相手の都道府県を表示するコンポーネント
+ */
 export const GameBattleDisplay = ({ prefecture, opponent }: GameBattleVSProps) => {
   return (
     <>

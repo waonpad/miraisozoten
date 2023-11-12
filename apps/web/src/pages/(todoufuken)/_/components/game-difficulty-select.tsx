@@ -10,6 +10,10 @@ export type GameDifficultySelectProps = {
   handleClickGameDifficulty: (difficulty: GameDifficulty) => void;
 };
 
+/**
+ * @description
+ * ゲームの難易度の選択肢を表示するコンポーネント
+ */
 export const GameDifficultySelect = ({
   difficulty: currentDifficulty,
   handleClickGameDifficulty,

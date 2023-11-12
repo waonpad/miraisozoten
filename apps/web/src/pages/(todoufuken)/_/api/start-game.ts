@@ -11,6 +11,10 @@ type UseStartGameOptions = {
   config?: MutationConfig<typeof startGame>;
 };
 
+/**
+ * @description
+ * useGameSettingsフック内で明示的にゲームの再取得を行うため、onSuccessは設定しない
+ */
 export const useStartGame = ({ config }: UseStartGameOptions = {}) => {
   return useMutation({
     // onSuccess: (res) => {

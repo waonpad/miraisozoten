@@ -7,6 +7,10 @@ type ConfirmGiveUpDialogProps = {
   handleGiveUp: () => void;
 };
 
+/**
+ * @description
+ * ゲームをギブアップするか確認するダイアログ
+ */
 export const ConfirmGiveUpDialog = ({
   open,
   handleOpenChange,

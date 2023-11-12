@@ -9,6 +9,10 @@ export type PrefectureOverviewDialogProps = {
   handleSelect: (prefecture: PrefectureResponse) => void;
 };
 
+/**
+ * @description
+ * ゲームの設定画面で、都道府県の概要を表示するダイアログ
+ */
 export const PrefectureOverviewDialog = ({
   prefecture,
   open,

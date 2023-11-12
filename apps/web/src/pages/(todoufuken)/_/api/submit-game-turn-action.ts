@@ -19,6 +19,10 @@ type UseSubmitGameLogTurnActionOptions = {
   config?: MutationConfig<typeof submitGameTurnAction>;
 };
 
+/**
+ * @description
+ * useGameTurnActionフック内で明示的にゲームの再取得を行うため、onSuccessは設定しない
+ */
 export const useSubmitGameTurnAction = ({ config }: UseSubmitGameLogTurnActionOptions = {}) => {
   return useMutation({
     // onSuccess: (res) => {

@@ -7,6 +7,10 @@ export type GameSettingSubmitProps = {
   handleSubmit: () => void;
 };
 
+/**
+ * @description
+ * ゲームの難易度とモードの設定完了を確認するコンポーネント
+ */
 export const GameSettingSubmit = ({ settings, handleSubmit }: GameSettingSubmitProps) => {
   return (
     <>

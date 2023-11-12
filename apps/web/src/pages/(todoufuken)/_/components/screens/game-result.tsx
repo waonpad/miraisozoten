@@ -5,6 +5,10 @@ import { assert } from '@/utils/asset';
 
 import { useGame } from '../../hooks/use-game';
 
+/**
+ * @description
+ * ゲームの結果を表示する画面
+ */
 export const GameResult = () => {
   const { game } = useGame();
   assert(game);

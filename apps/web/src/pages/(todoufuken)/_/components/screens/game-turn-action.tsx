@@ -10,6 +10,11 @@ import { GameBattleDisplay } from '../game-battle-display';
 import { GameTurnFactorSelect } from '../game-turn-factor-select';
 import { GameTurnQuestion } from '../game-turn-question';
 
+/**
+ * @description
+ * ターンの行動を決める画面 \
+ * ランダムでhigh-lowが決まっており、ユーザーは対戦相手県と使用データを選択する
+ */
 export const GameTurnAction = () => {
   const { game } = useGame();
   assert(game);
@@ -19,10 +24,13 @@ export const GameTurnAction = () => {
   // 都道府県のデータを取得
   const prefecturesQuery = usePrefectures();
   const prefectures = prefecturesQuery.data!;
-  // 選択肢一覧を、表示に必要な情報に変換
+
+  /**
+   * @description
+   * 選択肢一覧に表示できるデータを計算した結果
+   */
   const factors = getAllFactors(prefectures, game);
 
-  // 対戦相手となる都道府県を選択したら、ターンの行動を記録するステートに反映
   const handleClickSelectOpponent = (opponentId: number) => {
     setTurnAction((prev) => ({ ...prev, opponentId }));
   };
