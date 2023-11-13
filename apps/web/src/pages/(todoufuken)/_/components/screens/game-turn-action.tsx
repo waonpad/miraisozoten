@@ -58,6 +58,7 @@ export const GameTurnAction = () => {
       <GameBattleDisplayWithOpponentSelect
         prefecture={findById(prefectures, turnAction.factorPrefectureId ?? game.prefectureId)!}
         neighbors={game.neighbors}
+        disabled={turnAction.factorPrefectureId === undefined}
         handleClickSelectOpponent={handleClickSelectOpponent}
       />
       {/* 問題文 */}

@@ -5,6 +5,7 @@ import { Button } from 'ui/components/ui/button';
 export type GameBattleDisplayWithOpponentSelectProps = {
   prefecture: PrefectureResponse;
   neighbors: GameResponse['neighbors'];
+  disabled: boolean;
   handleClickSelectOpponent: (opponentId: number) => void;
 };
 
@@ -16,6 +17,7 @@ export type GameBattleDisplayWithOpponentSelectProps = {
 export const GameBattleDisplayWithOpponentSelect = ({
   prefecture,
   neighbors,
+  disabled,
   handleClickSelectOpponent,
 }: GameBattleDisplayWithOpponentSelectProps) => {
   return (
@@ -26,7 +28,11 @@ export const GameBattleDisplayWithOpponentSelect = ({
       {/* 相手県を選択するエリア */}
       {/* リストで表示する */}
       {neighbors.map((neighbor) => (
-        <Button key={neighbor.id} onClick={() => handleClickSelectOpponent(neighbor.id)}>
+        <Button
+          key={neighbor.id}
+          onClick={() => handleClickSelectOpponent(neighbor.id)}
+          disabled={disabled}
+        >
           {neighbor.name}
         </Button>
       ))}
