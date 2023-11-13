@@ -5,7 +5,7 @@
 
 import { PrefectureStatsData } from "./types";
 
-export const Hensati = {
+export const Deviationvalue = {
   label: "大学偏差値",
   unit: "点",
   attribution: {
