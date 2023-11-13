@@ -76,8 +76,8 @@ export const LabeledGameMode = {
  * 問題文に表示する際、どのような文字列にするかの設定
  */
 export const LabeledHighLow = {
-  HIGH: '多い',
-  LOW: '少ない',
+  HIGH: '多',
+  LOW: '少な',
 } satisfies Record<(typeof HighLow)[number], string>;
 
 /**
