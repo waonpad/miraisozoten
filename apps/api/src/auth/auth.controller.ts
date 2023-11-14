@@ -1,4 +1,4 @@
-import { Controller, HttpCode, Post, UseGuards, Get } from '@nestjs/common';
+import { Controller, HttpCode, Post, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { UserResponse, JwtDecodedUser } from 'schema/dist/user';
 import { User } from 'src/user/user.decorator';
@@ -15,10 +15,5 @@ export class AuthController {
   @UseGuards(AuthGuard)
   async login(@User() user: JwtDecodedUser): Promise<UserResponse> {
     return this.authService.login(user);
-  }
-
-  @Get('me')
-  async me(@User() user: JwtDecodedUser): Promise<UserResponse | null> {
-    return this.authService.me(user);
   }
 }

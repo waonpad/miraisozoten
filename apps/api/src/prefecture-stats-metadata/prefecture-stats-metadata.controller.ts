@@ -1,10 +1,9 @@
-import { Controller, Get, NotFoundException, Param } from '@nestjs/common';
-import { ApiOkResponse, ApiParam, ApiTags } from '@nestjs/swagger';
+import { Controller, Get, NotFoundException } from '@nestjs/common';
+import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
 import {
   PrefectureStatsMetadataResponse,
   PrefectureStatsMetadataResponseSchema,
-  PrefectureStatsMetadataShema,
 } from 'schema/dist/prefecture/stats/metadata';
 import { generateApiResponseOptions } from 'src/util';
 import { PrefectureStatsMetadataService } from './prefecture-stats-metadata.service';
@@ -26,37 +25,5 @@ export class PrefectureStatsMetadataController {
   )
   async getAllPrefectureStatsMetadata(): Promise<PrefectureStatsMetadataResponse[]> {
     return this.prefectureStatsMetadataService.getAllPrefectureStatsMetadata();
-  }
-
-  @Get('name/:name')
-  @ApiParam({
-    name: 'name',
-    type: String,
-    example: 'POPULATION',
-  })
-  @ApiOkResponse(generateApiResponseOptions({ schema: PrefectureStatsMetadataResponseSchema }))
-  async getPrefectureStatsMetadataByName(
-    @Param('name')
-    name: string
-  ): Promise<PrefectureStatsMetadataResponse | null> {
-    // 簡易的にバリデーションを実装した
-    const validatedName = PrefectureStatsMetadataShema.shape.name.parse(name);
-
-    return this.prefectureStatsMetadataService.getPrefectureStatsMetadataByName(validatedName);
-  }
-
-  // 使わなさそう
-  @Get(':id')
-  @ApiParam({
-    name: 'id',
-    type: String,
-    example: '1',
-  })
-  @ApiOkResponse(generateApiResponseOptions({ schema: PrefectureStatsMetadataResponseSchema }))
-  async getPrefectureStatsMetadata(
-    @Param('id')
-    id: string
-  ): Promise<PrefectureStatsMetadataResponse | null> {
-    return this.prefectureStatsMetadataService.getPrefectureStatsMetadata(+id);
   }
 }

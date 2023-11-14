@@ -17,18 +17,10 @@ export const CreateUserInputSchema = UserShema.omit({
   id: true,
 }) satisfies z.ZodType<Prisma.UserCreateInput>;
 
-export const UpdateUserInputSchema = UserShema.omit({
-  id: true,
-}) satisfies z.ZodType<Prisma.UserUpdateInput>;
-
 export const UserResponseSchema: z.ZodType<User> = UserShema;
 
 export type CreateUserInput = z.infer<typeof CreateUserInputSchema>;
 
-export type UpdateUserInput = z.infer<typeof UpdateUserInputSchema>;
-
 export type UserResponse = z.infer<typeof UserResponseSchema>;
 
 export class CreateUserInputDto extends createZodDto(CreateUserInputSchema) {}
-
-export class UpdateUserInputDto extends createZodDto(UpdateUserInputSchema) {}

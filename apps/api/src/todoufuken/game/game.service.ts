@@ -5,7 +5,6 @@ import { PageNumberPaginationMeta } from 'schema/dist/common/pagination';
 import { PrefectureStatsConfig } from 'schema/dist/prefecture/stats';
 import {
   CreateGameInputDto,
-  UpdateGameInputDto,
   GameResponse,
   GameResult,
   GetGamesQueryDto,
@@ -62,20 +61,6 @@ export class GameService {
           connect: { id: user.sub },
         },
       },
-      include: gameDefaultInclude,
-    });
-
-    return computeGameData({ game, prisma: this.prisma });
-  }
-
-  async updateGame(
-    id: Game['id'],
-    data: UpdateGameInputDto,
-    user: JwtDecodedUser
-  ): Promise<GameResponse> {
-    const game = await this.prisma.game.update({
-      where: { id, userId: user.sub },
-      data,
       include: gameDefaultInclude,
     });
 

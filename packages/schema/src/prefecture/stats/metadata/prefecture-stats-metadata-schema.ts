@@ -20,15 +20,3 @@ export const PrefectureStatsMetadataResponseSchema: z.ZodType<PrefectureStatsMet
   PrefectureStatsMetadataShema;
 
 export type PrefectureStatsMetadataResponse = z.infer<typeof PrefectureStatsMetadataResponseSchema>;
-
-// export const PrefectureStatsMetadataQueryOptionsSchema = z.object({
-//   name: z.enum(PrefectureStatsName).optional(),
-// });
-
-// export type PrefectureStatsMetadataQueryOptions = z.infer<
-//   typeof PrefectureStatsMetadataQueryOptionsSchema
-// >;
-
-// export class PrefectureStatsMetadataQueryOptionsDto extends createZodDto(
-//   PrefectureStatsMetadataQueryOptionsSchema
-// ) {}
