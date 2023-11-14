@@ -20,7 +20,6 @@ export const authHandlers: RestHandler<MockedRequest<DefaultBodyType>>[] = [
 
     const reqUser = authenticatedReq.user as JwtDecodedUser;
 
-    // TODO: バックエンドの処理を模倣する
     try {
       const existingUser = db.user.findFirst({
         where: {
@@ -30,27 +29,43 @@ export const authHandlers: RestHandler<MockedRequest<DefaultBodyType>>[] = [
         },
       });
 
+      // 匿名ログインの場合
+      if (reqUser.provider_id === 'anonymous') {
+        reqUser.name = 'ゲスト';
+        reqUser.email = `${reqUser.sub}@example.com`;
+        reqUser.email_verified = false;
+      }
+
+      // 匿名ログインからソーシャルアカウントにリンクした場合
+      // ソーシャルアカウントのデータがマウントされないので、プロバイダーのデータから取り出してくる
+      // Google以外の場合を検証していない
+      // Googleログイン以外をすることを想定していないので、providerData[0]としている
+      if (!reqUser.name) {
+        reqUser.name = reqUser.userRecord.providerData[0].displayName;
+        reqUser.picture = reqUser.userRecord.providerData[0].photoURL;
+      }
+
       const user = existingUser
         ? db.user.update({
             where: {
               id: {
-                equals: reqUser?.sub,
+                equals: reqUser.sub,
               },
             },
             data: {
-              name: reqUser?.name,
-              email: reqUser?.email,
-              emailVerified: reqUser?.email_verified,
-              image: reqUser?.picture,
+              name: reqUser.name,
+              email: reqUser.email,
+              emailVerified: reqUser.email_verified,
+              image: reqUser.picture,
               updatedAt: new Date().toString(),
             },
           })
         : db.user.create({
-            id: reqUser?.sub,
-            name: reqUser?.name,
-            email: reqUser?.email,
-            emailVerified: reqUser?.email_verified,
-            image: reqUser?.picture,
+            id: reqUser.sub,
+            name: reqUser.name,
+            email: reqUser.email,
+            emailVerified: reqUser.email_verified,
+            image: reqUser.picture,
             createdAt: new Date().toString(),
             updatedAt: new Date().toString(),
           });
