@@ -1,1 +1,0 @@
-dreddでテストをする場合, .env.test.local.exampleのVALID_TOKENに有効なJWTトークン, INVALID_TOKENに適当な文字列を指定してください
