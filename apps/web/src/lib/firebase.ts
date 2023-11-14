@@ -12,14 +12,10 @@ const firebaseConfig = {
 
 const firebaseApp = initializeApp(firebaseConfig);
 
-console.log('firebaseApp', firebaseApp);
-
 const firebaseAuth = getAuth();
 env.VITE_FIREBASE_EMULATOR_ENABLED === 'true' &&
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   connectAuthEmulator(firebaseAuth, `http://${env.VITE_FIREBASE_AUTH_EMULATOR_HOST}`);
-
-console.log('firebaseAuth', firebaseAuth);
 
 const firebaseAuthProviders = {
   google: new GoogleAuthProvider(),
