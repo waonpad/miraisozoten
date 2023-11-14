@@ -24,8 +24,6 @@ import { PageNumberPaginationMetaResponseSchema } from 'schema/dist/common/pagin
 import {
   CreateGameInputDto,
   CreateGameInputSchema,
-  UpdateGameInputDto,
-  UpdateGameInputSchema,
   GameResponse,
   GameResponseSchema,
   GetGamesQueryDto,
@@ -124,28 +122,6 @@ export class GameController {
     user: JwtDecodedUser
   ): Promise<GameResponse> {
     return this.gameService.createGame(createGameInputDto, user);
-  }
-
-  @Patch(':id')
-  @UseGuards(AuthGuard)
-  @ApiParam({
-    name: 'id',
-    type: String,
-    example: 'uuid-uuid-uuid-uuid',
-  })
-  @ApiBody({
-    schema: generateSchema(UpdateGameInputSchema),
-  })
-  @ApiOkResponse(generateApiResponseOptions({ schema: GameResponseSchema }))
-  async update(
-    @Param('id')
-    id: string,
-    @Body()
-    updateGameInputDto: UpdateGameInputDto,
-    @User()
-    user: JwtDecodedUser
-  ): Promise<GameResponse> {
-    return this.gameService.updateGame(id, updateGameInputDto, user);
   }
 
   // 別の方法でもログを書かないといけない可能性があるので、Dtoを複数作った方がよさそう

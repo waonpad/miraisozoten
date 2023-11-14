@@ -17,6 +17,15 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+env:
+  APP_ENV: 'production'
+  HOST: 'localhost'
+  PORT: 3000
+  SENTRY_DSN: 'https://dummy.io'
+  FIREBASE_PROJECT_ID: 'dummy'
+  FIREBASE_PRIVATE_KEY: 'dummy'
+  FIREBASE_CLIENT_EMAIL: 'dummy'
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"

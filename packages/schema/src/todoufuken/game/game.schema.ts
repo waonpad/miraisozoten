@@ -41,10 +41,6 @@ export const CreateGameInputSchema = GameShema.pick({
   prefectureId: true,
 });
 
-export const UpdateGameInputSchema = GameShema.pick({
-  state: true,
-});
-
 export const GameResponseSchema = GameShema.merge(
   z.object({
     prefecture: PrefectureShema.merge(z.object({ region: RegionShema })),
@@ -66,12 +62,8 @@ export type GetGamesQuery = z.infer<typeof GetGamesQuerySchema>;
 
 export type CreateGameInput = z.infer<typeof CreateGameInputSchema>;
 
-export type UpdateGameInput = z.infer<typeof UpdateGameInputSchema>;
-
 export type GameResponse = z.infer<typeof GameResponseSchema>;
 
 export class GetGamesQueryDto extends createZodDto(GetGamesQuerySchema) {}
 
 export class CreateGameInputDto extends createZodDto(CreateGameInputSchema) {}
-
-export class UpdateGameInputDto extends createZodDto(UpdateGameInputSchema) {}

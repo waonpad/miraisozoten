@@ -2,8 +2,6 @@ import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { RavenInterceptor, RavenModule } from 'nest-raven';
 import { ZodValidationPipe } from 'nestjs-zod';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { EnvModule } from './config/environments/env.module';
 import { ZodValidationExceptionFilter } from './filters/zod-validation-exception.filter';
@@ -26,10 +24,9 @@ import { UserMiddleware } from './user/user.middleware';
     GameModule,
   ],
   //インスタンス化して、Controllerが何かを定義している
-  controllers: [AppController],
+  controllers: [],
   //インスタンス化して、このModule内で使用する可能性のあるproviderを定義している
   providers: [
-    AppService,
     { provide: APP_INTERCEPTOR, useClass: LoggerInterceptor },
     {
       provide: APP_PIPE,

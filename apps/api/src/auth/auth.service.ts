@@ -43,16 +43,4 @@ export class AuthService {
 
     return userRecord;
   }
-
-  async me(user: JwtDecodedUser): Promise<UserResponse | null> {
-    if (!user) {
-      return null;
-    }
-
-    const userRecord = await this.prisma.user.findUnique({
-      where: { id: user.sub },
-    });
-
-    return userRecord;
-  }
 }

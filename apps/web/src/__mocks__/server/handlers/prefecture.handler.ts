@@ -9,12 +9,9 @@ import { Prefectures as PrefecturesSeedData } from '../../../../../../packages/d
 import { db } from '../db';
 import { delayedResponse } from '../utils/delayed-response';
 
-// TODO: statsとneighborsは現状使っていないので後から削除するか・・・
-
 export const prefectureHandlers: RestHandler<MockedRequest<DefaultBodyType>>[] = [
   rest.get(`${env.VITE_API_URL}/prefectures`, async (_req, _res, ctx) => {
     try {
-      // リレーションクエリできない？っぽいので自力でやらないといけなさそう
       const prefectures = db.prefecture.findMany({});
 
       const includedPrefectures = prefectures.map((prefecture) => {
