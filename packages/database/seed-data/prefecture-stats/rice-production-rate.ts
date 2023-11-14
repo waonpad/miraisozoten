@@ -5,7 +5,7 @@
 
 import { PrefectureStatsData } from "./types";
 
-export const Kome = {
+export const Riceproductionrate = {
   label: "お米生産率",
   unit: "ｔ",
   attribution: {

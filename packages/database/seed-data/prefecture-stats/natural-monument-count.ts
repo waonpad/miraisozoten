@@ -5,7 +5,7 @@
 
 import { PrefectureStatsData } from "./types";
 
-export const Natural = {
+export const NaturalmonumentCount = {
   label: "天然記念物数",
   unit: "件",
   attribution: {

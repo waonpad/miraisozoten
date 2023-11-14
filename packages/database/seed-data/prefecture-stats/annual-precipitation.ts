@@ -5,7 +5,7 @@
 
 import { PrefectureStatsData } from "./types";
 
-export const Kousuiryou = {
+export const annualprecipitation = {
   label:"年間降水量",
   unit: "mm",
   attribution: {
