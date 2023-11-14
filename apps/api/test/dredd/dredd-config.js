@@ -22,6 +22,16 @@ const axiosInstance = axios.create({
 });
 
 /**
+ * @description
+ * リクエストヘッダーにトランザクションから取得したトークンを設定して返す
+ */
+const reqHeadersWithTokenFromTransaction = (transaction) => ({
+  headers: {
+    Authorization: 'Bearer ' + transaction.request.headers.Authorization.split(' ')[1],
+  },
+});
+
+/**
  * @param {() => Promise<void>} fn
  * @description
  * hooksは普通に使うとエラーが起きても何も表示されないので,
@@ -81,6 +91,7 @@ env.FIREBASE_AUTH_EMULATOR_HOST &&
 
 module.exports = {
   axios: axiosInstance,
+  reqHeadersWithTokenFromTransaction,
   env,
   dreddHooksWrapper,
   address,
