@@ -23,8 +23,6 @@ import { gameRelationInclude } from '../utils/game-relation-include';
 import { getPageNumberPaginationMeta } from '../utils/get-page-number-pagination-meta';
 import { getRequestPramsObject } from '../utils/get-request-params-object';
 
-// TODO: updateGameは使用されていないので、削除する
-
 export const gameHandlers: RestHandler<MockedRequest<DefaultBodyType>>[] = [
   rest.get(`${env.VITE_API_URL}/games`, async (req, _res, ctx) => {
     const paramsOrError = (() => {
