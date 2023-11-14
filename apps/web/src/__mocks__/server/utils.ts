@@ -1,4 +1,3 @@
-import jwtDecode from 'jwt-decode';
 import { RestRequest, createResponseComposition, context, ResponseFunction } from 'msw';
 import { JwtDecodedUser } from 'schema/dist/user';
 
@@ -9,7 +8,7 @@ export const delayedResponse: ResponseFunction<any> = createResponseComposition(
   context.delay(isTesting ? 0 : 1000),
 ]);
 
-export const userMiddleware = (req: RestRequest): RestRequest => {
+export const userMiddleware = async (req: RestRequest): Promise<RestRequest> => {
   const token = req.headers.get('Authorization')?.split(' ')[1];
 
   if (!token) {
@@ -17,7 +16,16 @@ export const userMiddleware = (req: RestRequest): RestRequest => {
   }
 
   try {
-    const decoded = jwtDecode<JwtDecodedUser>(token);
+    // fb-toolsパッケージのlib/admin-server.jsでサーバーを立ててトークンの検証を行っている
+    const decodedResponse = await fetch('http://localhost:3010/firebase/admin/verify', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ token }),
+    });
+
+    const decoded: JwtDecodedUser = await decodedResponse.json();
 
     req.user = decoded;
 

@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-import { factory, primaryKey } from '@mswjs/data';
+import { factory, nullable, primaryKey } from '@mswjs/data';
 
 const models = {
   user: {
     id: primaryKey(String),
     name: String,
-    email: String,
+    email: nullable(String),
     emailVerified: Boolean,
-    image: String,
+    image: nullable(String),
     createdAt: Date,
     updatedAt: Date,
   },

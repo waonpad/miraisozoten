@@ -29,6 +29,11 @@ export class Env {
         FIREBASE_PROJECT_ID: z.string(),
         FIREBASE_PRIVATE_KEY: z.string(),
         FIREBASE_CLIENT_EMAIL: z.string(),
+
+        ...(runtimeEnv.APP_ENV !== 'production' && {
+          // これが設定されていると、自動的にfirebase-adminの初期化時にemulatorを使うようになる
+          FIREBASE_AUTH_EMULATOR_HOST: z.string().url().nullable(),
+        }),
       },
       clientPrefix: '',
       client: {},

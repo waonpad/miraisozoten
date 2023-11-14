@@ -11,7 +11,7 @@ import { authGuard, delayedResponse, userMiddleware } from '../utils';
 
 export const authHandlers: RestHandler<MockedRequest<DefaultBodyType>>[] = [
   rest.post(`${env.VITE_API_URL}/auth/login`, async (req, _res, ctx) => {
-    const userReq = userMiddleware(req);
+    const userReq = await userMiddleware(req);
     const authenticatedReq = authGuard(userReq);
 
     if (authenticatedReq instanceof Error) {
@@ -19,6 +19,8 @@ export const authHandlers: RestHandler<MockedRequest<DefaultBodyType>>[] = [
     }
 
     const reqUser = authenticatedReq.user as JwtDecodedUser;
+
+    // TODO: バックエンドの処理を模倣する
     try {
       const existingUser = db.user.findFirst({
         where: {
@@ -64,9 +66,9 @@ export const authHandlers: RestHandler<MockedRequest<DefaultBodyType>>[] = [
     }
   }),
 
-  rest.get(`${env.VITE_API_URL}/auth/me`, (req, _res, ctx) => {
+  rest.get(`${env.VITE_API_URL}/auth/me`, async (req, _res, ctx) => {
     try {
-      const { user } = userMiddleware(req);
+      const { user } = await userMiddleware(req);
 
       if (!user) {
         return delayedResponse(ctx.json(null));

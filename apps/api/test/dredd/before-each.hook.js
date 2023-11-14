@@ -1,16 +1,42 @@
-const { env } = require('./dredd-config');
+const { firebaseAuth, dreddHooksWrapper } = require('./dredd-config');
 const hooks = require('hooks');
+const { GoogleAuthProvider, signInWithCredential, signInAnonymously } = require('firebase/auth');
 
-hooks.beforeEach((transaction, done) => {
-  // ダミーエンドポイントをスキップ
-  if (transaction.request.uri.split('/')[2] === '-schema-') {
-    transaction.skip = true;
-  }
+hooks.beforeEach(async (transaction, done) => {
+  await dreddHooksWrapper(async () => {
+    // 匿名ユーザー
+    // const result = await signInAnonymously(firebaseAuth);
 
-  if (transaction.request.uri.split('/')[1] === 'games') {
-    transaction.skip = true;
-  }
+    const random = Math.random();
 
-  transaction.request.headers['Authorization'] = 'Bearer ' + env.VALID_TOKEN;
-  done();
+    // テスト用のユーザーを作成
+    const result = await signInWithCredential(
+      firebaseAuth,
+      GoogleAuthProvider.credential(
+        JSON.stringify({
+          sub: `test-user-${random}`,
+          email: `test-user-${random}@example.com`,
+          email_verified: true,
+          name: `test-user-${random}`,
+        })
+      )
+    );
+
+    // テスト用のユーザーのトークンを取得
+    const token = await result.user.getIdToken();
+
+    // ダミーエンドポイントをスキップ
+    if (transaction.request.uri.split('/')[2] === '-schema-') {
+      transaction.skip = true;
+    }
+
+    // テストしないエンドポイントをスキップ
+    if (['games', 'prefecture-stats-metadata'].includes(transaction.request.uri.split('/')[1])) {
+      transaction.skip = true;
+    }
+
+    // 作成したユーザーのトークンをリクエストヘッダーに追加
+    transaction.request.headers['Authorization'] = 'Bearer ' + token;
+    done();
+  });
 });

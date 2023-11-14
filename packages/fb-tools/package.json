@@ -1,0 +1,11 @@
+{
+  "name": "fb-tools",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "firebase emulators:start"
+  },
+  "files": [
+    "firebase.json"
+  ]
+}
