@@ -27,10 +27,10 @@ export const createEnv = ({ runtimeEnv }: { runtimeEnv: NodeJS.ProcessEnv }) => 
       ...(runtimeEnv.VITE_APP_ENV !== 'production' && {
         VITE_API_MOCKING: z.enum(['true', 'false']),
 
-        // モックを有効にするなら有効なトークンと無効なトークンが必須
-        ...(runtimeEnv.VITE_API_MOCKING === 'true' && {
-          VITE_VALID_TOKEN: z.string(),
-          VITE_INVALID_TOKEN: z.string(),
+        VITE_FIREBASE_EMULATOR_ENABLED: z.enum(['true', 'false']),
+
+        ...(runtimeEnv.VITE_FIREBASE_EMULATOR_ENABLED === 'true' && {
+          VITE_FIREBASE_AUTH_EMULATOR_HOST: z.string(),
         }),
       }),
     },

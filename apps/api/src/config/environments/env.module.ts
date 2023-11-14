@@ -6,7 +6,8 @@ import { Env } from './env.service';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: ['.env'],
+      // eslint-disable-next-line turbo/no-undeclared-env-vars
+      envFilePath: ['.env', ...(process.env.APP_ENV !== 'production' ? [`.env.test.local`] : [])],
       isGlobal: true,
     }),
   ],

@@ -17,7 +17,7 @@ const ciWebPath = root('out/apps/web');
 
 const databasePath = root('packages/database');
 const schemaPath = root('packages/schema');
-const prefecturePath = root('packages/prefecture');
+const fbToolsPath = root('packages/fb-tools');
 
 module.exports = {
   scripts: {
@@ -29,9 +29,10 @@ module.exports = {
       },
       deps: `yarn install --frozen-lockfile && yarn husky install`,
       docker: `docker compose up -d`,
-      packages: `nps prepare.database prepare.schema`,
+      packages: `nps prepare.database prepare.schema prepare.fb-tools`,
       database: `docker compose up -d && nps prisma.generate prisma.migrate.dev prisma.seed prisma.build`,
       schema: `cd ${schemaPath} && yarn build`,
+      'fb-tools': `cd ${fbToolsPath} && firebase init emulators`,
       apps: ``,
       ci: {
         web: `npx turbo prune web && cd out && yarn install --frozen-lockfile`,
