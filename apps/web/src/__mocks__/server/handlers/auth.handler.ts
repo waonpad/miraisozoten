@@ -7,7 +7,9 @@ import { JwtDecodedUser } from 'schema/dist/user';
 import { env } from '@/constants/env';
 
 import { db, persistDb } from '../db';
-import { authGuard, delayedResponse, userMiddleware } from '../utils';
+import { authGuard } from '../guards/auth-guard';
+import { userMiddleware } from '../middleware/user-middleware';
+import { delayedResponse } from '../utils/delayed-response';
 
 export const authHandlers: RestHandler<MockedRequest<DefaultBodyType>>[] = [
   rest.post(`${env.VITE_API_URL}/auth/login`, async (req, _res, ctx) => {
