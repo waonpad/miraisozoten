@@ -5,7 +5,7 @@
 
 import { PrefectureStatsData } from "./types";
 
-export const Soccerpopulation = {
+export const SoccerPopulation = {
   label: "サッカー人口",
   unit: "人",
   attribution: {

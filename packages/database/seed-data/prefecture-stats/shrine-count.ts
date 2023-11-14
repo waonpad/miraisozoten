@@ -5,7 +5,7 @@
 
 import { PrefectureStatsData } from "./types";
 
-export const Shrinecount = {
+export const ShrineCount = {
   label: "神社の数",
   unit: "社",
   attribution: {

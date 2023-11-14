@@ -5,7 +5,7 @@
 
 import { PrefectureStatsData } from "./types";
 
-export const Sugarconsumption = {
+export const SugarConsumption = {
   label: "砂糖消費量",
   unit: "g",
   attribution: {

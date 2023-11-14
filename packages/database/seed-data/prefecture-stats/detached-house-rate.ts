@@ -5,7 +5,7 @@
 
 import { PrefectureStatsData } from "./types";
 
-export const Detachedhouserate = {
+export const DetachedHouseRate = {
   label: "戸建て率",
   unit: "%",
   attribution: {

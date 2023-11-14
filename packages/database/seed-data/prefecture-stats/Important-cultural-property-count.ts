@@ -5,7 +5,7 @@
 
 import { PrefectureStatsData } from "./types";
 
-export const ImportantculturalpropertyCount = {
+export const ImportantCulturalPropertyCount = {
   label: "国宝・重要文化財数（建造物）",
   unit: "棟",
   attribution: {

@@ -5,7 +5,7 @@
 
 import { PrefectureStatsData } from "./types";
 
-export const Deviationvalue = {
+export const DeviationValue = {
   label: "大学偏差値",
   unit: "点",
   attribution: {

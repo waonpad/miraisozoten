@@ -5,7 +5,7 @@
 
 import { PrefectureStatsData } from "./types";
 
-export const Hometowntax = {
+export const HometownTax = {
   label: "ふるさと納税利用者数",
   unit: "人",
   attribution: {
