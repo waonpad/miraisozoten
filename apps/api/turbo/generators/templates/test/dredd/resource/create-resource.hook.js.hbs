@@ -1,4 +1,9 @@
-const { axios, dreddHooksWrapper, address } = require('../dredd-config');
+const {
+  axios,
+  dreddHooksWrapper,
+  address, 
+  reqHeadersWithTokenFromTransaction,
+} = require('../dredd-config');
 const hooks = require('hooks');
 const { RESOURCES, dummyItem } = require('./config');
 
@@ -14,7 +19,10 @@ hooks.before(addr, async (transaction, done) => {
 
 hooks.after(addr, async (transaction, done) => {
   await dreddHooksWrapper(async () => {
-    await axios.delete(`${RESOURCES}/${JSON.parse(transaction.real.body).id}`);
+    await axios.delete(
+      `${RESOURCES}/${JSON.parse(transaction.real.body).id}`,
+      reqHeadersWithTokenFromTransaction(transaction)
+    );
 
     done();
   });
