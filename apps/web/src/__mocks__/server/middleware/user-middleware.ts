@@ -1,12 +1,5 @@
-import { RestRequest, createResponseComposition, context, ResponseFunction } from 'msw';
+import { RestRequest } from 'msw';
 import { JwtDecodedUser } from 'schema/dist/user';
-
-const isTesting = process.env.NODE_ENV === 'test';
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const delayedResponse: ResponseFunction<any> = createResponseComposition(undefined, [
-  context.delay(isTesting ? 0 : 1000),
-]);
 
 export const userMiddleware = async (req: RestRequest): Promise<RestRequest> => {
   const token = req.headers.get('Authorization')?.split(' ')[1];
@@ -33,13 +26,4 @@ export const userMiddleware = async (req: RestRequest): Promise<RestRequest> => 
   } catch (error) {
     return req;
   }
-};
-
-export const authGuard = (request: RestRequest): RestRequest | Error => {
-  if (!request.user) {
-    const error = new Error('Unauthorized');
-    return error;
-  }
-
-  return request;
 };
