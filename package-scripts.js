@@ -30,7 +30,7 @@ module.exports = {
       deps: `yarn install --frozen-lockfile && yarn husky install`,
       docker: `docker compose up -d`,
       packages: `nps prepare.database prepare.schema prepare.fb-tools`,
-      database: `docker compose up -d && nps prisma.generate prisma.migrate.dev prisma.seed prisma.build`,
+      database: `docker compose up -d && nps prisma.generate prisma.migrate.reset prisma.migrate.dev prisma.seed prisma.build`,
       schema: `cd ${schemaPath} && yarn build`,
       'fb-tools': `cd ${fbToolsPath} && firebase init emulators`,
       apps: ``,
@@ -61,11 +61,15 @@ module.exports = {
       studio: `cd ${databasePath} && npx prisma studio`,
       migrate: {
         dev: `cd ${databasePath} && npx prisma migrate dev`,
+        reset: `cd ${databasePath} && npx prisma migrate reset --force`,
       },
       seed: `cd ${databasePath} && yarn seed`,
       build: {
         default: `cd ${databasePath} && yarn build`,
       },
+    },
+    firebase: {
+      admin: `cd ${fbToolsPath} && node lib/admin-server.js`,
     },
     build: {
       default: 'npx turbo run build',

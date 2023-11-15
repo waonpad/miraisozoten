@@ -13,7 +13,7 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 
 const firebaseAuth = getAuth();
-env.VITE_FIREBASE_EMULATOR_ENABLED === 'true' &&
+(env.VITE_FIREBASE_EMULATOR_ENABLED === 'true' || env.VITE_API_MOCKING === 'true') &&
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   connectAuthEmulator(firebaseAuth, `http://${env.VITE_FIREBASE_AUTH_EMULATOR_HOST}`);
 
