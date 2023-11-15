@@ -16,14 +16,14 @@ import { GameLogShema } from './log/game-log.schema';
 extendZodWithOpenApi(z as typeof zod);
 
 export const GameShema = z.object({
-  id: z.string().uuid(),
-  state: z.enum(GameState),
-  difficulty: z.enum(GameDifficulty),
-  mode: z.enum(GameMode),
-  prefectureId: z.number(),
-  userId: z.string(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
+  id: z.string().uuid().openapi({ example: '00000000-0000-0000-0000-000000000000' }),
+  state: z.enum(GameState).openapi({ example: 'PLAYING' }),
+  difficulty: z.enum(GameDifficulty).openapi({ example: 'NORMAL' }),
+  mode: z.enum(GameMode).openapi({ example: 'NATIONWIDE' }),
+  prefectureId: z.number().openapi({ example: 1 }),
+  userId: z.string().openapi({ example: '00000000-0000-0000-0000-000000000000' }),
+  createdAt: z.date().openapi({ example: '2021-01-01T00:00:00.000Z' }),
+  updatedAt: z.date().openapi({ example: '2021-01-01T00:00:00.000Z' }),
 });
 
 export const GetGamesQuerySchema = z
@@ -31,7 +31,7 @@ export const GetGamesQuerySchema = z
     state: GameShema.shape.state.optional(),
     difficulty: GameShema.shape.difficulty.optional(),
     mode: GameShema.shape.mode.optional(),
-    userId: z.string().optional(),
+    userId: GameShema.shape.userId.optional(),
   })
   .merge(PageNumberPaginationOptionsSchema);
 
@@ -51,7 +51,7 @@ export const GameResponseSchema = GameShema.merge(
       )
     ),
     // バックエンドで計算した値を返す
-    hideData: z.boolean(),
+    hideData: z.boolean().openapi({ example: false }),
     conquereds: z.array(PrefectureShema),
     neighbors: z.array(PrefectureShema),
     // Factorの吸収は？

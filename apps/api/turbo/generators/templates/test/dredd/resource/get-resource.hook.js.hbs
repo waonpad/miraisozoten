@@ -26,10 +26,8 @@ hooks.before(addr, async (transaction, done) => {
   });
 });
 
-hooks.after(addr, async (transaction, done) => {
-  await dreddHooksWrapper(async () => {
-    await axios.delete(transaction.fullPath, reqHeadersWithTokenFromTransaction(transaction));
-
-    done();
-  });
-});
+// hooks.after(addr, async (transaction, done) => {
+//   await dreddHooksWrapper(async () => {
+//     done();
+//   });
+// });

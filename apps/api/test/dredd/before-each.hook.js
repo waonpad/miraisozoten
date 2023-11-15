@@ -25,13 +25,13 @@ hooks.beforeEach(async (transaction, done) => {
     // テスト用のユーザーのトークンを取得
     const token = await result.user.getIdToken();
 
-    // ダミーエンドポイントをスキップ
-    if (transaction.request.uri.split('/')[2] === '-schema-') {
+    // テストしないエンドポイントをスキップ
+    if (['prefecture-stats-metadata'].includes(transaction.request.uri.split('/')[1])) {
       transaction.skip = true;
     }
 
-    // テストしないエンドポイントをスキップ
-    if (['games', 'prefecture-stats-metadata'].includes(transaction.request.uri.split('/')[1])) {
+    // ダミーエンドポイントをスキップ
+    if (transaction.request.uri.split('/')[2] === '-schema-') {
       transaction.skip = true;
     }
 

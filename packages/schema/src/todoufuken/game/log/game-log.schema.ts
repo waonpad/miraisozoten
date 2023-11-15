@@ -12,15 +12,15 @@ import { GameResult, HighLow } from '../game.enum';
 extendZodWithOpenApi(z as typeof zod);
 
 export const GameLogShema = z.object({
-  id: z.number(),
-  gameId: z.string().uuid(),
-  highLow: z.enum(HighLow),
-  factorPrefectureId: z.number(),
-  factorName: z.enum(PrefectureStatsName),
-  opponentId: z.number(),
-  result: z.enum(GameResult),
-  createdAt: z.date(),
-  updatedAt: z.date(),
+  id: z.number().openapi({ example: 1 }),
+  gameId: z.string().uuid().openapi({ example: '00000000-0000-0000-0000-000000000000' }),
+  highLow: z.enum(HighLow).openapi({ example: 'HIGH' }),
+  factorPrefectureId: PrefectureShema.shape.id,
+  factorName: z.enum(PrefectureStatsName).openapi({ example: 'POPULATION' }),
+  opponentId: PrefectureShema.shape.id,
+  result: z.enum(GameResult).openapi({ example: 'WIN' }),
+  createdAt: z.date().openapi({ example: '2021-01-01T00:00:00.000Z' }),
+  updatedAt: z.date().openapi({ example: '2021-01-01T00:00:00.000Z' }),
 });
 
 export const CreateGameLogInputSchema = GameLogShema.pick({

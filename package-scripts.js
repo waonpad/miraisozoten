@@ -44,7 +44,7 @@ module.exports = {
       default: `nps test.web test.api`,
       web: `cd ${webPath} && yarn test`,
       api: `cd ${apiPath} && yarn test`,
-      dredd: `cd ${apiPath} && dredd`,
+      predredd: `docker compose up -d && npx turbo run dev --scope=fb-tools --scope=api --parallel --no-daemon`,
       ci: {
         default: `nps test.ci.web test.ci.api`,
         web: `cd ${ciWebPath} && yarn test:ci`,
