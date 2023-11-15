@@ -3,7 +3,7 @@ dry-run: null
 hookfiles: ./test/dredd/**/*.hook.js
 language: nodejs
 require: null
-server: yarn start
+server: null
 server-wait: 10
 init: false
 custom: {}
