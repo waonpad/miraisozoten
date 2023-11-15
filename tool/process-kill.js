@@ -14,28 +14,14 @@ const processKill = {
     return `Killed process ${processId} on port ${port}`;
   },
   darwin: (port) => {
-    const command = `lsof -i :${port}`;
-    const result = execSync(command).toString().trim().split('\n')[1];
+    const command = `lsof -t -i tcp:${port} | xargs kill -9`;
 
-    const processId = result.split(' ').pop();
+    const result = execSync(command).toString();
 
-    const command2 = `kill -9 ${processId}`;
-    const result2 = execSync(command2).toString();
-
-    return `Killed process ${processId} on port ${port}`;
+    return `Killed process on port ${port}`;
   },
-  linux: (port) => {
-    const command = `lsof -i :${port}`;
-    const result = execSync(command).toString().trim().split('\n')[1];
-
-    const processId = result.split(' ').pop();
-
-    console.log(`Killing process ${processId} on port ${port}`);
-
-    const command2 = `kill -9 ${processId}`;
-    const result2 = execSync(command2).toString();
-
-    return `Killed process ${processId} on port ${port}`;
+  linux: () => {
+    throw new Error('Not implemented');
   },
 };
 
