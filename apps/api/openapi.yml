@@ -1,19 +1,5 @@
 openapi: 3.0.0
 paths:
-  /:
-    get:
-      operationId: AppController_getHello
-      parameters: []
-      responses:
-        '200':
-          description: ''
-  /danger:
-    get:
-      operationId: AppController_getDanger
-      parameters: []
-      responses:
-        '200':
-          description: ''
   /auth/login:
     post:
       operationId: AuthController_login
@@ -21,16 +7,8 @@ paths:
       responses:
         '200':
           description: ''
-      tags: &ref_0
+      tags:
         - auth
-  /auth/me:
-    get:
-      operationId: AuthController_me
-      parameters: []
-      responses:
-        '200':
-          description: ''
-      tags: *ref_0
   /prefectures/-schema-:
     get:
       operationId: PrefectureController_openApiSchema
@@ -44,23 +22,31 @@ paths:
                 properties:
                   id:
                     type: number
+                    example: 2
                   name:
                     type: string
+                    example: 青森県
                   short:
                     type: string
+                    example: 青森
                   kana:
                     type: string
+                    example: アオモリケン
                   en:
                     type: string
+                    example: Aomori
                   regionId:
                     type: number
+                    example: 1
                   region:
                     type: object
                     properties:
                       id:
                         type: number
+                        example: 1
                       name:
                         type: string
+                        example: 北海道・東北
                     required:
                       - id
                       - name
@@ -71,16 +57,22 @@ paths:
                       properties:
                         id:
                           type: number
+                          example: 2
                         name:
                           type: string
+                          example: 青森県
                         short:
                           type: string
+                          example: 青森
                         kana:
                           type: string
+                          example: アオモリケン
                         en:
                           type: string
+                          example: Aomori
                         regionId:
                           type: number
+                          example: 1
                       required:
                         - id
                         - name
@@ -93,10 +85,13 @@ paths:
                     properties:
                       id:
                         type: number
+                        example: 1
                       area:
                         type: number
+                        example: 100
                       population:
                         type: number
+                        example: 100
                     required:
                       - id
                       - area
@@ -112,7 +107,7 @@ paths:
                   - neighbors
                   - stats
           description: ''
-      tags: &ref_1
+      tags: &ref_0
         - prefectures
   /prefectures:
     get:
@@ -129,23 +124,31 @@ paths:
                   properties:
                     id:
                       type: number
+                      example: 2
                     name:
                       type: string
+                      example: 青森県
                     short:
                       type: string
+                      example: 青森
                     kana:
                       type: string
+                      example: アオモリケン
                     en:
                       type: string
+                      example: Aomori
                     regionId:
                       type: number
+                      example: 1
                     region:
                       type: object
                       properties:
                         id:
                           type: number
+                          example: 1
                         name:
                           type: string
+                          example: 北海道・東北
                       required:
                         - id
                         - name
@@ -156,16 +159,22 @@ paths:
                         properties:
                           id:
                             type: number
+                            example: 2
                           name:
                             type: string
+                            example: 青森県
                           short:
                             type: string
+                            example: 青森
                           kana:
                             type: string
+                            example: アオモリケン
                           en:
                             type: string
+                            example: Aomori
                           regionId:
                             type: number
+                            example: 1
                         required:
                           - id
                           - name
@@ -178,10 +187,13 @@ paths:
                       properties:
                         id:
                           type: number
+                          example: 1
                         area:
                           type: number
+                          example: 100
                         population:
                           type: number
+                          example: 100
                       required:
                         - id
                         - area
@@ -197,214 +209,7 @@ paths:
                     - neighbors
                     - stats
           description: ''
-      tags: *ref_1
-  /prefectures/{id}:
-    get:
-      operationId: PrefectureController_getPrefecture
-      parameters:
-        - name: id
-          required: true
-          in: path
-          example: '1'
-          schema:
-            type: string
-      responses:
-        '200':
-          content:
-            application/json; charset=utf-8:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: number
-                  name:
-                    type: string
-                  short:
-                    type: string
-                  kana:
-                    type: string
-                  en:
-                    type: string
-                  regionId:
-                    type: number
-                  region:
-                    type: object
-                    properties:
-                      id:
-                        type: number
-                      name:
-                        type: string
-                    required:
-                      - id
-                      - name
-                  neighbors:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: number
-                        name:
-                          type: string
-                        short:
-                          type: string
-                        kana:
-                          type: string
-                        en:
-                          type: string
-                        regionId:
-                          type: number
-                      required:
-                        - id
-                        - name
-                        - short
-                        - kana
-                        - en
-                        - regionId
-                  stats:
-                    type: object
-                    properties:
-                      id:
-                        type: number
-                      area:
-                        type: number
-                      population:
-                        type: number
-                    required:
-                      - id
-                      - area
-                      - population
-                required:
-                  - id
-                  - name
-                  - short
-                  - kana
-                  - en
-                  - regionId
-                  - region
-                  - neighbors
-                  - stats
-          description: ''
-      tags: *ref_1
-  /prefectures/{id}/stats:
-    get:
-      operationId: PrefectureController_getPrefectureStats
-      parameters:
-        - name: id
-          required: true
-          in: path
-          example: '1'
-          schema:
-            type: string
-      responses:
-        '200':
-          content:
-            application/json; charset=utf-8:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: number
-                  area:
-                    type: number
-                  population:
-                    type: number
-                required:
-                  - id
-                  - area
-                  - population
-          description: ''
-      tags: *ref_1
-  /prefectures/{id}/neighbors:
-    get:
-      operationId: PrefectureController_getPrefectureNeighbors
-      parameters:
-        - name: id
-          required: true
-          in: path
-          example: '1'
-          schema:
-            type: string
-      responses:
-        '200':
-          content:
-            application/json; charset=utf-8:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: number
-                    name:
-                      type: string
-                    short:
-                      type: string
-                    kana:
-                      type: string
-                    en:
-                      type: string
-                    regionId:
-                      type: number
-                    region:
-                      type: object
-                      properties:
-                        id:
-                          type: number
-                        name:
-                          type: string
-                      required:
-                        - id
-                        - name
-                    neighbors:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          id:
-                            type: number
-                          name:
-                            type: string
-                          short:
-                            type: string
-                          kana:
-                            type: string
-                          en:
-                            type: string
-                          regionId:
-                            type: number
-                        required:
-                          - id
-                          - name
-                          - short
-                          - kana
-                          - en
-                          - regionId
-                    stats:
-                      type: object
-                      properties:
-                        id:
-                          type: number
-                        area:
-                          type: number
-                        population:
-                          type: number
-                      required:
-                        - id
-                        - area
-                        - population
-                  required:
-                    - id
-                    - name
-                    - short
-                    - kana
-                    - en
-                    - regionId
-                    - region
-                    - neighbors
-                    - stats
-          description: ''
-      tags: *ref_1
+      tags: *ref_0
   /prefecture-stats-metadata/-schema-:
     get:
       operationId: PrefectureStatsMetadataController_openApiSchema
@@ -418,25 +223,33 @@ paths:
                 properties:
                   id:
                     type: number
+                    example: 1
                   name:
                     type: string
                     enum:
                       - AREA
                       - POPULATION
+                    example: POPULATION
                   label:
                     type: string
+                    example: 人口
                   unit:
                     type: string
+                    example: 人
                   sourceSiteName:
                     type: string
+                    example: ソースサイト
                   sourceUrlTitle:
                     type: string
+                    example: ソースタイトル
                   sourceUrl:
                     type: string
                     format: uri
+                    example: https://example.com
                   retrievedAt:
                     type: string
                     format: date-time
+                    example: '2021-01-01T00:00:00.000Z'
                 required:
                   - id
                   - name
@@ -447,7 +260,7 @@ paths:
                   - sourceUrl
                   - retrievedAt
           description: ''
-      tags: &ref_2
+      tags: &ref_1
         - prefecture-stats-metadata
   /prefecture-stats-metadata:
     get:
@@ -464,25 +277,33 @@ paths:
                   properties:
                     id:
                       type: number
+                      example: 1
                     name:
                       type: string
                       enum:
                         - AREA
                         - POPULATION
+                      example: POPULATION
                     label:
                       type: string
+                      example: 人口
                     unit:
                       type: string
+                      example: 人
                     sourceSiteName:
                       type: string
+                      example: ソースサイト
                     sourceUrlTitle:
                       type: string
+                      example: ソースタイトル
                     sourceUrl:
                       type: string
                       format: uri
+                      example: https://example.com
                     retrievedAt:
                       type: string
                       format: date-time
+                      example: '2021-01-01T00:00:00.000Z'
                   required:
                     - id
                     - name
@@ -493,105 +314,7 @@ paths:
                     - sourceUrl
                     - retrievedAt
           description: ''
-      tags: *ref_2
-  /prefecture-stats-metadata/name/{name}:
-    get:
-      operationId: PrefectureStatsMetadataController_getPrefectureStatsMetadataByName
-      parameters:
-        - name: name
-          required: true
-          in: path
-          example: POPULATION
-          schema:
-            type: string
-      responses:
-        '200':
-          content:
-            application/json; charset=utf-8:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: number
-                  name:
-                    type: string
-                    enum:
-                      - AREA
-                      - POPULATION
-                  label:
-                    type: string
-                  unit:
-                    type: string
-                  sourceSiteName:
-                    type: string
-                  sourceUrlTitle:
-                    type: string
-                  sourceUrl:
-                    type: string
-                    format: uri
-                  retrievedAt:
-                    type: string
-                    format: date-time
-                required:
-                  - id
-                  - name
-                  - label
-                  - unit
-                  - sourceSiteName
-                  - sourceUrlTitle
-                  - sourceUrl
-                  - retrievedAt
-          description: ''
-      tags: *ref_2
-  /prefecture-stats-metadata/{id}:
-    get:
-      operationId: PrefectureStatsMetadataController_getPrefectureStatsMetadata
-      parameters:
-        - name: id
-          required: true
-          in: path
-          example: '1'
-          schema:
-            type: string
-      responses:
-        '200':
-          content:
-            application/json; charset=utf-8:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: number
-                  name:
-                    type: string
-                    enum:
-                      - AREA
-                      - POPULATION
-                  label:
-                    type: string
-                  unit:
-                    type: string
-                  sourceSiteName:
-                    type: string
-                  sourceUrlTitle:
-                    type: string
-                  sourceUrl:
-                    type: string
-                    format: uri
-                  retrievedAt:
-                    type: string
-                    format: date-time
-                required:
-                  - id
-                  - name
-                  - label
-                  - unit
-                  - sourceSiteName
-                  - sourceUrlTitle
-                  - sourceUrl
-                  - retrievedAt
-          description: ''
-      tags: *ref_2
+      tags: *ref_1
   /games/-schema-:
     get:
       operationId: GameController_openApiSchema
@@ -606,12 +329,14 @@ paths:
                   id:
                     type: string
                     format: uuid
+                    example: 00000000-0000-0000-0000-000000000000
                   state:
                     type: string
                     enum:
                       - PLAYING
                       - FINISHED
                       - GIVEN_UP
+                    example: PLAYING
                   difficulty:
                     type: string
                     enum:
@@ -619,43 +344,57 @@ paths:
                       - NORMAL
                       - HARD
                       - VERY_HARD
+                    example: NORMAL
                   mode:
                     type: string
                     enum:
                       - NATIONWIDE
                       - REGIONAL
+                    example: NATIONWIDE
                   prefectureId:
                     type: number
+                    example: 1
                   userId:
                     type: string
+                    example: 00000000-0000-0000-0000-000000000000
                   createdAt:
                     type: string
                     format: date-time
+                    example: '2021-01-01T00:00:00.000Z'
                   updatedAt:
                     type: string
                     format: date-time
+                    example: '2021-01-01T00:00:00.000Z'
                   prefecture:
                     type: object
                     properties:
                       id:
                         type: number
+                        example: 2
                       name:
                         type: string
+                        example: 青森県
                       short:
                         type: string
+                        example: 青森
                       kana:
                         type: string
+                        example: アオモリケン
                       en:
                         type: string
+                        example: Aomori
                       regionId:
                         type: number
+                        example: 1
                       region:
                         type: object
                         properties:
                           id:
                             type: number
+                            example: 1
                           name:
                             type: string
+                            example: 北海道・東北
                         required:
                           - id
                           - name
@@ -672,22 +411,29 @@ paths:
                     properties:
                       id:
                         type: string
+                        example: 00000000-0000-0000-0000-000000000000
                       name:
                         type: string
+                        example: ゲスト
                       email:
                         type: string
                         nullable: true
+                        example: example@example.com
                       emailVerified:
                         type: boolean
+                        example: false
                       image:
                         type: string
                         nullable: true
+                        example: null
                       createdAt:
                         type: string
                         format: date-time
+                        example: '2021-01-01T00:00:00.000Z'
                       updatedAt:
                         type: string
                         format: date-time
+                        example: '2021-01-01T00:00:00.000Z'
                     required:
                       - id
                       - name
@@ -703,57 +449,74 @@ paths:
                       properties:
                         id:
                           type: number
+                          example: 1
                         gameId:
                           type: string
                           format: uuid
+                          example: 00000000-0000-0000-0000-000000000000
                         highLow:
                           type: string
                           enum:
                             - HIGH
                             - LOW
+                          example: HIGH
                         factorPrefectureId:
                           type: number
+                          example: 2
                         factorName:
                           type: string
                           enum:
                             - AREA
                             - POPULATION
+                          example: POPULATION
                         opponentId:
                           type: number
+                          example: 2
                         result:
                           type: string
                           enum:
                             - WIN
                             - DRAW
                             - LOSE
+                          example: WIN
                         createdAt:
                           type: string
                           format: date-time
+                          example: '2021-01-01T00:00:00.000Z'
                         updatedAt:
                           type: string
                           format: date-time
+                          example: '2021-01-01T00:00:00.000Z'
                         opponent:
                           type: object
                           properties:
                             id:
                               type: number
+                              example: 2
                             name:
                               type: string
+                              example: 青森県
                             short:
                               type: string
+                              example: 青森
                             kana:
                               type: string
+                              example: アオモリケン
                             en:
                               type: string
+                              example: Aomori
                             regionId:
                               type: number
+                              example: 1
                             region:
                               type: object
                               properties:
                                 id:
                                   type: number
+                                  example: 1
                                 name:
                                   type: string
+                                  example: 北海道・東北
                               required:
                                 - id
                                 - name
@@ -778,6 +541,7 @@ paths:
                         - opponent
                   hideData:
                     type: boolean
+                    example: false
                   conquereds:
                     type: array
                     items:
@@ -785,16 +549,22 @@ paths:
                       properties:
                         id:
                           type: number
+                          example: 2
                         name:
                           type: string
+                          example: 青森県
                         short:
                           type: string
+                          example: 青森
                         kana:
                           type: string
+                          example: アオモリケン
                         en:
                           type: string
+                          example: Aomori
                         regionId:
                           type: number
+                          example: 1
                       required:
                         - id
                         - name
@@ -809,16 +579,22 @@ paths:
                       properties:
                         id:
                           type: number
+                          example: 2
                         name:
                           type: string
+                          example: 青森県
                         short:
                           type: string
+                          example: 青森
                         kana:
                           type: string
+                          example: アオモリケン
                         en:
                           type: string
+                          example: Aomori
                         regionId:
                           type: number
+                          example: 1
                       required:
                         - id
                         - name
@@ -842,7 +618,7 @@ paths:
                   - conquereds
                   - neighbors
           description: ''
-      tags: &ref_3
+      tags: &ref_2
         - games
   /games:
     get:
@@ -890,7 +666,7 @@ paths:
             application/json; charset=utf-8:
               schema: {}
           description: ''
-      tags: *ref_3
+      tags: *ref_2
     post:
       operationId: GameController_create
       parameters: []
@@ -908,13 +684,16 @@ paths:
                     - NORMAL
                     - HARD
                     - VERY_HARD
+                  example: NORMAL
                 mode:
                   type: string
                   enum:
                     - NATIONWIDE
                     - REGIONAL
+                  example: NATIONWIDE
                 prefectureId:
                   type: number
+                  example: 1
               required:
                 - difficulty
                 - mode
@@ -929,12 +708,14 @@ paths:
                   id:
                     type: string
                     format: uuid
+                    example: 00000000-0000-0000-0000-000000000000
                   state:
                     type: string
                     enum:
                       - PLAYING
                       - FINISHED
                       - GIVEN_UP
+                    example: PLAYING
                   difficulty:
                     type: string
                     enum:
@@ -942,43 +723,57 @@ paths:
                       - NORMAL
                       - HARD
                       - VERY_HARD
+                    example: NORMAL
                   mode:
                     type: string
                     enum:
                       - NATIONWIDE
                       - REGIONAL
+                    example: NATIONWIDE
                   prefectureId:
                     type: number
+                    example: 1
                   userId:
                     type: string
+                    example: 00000000-0000-0000-0000-000000000000
                   createdAt:
                     type: string
                     format: date-time
+                    example: '2021-01-01T00:00:00.000Z'
                   updatedAt:
                     type: string
                     format: date-time
+                    example: '2021-01-01T00:00:00.000Z'
                   prefecture:
                     type: object
                     properties:
                       id:
                         type: number
+                        example: 2
                       name:
                         type: string
+                        example: 青森県
                       short:
                         type: string
+                        example: 青森
                       kana:
                         type: string
+                        example: アオモリケン
                       en:
                         type: string
+                        example: Aomori
                       regionId:
                         type: number
+                        example: 1
                       region:
                         type: object
                         properties:
                           id:
                             type: number
+                            example: 1
                           name:
                             type: string
+                            example: 北海道・東北
                         required:
                           - id
                           - name
@@ -995,22 +790,29 @@ paths:
                     properties:
                       id:
                         type: string
+                        example: 00000000-0000-0000-0000-000000000000
                       name:
                         type: string
+                        example: ゲスト
                       email:
                         type: string
                         nullable: true
+                        example: example@example.com
                       emailVerified:
                         type: boolean
+                        example: false
                       image:
                         type: string
                         nullable: true
+                        example: null
                       createdAt:
                         type: string
                         format: date-time
+                        example: '2021-01-01T00:00:00.000Z'
                       updatedAt:
                         type: string
                         format: date-time
+                        example: '2021-01-01T00:00:00.000Z'
                     required:
                       - id
                       - name
@@ -1026,57 +828,74 @@ paths:
                       properties:
                         id:
                           type: number
+                          example: 1
                         gameId:
                           type: string
                           format: uuid
+                          example: 00000000-0000-0000-0000-000000000000
                         highLow:
                           type: string
                           enum:
                             - HIGH
                             - LOW
+                          example: HIGH
                         factorPrefectureId:
                           type: number
+                          example: 2
                         factorName:
                           type: string
                           enum:
                             - AREA
                             - POPULATION
+                          example: POPULATION
                         opponentId:
                           type: number
+                          example: 2
                         result:
                           type: string
                           enum:
                             - WIN
                             - DRAW
                             - LOSE
+                          example: WIN
                         createdAt:
                           type: string
                           format: date-time
+                          example: '2021-01-01T00:00:00.000Z'
                         updatedAt:
                           type: string
                           format: date-time
+                          example: '2021-01-01T00:00:00.000Z'
                         opponent:
                           type: object
                           properties:
                             id:
                               type: number
+                              example: 2
                             name:
                               type: string
+                              example: 青森県
                             short:
                               type: string
+                              example: 青森
                             kana:
                               type: string
+                              example: アオモリケン
                             en:
                               type: string
+                              example: Aomori
                             regionId:
                               type: number
+                              example: 1
                             region:
                               type: object
                               properties:
                                 id:
                                   type: number
+                                  example: 1
                                 name:
                                   type: string
+                                  example: 北海道・東北
                               required:
                                 - id
                                 - name
@@ -1101,6 +920,7 @@ paths:
                         - opponent
                   hideData:
                     type: boolean
+                    example: false
                   conquereds:
                     type: array
                     items:
@@ -1108,16 +928,22 @@ paths:
                       properties:
                         id:
                           type: number
+                          example: 2
                         name:
                           type: string
+                          example: 青森県
                         short:
                           type: string
+                          example: 青森
                         kana:
                           type: string
+                          example: アオモリケン
                         en:
                           type: string
+                          example: Aomori
                         regionId:
                           type: number
+                          example: 1
                       required:
                         - id
                         - name
@@ -1132,16 +958,22 @@ paths:
                       properties:
                         id:
                           type: number
+                          example: 2
                         name:
                           type: string
+                          example: 青森県
                         short:
                           type: string
+                          example: 青森
                         kana:
                           type: string
+                          example: アオモリケン
                         en:
                           type: string
+                          example: Aomori
                         regionId:
                           type: number
+                          example: 1
                       required:
                         - id
                         - name
@@ -1165,7 +997,7 @@ paths:
                   - conquereds
                   - neighbors
           description: ''
-      tags: *ref_3
+      tags: *ref_2
   /games/{id}:
     get:
       operationId: GameController_getGame
@@ -1186,12 +1018,14 @@ paths:
                   id:
                     type: string
                     format: uuid
+                    example: 00000000-0000-0000-0000-000000000000
                   state:
                     type: string
                     enum:
                       - PLAYING
                       - FINISHED
                       - GIVEN_UP
+                    example: PLAYING
                   difficulty:
                     type: string
                     enum:
@@ -1199,43 +1033,57 @@ paths:
                       - NORMAL
                       - HARD
                       - VERY_HARD
+                    example: NORMAL
                   mode:
                     type: string
                     enum:
                       - NATIONWIDE
                       - REGIONAL
+                    example: NATIONWIDE
                   prefectureId:
                     type: number
+                    example: 1
                   userId:
                     type: string
+                    example: 00000000-0000-0000-0000-000000000000
                   createdAt:
                     type: string
                     format: date-time
+                    example: '2021-01-01T00:00:00.000Z'
                   updatedAt:
                     type: string
                     format: date-time
+                    example: '2021-01-01T00:00:00.000Z'
                   prefecture:
                     type: object
                     properties:
                       id:
                         type: number
+                        example: 2
                       name:
                         type: string
+                        example: 青森県
                       short:
                         type: string
+                        example: 青森
                       kana:
                         type: string
+                        example: アオモリケン
                       en:
                         type: string
+                        example: Aomori
                       regionId:
                         type: number
+                        example: 1
                       region:
                         type: object
                         properties:
                           id:
                             type: number
+                            example: 1
                           name:
                             type: string
+                            example: 北海道・東北
                         required:
                           - id
                           - name
@@ -1252,22 +1100,29 @@ paths:
                     properties:
                       id:
                         type: string
+                        example: 00000000-0000-0000-0000-000000000000
                       name:
                         type: string
+                        example: ゲスト
                       email:
                         type: string
                         nullable: true
+                        example: example@example.com
                       emailVerified:
                         type: boolean
+                        example: false
                       image:
                         type: string
                         nullable: true
+                        example: null
                       createdAt:
                         type: string
                         format: date-time
+                        example: '2021-01-01T00:00:00.000Z'
                       updatedAt:
                         type: string
                         format: date-time
+                        example: '2021-01-01T00:00:00.000Z'
                     required:
                       - id
                       - name
@@ -1283,57 +1138,74 @@ paths:
                       properties:
                         id:
                           type: number
+                          example: 1
                         gameId:
                           type: string
                           format: uuid
+                          example: 00000000-0000-0000-0000-000000000000
                         highLow:
                           type: string
                           enum:
                             - HIGH
                             - LOW
+                          example: HIGH
                         factorPrefectureId:
                           type: number
+                          example: 2
                         factorName:
                           type: string
                           enum:
                             - AREA
                             - POPULATION
+                          example: POPULATION
                         opponentId:
                           type: number
+                          example: 2
                         result:
                           type: string
                           enum:
                             - WIN
                             - DRAW
                             - LOSE
+                          example: WIN
                         createdAt:
                           type: string
                           format: date-time
+                          example: '2021-01-01T00:00:00.000Z'
                         updatedAt:
                           type: string
                           format: date-time
+                          example: '2021-01-01T00:00:00.000Z'
                         opponent:
                           type: object
                           properties:
                             id:
                               type: number
+                              example: 2
                             name:
                               type: string
+                              example: 青森県
                             short:
                               type: string
+                              example: 青森
                             kana:
                               type: string
+                              example: アオモリケン
                             en:
                               type: string
+                              example: Aomori
                             regionId:
                               type: number
+                              example: 1
                             region:
                               type: object
                               properties:
                                 id:
                                   type: number
+                                  example: 1
                                 name:
                                   type: string
+                                  example: 北海道・東北
                               required:
                                 - id
                                 - name
@@ -1358,6 +1230,7 @@ paths:
                         - opponent
                   hideData:
                     type: boolean
+                    example: false
                   conquereds:
                     type: array
                     items:
@@ -1365,16 +1238,22 @@ paths:
                       properties:
                         id:
                           type: number
+                          example: 2
                         name:
                           type: string
+                          example: 青森県
                         short:
                           type: string
+                          example: 青森
                         kana:
                           type: string
+                          example: アオモリケン
                         en:
                           type: string
+                          example: Aomori
                         regionId:
                           type: number
+                          example: 1
                       required:
                         - id
                         - name
@@ -1389,16 +1268,22 @@ paths:
                       properties:
                         id:
                           type: number
+                          example: 2
                         name:
                           type: string
+                          example: 青森県
                         short:
                           type: string
+                          example: 青森
                         kana:
                           type: string
+                          example: アオモリケン
                         en:
                           type: string
+                          example: Aomori
                         regionId:
                           type: number
+                          example: 1
                       required:
                         - id
                         - name
@@ -1422,278 +1307,7 @@ paths:
                   - conquereds
                   - neighbors
           description: ''
-      tags: *ref_3
-    patch:
-      operationId: GameController_update
-      parameters:
-        - name: id
-          required: true
-          in: path
-          example: uuid-uuid-uuid-uuid
-          schema:
-            type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                state:
-                  type: string
-                  enum:
-                    - PLAYING
-                    - FINISHED
-                    - GIVEN_UP
-              required:
-                - state
-      responses:
-        '200':
-          content:
-            application/json; charset=utf-8:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    format: uuid
-                  state:
-                    type: string
-                    enum:
-                      - PLAYING
-                      - FINISHED
-                      - GIVEN_UP
-                  difficulty:
-                    type: string
-                    enum:
-                      - EASY
-                      - NORMAL
-                      - HARD
-                      - VERY_HARD
-                  mode:
-                    type: string
-                    enum:
-                      - NATIONWIDE
-                      - REGIONAL
-                  prefectureId:
-                    type: number
-                  userId:
-                    type: string
-                  createdAt:
-                    type: string
-                    format: date-time
-                  updatedAt:
-                    type: string
-                    format: date-time
-                  prefecture:
-                    type: object
-                    properties:
-                      id:
-                        type: number
-                      name:
-                        type: string
-                      short:
-                        type: string
-                      kana:
-                        type: string
-                      en:
-                        type: string
-                      regionId:
-                        type: number
-                      region:
-                        type: object
-                        properties:
-                          id:
-                            type: number
-                          name:
-                            type: string
-                        required:
-                          - id
-                          - name
-                    required:
-                      - id
-                      - name
-                      - short
-                      - kana
-                      - en
-                      - regionId
-                      - region
-                  user:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                      name:
-                        type: string
-                      email:
-                        type: string
-                        nullable: true
-                      emailVerified:
-                        type: boolean
-                      image:
-                        type: string
-                        nullable: true
-                      createdAt:
-                        type: string
-                        format: date-time
-                      updatedAt:
-                        type: string
-                        format: date-time
-                    required:
-                      - id
-                      - name
-                      - email
-                      - emailVerified
-                      - image
-                      - createdAt
-                      - updatedAt
-                  logs:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: number
-                        gameId:
-                          type: string
-                          format: uuid
-                        highLow:
-                          type: string
-                          enum:
-                            - HIGH
-                            - LOW
-                        factorPrefectureId:
-                          type: number
-                        factorName:
-                          type: string
-                          enum:
-                            - AREA
-                            - POPULATION
-                        opponentId:
-                          type: number
-                        result:
-                          type: string
-                          enum:
-                            - WIN
-                            - DRAW
-                            - LOSE
-                        createdAt:
-                          type: string
-                          format: date-time
-                        updatedAt:
-                          type: string
-                          format: date-time
-                        opponent:
-                          type: object
-                          properties:
-                            id:
-                              type: number
-                            name:
-                              type: string
-                            short:
-                              type: string
-                            kana:
-                              type: string
-                            en:
-                              type: string
-                            regionId:
-                              type: number
-                            region:
-                              type: object
-                              properties:
-                                id:
-                                  type: number
-                                name:
-                                  type: string
-                              required:
-                                - id
-                                - name
-                          required:
-                            - id
-                            - name
-                            - short
-                            - kana
-                            - en
-                            - regionId
-                            - region
-                      required:
-                        - id
-                        - gameId
-                        - highLow
-                        - factorPrefectureId
-                        - factorName
-                        - opponentId
-                        - result
-                        - createdAt
-                        - updatedAt
-                        - opponent
-                  hideData:
-                    type: boolean
-                  conquereds:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: number
-                        name:
-                          type: string
-                        short:
-                          type: string
-                        kana:
-                          type: string
-                        en:
-                          type: string
-                        regionId:
-                          type: number
-                      required:
-                        - id
-                        - name
-                        - short
-                        - kana
-                        - en
-                        - regionId
-                  neighbors:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: number
-                        name:
-                          type: string
-                        short:
-                          type: string
-                        kana:
-                          type: string
-                        en:
-                          type: string
-                        regionId:
-                          type: number
-                      required:
-                        - id
-                        - name
-                        - short
-                        - kana
-                        - en
-                        - regionId
-                required:
-                  - id
-                  - state
-                  - difficulty
-                  - mode
-                  - prefectureId
-                  - userId
-                  - createdAt
-                  - updatedAt
-                  - prefecture
-                  - user
-                  - logs
-                  - hideData
-                  - conquereds
-                  - neighbors
-          description: ''
-      tags: *ref_3
+      tags: *ref_2
   /games/{id}/logging/turn-action:
     post:
       operationId: GameController_loggingTurnAction
@@ -1716,15 +1330,19 @@ paths:
                   enum:
                     - HIGH
                     - LOW
+                  example: HIGH
                 factorPrefectureId:
                   type: number
+                  example: 2
                 factorName:
                   type: string
                   enum:
                     - AREA
                     - POPULATION
+                  example: POPULATION
                 opponentId:
                   type: number
+                  example: 2
               required:
                 - highLow
                 - factorPrefectureId
@@ -1740,12 +1358,14 @@ paths:
                   id:
                     type: string
                     format: uuid
+                    example: 00000000-0000-0000-0000-000000000000
                   state:
                     type: string
                     enum:
                       - PLAYING
                       - FINISHED
                       - GIVEN_UP
+                    example: PLAYING
                   difficulty:
                     type: string
                     enum:
@@ -1753,43 +1373,57 @@ paths:
                       - NORMAL
                       - HARD
                       - VERY_HARD
+                    example: NORMAL
                   mode:
                     type: string
                     enum:
                       - NATIONWIDE
                       - REGIONAL
+                    example: NATIONWIDE
                   prefectureId:
                     type: number
+                    example: 1
                   userId:
                     type: string
+                    example: 00000000-0000-0000-0000-000000000000
                   createdAt:
                     type: string
                     format: date-time
+                    example: '2021-01-01T00:00:00.000Z'
                   updatedAt:
                     type: string
                     format: date-time
+                    example: '2021-01-01T00:00:00.000Z'
                   prefecture:
                     type: object
                     properties:
                       id:
                         type: number
+                        example: 2
                       name:
                         type: string
+                        example: 青森県
                       short:
                         type: string
+                        example: 青森
                       kana:
                         type: string
+                        example: アオモリケン
                       en:
                         type: string
+                        example: Aomori
                       regionId:
                         type: number
+                        example: 1
                       region:
                         type: object
                         properties:
                           id:
                             type: number
+                            example: 1
                           name:
                             type: string
+                            example: 北海道・東北
                         required:
                           - id
                           - name
@@ -1806,22 +1440,29 @@ paths:
                     properties:
                       id:
                         type: string
+                        example: 00000000-0000-0000-0000-000000000000
                       name:
                         type: string
+                        example: ゲスト
                       email:
                         type: string
                         nullable: true
+                        example: example@example.com
                       emailVerified:
                         type: boolean
+                        example: false
                       image:
                         type: string
                         nullable: true
+                        example: null
                       createdAt:
                         type: string
                         format: date-time
+                        example: '2021-01-01T00:00:00.000Z'
                       updatedAt:
                         type: string
                         format: date-time
+                        example: '2021-01-01T00:00:00.000Z'
                     required:
                       - id
                       - name
@@ -1837,57 +1478,74 @@ paths:
                       properties:
                         id:
                           type: number
+                          example: 1
                         gameId:
                           type: string
                           format: uuid
+                          example: 00000000-0000-0000-0000-000000000000
                         highLow:
                           type: string
                           enum:
                             - HIGH
                             - LOW
+                          example: HIGH
                         factorPrefectureId:
                           type: number
+                          example: 2
                         factorName:
                           type: string
                           enum:
                             - AREA
                             - POPULATION
+                          example: POPULATION
                         opponentId:
                           type: number
+                          example: 2
                         result:
                           type: string
                           enum:
                             - WIN
                             - DRAW
                             - LOSE
+                          example: WIN
                         createdAt:
                           type: string
                           format: date-time
+                          example: '2021-01-01T00:00:00.000Z'
                         updatedAt:
                           type: string
                           format: date-time
+                          example: '2021-01-01T00:00:00.000Z'
                         opponent:
                           type: object
                           properties:
                             id:
                               type: number
+                              example: 2
                             name:
                               type: string
+                              example: 青森県
                             short:
                               type: string
+                              example: 青森
                             kana:
                               type: string
+                              example: アオモリケン
                             en:
                               type: string
+                              example: Aomori
                             regionId:
                               type: number
+                              example: 1
                             region:
                               type: object
                               properties:
                                 id:
                                   type: number
+                                  example: 1
                                 name:
                                   type: string
+                                  example: 北海道・東北
                               required:
                                 - id
                                 - name
@@ -1912,6 +1570,7 @@ paths:
                         - opponent
                   hideData:
                     type: boolean
+                    example: false
                   conquereds:
                     type: array
                     items:
@@ -1919,16 +1578,22 @@ paths:
                       properties:
                         id:
                           type: number
+                          example: 2
                         name:
                           type: string
+                          example: 青森県
                         short:
                           type: string
+                          example: 青森
                         kana:
                           type: string
+                          example: アオモリケン
                         en:
                           type: string
+                          example: Aomori
                         regionId:
                           type: number
+                          example: 1
                       required:
                         - id
                         - name
@@ -1943,16 +1608,22 @@ paths:
                       properties:
                         id:
                           type: number
+                          example: 2
                         name:
                           type: string
+                          example: 青森県
                         short:
                           type: string
+                          example: 青森
                         kana:
                           type: string
+                          example: アオモリケン
                         en:
                           type: string
+                          example: Aomori
                         regionId:
                           type: number
+                          example: 1
                       required:
                         - id
                         - name
@@ -1976,7 +1647,7 @@ paths:
                   - conquereds
                   - neighbors
           description: ''
-      tags: *ref_3
+      tags: *ref_2
   /games/{id}/give-up:
     patch:
       operationId: GameController_giveUp
@@ -1997,12 +1668,14 @@ paths:
                   id:
                     type: string
                     format: uuid
+                    example: 00000000-0000-0000-0000-000000000000
                   state:
                     type: string
                     enum:
                       - PLAYING
                       - FINISHED
                       - GIVEN_UP
+                    example: PLAYING
                   difficulty:
                     type: string
                     enum:
@@ -2010,43 +1683,57 @@ paths:
                       - NORMAL
                       - HARD
                       - VERY_HARD
+                    example: NORMAL
                   mode:
                     type: string
                     enum:
                       - NATIONWIDE
                       - REGIONAL
+                    example: NATIONWIDE
                   prefectureId:
                     type: number
+                    example: 1
                   userId:
                     type: string
+                    example: 00000000-0000-0000-0000-000000000000
                   createdAt:
                     type: string
                     format: date-time
+                    example: '2021-01-01T00:00:00.000Z'
                   updatedAt:
                     type: string
                     format: date-time
+                    example: '2021-01-01T00:00:00.000Z'
                   prefecture:
                     type: object
                     properties:
                       id:
                         type: number
+                        example: 2
                       name:
                         type: string
+                        example: 青森県
                       short:
                         type: string
+                        example: 青森
                       kana:
                         type: string
+                        example: アオモリケン
                       en:
                         type: string
+                        example: Aomori
                       regionId:
                         type: number
+                        example: 1
                       region:
                         type: object
                         properties:
                           id:
                             type: number
+                            example: 1
                           name:
                             type: string
+                            example: 北海道・東北
                         required:
                           - id
                           - name
@@ -2063,22 +1750,29 @@ paths:
                     properties:
                       id:
                         type: string
+                        example: 00000000-0000-0000-0000-000000000000
                       name:
                         type: string
+                        example: ゲスト
                       email:
                         type: string
                         nullable: true
+                        example: example@example.com
                       emailVerified:
                         type: boolean
+                        example: false
                       image:
                         type: string
                         nullable: true
+                        example: null
                       createdAt:
                         type: string
                         format: date-time
+                        example: '2021-01-01T00:00:00.000Z'
                       updatedAt:
                         type: string
                         format: date-time
+                        example: '2021-01-01T00:00:00.000Z'
                     required:
                       - id
                       - name
@@ -2094,57 +1788,74 @@ paths:
                       properties:
                         id:
                           type: number
+                          example: 1
                         gameId:
                           type: string
                           format: uuid
+                          example: 00000000-0000-0000-0000-000000000000
                         highLow:
                           type: string
                           enum:
                             - HIGH
                             - LOW
+                          example: HIGH
                         factorPrefectureId:
                           type: number
+                          example: 2
                         factorName:
                           type: string
                           enum:
                             - AREA
                             - POPULATION
+                          example: POPULATION
                         opponentId:
                           type: number
+                          example: 2
                         result:
                           type: string
                           enum:
                             - WIN
                             - DRAW
                             - LOSE
+                          example: WIN
                         createdAt:
                           type: string
                           format: date-time
+                          example: '2021-01-01T00:00:00.000Z'
                         updatedAt:
                           type: string
                           format: date-time
+                          example: '2021-01-01T00:00:00.000Z'
                         opponent:
                           type: object
                           properties:
                             id:
                               type: number
+                              example: 2
                             name:
                               type: string
+                              example: 青森県
                             short:
                               type: string
+                              example: 青森
                             kana:
                               type: string
+                              example: アオモリケン
                             en:
                               type: string
+                              example: Aomori
                             regionId:
                               type: number
+                              example: 1
                             region:
                               type: object
                               properties:
                                 id:
                                   type: number
+                                  example: 1
                                 name:
                                   type: string
+                                  example: 北海道・東北
                               required:
                                 - id
                                 - name
@@ -2169,6 +1880,7 @@ paths:
                         - opponent
                   hideData:
                     type: boolean
+                    example: false
                   conquereds:
                     type: array
                     items:
@@ -2176,16 +1888,22 @@ paths:
                       properties:
                         id:
                           type: number
+                          example: 2
                         name:
                           type: string
+                          example: 青森県
                         short:
                           type: string
+                          example: 青森
                         kana:
                           type: string
+                          example: アオモリケン
                         en:
                           type: string
+                          example: Aomori
                         regionId:
                           type: number
+                          example: 1
                       required:
                         - id
                         - name
@@ -2200,16 +1918,22 @@ paths:
                       properties:
                         id:
                           type: number
+                          example: 2
                         name:
                           type: string
+                          example: 青森県
                         short:
                           type: string
+                          example: 青森
                         kana:
                           type: string
+                          example: アオモリケン
                         en:
                           type: string
+                          example: Aomori
                         regionId:
                           type: number
+                          example: 1
                       required:
                         - id
                         - name
@@ -2233,7 +1957,7 @@ paths:
                   - conquereds
                   - neighbors
           description: ''
-      tags: *ref_3
+      tags: *ref_2
 info:
   title: API Doc
   description: API Doc Description
