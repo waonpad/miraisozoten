@@ -2,6 +2,7 @@ const axios = require('axios');
 const admin = require('firebase-admin');
 const { initializeApp } = require('firebase/app');
 const { getAuth, connectAuthEmulator } = require('firebase/auth');
+const { prisma } = require('database');
 
 require('dotenv').config({ path: '.env' });
 require('dotenv').config({ path: '.env.test.local' });
@@ -97,4 +98,5 @@ module.exports = {
   address,
   firebaseAdmin: admin,
   firebaseAuth,
+  prisma,
 };
