@@ -1,4 +1,4 @@
-import { initializeApp } from 'firebase/app';
+import { initializeApp, getApp } from 'firebase/app';
 import { getAuth, connectAuthEmulator, GoogleAuthProvider } from 'firebase/auth';
 
 import { env } from '@/constants/env';
@@ -10,7 +10,16 @@ const firebaseConfig = {
   appId: env.VITE_FIREBASE_APP_ID,
 };
 
-const firebaseApp = initializeApp(firebaseConfig);
+const firebaseApp = (() => {
+  if (getApp()) {
+    console.warn('Firebase app already initialized');
+
+    return getApp();
+  }
+  console.log('Firebase app initialized');
+
+  return initializeApp(firebaseConfig);
+})();
 
 const firebaseAuth = getAuth();
 (env.VITE_FIREBASE_EMULATOR_ENABLED === 'true' || env.VITE_API_MOCKING === 'true') &&
