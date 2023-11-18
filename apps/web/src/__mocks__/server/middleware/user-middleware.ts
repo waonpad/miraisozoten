@@ -18,6 +18,8 @@ export const userMiddleware = async (req: RestRequest): Promise<RestRequest> => 
       body: JSON.stringify({ token }),
     });
 
+    console.log(decodedResponse);
+
     const decoded: JwtDecodedUser = await decodedResponse.json();
 
     req.user = decoded;
