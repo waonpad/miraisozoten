@@ -1,6 +1,3 @@
-// プロジェクト内に必要なパッケージが含まれているため、
-// fb-toolsパッケージでは明示的な依存関係を管理していません
-
 const express = require('express');
 const admin = require('firebase-admin');
 const path = require('path');
