@@ -11,7 +11,7 @@
     "preview": "vite preview",
     "test": "vitest run --silent",
     "test:watch": "vitest watch --silent",
-    "test:ci": "vitest run --silent"
+    "test:ci": "vitest run"
   },
   "dependencies": {
     "@generouted/react-router": "^1.16.0",

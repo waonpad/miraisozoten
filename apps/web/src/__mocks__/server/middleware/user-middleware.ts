@@ -24,6 +24,8 @@ export const userMiddleware = async (req: RestRequest): Promise<RestRequest> => 
 
     return req;
   } catch (error) {
+    console.error(error);
+
     return req;
   }
 };
