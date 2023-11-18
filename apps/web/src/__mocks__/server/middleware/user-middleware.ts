@@ -18,7 +18,9 @@ export const userMiddleware = async (req: RestRequest): Promise<RestRequest> => 
       body: JSON.stringify({ token }),
     });
 
-    console.log(decodedResponse);
+    if (!decodedResponse.ok) {
+      console.error('Failed to decode token', decodedResponse);
+    }
 
     const decoded: JwtDecodedUser = await decodedResponse.json();
 
