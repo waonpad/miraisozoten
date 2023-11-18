@@ -20,6 +20,8 @@ export const userMiddleware = async (req: RestRequest): Promise<RestRequest> => 
 
     if (!decodedResponse.ok) {
       console.error('Failed to decode token', await decodedResponse.text());
+
+      return req;
     }
 
     const decoded: JwtDecodedUser = await decodedResponse.json();
@@ -28,7 +30,7 @@ export const userMiddleware = async (req: RestRequest): Promise<RestRequest> => 
 
     return req;
   } catch (error) {
-    console.error(error);
+    console.error('Failed to parse decoded token', error);
 
     return req;
   }
