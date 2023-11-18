@@ -75,6 +75,8 @@ jobs:
       - run: npx nps prepare.ci.web
       - run: npx nps build.ci.web
 
+      - name: add fb-tools deps
+        run: cd packages/fb-tools && yarn install --frozen-lockfile
       - run: npx turbo run dev --scope=fb-tools &
       - run: nps firebase.admin &
       - run: sleep 10 &
