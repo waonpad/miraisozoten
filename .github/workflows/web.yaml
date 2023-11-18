@@ -71,7 +71,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
-      - run: yarn global add turbo firebase-tools
+      - run: yarn global add turbo firebase-tools nps
       - run: npx nps prepare.ci.web
       - run: npx nps build.ci.web
 
