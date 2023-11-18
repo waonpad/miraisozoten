@@ -37,7 +37,6 @@ module.exports = {
       ci: {
         web: `npx turbo prune web && cd out && yarn install --frozen-lockfile`,
         api: `npx turbo prune api && cd out && yarn install --frozen-lockfile`,
-        database: `npx turbo prune database && cd out && yarn install --frozen-lockfile`,
       },
     },
     test: {
@@ -140,7 +139,6 @@ module.exports = {
     util: {
       pstatsref: `yarn ts-node ${root('tool/post-update-prefecture-stats-data.ts')}`,
       gensec: `node ${root('tool/gen-secret.js')}`,
-      upnxsec: `node ${root('tool/update-nextauth-secret.js')}`,
       pkill: {
         api: `node ${root('tool/process-kill.js')} 3000`,
       },
