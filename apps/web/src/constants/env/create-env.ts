@@ -6,7 +6,7 @@ export const createEnv = ({ runtimeEnv }: { runtimeEnv: NodeJS.ProcessEnv }) => 
     server: {},
     clientPrefix: 'VITE_',
     client: {
-      VITE_APP_ENV: z.enum(['development', 'production', 'test']),
+      VITE_APP_ENV: z.enum(['development', 'production', 'test', 'ci']),
       VITE_API_URL: z.string().url(),
       VITE_APP_NAME: z.string(),
       VITE_HOST_URL: z.string().url(),

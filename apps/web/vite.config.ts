@@ -1,7 +1,9 @@
 import react from '@vitejs/plugin-react';
-import { defineConfig, loadEnv } from 'vite';
+import { UserConfig, defineConfig, loadEnv } from 'vite';
 import generouted from '@generouted/react-router/plugin';
 import yaml from '@rollup/plugin-yaml';
+import path from 'path';
+import type { UserConfig as VitestUserConfig } from 'vitest/dist/config.js';
 
 const createEnv = require('./src/constants/env/create-env').createEnv;
 
@@ -17,23 +19,21 @@ export default ({ mode }) => {
   createEnv({ runtimeEnv: process.env });
 
   return defineConfig({
-    plugins: [
-      react(),
-      htmlPlugin(process.env),
-      yaml(),
-      generouted({
-        source: {
-          routes: './src/pages/**/[\\w[-]*.{jsx,tsx}',
-          modals: './src/pages/**/[+]*.{jsx,tsx}',
-        },
-        output: './src/router.ts',
-      }),
-    ],
+    plugins: [react(), htmlPlugin(process.env), yaml(), generouted()],
     resolve: { alias: { '@': '/src' } },
     server: {
       port: 8080,
     },
-  });
+    test: {
+      globals: true,
+      environment: 'happy-dom',
+      include: ['src/**/*.test.{js,ts,jsx,tsx}'],
+      alias: {
+        '@': path.resolve(__dirname, './src'),
+      },
+      setupFiles: ['./src/setup-tests.ts'],
+    },
+  } as UserConfig & { test: VitestUserConfig['test'] });
 };
 
 /**
