@@ -78,7 +78,7 @@ jobs:
       - name: add fb-tools deps
         run: cd packages/fb-tools && yarn install --frozen-lockfile
       - name: run firebase emulators
-        run: cd packages/fb-tools && yarn dev &
+        run: cd packages/fb-tools && yarn dev --token ${{ secrets.FIREBASE_CI_TOKEN }} &
       - run: nps firebase.admin &
       - run: sleep 10 &
       - run: curl -I http://localhost:9099 &
