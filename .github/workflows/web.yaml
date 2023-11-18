@@ -81,6 +81,7 @@ jobs:
         run: cd packages/fb-tools && yarn dev &
       - run: nps firebase.admin &
       - run: sleep 10 &
+      - run: curl -I http://localhost:9099 &
       - run: curl -I http://localhost:3010/firebase/admin &
 
       - run: npx nps test.ci.web
