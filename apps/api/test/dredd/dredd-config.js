@@ -13,14 +13,7 @@ const env = process.env;
  * @description
  * baseURLとAuthorizationがデフォルトで設定されたaxiosインスタンス
  */
-const axiosInstance = axios.create({
-  baseURL: `http://${env.HOST}:${env.PORT}`,
-  // 毎回firebaseのユーザーを作るため、その時のトークンを使うようにする
-  // TODO: トランザクションからトークンを取得し、それをヘッダーに設定するようにテンプレートを修正する
-  headers: {
-    Authorization: 'Bearer ' + env.VALID_TOKEN, // これは動かなくなった
-  },
-});
+const axiosInstance = axios.create({ baseURL: `http://${env.HOST}:${env.PORT}` });
 
 /**
  * @description
