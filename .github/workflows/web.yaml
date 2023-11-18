@@ -19,7 +19,7 @@ on:
 
 env:
   # t3-envがCI環境でも動くため、ダミーでエラーを回避する
-  VITE_APP_ENV: test
+  VITE_APP_ENV: ci
   VITE_API_URL: http://localhost:3000
   VITE_APP_NAME: 'VITE APP'
   VITE_HOST_URL: http://localhost:8080
@@ -33,12 +33,6 @@ env:
   VITE_API_MOCKING: true
   VITE_FIREBASE_EMULATOR_ENABLED: true
   VITE_FIREBASE_AUTH_EMULATOR_HOST: 127.0.0.1:9099
-
-  # FirebaseのCI環境用の設定
-  FIREBASE_AUTH_EMULATOR_HOST: 127.0.0.1:9099
-  FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
-  FIREBASE_PRIVATE_KEY: ${{ secrets.FIREBASE_PRIVATE_KEY }}
-  FIREBASE_CLIENT_EMAIL: ${{ secrets.FIREBASE_CLIENT_EMAIL }}
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -77,12 +71,5 @@ jobs:
 
       - name: add fb-tools deps
         run: cd packages/fb-tools && yarn install --frozen-lockfile
-      # - run: nps firebase.admin &
-      # - run: sleep 5 &
       - name: run firebase emulators
-        run: cd packages/fb-tools && firebase emulators:exec "nps firebase.admin & sleep 5 & npx nps test.ci.web" --project ${{ secrets.FIREBASE_PROJECT_ID }}
-      # - run: sleep 10
-      # - run: curl -I http://localhost:9099
-      # - run: curl -I http://localhost:3010/firebase/admin
-
-      # - run: npx nps test.ci.web
+        run: cd packages/fb-tools && firebase emulators:exec "npx nps test.ci.web" --project ${{ secrets.FIREBASE_PROJECT_ID }}
