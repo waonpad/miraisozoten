@@ -68,8 +68,4 @@ jobs:
       - run: yarn global add turbo firebase-tools nps
       - run: npx nps prepare.ci.web
       - run: npx nps build.ci.web
-
-      - name: add fb-tools deps
-        run: cd packages/fb-tools && yarn install --frozen-lockfile
-      - name: run firebase emulators
-        run: cd packages/fb-tools && firebase emulators:exec "npx nps test.ci.web" --project ${{ secrets.FIREBASE_PROJECT_ID }}
+      - run: cd packages/fb-tools && firebase emulators:exec "npx nps test.ci.web" --project ${{ secrets.FIREBASE_PROJECT_ID }}
