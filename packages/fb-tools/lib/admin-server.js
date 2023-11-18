@@ -29,14 +29,6 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.get('/firebase/admin', (req, res) => {
-  console.log('GET /firebase/admin');
-
-  return res.json({
-    message: 'Firebase Admin Server',
-  });
-});
-
 app.post('/firebase/admin/verify', async (req, res) => {
   const token = req.body.token;
 
