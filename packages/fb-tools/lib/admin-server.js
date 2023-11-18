@@ -49,7 +49,7 @@ app.post('/firebase/admin/verify', async (req, res) => {
       userRecord,
     });
   } catch (error) {
-    res.status(401).send('Unauthorized');
+    res.status(401).send('Unauthorized: ' + error);
   }
 });
 
