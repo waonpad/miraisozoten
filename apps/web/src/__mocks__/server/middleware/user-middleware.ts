@@ -13,6 +13,7 @@ export const userMiddleware = async (req: RestRequest): Promise<RestRequest> => 
   // CI環境の場合、うまくエミュレーターが使えないので、ここでユーザー情報を作って返してしまう
   if (env.VITE_APP_ENV === 'ci') {
     const user: JwtDecodedUser = {
+      provider_id: 'anonymous', // 匿名ログインであることを示すために必要
       aud: env.VITE_FIREBASE_PROJECT_ID,
       auth_time: 1631030400,
       email: 'ci-test@example.com',
