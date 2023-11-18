@@ -1,4 +1,4 @@
-import { initializeApp, getApp } from 'firebase/app';
+import { initializeApp, getApps } from 'firebase/app';
 import { getAuth, connectAuthEmulator, GoogleAuthProvider } from 'firebase/auth';
 
 import { env } from '@/constants/env';
@@ -11,10 +11,10 @@ const firebaseConfig = {
 };
 
 const firebaseApp = (() => {
-  if (getApp()) {
+  if (getApps().length > 0) {
     console.warn('Firebase app already initialized');
 
-    return getApp();
+    return getApps()[0];
   }
   console.log('Firebase app initialized');
 
