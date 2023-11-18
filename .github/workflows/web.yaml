@@ -77,7 +77,8 @@ jobs:
 
       - name: add fb-tools deps
         run: cd packages/fb-tools && yarn install --frozen-lockfile
-      - run: nps firebase.admin
+      - run: nps firebase.admin &
+      - run: sleep 5 &
       - name: run firebase emulators
         run: cd packages/fb-tools && firebase emulators:exec "npx nps test.ci.web" --token ${{ secrets.FIREBASE_CI_TOKEN }}
       # - run: sleep 10
