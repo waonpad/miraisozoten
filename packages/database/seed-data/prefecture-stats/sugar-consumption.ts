@@ -1,0 +1,70 @@
+// 1. テンプレート(_template.ts)をコピーする
+// 2. ファイル名をデータの内容が分かる名前(ケバブケース)に変更する
+// 3. exportしている変数名をファイル名と対応した名前(パスカルケース)に変更する
+// 4. PrefectureStatsData型を満たすようにデータを入力する
+
+import { PrefectureStatsData } from "./types";
+
+export const SugarConsumption = {
+  label: "砂糖消費量",
+  unit: "g",
+  attribution: {
+    sourceSiteName: "都道府県別統計とランキングで見る県民性",
+    sourceUrlTitle: "都道府県別砂糖消費量",
+    sourceUrl: 'https://todo-ran.com/t/kiji/11739',
+    retrievedAt: {
+      year: 2023,
+      month: 11,
+      day: 6,
+    },
+  },
+  prefectures: {
+    1:  { id: 1,  name: '北海道',   value:  4203},
+    2:  { id: 2,  name: '青森県',   value:  4716},
+    3:  { id: 3,  name: '岩手県',   value:  3896},
+    4:  { id: 4,  name: '宮城県',   value:  4663},
+    5:  { id: 5,  name: '秋田県',   value:  5633},
+    6:  { id: 6,  name: '山形県',   value:  6435},
+    7:  { id: 7,  name: '福島県',   value:  5145},
+    8:  { id: 8,  name: '茨城県',   value:  4419},
+    9:  { id: 9,  name: '栃木県',   value:  4432},
+    10: { id: 10, name: '群馬県',   value:  4852},
+    11: { id: 11, name: '埼玉県',   value:  3732},
+    12: { id: 12, name: '千葉県',   value:  3824},
+    13: { id: 13, name: '東京都',   value:  3393},
+    14: { id: 14, name: '神奈川県', value:  4315},
+    15: { id: 15, name: '新潟県',   value:  5168},
+    16: { id: 16, name: '富山県',   value:  4562},
+    17: { id: 17, name: '石川県',   value:  3556},
+    18: { id: 18, name: '福井県',   value:  3837},
+    19: { id: 19, name: '山梨県',   value:  4247},
+    20: { id: 20, name: '長野県',   value:  6918},
+    21: { id: 21, name: '岐阜県',   value:  4620},
+    22: { id: 22, name: '静岡県',   value:  4496},
+    23: { id: 23, name: '愛知県',   value:  3718},
+    24: { id: 24, name: '三重県',   value:  4552},
+    25: { id: 25, name: '滋賀県',   value:  4863},
+    26: { id: 26, name: '京都府',   value:  5186},
+    27: { id: 27, name: '大阪府',   value:  4413},
+    28: { id: 28, name: '兵庫県',   value:  4819},
+    29: { id: 29, name: '奈良県',   value:  5139},
+    30: { id: 30, name: '和歌山県', value:  5435},
+    31: { id: 31, name: '鳥取県',   value:  6198},
+    32: { id: 32, name: '島根県',   value:  5959},
+    33: { id: 33, name: '岡山県',   value:  4538},
+    34: { id: 34, name: '広島県',   value:  4153},
+    35: { id: 35, name: '山口県',   value:  5689},
+    36: { id: 36, name: '徳島県',   value:  4915},
+    37: { id: 37, name: '香川県',   value:  5735},
+    38: { id: 38, name: '愛媛県',   value:  5488},
+    39: { id: 39, name: '高知県',   value:  4460},
+    40: { id: 40, name: '福岡県',   value:  4506},
+    41: { id: 41, name: '佐賀県',   value:  5264},
+    42: { id: 42, name: '長崎県',   value:  6750},
+    43: { id: 43, name: '熊本県',   value:  5348},
+    44: { id: 44, name: '大分県',   value:  5961},
+    45: { id: 45, name: '宮崎県',   value:  6093},
+    46: { id: 46, name: '鹿児島県', value:  6027},
+    47: { id: 47, name: '沖縄県',   value:  3771},
+  }
+} as const satisfies PrefectureStatsData
