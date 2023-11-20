@@ -2,6 +2,8 @@ import { PrefectureResponse } from 'schema/dist/prefecture';
 import { Button } from 'ui/components/ui/button';
 import { Dialog, DialogContent, DialogFooter } from 'ui/components/ui/dialog';
 
+import { PrefectureSVG } from '@/components/maps/prefecture-svg';
+
 export type PrefectureOverviewDialogProps = {
   prefecture: PrefectureResponse;
   open: boolean;
@@ -23,7 +25,7 @@ export const PrefectureOverviewDialog = ({
     <>
       <Dialog open={open} onOpenChange={handleOpenChange}>
         <DialogContent>
-          <div>svgを配置</div>
+          <PrefectureSVG prefectureNameEn={prefecture.en} />
           <div>{prefecture.name}</div>
           <div>{prefecture.region?.name}</div>
           {/* スペースが大きくなりすぎる可能性があるため、隣接県は表示しないことにした */}
