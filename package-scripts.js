@@ -41,8 +41,8 @@ module.exports = {
     },
     test: {
       default: `nps test.web test.api`,
-      web: `cd ${webPath} && yarn test`,
-      api: `cd ${apiPath} && yarn test`,
+      web: `cd ${fbToolsPath} && firebase emulators:exec "nps firebase.admin & cd ${webPath} && yarn test && nps util.pkill.fbadmin"`,
+      api: `cd ${apiPath} && yarn test`, // まだfirebase emulator不要 あとから必要になるかもしれない
       predredd: `docker compose up -d && npx turbo run dev --scope=fb-tools --scope=api --parallel --no-daemon`,
       ci: {
         default: `nps test.ci.web test.ci.api`,
@@ -141,6 +141,7 @@ module.exports = {
       gensec: `node ${root('tool/gen-secret.js')}`,
       pkill: {
         api: `node ${root('tool/process-kill.js')} 3000`,
+        fbadmin: `node ${root('tool/process-kill.js')} 3010`,
       },
     },
   },
