@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 
+import { usePrefectures } from '@/pages/(prefectures)/_/api/get-prefectures';
 import { assert } from '@/utils/asset';
 
 import { useGame } from '../hooks/use-game';
@@ -12,7 +13,22 @@ export const GameStatus = () => {
   const { game } = useGame();
   assert(game);
 
-  const { startTime, conqueredsCount, missCount, playTime: loggedPlayTime } = game;
+  const {
+    prefecture,
+    mode,
+    startTime,
+    conqueredsCount,
+    missCount,
+    playTime: loggedPlayTime,
+  } = game;
+
+  const prefecturesQuery = usePrefectures();
+  const prefectures = prefecturesQuery.data!;
+
+  const allCount =
+    mode === 'NATIONWIDE'
+      ? 47
+      : prefectures.filter((p) => p.regionId === prefecture.regionId).length;
 
   /**
    * @description
@@ -48,7 +64,9 @@ export const GameStatus = () => {
 
   return (
     <>
-      <div>制覇数: {conqueredsCount} / 47</div>
+      <div>
+        制覇数: {conqueredsCount} / {allCount}
+      </div>
       <div>ミス: {missCount}</div>
       {/* 秒ミリ秒を、分秒に変換 */}
       <div>

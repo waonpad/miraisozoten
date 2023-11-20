@@ -26,14 +26,18 @@ export const GameTurnFactorSelect = ({
     <div>
       {factors.map((factor, index) => (
         <Button key={index} onClick={() => handleClickSelectFactor(factor)}>
-          {factor.prefecture.name}
+          {/* {factor.prefecture.name} */}
           {factor.label}
-          {!game.hideData && (
-            <div>
-              {factor.value}
-              {factor.unit}
+          {!game.hideData ? factor.totalValue : '〇〇'}
+          {factor.unit}
+          {/* TODO: 吸収した県が複数になると表示できなくなってしまう */}
+          {factor.absorbedFactors.map((absorbedFactor) => (
+            <div key={absorbedFactor.prefecture.id}>
+              {`+ ${!game.hideData ? `${absorbedFactor.value} ${absorbedFactor.unit}` : ''} (${
+                absorbedFactor.prefecture.name
+              })`}
             </div>
-          )}
+          ))}
         </Button>
       ))}
     </div>

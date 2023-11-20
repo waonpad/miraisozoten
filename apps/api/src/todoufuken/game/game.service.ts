@@ -75,11 +75,34 @@ export class GameService {
     user: JwtDecodedUser
   ): Promise<GameLogResponse> {
     // どの都道府県のデータを使うのか
+    // ↑
+    // 最初に選んだ都道府県固定
     const allyPrefectureId = data.factorPrefectureId;
+
+    const computedGame = await computeGameData({
+      game: await this.prisma.game.findUniqueOrThrow({
+        where: { id, userId: user.sub },
+        include: gameDefaultInclude,
+      }),
+      prisma: this.prisma,
+    });
+
+    // factorNameがdata.factorNameと一致するかつ
+    // resultがWINのログのopponentIdを抽出
+    const conqueredBySameFactorPrefectureIds = computedGame.logs
+      .filter((log) => {
+        const isSameFactorName = log.factorName === data.factorName;
+        const isWin = log.result === 'WIN';
+
+        return isSameFactorName && isWin;
+      })
+      .map((log) => log.opponentId);
 
     const factors = await this.prisma.prefectureStats.findMany({
       where: {
-        OR: [{ id: allyPrefectureId }, { id: data.opponentId }],
+        id: {
+          in: [allyPrefectureId, data.opponentId, ...conqueredBySameFactorPrefectureIds],
+        },
       },
       select: {
         id: true,
@@ -87,37 +110,47 @@ export class GameService {
       },
     });
 
-    // factorsの2つを比較しで、勝敗を決める
     const prefectureFactor = factors.find((f) => f.id === allyPrefectureId)?.[
       PrefectureStatsConfig[data.factorName].camel
-    ];
+    ] as unknown as number;
+
+    const conqueredBySameFactorPrefectureFactor = factors
+      .filter((f) => {
+        return conqueredBySameFactorPrefectureIds.includes(f.id);
+      })
+      .reduce((prev, current) => {
+        return prev + current[PrefectureStatsConfig[data.factorName].camel];
+      }, 0);
+
+    // 最初に選んだ都道府県の値 + 制覇した都道府県の値
+    const allyFactor = prefectureFactor + conqueredBySameFactorPrefectureFactor;
+
     const opponentFactor = factors.find((f) => f.id === data.opponentId)?.[
       PrefectureStatsConfig[data.factorName].camel
-    ];
+    ] as unknown as number;
 
     const result: GameResult =
       // 同じ値であれば、勝利条件に関わらずDRAW
-      prefectureFactor === opponentFactor
+      allyFactor === opponentFactor
         ? 'DRAW'
         : // 高ければ勝つ場合
         data.highLow === 'HIGH'
-        ? prefectureFactor > opponentFactor
+        ? allyFactor > opponentFactor
           ? 'WIN'
           : 'LOSE'
         : // 低ければ勝つ場合
-        prefectureFactor < opponentFactor
+        allyFactor < opponentFactor
         ? 'WIN'
         : 'LOSE';
 
-    const game = await this.prisma.game.findUniqueOrThrow({
-      where: { id, userId: user.sub },
-      include: gameDefaultInclude,
-    });
-
-    const computedGame = computeGameData({ game, prisma: this.prisma });
-
     // 隣接県が無いということは、全ての県を回りきったということなので、ゲームを終了する
-    if ((await computedGame).neighbors.length === 0) {
+    // が、このターンの対戦相手はまだ隣接県として残っているので、
+    if (
+      computedGame.neighbors.length === 1 && // 残りの隣接県が1で
+      computedGame.neighbors[0].id === data.opponentId && // その隣接県が今回の対戦相手で
+      result === 'WIN' // 勝利した場合
+    ) {
+      // ゲームを終了する
       await this.prisma.game.update({
         where: { id, userId: user.sub },
         data: {

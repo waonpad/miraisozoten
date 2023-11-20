@@ -36,7 +36,8 @@ export const GameTurnAction = () => {
   const handleClcikSelectFactor = (factor: ReturnType<typeof getAllFactors>[number]) => {
     setTurnAction((prev) => ({
       ...prev,
-      factorPrefectureId: factor.prefecture.id,
+      // factorPrefectureId: factor.prefecture.id,
+      factorPrefectureId: game.prefectureId, // WHY: Issue #231 応急処置
       factorName: factor.name,
     }));
   };
@@ -56,9 +57,9 @@ export const GameTurnAction = () => {
     <>
       {/* 見方都道府県と、ターンの相手を選択するエリアのまとまり */}
       <GameBattleDisplayWithOpponentSelect
-        prefecture={findById(prefectures, turnAction.factorPrefectureId ?? game.prefectureId)!}
+        prefecture={findById(prefectures, game.prefectureId)!}
         neighbors={game.neighbors}
-        disabled={turnAction.factorPrefectureId === undefined}
+        disabled={!turnAction.factorName}
         handleClickSelectOpponent={handleClickSelectOpponent}
       />
       {/* 問題文 */}

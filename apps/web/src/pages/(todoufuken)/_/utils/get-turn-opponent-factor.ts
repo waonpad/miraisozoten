@@ -5,9 +5,9 @@ import { GameResponse } from 'schema/dist/todoufuken/game';
 import { computeFactors } from './compute-factors';
 
 /**
- * ターンに使用した統計データを首都kうするための関数
+ * ターンに使用した統計データの相手県の情報を取得するための関数
  */
-export const getTurnFactor = ({
+export const getTurnOpponentFactor = ({
   factorName,
   prefectures,
   prefectureId,
