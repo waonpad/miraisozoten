@@ -5,7 +5,7 @@
 
 import { PrefectureStatsData } from "./types";
 
-export const Garbagerecyclingrate = {
+export const GarbageRecyclingRate = {
   label: "ゴミのリサイクル率",
   unit: "%",
   attribution: {
