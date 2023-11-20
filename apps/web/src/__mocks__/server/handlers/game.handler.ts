@@ -218,10 +218,33 @@ export const gameHandlers: RestHandler<MockedRequest<DefaultBodyType>>[] = [
     >;
 
     try {
+      const game = db.game.findFirst({
+        where: {
+          id: {
+            equals: req.params.id as string,
+          },
+        },
+      });
+
+      const includedGame = gameRelationInclude(game as unknown as Game);
+
+      const computedGame = computeGameData({ game: includedGame });
+
+      // factorNameがdata.factorNameと一致するかつ
+      // resultがWINのログのopponentIdを抽出
+      const conqueredBySameFactorPrefectureIds = computedGame.logs
+        .filter((log) => {
+          const isSameFactorName = log.factorName === factorName;
+          const isWin = log.result === 'WIN';
+
+          return isSameFactorName && isWin;
+        })
+        .map((log) => log.opponentId);
+
       const factors = db.prefectureStats.findMany({
         where: {
           id: {
-            in: [factorPrefectureId, opponentId],
+            in: [factorPrefectureId, opponentId, ...conqueredBySameFactorPrefectureIds],
           },
         },
       });
@@ -238,38 +261,42 @@ export const gameHandlers: RestHandler<MockedRequest<DefaultBodyType>>[] = [
         PrefectureStatsConfig[factorName].camel
       ] as number;
 
+      const conqueredBySameFactorPrefectureFactor = factors
+        .filter((f) => {
+          return conqueredBySameFactorPrefectureIds.includes(f.id);
+        })
+        .reduce((prev, current) => {
+          return prev + current[PrefectureStatsConfig[factorName].camel];
+        }, 0);
+
+      // 最初に選んだ都道府県の値 + 制覇した都道府県の値
+      const allyFactor = prefectureFactor + conqueredBySameFactorPrefectureFactor;
+
       const opponentFactor = factors.find((f) => f.id === opponentId)?.[
         PrefectureStatsConfig[factorName].camel
       ] as number;
 
       const result: GameResult =
         // 同じ値であれば、勝利条件に関わらずDRAW
-        prefectureFactor === opponentFactor
+        allyFactor === opponentFactor
           ? 'DRAW'
           : // 高ければ勝つ場合
           highLow === 'HIGH'
-          ? prefectureFactor > opponentFactor
+          ? allyFactor > opponentFactor
             ? 'WIN'
             : 'LOSE'
           : // 低ければ勝つ場合
-          prefectureFactor < opponentFactor
+          allyFactor < opponentFactor
           ? 'WIN'
           : 'LOSE';
 
-      const game = db.game.findFirst({
-        where: {
-          id: {
-            equals: req.params.id as string,
-          },
-        },
-      });
-
-      const includedGame = gameRelationInclude(game as unknown as Game);
-
-      const computedGame = computeGameData({ game: includedGame });
-
       // 隣接県が無いということは、全ての県を回りきったということなので、ゲームを終了する
-      if (computedGame.neighbors.length === 0) {
+      // が、このターンの対戦相手はまだ隣接県として残っているので、
+      if (
+        computedGame.neighbors.length === 1 && // 残りの隣接県が1で
+        computedGame.neighbors[0].id === opponentId && // その隣接県が今回の対戦相手で
+        result === 'WIN' // 勝利した場合
+      ) {
         db.game.update({
           where: {
             id: {

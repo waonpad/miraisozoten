@@ -5,7 +5,8 @@ import { assert } from '@/utils/asset';
 
 import { LabeledTurnResult } from '../../config/game';
 import { useGame } from '../../hooks/use-game';
-import { getTurnFactor } from '../../utils/get-turn-factor';
+import { getTurnAllyFactor } from '../../utils/get-turn-ally-factor';
+import { getTurnOpponentFactor } from '../../utils/get-turn-opponent-factor';
 import { GameBattleDisplay } from '../game-battle-display';
 
 /**
@@ -44,17 +45,13 @@ export const GameTurnResult = () => {
    * @description
    * 現在のターンに自分が使用した統計データ
    */
-  const allyFactor = getTurnFactor({
-    factorName: currentTurn.factorName,
-    prefectures,
-    prefectureId: currentTurn.factorPrefectureId, // 自分の都道府県ID
-  });
+  const allyFactor = getTurnAllyFactor(prefectures, game, currentTurn.factorName);
 
   /**
    * @description
    * 現在のターンに使用した統計データの相手県側のデータ
    */
-  const opponentFactor = getTurnFactor({
+  const opponentFactor = getTurnOpponentFactor({
     factorName: currentTurn.factorName,
     prefectures,
     prefectureId: currentTurn.opponentId, // 相手の都道府県ID
