@@ -13,6 +13,7 @@ import path from 'path';
 // prefecture-stats.enum.ts に追加する
 // prefecture-stats.config.ts に追加する (すでに存在していたらスキップされる)
 // game-difficulty.config.ts に追加する (すでに存在していたらスキップされる)
+// db.ts に追加する
 
 // prismaスキーマの実際の更新はこのスクリプトでは行われないため
 // nps prepare.database を実行する必要がある
@@ -238,6 +239,48 @@ const main = async () => {
       console.log('game-difficulty.config.ts has been updated.');
     } catch (err) {
       console.error('Unable to write to game-difficulty.config.ts: ' + err);
+    }
+
+    const mswDataDBFilePath = path.join(
+      path.resolve(process.cwd()),
+      'apps/web/src/__mocks__/server/db.ts'
+    );
+    let oldMswDataDBFileContent = await readFile(mswDataDBFilePath, 'utf8');
+
+    let insertionStartPointIndex = oldMswDataDBFileContent.indexOf('  prefectureStats: {');
+    if (insertionStartPointIndex === -1) {
+      console.error('Unable to find insertion point in db.ts');
+      return;
+    }
+
+    let insertionEndPointIndex = oldMswDataDBFileContent.indexOf(
+      '  } satisfies {\n    [K in keyof PrefectureStats]: unknown;'
+    );
+    if (insertionEndPointIndex === -1) {
+      console.error('Unable to find insertion point in db.ts');
+      return;
+    }
+
+    newContent = '';
+    for (const { variableName } of fileNameAndVariableNames) {
+      const snakeCaseVariableName = camelize(variableName);
+      if (!oldMswDataDBFileContent.includes(snakeCaseVariableName)) {
+        newContent += `    ${snakeCaseVariableName}: Number,\n`;
+      }
+    }
+
+    let newMswDataDBFileContent =
+      oldMswDataDBFileContent.slice(0, insertionStartPointIndex) +
+      '  prefectureStats: {\n' +
+      '    id: primaryKey(Number),\n' +
+      newContent +
+      oldMswDataDBFileContent.slice(insertionEndPointIndex);
+
+    try {
+      await writeFile(mswDataDBFilePath, newMswDataDBFileContent);
+      console.log('db.ts has been updated.');
+    } catch (err) {
+      console.error('Unable to write to db.ts: ' + err);
     }
   });
 };

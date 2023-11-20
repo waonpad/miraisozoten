@@ -48,11 +48,29 @@ const models = {
   } & {
     [key: string]: unknown;
   },
-  // TODO: ここはtool/post-update-prefecture-stats-data.tsでスクリプトで生成するようにする
   prefectureStats: {
     id: primaryKey(Number),
+    importantCulturalPropertyCount: Number,
+    academicability: Number,
+    annualPrecipitation: Number,
     area: Number,
+    artmuseumCount: Number,
+    attractivenessRanking: Number,
+    averageTemperature: Number,
+    detachedHouseRate: Number,
+    deviationValue: Number,
+    elementarySchoolCount: Number,
+    garbageRecyclingRate: Number,
+    gDP: Number,
+    hometownTax: Number,
+    koshienCount: Number,
+    naturalMonumentCount: Number,
     population: Number,
+    riceProductionRate: Number,
+    shrineCount: Number,
+    soccerPopulation: Number,
+    stationCount: Number,
+    sugarConsumption: Number,
   } satisfies {
     [K in keyof PrefectureStats]: unknown;
   } & {
