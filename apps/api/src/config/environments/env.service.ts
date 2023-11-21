@@ -32,7 +32,7 @@ export class Env {
 
         ...(runtimeEnv.APP_ENV !== 'production' && {
           // これが設定されていると、自動的にfirebase-adminの初期化時にemulatorを使うようになる
-          FIREBASE_AUTH_EMULATOR_HOST: z.string().nullable(),
+          FIREBASE_AUTH_EMULATOR_HOST: z.string().optional(),
         }),
       },
       clientPrefix: '',
