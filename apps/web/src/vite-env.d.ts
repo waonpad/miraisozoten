@@ -1,3 +1,4 @@
+/// <reference types="vite-plugin-svgr/client" />
 /// <reference types="vite/client" />
 
 import { JwtDecodedUser } from 'schema/dist/user';
