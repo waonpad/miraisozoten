@@ -1,6 +1,8 @@
 import { PrefectureResponse } from 'schema/dist/prefecture';
 import { GameResponse } from 'schema/dist/todoufuken/game';
 
+import NotchedPaperBurlywood from '@/assets/notched-paper-burlywood.png';
+import { ImageBgContainer } from '@/components/containers/image-bg-container';
 import { PrefectureSVG } from '@/components/maps/prefecture-svg';
 
 export type GameBattleVSProps = {
@@ -15,10 +17,10 @@ export type GameBattleVSProps = {
 export const GameBattleDisplay = ({ prefecture, opponent }: GameBattleVSProps) => {
   return (
     <>
-      <div>{prefecture.name}</div>
+      <ImageBgContainer imagePath={NotchedPaperBurlywood}>{prefecture.name}</ImageBgContainer>
       <PrefectureSVG prefectureNameEn={prefecture.en} />
       <div>VS</div>
-      <div>{opponent.name}</div>
+      <ImageBgContainer imagePath={NotchedPaperBurlywood}>{opponent.name}</ImageBgContainer>
       <PrefectureSVG prefectureNameEn={opponent.en} />
     </>
   );
