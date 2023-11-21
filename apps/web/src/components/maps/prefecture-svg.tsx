@@ -12,6 +12,8 @@ export type PrefectureSVGProps = {
 // TODO: リファクタリング
 
 export const PrefectureSVG = ({ prefectureNameEn }: PrefectureSVGProps) => {
+  console.log = () => {};
+
   const [pre, setPre] = useState<{
     preId: string;
     preName: string;
