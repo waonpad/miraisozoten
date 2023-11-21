@@ -1,1 +1,5 @@
 @import 'tailwind-config/globals.css';
+
+.firebase-emulator-warning {
+  opacity: 0.3;
+}
