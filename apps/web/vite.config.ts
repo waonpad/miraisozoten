@@ -4,6 +4,7 @@ import generouted from '@generouted/react-router/plugin';
 import yaml from '@rollup/plugin-yaml';
 import path from 'path';
 import type { UserConfig as VitestUserConfig } from 'vitest/dist/config.js';
+import svgr from 'vite-plugin-svgr';
 
 const createEnv = require('./src/constants/env/create-env').createEnv;
 
@@ -19,7 +20,7 @@ export default ({ mode }) => {
   createEnv({ runtimeEnv: process.env });
 
   return defineConfig({
-    plugins: [react(), htmlPlugin(process.env), yaml(), generouted()],
+    plugins: [react(), htmlPlugin(process.env), yaml(), generouted(), svgr()],
     resolve: { alias: { '@': '/src' } },
     server: {
       port: 8080,
