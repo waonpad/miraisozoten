@@ -2,6 +2,7 @@ import { PrefectureResponse } from 'schema/dist/prefecture';
 import { Button } from 'ui/components/ui/button';
 import { Dialog, DialogContent, DialogFooter } from 'ui/components/ui/dialog';
 
+import Paperorange from '@/assets/paper-orange.jpg';
 import { PrefectureSVG } from '@/components/maps/prefecture-svg';
 
 export type PrefectureOverviewDialogProps = {
@@ -24,7 +25,12 @@ export const PrefectureOverviewDialog = ({
   return (
     <>
       <Dialog open={open} onOpenChange={handleOpenChange}>
-        <DialogContent>
+        <DialogContent
+          style={{
+            backgroundImage: `url(${Paperorange})`,
+            backgroundSize: '100% 100%',
+          }}
+        >
           <PrefectureSVG prefectureNameEn={prefecture.en} />
           <div>{prefecture.name}</div>
           <div>{prefecture.region?.name}</div>
