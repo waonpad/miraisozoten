@@ -2,6 +2,8 @@ import { useState } from 'react';
 
 import { GameDifficulty, GameMode } from 'schema/dist/todoufuken/game';
 
+import { Logo } from '@/components/elements/logo';
+
 import { GameRankingFilter } from './_/components/game-ranking-filter';
 import { InfiniteGameRankingListHeader } from './_/components/game-ranking-list-header';
 import {
@@ -28,6 +30,8 @@ export default function Page() {
 
   return (
     <>
+      <Logo />
+
       <GameRankingFilter
         filterParams={rankingFilterParams}
         handleClickGameDifficulty={handleClickGameDifficulty}

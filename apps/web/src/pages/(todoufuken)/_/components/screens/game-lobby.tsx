@@ -5,6 +5,7 @@ import { PrefectureResponse } from 'schema/dist/prefecture';
 import { GameDifficulty, GameMode } from 'schema/dist/todoufuken/game';
 import { Button } from 'ui/components/ui/button';
 
+import { Logo } from '@/components/elements/logo';
 import { JapanRadioSVGMap } from '@/components/maps/japan-radio-svg-map';
 import { usePrefectures } from '@/pages/(prefectures)/_/api/get-prefectures';
 import { Link } from '@/router';
@@ -73,7 +74,7 @@ export const GameLobby = () => {
 
   return (
     <>
-      {/* TODO: プロダクトのロゴを用意して配置する */}
+      <Logo />
 
       <div>{gameSettings.mode}</div>
       <div>モード</div>
