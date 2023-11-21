@@ -20,11 +20,15 @@ export const ImageBgButton = ({
     <button
       {...props}
       style={{
-        backgroundImage: isSelected
-          ? `url(${selectedImagePath})`
-          : isHover
-          ? `url(${hoverImagePath})`
-          : `url(${imagePath})`,
+        backgroundImage:
+          // 選択フラグがtrueでその時用の画像がある場合は選択時の画像を表示
+          isSelected && selectedImagePath
+            ? `url(${selectedImagePath})`
+            : // hoverされていて、かつhover時の画像がある場合はhover時の画像を表示
+            isHover && hoverImagePath
+            ? `url(${hoverImagePath})`
+            : // それ以外は通常の画像を表示
+              `url(${imagePath})`,
         backgroundSize: '100% 100%',
         backgroundColor: 'transparent',
         justifyContent: 'center',
