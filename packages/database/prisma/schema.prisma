@@ -72,7 +72,7 @@ model PrefectureStats {
   importantCulturalPropertyCount Int
   academicability Float
   annualPrecipitation Int
-  area Float
+  area Int
   artmuseumCount Int
   attractivenessRanking Float
   averageTemperature Float

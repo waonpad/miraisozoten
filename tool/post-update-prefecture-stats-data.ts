@@ -183,8 +183,8 @@ const main = async () => {
       );
       const fileData = await readFile(filePath, 'utf8');
 
-      const labelMatch = fileData.match(/label: '(.+)',/);
-      const unitMatch = fileData.match(/unit: '(.+)',/);
+      const labelMatch = fileData.match(/label:\s*["'](.+)["'],/);
+      const unitMatch = fileData.match(/unit:\s*["'](.+)["'],/);
 
       const label = labelMatch ? labelMatch[1] : '';
       const unit = unitMatch ? unitMatch[1] : '';
@@ -268,6 +268,8 @@ const main = async () => {
         newContent += `    ${snakeCaseVariableName}: Number,\n`;
       }
     }
+
+    console.log(newContent);
 
     let newMswDataDBFileContent =
       oldMswDataDBFileContent.slice(0, insertionStartPointIndex) +
