@@ -19,13 +19,20 @@ on:
 
 env:
   # t3-envがCI環境でも動くため、ダミーでエラーを回避する
-  VITE_APP_ENV: production
+  VITE_APP_ENV: ci
   VITE_API_URL: http://localhost:3000
   VITE_APP_NAME: 'VITE APP'
   VITE_HOST_URL: http://localhost:8080
-  VITE_GOOGLE_CLIENT_ID: 'dummy'
   VITE_SENTRY_ENABLED: false
   VITE_SENTRY_DSN: 'http://localhost:3000/dummy-url'
+  VITE_FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+  VITE_FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
+  VITE_FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+  VITE_FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
+
+  VITE_API_MOCKING: true
+  VITE_FIREBASE_EMULATOR_ENABLED: true
+  VITE_FIREBASE_AUTH_EMULATOR_HOST: 127.0.0.1:9099
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -58,7 +65,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
-      - run: yarn global add turbo
+      - run: yarn global add turbo firebase-tools nps
       - run: npx nps prepare.ci.web
       - run: npx nps build.ci.web
-      - run: npx nps test.ci.web
+      - run: cd packages/fb-tools && firebase emulators:exec "npx nps test.ci.web" --project ${{ secrets.FIREBASE_PROJECT_ID }}

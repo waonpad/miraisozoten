@@ -1,23 +1,134 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-import { factory, primaryKey } from '@mswjs/data';
+import { factory, manyOf, nullable, oneOf, primaryKey } from '@mswjs/data';
+import {
+  Game,
+  GameLog,
+  Prefecture,
+  PrefectureStats,
+  PrefectureStatsMetadata,
+  Region,
+  User,
+} from 'database';
+
+import { seedingPrefectureStatsMetadata } from '@/test/seeders/prefecture-stats-metadata.seeder';
+import { seedingPrefectureStats } from '@/test/seeders/prefecture-stats.seeder';
+import { seedingPrefectures } from '@/test/seeders/prefecture.seeder';
+import { seedingRegions } from '@/test/seeders/region.seeder';
 
 const models = {
   user: {
     id: primaryKey(String),
     name: String,
-    email: String,
+    email: nullable(String),
     emailVerified: Boolean,
-    image: String,
+    image: nullable(String),
     createdAt: Date,
     updatedAt: Date,
+    games: manyOf('game'),
+  } satisfies {
+    [K in keyof User]: unknown;
+  } & {
+    [key: string]: unknown;
   },
-  weapon: {
+  prefecture: {
     id: primaryKey(Number),
     name: String,
-    attackPower: Number,
-    attribute: String,
+    short: String,
+    kana: String,
+    en: String,
+    regionId: Number,
+    neighbors: manyOf('prefecture'),
+    region: oneOf('region'),
+    games: manyOf('game'),
+    stats: oneOf('prefectureStats', { unique: true }),
+  } satisfies {
+    [K in keyof Prefecture]: unknown;
+  } & {
+    [key: string]: unknown;
+  },
+  prefectureStats: {
+    id: primaryKey(Number),
+    importantCulturalPropertyCount: Number,
+    academicability: Number,
+    annualPrecipitation: Number,
+    area: Number,
+    artmuseumCount: Number,
+    attractivenessRanking: Number,
+    averageTemperature: Number,
+    detachedHouseRate: Number,
+    deviationValue: Number,
+    elementarySchoolCount: Number,
+    garbageRecyclingRate: Number,
+    gDP: Number,
+    hometownTax: Number,
+    koshienCount: Number,
+    naturalMonumentCount: Number,
+    population: Number,
+    riceProductionRate: Number,
+    shrineCount: Number,
+    soccerPopulation: Number,
+    stationCount: Number,
+    sugarConsumption: Number,
+  } satisfies {
+    [K in keyof PrefectureStats]: unknown;
+  } & {
+    [key: string]: unknown;
+  },
+  prefectureStatsMetadata: {
+    id: primaryKey(Number),
+    name: String,
+    label: String,
+    unit: String,
+    sourceSiteName: String,
+    sourceUrlTitle: String,
+    sourceUrl: String,
+    retrievedAt: Date,
+  } satisfies {
+    [K in keyof PrefectureStatsMetadata]: unknown;
+  } & {
+    [key: string]: unknown;
+  },
+  region: {
+    id: primaryKey(Number),
+    name: String,
+  } satisfies {
+    [K in keyof Region]: unknown;
+  } & {
+    [key: string]: unknown;
+  },
+  game: {
+    id: primaryKey(String),
+    state: String,
+    difficulty: String,
+    mode: String,
+    prefectureId: Number,
+    userId: String,
+    createdAt: Date,
+    updatedAt: Date,
+  } satisfies {
+    [K in keyof Game]: unknown;
+  } & {
+    [key: string]: unknown;
+  },
+  gameLog: {
+    id: primaryKey(Number),
+    gameId: String,
+    highLow: String,
+    factorPrefectureId: Number,
+    factorName: String,
+    opponentId: Number,
+    result: String,
+    createdAt: Date,
+    updatedAt: Date,
+    game: oneOf('game'),
+    factorPrefecture: oneOf('prefecture'),
+    opponent: oneOf('prefecture'),
+  } satisfies {
+    [K in keyof GameLog]: unknown;
+  } & {
+    [key: string]: unknown;
   },
 };
 
@@ -48,6 +159,11 @@ export const initializeDb = () => {
       });
     }
   });
+
+  seedingRegions(db);
+  seedingPrefectures(db);
+  seedingPrefectureStats(db);
+  seedingPrefectureStatsMetadata(db);
 };
 
 export const resetDb = () => {

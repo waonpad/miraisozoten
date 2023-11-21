@@ -1,62 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import { FunctionComponent } from 'react';
 
 import { render as rtlRender, screen, waitForElementToBeRemoved } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { User, Weapon } from 'database';
-import jwtDecode from 'jwt-decode';
-import { JwtDecodedUser } from 'schema/dist/user';
 
-import { userGenerator, weaponGenerator } from '@/__mocks__/server/data-generators';
-import { db } from '@/__mocks__/server/db';
-import { COOKIE_NAMES } from '@/constants/cookie-names';
-import { env } from '@/constants/env';
-import { AppProvider } from '@/providers/app-provider';
-import { setCookie } from '@/utils/cookie/set-cookie';
-
-export const createUser = (userProperties?: Partial<User>) => {
-  const user = userGenerator(userProperties);
-  db.user.create({
-    ...user,
-    createdAt: user.createdAt.toString(),
-    updatedAt: user.updatedAt.toString(),
-  });
-  return user;
-};
-
-export const createOAuthUser = () => {
-  const decodedUser = jwtDecode<JwtDecodedUser>(env.VITE_VALID_TOKEN);
-
-  const user = {
-    id: decodedUser.sub,
-    name: decodedUser.name,
-    email: decodedUser.email,
-    emailVerified: decodedUser.email_verified,
-    image: decodedUser.picture,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  };
-
-  db.user.create({
-    ...user,
-    createdAt: user.createdAt.toString(),
-    updatedAt: user.updatedAt.toString(),
-  });
-
-  return user;
-};
-
-export const loginAsUser = (user: User) => {
-  setCookie(COOKIE_NAMES.AUTH_TOKEN, env.VITE_VALID_TOKEN);
-  return user;
-};
-
-export const createWeapon = (weaponProperties?: Partial<Weapon>) => {
-  const weapon = weaponGenerator(weaponProperties);
-  db.weapon.create(weapon);
-  return weapon;
-};
+import { TestRenderProvider } from './test-render-provider';
 
 export const waitForLoadingToFinish = () =>
   waitForElementToBeRemoved(
@@ -64,37 +12,22 @@ export const waitForLoadingToFinish = () =>
     { timeout: 4000 }
   );
 
-const initializeUser = (user?: User | null) => {
-  if (typeof user === 'undefined') {
-    return loginAsUser(createOAuthUser());
-  } else if (user) {
-    return loginAsUser(user);
-  } else {
-    return null;
-  }
-};
-
-export const render: (
+export const render = async (
   ui: React.ReactElement,
   options?: {
     route?: string;
-    user?: User | null;
+    renderOptions?: Parameters<typeof rtlRender>[1];
   }
-) => Promise<ReturnType<typeof rtlRender>> = async (
-  ui,
-  { route = '/', user, ...renderOptions } = {}
-) => {
-  // if you want to render the app unauthenticated then pass "null" as the user
-  user = initializeUser(user);
+): Promise<ReturnType<typeof rtlRender>> => {
+  const { route = '/', renderOptions } = options || {};
 
   window.history.pushState({}, 'Test page', route);
 
   const returnValue = {
     ...rtlRender(ui, {
-      wrapper: AppProvider as FunctionComponent<unknown>,
+      wrapper: TestRenderProvider,
       ...renderOptions,
     }),
-    user,
   };
 
   await waitForLoadingToFinish();

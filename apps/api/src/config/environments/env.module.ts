@@ -1,14 +1,13 @@
 import { Global, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { validate } from './env-validator';
 import { Env } from './env.service';
 
 @Global()
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: ['.env'],
-      validate,
+      // eslint-disable-next-line turbo/no-undeclared-env-vars
+      envFilePath: ['.env', ...(process.env.APP_ENV !== 'production' ? [`.env.test.local`] : [])],
       isGlobal: true,
     }),
   ],

@@ -1,6 +1,6 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { NextFunction, Request, Response } from 'express';
-import jet_decode, { InvalidTokenError } from 'jwt-decode';
+import * as admin from 'firebase-admin';
 import { JwtDecodedUser } from 'schema/src/user';
 import { Env } from 'src/config/environments/env.service';
 
@@ -11,23 +11,24 @@ export class UserMiddleware implements NestMiddleware {
   async use(req: Request, _res: Response, next: NextFunction) {
     const token = req.headers.authorization?.split(' ')[1];
 
-    if (!token) {
+    if (!token || token === 'null') {
       return next();
     }
 
     try {
-      const decoded = jet_decode<JwtDecodedUser>(token);
+      const decoded = await admin.auth().verifyIdToken(token);
+
+      const userRecord = await admin.auth().getUser(decoded.sub);
 
       if (decoded?.sub) {
-        req.user = decoded;
+        (req.user as JwtDecodedUser) = {
+          ...decoded,
+          userRecord,
+        };
       }
 
       return next();
     } catch (err) {
-      if (!(err instanceof InvalidTokenError)) {
-        console.error('UserMiddleware error', err);
-      }
-
       return next();
     }
   }

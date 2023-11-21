@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PrismaService } from '../prisma/prisma.service';
+import { InjectionToken } from 'src/config/environments/constants/injection-token.enum';
+import { BasePrismaService, PrismaService } from '../prisma/prisma.service';
 import { {{pascalCase name}}Controller } from './{{kebabCase name}}.controller';
 import { {{pascalCase name}}Service } from './{{kebabCase name}}.service';
 
@@ -13,7 +14,15 @@ describe('{{pascalCase name}}Controller', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [{{pascalCase name}}Controller],
-      providers: [{{pascalCase name}}Service, PrismaService],
+      providers: [
+        {{pascalCase name}}Service, 
+        {
+          provide: InjectionToken.PRISMA_SERVICE,
+          useFactory: () => {
+            return new BasePrismaService().withExtensions();
+          },
+        },
+      ],
     }).compile();
 
     controller = module.get<{{pascalCase name}}Controller>({{pascalCase name}}Controller);

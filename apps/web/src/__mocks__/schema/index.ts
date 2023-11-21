@@ -1,7 +1,7 @@
-import { Weapon } from 'database';
+// import { User } from 'database';
 
-import { getMockData } from '@/__mocks__/utils/get-example-data';
+// import { getMockData } from '@/__mocks__/utils/get-example-data';
 
 export const mockData = {
-  weapon: getMockData<Weapon>('weapons'),
+  // user: getMockData<User>('users'),
 };

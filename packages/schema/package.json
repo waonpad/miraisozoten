@@ -10,14 +10,17 @@
   },
   "dependencies": {
     "@anatine/zod-openapi": "^2.2.0",
+    "@nestjs/common": "^10.0.0",
     "database": "*",
     "nestjs-zod": "^3.0.0",
     "prisma-extension-pagination": "^0.5.0",
+    "reflect-metadata": "^0.1.13",
     "zod": "^3.22.4"
   },
   "devDependencies": {
     "eslint": "^8.45.0",
     "eslint-config-custom": "*",
+    "firebase-admin": "^11.11.0",
     "openapi3-ts": "^4.1.2",
     "tsconfig": "*",
     "tsup": "^7.2.0",

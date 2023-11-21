@@ -1,9 +1,31 @@
 import { INestApplication, Injectable, OnModuleInit } from '@nestjs/common';
 import { PrismaClient } from 'database';
 import { paginate } from 'prisma-extension-pagination';
+import { GameDifficulty } from 'schema/dist/todoufuken/game';
+
+export type PrismaService = ReturnType<BasePrismaService['withExtensions']> & {
+  pg(): ReturnType<BasePrismaService['pg']>;
+};
 
 @Injectable()
-export class PrismaService extends PrismaClient implements OnModuleInit {
+export class BasePrismaService extends PrismaClient implements OnModuleInit {
+  withExtensions() {
+    return this.$extends({
+      result: {
+        game: {
+          hideData: {
+            needs: { difficulty: true },
+            compute(data) {
+              return (['HARD', 'VERY_HARD'] satisfies GameDifficulty[]).some(
+                (d) => d === data.difficulty
+              );
+            },
+          },
+        },
+      },
+    });
+  }
+
   async onModuleInit() {
     await this.$connect();
   }

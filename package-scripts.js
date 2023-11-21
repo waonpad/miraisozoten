@@ -16,6 +16,8 @@ const ciApiPath = root('out/apps/api');
 const ciWebPath = root('out/apps/web');
 
 const databasePath = root('packages/database');
+const schemaPath = root('packages/schema');
+const fbToolsPath = root('packages/fb-tools');
 
 module.exports = {
   scripts: {
@@ -27,20 +29,21 @@ module.exports = {
       },
       deps: `yarn install --frozen-lockfile && yarn husky install`,
       docker: `docker compose up -d`,
-      packages: `nps prepare.database`,
-      database: `docker compose up -d && nps prisma.generate prisma.migrate.dev prisma.build`,
+      packages: `nps prepare.database prepare.schema prepare.fb-tools`,
+      database: `docker compose up -d && nps prisma.generate prisma.migrate.reset prisma.migrate.dev prisma.seed prisma.build`,
+      schema: `cd ${schemaPath} && yarn build`,
+      'fb-tools': `cd ${fbToolsPath} && firebase init emulators`,
       apps: ``,
       ci: {
         web: `npx turbo prune web && cd out && yarn install --frozen-lockfile`,
         api: `npx turbo prune api && cd out && yarn install --frozen-lockfile`,
-        database: `npx turbo prune database && cd out && yarn install --frozen-lockfile`,
       },
     },
     test: {
       default: `nps test.web test.api`,
-      web: `cd ${webPath} && yarn test`,
-      api: `cd ${apiPath} && yarn test`,
-      dredd: `cd ${apiPath} && dredd`,
+      web: `cd ${fbToolsPath} && firebase emulators:exec "nps firebase.admin & cd ${webPath} && yarn test && nps util.pkill.fbadmin"`,
+      api: `cd ${apiPath} && yarn test`, // まだfirebase emulator不要 あとから必要になるかもしれない
+      predredd: `docker compose up -d && npx turbo run dev --scope=fb-tools --scope=api --parallel --no-daemon`,
       ci: {
         default: `nps test.ci.web test.ci.api`,
         web: `cd ${ciWebPath} && yarn test:ci`,
@@ -57,10 +60,15 @@ module.exports = {
       studio: `cd ${databasePath} && npx prisma studio`,
       migrate: {
         dev: `cd ${databasePath} && npx prisma migrate dev`,
+        reset: `cd ${databasePath} && npx prisma migrate reset --force`,
       },
+      seed: `cd ${databasePath} && yarn seed`,
       build: {
         default: `cd ${databasePath} && yarn build`,
       },
+    },
+    firebase: {
+      admin: `cd ${fbToolsPath} && node lib/admin-server.js`,
     },
     build: {
       default: 'npx turbo run build',
@@ -129,10 +137,11 @@ module.exports = {
       },
     },
     util: {
+      pstatsref: `yarn ts-node ${root('tool/post-update-prefecture-stats-data.ts')}`,
       gensec: `node ${root('tool/gen-secret.js')}`,
-      upnxsec: `node ${root('tool/update-nextauth-secret.js')}`,
       pkill: {
         api: `node ${root('tool/process-kill.js')} 3000`,
+        fbadmin: `node ${root('tool/process-kill.js')} 3010`,
       },
     },
   },

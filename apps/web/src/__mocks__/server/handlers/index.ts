@@ -1,9 +1,13 @@
 import { DefaultBodyType, MockedRequest, RestHandler } from 'msw';
 
 import { authHandlers } from './auth.handler';
-import { weaponHandlers } from './weapon.handler';
+import { gameHandlers } from './game.handler';
+import { prefectureStatsMetadataHandlers } from './prefecture-stats-metadata.handler';
+import { prefectureHandlers } from './prefecture.handler';
 
 export const handlers: RestHandler<MockedRequest<DefaultBodyType>>[] = [
   ...authHandlers,
-  ...weaponHandlers,
+  ...gameHandlers,
+  ...prefectureStatsMetadataHandlers,
+  ...prefectureHandlers,
 ];

@@ -1,34 +1,34 @@
 import { Suspense } from 'react';
 
-import { GoogleOAuthProvider } from '@react-oauth/google';
 import { QueryClientProvider } from '@tanstack/react-query';
-import { CookiesProvider } from 'react-cookie';
+import { ErrorBoundary } from 'react-error-boundary';
 import { HelmetProvider } from 'react-helmet-async';
 
 import { AuthGuard } from '@/auth/auth-guard';
 import { AuthProvider } from '@/auth/auth-provider';
 import { ErrorFallback } from '@/components/elements/error-fallback';
 import { SuspenseFallback } from '@/components/elements/suspense-fallback';
-import { env } from '@/constants/env';
+import { WatchUnhandledError } from '@/lib/react-error-boundary';
 import { queryClient } from '@/lib/react-query';
 import * as Sentry from '@/lib/sentry';
 
 export const AppProvider = ({ children }: { children: React.ReactNode }) => {
   return (
-    <CookiesProvider>
-      <Suspense fallback={<SuspenseFallback />}>
-        <Sentry.ErrorBoundary fallback={ErrorFallback}>
-          <HelmetProvider>
-            <QueryClientProvider client={queryClient}>
-              <AuthProvider>
-                <GoogleOAuthProvider clientId={env.VITE_GOOGLE_CLIENT_ID}>
+    // SentryのErrorBoundaryで捕まえるので、react-error-boundaryのfallbackは空にしておく
+    <ErrorBoundary fallbackRender={() => <></>}>
+      <Sentry.ErrorBoundary fallback={ErrorFallback}>
+        <WatchUnhandledError>
+          <Suspense fallback={<SuspenseFallback />}>
+            <HelmetProvider>
+              <QueryClientProvider client={queryClient}>
+                <AuthProvider>
                   <AuthGuard>{children}</AuthGuard>
-                </GoogleOAuthProvider>
-              </AuthProvider>
-            </QueryClientProvider>
-          </HelmetProvider>
-        </Sentry.ErrorBoundary>
-      </Suspense>
-    </CookiesProvider>
+                </AuthProvider>
+              </QueryClientProvider>
+            </HelmetProvider>
+          </Suspense>
+        </WatchUnhandledError>
+      </Sentry.ErrorBoundary>
+    </ErrorBoundary>
   );
 };

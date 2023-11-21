@@ -1,5 +1,5 @@
-export const getCookie = (name: string): string => {
-  let cookieValue = '';
+export const getCookie = (name: string): string | null => {
+  let cookieValue = null;
 
   if (document.cookie && document.cookie !== '') {
     const cookies = document.cookie.split(';');

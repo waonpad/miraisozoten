@@ -1,9 +1,11 @@
 import react from '@vitejs/plugin-react';
-import { defineConfig, loadEnv } from 'vite';
+import { UserConfig, defineConfig, loadEnv } from 'vite';
 import generouted from '@generouted/react-router/plugin';
 import yaml from '@rollup/plugin-yaml';
+import path from 'path';
+import type { UserConfig as VitestUserConfig } from 'vitest/dist/config.js';
 
-const createEnv = require('./src/constants/env/createEnv').createEnv;
+const createEnv = require('./src/constants/env/create-env').createEnv;
 
 // https://vitejs.dev/config/
 export default ({ mode }) => {
@@ -17,20 +19,36 @@ export default ({ mode }) => {
   createEnv({ runtimeEnv: process.env });
 
   return defineConfig({
-    plugins: [
-      react(),
-      yaml(),
-      generouted({
-        source: {
-          routes: './src/pages/**/[\\w[-]*.{jsx,tsx}',
-          modals: './src/pages/**/[+]*.{jsx,tsx}',
-        },
-        output: './src/router.ts',
-      }),
-    ],
+    plugins: [react(), htmlPlugin(process.env), yaml(), generouted()],
     resolve: { alias: { '@': '/src' } },
     server: {
       port: 8080,
     },
-  });
+    test: {
+      globals: true,
+      environment: 'happy-dom',
+      include: ['src/**/*.test.{js,ts,jsx,tsx}'],
+      alias: {
+        '@': path.resolve(__dirname, './src'),
+      },
+      setupFiles: ['./src/setup-tests.ts'],
+    },
+  } as UserConfig & { test: VitestUserConfig['test'] });
 };
+
+/**
+ * Replace env variables in index.html
+ * @see https://github.com/vitejs/vite/issues/3105#issuecomment-939703781
+ * @example `%VITE_MY_ENV%`
+ * @see https://vitejs.dev/guide/api-plugin.html#transformindexhtml
+ */
+function htmlPlugin(env: ReturnType<typeof loadEnv>) {
+  return {
+    name: 'html-transform',
+    transformIndexHtml: {
+      enforce: 'pre' as const,
+      transform: (html: string): string =>
+        html.replace(/%(.*?)%/g, (match, p1) => env[p1] ?? match),
+    },
+  };
+}

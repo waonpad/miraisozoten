@@ -1,0 +1,24 @@
+const {
+  axios,
+  dreddHooksWrapper,
+  address, 
+  reqHeadersWithTokenFromTransaction,
+} = require('../dredd-config');
+const hooks = require('hooks');
+const { RESOURCES, dummyItem } = require('./config');
+
+const addr = address(RESOURCES, 'POST');
+
+hooks.before(addr, async (transaction, done) => {
+  await dreddHooksWrapper(async () => {
+    transaction.request.body = JSON.stringify(dummyItem);
+
+    done();
+  });
+});
+
+// hooks.after(addr, async (transaction, done) => {
+//   await dreddHooksWrapper(async () => {
+//     done();
+//   });
+// });
