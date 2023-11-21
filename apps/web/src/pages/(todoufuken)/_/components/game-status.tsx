@@ -65,7 +65,7 @@ export const GameStatus = () => {
   return (
     <>
       <div>
-        制覇数: {conqueredsCount} / {allCount}
+        制覇数: {conqueredsCount + 1} / {allCount}
       </div>
       <div>ミス: {missCount}</div>
       {/* 秒ミリ秒を、分秒に変換 */}

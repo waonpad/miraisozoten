@@ -13,11 +13,10 @@ export const GameResult = () => {
   const { game } = useGame();
   assert(game);
 
-  const { conqueredsCount, missCount, playTime } = game;
+  const { missCount, playTime } = game;
 
   return (
     <>
-      <div>制覇数: {conqueredsCount} / 47</div>
       <div>ミス: {missCount}</div>
       {/* 秒ミリ秒を、分秒に変換 */}
       <div>
