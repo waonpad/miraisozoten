@@ -8,7 +8,7 @@ export type GiveUpIconButtonProps = {
 
 export const GiveUpIconButton = ({ onClick }: GiveUpIconButtonProps) => {
   return (
-    <Button onClick={onClick} asChild size={'icon'} variant={'ghost'}>
+    <Button onClick={onClick} asChild size={'icon'} variant={'icon'}>
       <GiveUpIcon />
     </Button>
   );
