@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { GameDifficulty, GameMode } from 'schema/dist/todoufuken/game';
 
 import { Logo } from '@/components/elements/logo';
+import { Head } from '@/components/head';
 
 import { GameRankingFilter } from './_/components/game-ranking-filter';
 import { InfiniteGameRankingListHeader } from './_/components/game-ranking-list-header';
@@ -30,6 +31,11 @@ export default function Page() {
 
   return (
     <>
+      <Head
+        title="ランキング"
+        description="ゲームのランキングページです。ゲームを速くクリアして高順位を目指そう！"
+      />
+
       <Logo />
 
       <GameRankingFilter

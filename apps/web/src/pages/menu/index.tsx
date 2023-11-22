@@ -7,6 +7,7 @@ import { RETURN_TO } from '@/auth/auth-guard';
 import { useAuth } from '@/auth/use-auth';
 import { AuthIconButton } from '@/components/elements/auth-icon-button';
 import { Logo } from '@/components/elements/logo';
+import { Head } from '@/components/head';
 import { Link } from '@/router';
 
 export default function Page() {
@@ -30,6 +31,11 @@ export default function Page() {
 
   return (
     <>
+      <Head
+        title="メニュー"
+        description="メニューページです。ここから様々なページに遷移できます。"
+      />
+
       <Logo />
 
       {/* ログインボタン */}
