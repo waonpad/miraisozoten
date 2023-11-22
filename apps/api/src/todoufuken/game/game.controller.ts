@@ -87,9 +87,10 @@ export class GameController {
     })
   )
   async getAllGame(
-    @Query() query: GetGamesQueryDto
+    @Query() query: GetGamesQueryDto,
+    @User() user: JwtDecodedUser
   ): Promise<[GameResponse[], PageNumberPaginationMeta]> {
-    return this.gameService.getAllGame(query);
+    return this.gameService.getAllGame(query, user);
   }
 
   @Get(':id')
