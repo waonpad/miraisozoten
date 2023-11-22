@@ -30,11 +30,14 @@ export class GameService {
       throw new ForbiddenException('You can only get your own games');
     }
 
-    const { page, limit, ...rest } = query;
+    const { page, limit, regionId, ...rest } = query;
 
     const games = await this.prisma
       .pg()
-      .game.paginate({ where: { ...rest }, include: gameDefaultInclude })
+      .game.paginate({
+        where: { prefecture: { regionId }, ...rest },
+        include: gameDefaultInclude,
+      })
       .withPages({ page, limit, includePageCount: true });
 
     const computedGames = await Promise.all(
