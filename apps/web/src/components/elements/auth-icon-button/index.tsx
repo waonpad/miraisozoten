@@ -16,14 +16,14 @@ export const AuthIconButton = () => {
     <>
       {isLoggedIn && !isAnonymous && (
         // ログインしていて、かつ匿名ユーザーでなければログアウトできる
-        <Button onClick={logout} asChild size={'icon'} variant={'ghost'}>
+        <Button onClick={logout} asChild size={'icon'} variant={'icon'}>
           <LogoutIcon />
         </Button>
       )}
       {((isLoggedIn && isAnonymous) || !isLoggedIn) && (
         // ログインされていていも、匿名ユーザーなら実際のアカウントでログインできる
         // ログインされていなければログインできる(自動で匿名ログインされるため、起こらないはず)
-        <Button onClick={() => login('google')} asChild size={'icon'} variant={'ghost'}>
+        <Button onClick={() => login('google')} asChild size={'icon'} variant={'icon'}>
           <LoginIcon />
         </Button>
       )}
