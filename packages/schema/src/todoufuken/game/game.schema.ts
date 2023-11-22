@@ -31,6 +31,7 @@ export const GetGamesQuerySchema = z
     state: GameShema.shape.state.optional(),
     difficulty: GameShema.shape.difficulty.optional(),
     mode: GameShema.shape.mode.optional(),
+    regionId: z.coerce.number().optional(),
     userId: GameShema.shape.userId.optional(),
   })
   .merge(PageNumberPaginationOptionsSchema);
