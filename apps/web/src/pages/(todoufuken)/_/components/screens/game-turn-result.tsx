@@ -1,5 +1,8 @@
-import { Button } from 'ui/components/ui/button';
-
+import NotchedPaperBurlywood from '@/assets/notched-paper-burlywood.png';
+import NotchedPaperOrangeHovered from '@/assets/notched-paper-orange-hovered.png';
+import NotchedPaperOrange from '@/assets/notched-paper-orange.png';
+import { ImageBgContainer } from '@/components/containers/image-bg-container';
+import { ImageBgButton } from '@/components/elements/image-bg-button';
 import { usePrefectures } from '@/pages/(prefectures)/_/api/get-prefectures';
 import { assert } from '@/utils/asset';
 
@@ -65,29 +68,47 @@ export const GameTurnResult = () => {
       {game.state === 'FINISHED' ? (
         <>
           <div>おめでとう！</div>
-          <Button onClick={handleClickChangeScreenResult}>結果を見る！</Button>
+          <ImageBgButton
+            imagePath={NotchedPaperOrange}
+            hoverImagePath={NotchedPaperOrangeHovered}
+            onClick={handleClickChangeScreenResult}
+          >
+            結果を見る！
+          </ImageBgButton>
         </>
       ) : (
         <>
           <div>{LabeledTurnResult[currentTurn.result]}</div>
-          <Button onClick={handleClickNextTurn}>次へ</Button>
+          <ImageBgButton
+            imagePath={NotchedPaperOrange}
+            hoverImagePath={NotchedPaperOrangeHovered}
+            onClick={handleClickNextTurn}
+          >
+            次へ
+          </ImageBgButton>
         </>
       )}
       {/* 自分が利用したデータと相手のデータを表示する */}
-      <div>
-        <div>自分の回答</div>
+      <ImageBgContainer imagePath={NotchedPaperBurlywood}>
+        {/* <div>自分の回答</div> */}
         {/* 都道府県名 */}
-        {prefectures.find((prefecture) => prefecture.id === currentTurn.factorPrefectureId)?.name}
+        {/* {prefectures.find((prefecture) => prefecture.id === currentTurn.factorPrefectureId)?.name} */}
         {/* 都道府県のデータ */}
-        {JSON.stringify(allyFactor)}
-      </div>
-      <div>
-        <div>相手の回答</div>
+        {`${allyFactor.label} ${allyFactor.totalValue!} ${allyFactor.unit}`}
+        <div>
+          {/* ここに選択した都道府県以外の吸収したデータの合計を表示 */}
+          {!game.hideData && (
+            <div>{`+ ${allyFactor.totalValue - allyFactor.value!} ${allyFactor.unit}`}</div>
+          )}
+        </div>
+      </ImageBgContainer>
+      <ImageBgContainer imagePath={NotchedPaperBurlywood}>
+        {/* <div>相手の回答</div> */}
         {/* 都道府県名 */}
-        {prefectures.find((prefecture) => prefecture.id === currentTurn.opponentId)?.name}
+        {/* {prefectures.find((prefecture) => prefecture.id === currentTurn.opponentId)?.name} */}
         {/* 都道府県のデータ */}
-        {JSON.stringify(opponentFactor)}
-      </div>
+        {`${opponentFactor.label} ${opponentFactor.value!} ${opponentFactor.unit}`}
+      </ImageBgContainer>
     </>
   );
 };

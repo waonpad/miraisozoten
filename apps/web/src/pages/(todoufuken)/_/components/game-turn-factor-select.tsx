@@ -1,5 +1,9 @@
-import { Button } from 'ui/components/ui/button';
+import { PrefectureStatsName } from 'schema/dist/prefecture/stats';
 
+import NotchedPaperOrangeHovered from '@/assets/notched-paper-orange-hovered.png';
+import NotchedPaperOrangeSelected from '@/assets/notched-paper-orange-selected.png';
+import NotchedPaperOrange from '@/assets/notched-paper-orange.png';
+import { ImageBgButton } from '@/components/elements/image-bg-button';
 import { assert } from '@/utils/asset';
 
 import { useGame } from '../hooks/use-game';
@@ -8,6 +12,7 @@ import { getAllFactors } from '../utils/gat-all-factors';
 export type GameTurnFactorSelectProps = {
   factors: ReturnType<typeof getAllFactors>;
   handleClickSelectFactor: (factor: ReturnType<typeof getAllFactors>[number]) => void;
+  selectedFactorName?: PrefectureStatsName;
 };
 
 /**
@@ -17,6 +22,7 @@ export type GameTurnFactorSelectProps = {
  */
 export const GameTurnFactorSelect = ({
   factors,
+  selectedFactorName,
   handleClickSelectFactor,
 }: GameTurnFactorSelectProps) => {
   const { game } = useGame();
@@ -25,20 +31,33 @@ export const GameTurnFactorSelect = ({
   return (
     <div>
       {factors.map((factor, index) => (
-        <Button key={index} onClick={() => handleClickSelectFactor(factor)}>
+        <ImageBgButton
+          imagePath={NotchedPaperOrange}
+          hoverImagePath={NotchedPaperOrangeHovered}
+          selectedImagePath={NotchedPaperOrangeSelected}
+          selected={factor.name === selectedFactorName}
+          key={index}
+          onClick={() => handleClickSelectFactor(factor)}
+        >
           {/* {factor.prefecture.name} */}
           {factor.label}
           {!game.hideData ? factor.totalValue : '〇〇'}
           {factor.unit}
           {/* TODO: 吸収した県が複数になると表示できなくなってしまう */}
-          {factor.absorbedFactors.map((absorbedFactor) => (
+          {/* {factor.absorbedFactors.map((absorbedFactor) => (
             <div key={absorbedFactor.prefecture.id}>
               {`+ ${!game.hideData ? `${absorbedFactor.value} ${absorbedFactor.unit}` : ''} (${
                 absorbedFactor.prefecture.name
               })`}
             </div>
-          ))}
-        </Button>
+          ))} */}
+
+          {/* NOTICE: ここではどれだけプラスされたかのみを表示し、
+          ステータスの制覇数からどの県のどのデータを吸収したかを確認できるようにする */}
+
+          {/* ここに選択した都道府県以外の吸収したデータの合計を表示 */}
+          {!game.hideData && <div>{`+ ${factor.totalValue - factor.value!} ${factor.unit}`}</div>}
+        </ImageBgButton>
       ))}
     </div>
   );

@@ -1,7 +1,9 @@
-import { Button } from 'ui/components/ui/button';
 import { Dialog, DialogContent } from 'ui/components/ui/dialog';
 
 import NotchedPaperBurlywood from '@/assets/notched-paper-burlywood.png';
+import NotchedPaperOrangeHovered from '@/assets/notched-paper-orange-hovered.png';
+import NotchedPaperOrange from '@/assets/notched-paper-orange.png';
+import { ImageBgButton } from '@/components/elements/image-bg-button';
 
 type ConfirmGiveUpDialogProps = {
   open: boolean;
@@ -29,8 +31,20 @@ export const ConfirmGiveUpDialog = ({
         className="border-none shadow-none"
       >
         <div>ギブアップしますか？</div>
-        <Button onClick={handleGiveUp}>ギブアップ</Button>
-        <Button onClick={() => handleOpenChange(false)}>キャンセル</Button>
+        <ImageBgButton
+          imagePath={NotchedPaperOrange}
+          hoverImagePath={NotchedPaperOrangeHovered}
+          onClick={handleGiveUp}
+        >
+          はい
+        </ImageBgButton>
+        <ImageBgButton
+          imagePath={NotchedPaperOrange}
+          hoverImagePath={NotchedPaperOrangeHovered}
+          onClick={() => handleOpenChange(false)}
+        >
+          いいえ
+        </ImageBgButton>
       </DialogContent>
     </Dialog>
   );

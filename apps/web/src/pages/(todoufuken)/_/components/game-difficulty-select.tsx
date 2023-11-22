@@ -1,6 +1,9 @@
 import { GameDifficulty } from 'schema/dist/todoufuken/game';
-import { Button } from 'ui/components/ui/button';
 
+import NotchedPaperBurlywoodHovered from '@/assets/notched-paper-burlywood-hovered.png';
+import NotchedPaperBurlywoodSelected from '@/assets/notched-paper-burlywood-selected.png';
+import NotchedPaperBurlywood from '@/assets/notched-paper-burlywood.png';
+import { ImageBgButton } from '@/components/elements/image-bg-button';
 import { strictEntries } from '@/utils/strict-entries';
 
 import { LabeledGameDifficulty } from '../config/game';
@@ -21,13 +24,16 @@ export const GameDifficultySelect = ({
   return (
     <>
       {strictEntries(LabeledGameDifficulty).map(([difficulty, label]) => (
-        <Button
+        <ImageBgButton
+          imagePath={NotchedPaperBurlywood}
+          hoverImagePath={NotchedPaperBurlywoodHovered}
+          selectedImagePath={NotchedPaperBurlywoodSelected}
+          selected={difficulty === currentDifficulty}
           key={difficulty}
           onClick={() => handleClickGameDifficulty(difficulty)}
-          {...(difficulty === currentDifficulty && { variant: 'destructive' })}
         >
           {label}
-        </Button>
+        </ImageBgButton>
       ))}
     </>
   );
