@@ -4,14 +4,18 @@ export type ImageBgButtonProps = {
   imagePath: string;
   hoverImagePath?: string;
   selectedImagePath?: string;
-  isSelected?: boolean;
+  disabledImagePath?: string;
+  selected?: boolean;
+  disabled?: boolean;
 } & React.HTMLAttributes<HTMLButtonElement>;
 
 export const ImageBgButton = ({
   imagePath,
   hoverImagePath,
   selectedImagePath,
-  isSelected,
+  disabledImagePath,
+  selected,
+  disabled,
   ...props
 }: ImageBgButtonProps) => {
   const [isHover, setIsHover] = useState(false);
@@ -21,8 +25,11 @@ export const ImageBgButton = ({
       {...props}
       style={{
         backgroundImage:
-          // 選択フラグがtrueでその時用の画像がある場合は選択時の画像を表示
-          isSelected && selectedImagePath
+          // disabledフラグがtrueでその時用の画像がある場合はdisabled時の画像を表示
+          disabled && disabledImagePath
+            ? `url(${disabledImagePath})`
+            : // 選択フラグがtrueでその時用の画像がある場合は選択時の画像を表示
+            selected && selectedImagePath
             ? `url(${selectedImagePath})`
             : // hoverされていて、かつhover時の画像がある場合はhover時の画像を表示
             isHover && hoverImagePath
