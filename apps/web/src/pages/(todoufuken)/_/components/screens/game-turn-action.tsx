@@ -65,7 +65,11 @@ export const GameTurnAction = () => {
       {/* 問題文 */}
       <GameTurnQuestion highLow={turnAction.highLow!} />
       {/* 要素を選択するエリア */}
-      <GameTurnFactorSelect factors={factors} handleClickSelectFactor={handleClcikSelectFactor} />
+      <GameTurnFactorSelect
+        factors={factors}
+        handleClickSelectFactor={handleClcikSelectFactor}
+        selectedFactorName={turnAction.factorName}
+      />
     </>
   );
 };

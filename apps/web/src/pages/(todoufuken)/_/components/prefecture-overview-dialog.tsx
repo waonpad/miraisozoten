@@ -1,8 +1,10 @@
 import { PrefectureResponse } from 'schema/dist/prefecture';
-import { Button } from 'ui/components/ui/button';
 import { Dialog, DialogContent, DialogFooter } from 'ui/components/ui/dialog';
 
+import NotchedPaperOrangeHovered from '@/assets/notched-paper-orange-hovered.png';
+import NotchedPaperOrange from '@/assets/notched-paper-orange.png';
 import PaperOrange from '@/assets/paper-orange.jpg';
+import { ImageBgButton } from '@/components/elements/image-bg-button';
 import { PrefectureSVG } from '@/components/maps/prefecture-svg';
 
 export type PrefectureOverviewDialogProps = {
@@ -41,14 +43,16 @@ export const PrefectureOverviewDialog = ({
           <div>人口: </div>
           <div>面積: </div>
           <DialogFooter>
-            <Button
+            <ImageBgButton
+              imagePath={NotchedPaperOrange}
+              hoverImagePath={NotchedPaperOrangeHovered}
               onClick={() => {
                 handleSelect(prefecture);
                 handleOpenChange(false);
               }}
             >
               この都道府県にする
-            </Button>
+            </ImageBgButton>
           </DialogFooter>
         </DialogContent>
       </Dialog>

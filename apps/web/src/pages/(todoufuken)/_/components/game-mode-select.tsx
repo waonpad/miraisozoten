@@ -1,6 +1,9 @@
 import { GameMode } from 'schema/dist/todoufuken/game';
-import { Button } from 'ui/components/ui/button';
 
+import NotchedPaperBurlywoodHovered from '@/assets/notched-paper-burlywood-hovered.png';
+import NotchedPaperBurlywoodSelected from '@/assets/notched-paper-burlywood-selected.png';
+import NotchedPaperBurlywood from '@/assets/notched-paper-burlywood.png';
+import { ImageBgButton } from '@/components/elements/image-bg-button';
 import { strictEntries } from '@/utils/strict-entries';
 
 import { LabeledGameMode } from '../config/game';
@@ -18,13 +21,16 @@ export const GameModeSelect = ({ mode: currentMode, handleClickGameMode }: GameM
   return (
     <>
       {strictEntries(LabeledGameMode).map(([mode, label]) => (
-        <Button
+        <ImageBgButton
+          imagePath={NotchedPaperBurlywood}
+          hoverImagePath={NotchedPaperBurlywoodHovered}
+          selectedImagePath={NotchedPaperBurlywoodSelected}
+          selected={mode === currentMode}
           key={mode}
           onClick={() => handleClickGameMode(mode)}
-          {...(mode === currentMode && { variant: 'destructive' })}
         >
           {label}
-        </Button>
+        </ImageBgButton>
       ))}
     </>
   );

@@ -1,4 +1,7 @@
-import { Button } from 'ui/components/ui/button';
+import NotchedPaperOrangeDisabled from '@/assets/notched-paper-orange-disabled.png';
+import NotchedPaperOrangeHovered from '@/assets/notched-paper-orange-hovered.png';
+import NotchedPaperOrange from '@/assets/notched-paper-orange.png';
+import { ImageBgButton } from '@/components/elements/image-bg-button';
 
 import { useGameSettings } from '../hooks/use-game-settings';
 
@@ -14,9 +17,15 @@ export type GameSettingSubmitProps = {
 export const GameSettingSubmit = ({ settings, handleSubmit }: GameSettingSubmitProps) => {
   return (
     <>
-      <Button disabled={!settings.difficulty || !settings.mode} onClick={handleSubmit}>
+      <ImageBgButton
+        imagePath={NotchedPaperOrange}
+        hoverImagePath={NotchedPaperOrangeHovered}
+        disabledImagePath={NotchedPaperOrangeDisabled}
+        disabled={!settings.difficulty || !settings.mode}
+        onClick={handleSubmit}
+      >
         都道府県選択へ
-      </Button>
+      </ImageBgButton>
       {!settings.difficulty && <div>難易度を選択してください</div>}
       {!settings.mode && <div>モードを選択してください</div>}
     </>
