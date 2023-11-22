@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { ForbiddenException, Inject, Injectable } from '@nestjs/common';
 import { Game } from 'database';
 
 import { PageNumberPaginationMeta } from 'schema/dist/common/pagination';
@@ -20,7 +20,16 @@ import { gameDefaultInclude } from './config/game-include-default';
 export class GameService {
   constructor(@Inject(InjectionToken.PRISMA_SERVICE) private readonly prisma: PrismaService) {}
 
-  async getAllGame(query: GetGamesQueryDto): Promise<[GameResponse[], PageNumberPaginationMeta]> {
+  async getAllGame(
+    query: GetGamesQueryDto,
+    user: JwtDecodedUser
+  ): Promise<[GameResponse[], PageNumberPaginationMeta]> {
+    if (query.userId && query.userId !== user.sub) {
+      // ユーザーIDが指定されているが、自分のIDと一致しない場合はエラー
+      // ただし、ランキングでは他のユーザーのゲームも見れる
+      throw new ForbiddenException('You can only get your own games');
+    }
+
     const { page, limit, ...rest } = query;
 
     const games = await this.prisma
