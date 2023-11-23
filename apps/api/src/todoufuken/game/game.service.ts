@@ -116,7 +116,18 @@ export class GameService {
     const computedGame = await computeGameData({
       game: await this.prisma.game.findUniqueOrThrow({
         where: { id, userId: user.sub },
-        include: gameDefaultInclude,
+        include: {
+          ...gameDefaultInclude,
+          prefecture: {
+            include: {
+              region: {
+                include: {
+                  prefectures: true,
+                },
+              },
+            },
+          },
+        },
       }),
       prisma: this.prisma,
     });
@@ -182,9 +193,14 @@ export class GameService {
     // 隣接県が無いということは、全ての県を回りきったということなので、ゲームを終了する
     // が、このターンの対戦相手はまだ隣接県として残っているので、
     if (
-      // BUG: 北海道→青森等、もとから隣接県が1の場合即終了してしまう Issue #258
-      computedGame.neighbors.length === 1 && // 残りの隣接県が1で
-      computedGame.neighbors[0].id === data.opponentId && // その隣接県が今回の対戦相手で
+      // 全国制覇モードで
+      // 制覇した県が45(最初に選択した県は含まず、今回のターンの対戦相手はまだ反映されていない)
+      ((computedGame.mode === 'NATIONWIDE' && computedGame.conquereds.length === 45) ||
+        // 地方制覇モードで
+        // 制覇した県が地方の県数 - 2(最初に選択した県は含まず、今回のターンの対戦相手はまだ反映されていない)
+        (computedGame.mode === 'REGIONAL' &&
+          computedGame.conquereds.length ===
+            computedGame.prefecture.region.prefectures.length - 2)) &&
       result === 'WIN' // 勝利した場合
     ) {
       // ゲームを終了する
