@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+
 import { usePrefectures } from '@/pages/(prefectures)/_/api/get-prefectures';
 import { assert } from '@/utils/asset';
 
@@ -27,7 +29,9 @@ export const GameTurnAction = () => {
    * @description
    * 選択肢一覧に表示できるデータを計算した結果
    */
-  const factors = getAllFactors(prefectures, game);
+  const factors = useMemo(() => {
+    return getAllFactors(prefectures, game);
+  }, [prefectures, game]);
 
   /**
    * @description
