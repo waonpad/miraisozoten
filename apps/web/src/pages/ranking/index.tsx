@@ -13,7 +13,7 @@ import {
 } from './_/components/infinite-game-ranking-list';
 
 const defaultFilterParams = {
-  modde: 'NATIONWIDE',
+  mode: 'NATIONWIDE',
   difficulty: 'NORMAL',
 } as const satisfies InfiniteGameRankingListProps['filterParams'];
 
