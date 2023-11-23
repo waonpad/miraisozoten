@@ -17,7 +17,9 @@ export const InfiniteGameArchiveList = () => {
   const { user } = useAuth();
 
   const infiniteinfiniteGamesQuery = useInfiniteGames({
-    params: { userId: user!.id },
+    // orderByはスキーマのデフォルト値を使う
+    // よろしくない書き方ではあるはずだが、とりあえずこれで動くので妥協
+    params: { userId: user!.id, orderBy: undefined as never },
   });
 
   const infiniteGames = formatInfiniteData(infiniteinfiniteGamesQuery.data);
