@@ -12,8 +12,6 @@ export type PrefectureSVGProps = {
 // TODO: リファクタリング
 
 export const PrefectureSVG = ({ prefectureNameEn }: PrefectureSVGProps) => {
-  console.log = () => {};
-
   const [pre, setPre] = useState<{
     preId: string;
     preName: string;
@@ -41,7 +39,7 @@ export const PrefectureSVG = ({ prefectureNameEn }: PrefectureSVGProps) => {
 
     const JapanSVG = Japan as unknown as Map;
 
-    console.log(JapanSVG);
+    // console.log(JapanSVG);
 
     const prefecture = JapanSVG.locations.find((location) => {
       return location.id === prefectureNameEn;
@@ -61,7 +59,7 @@ export const PrefectureSVG = ({ prefectureNameEn }: PrefectureSVGProps) => {
       return a;
     });
 
-    console.log(b);
+    // console.log(b);
 
     const beforeCommas = b
       .map((item, index) => {
@@ -152,17 +150,17 @@ export const PrefectureSVG = ({ prefectureNameEn }: PrefectureSVGProps) => {
       value: number;
     }[];
 
-    console.log(beforeCommas, newAfterCommas);
+    // console.log(beforeCommas, newAfterCommas);
 
     const minAfterCommas = Math.min(...(newAfterCommas.map((item) => item.value) as number[]));
     const maxAfterCommas = Math.max(...(newAfterCommas.map((item) => item.value) as number[]));
 
-    console.log({
-      minBeforeCommas,
-      maxBeforeCommas,
-      minAfterCommas,
-      maxAfterCommas,
-    });
+    // console.log({
+    //   minBeforeCommas,
+    //   maxBeforeCommas,
+    //   minAfterCommas,
+    //   maxAfterCommas,
+    // });
 
     setMinMax({
       minBeforeCommas,
@@ -185,7 +183,7 @@ export const PrefectureSVG = ({ prefectureNameEn }: PrefectureSVGProps) => {
       return b;
     });
 
-    console.log(bConvertM);
+    // console.log(bConvertM);
 
     const formatNum = bConvertM.map((item) => {
       // 正規表現で数値であるかを判定(-と.がある)
