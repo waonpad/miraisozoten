@@ -22,6 +22,7 @@ export const GameShema = z.object({
   mode: z.enum(GameMode).openapi({ example: 'NATIONWIDE' }),
   prefectureId: z.number().openapi({ example: 1 }),
   userId: z.string().openapi({ example: '00000000-0000-0000-0000-000000000000' }),
+  clearTime: z.number().nullable().openapi({ example: 1234.567 }),
   createdAt: z.date().openapi({ example: '2021-01-01T00:00:00.000Z' }),
   updatedAt: z.date().openapi({ example: '2021-01-01T00:00:00.000Z' }),
 });
@@ -33,6 +34,21 @@ export const GetGamesQuerySchema = z
     mode: GameShema.shape.mode.optional(),
     regionId: z.coerce.number().optional(),
     userId: GameShema.shape.userId.optional(),
+    orderBy: z
+      .array(
+        z.union([
+          z.object({
+            column: z.enum(['clearTime']),
+            sort: z.enum(['asc', 'desc']),
+            nulls: z.enum(['first', 'last']),
+          }),
+          z.object({
+            column: z.enum(['createdAt']),
+            sort: z.enum(['asc', 'desc']),
+          }),
+        ])
+      )
+      .default([{ column: 'createdAt', sort: 'desc' }]),
   })
   .merge(PageNumberPaginationOptionsSchema);
 
@@ -55,7 +71,7 @@ export const GameResponseSchema = GameShema.merge(
     hideData: z.boolean().openapi({ example: false }),
     conquereds: z.array(PrefectureShema),
     neighbors: z.array(PrefectureShema),
-    // Factorの吸収は？
+    rank: z.number().optional().openapi({ example: 1 }),
   })
 ) satisfies z.ZodType<Game & { prefecture: Prefecture; user: User; logs: GameLog[] }>;
 

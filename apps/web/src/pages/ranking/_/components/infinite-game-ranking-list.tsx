@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 
-import { GameDifficulty, GameMode } from 'schema/dist/todoufuken/game';
+import { GameResponse } from 'schema/dist/todoufuken/game';
 import { Button } from 'ui/components/ui/button';
 
 import { useInfiniteGames } from '@/pages/(todoufuken)/_/api/get-infinite-games';
@@ -10,11 +10,10 @@ import { useIntersectionObserver } from '@/utils/hooks/use-intersection-observer
 import { InfiniteGameRankingListItem } from './game-ranking-list-item';
 
 export type InfiniteGameRankingListProps = {
-  filterParams: {
-    // TODO: モードが地方制覇の場合、地方idで絞り込めるようにする Issue #182
-    modde: GameMode;
-    difficulty: GameDifficulty;
-  };
+  filterParams: Omit<
+    typeof useInfiniteGames extends (args: { params: infer T }) => unknown ? T : never,
+    'state' | 'orderBy' | 'userId'
+  >;
 };
 
 /**
@@ -26,10 +25,18 @@ export const InfiniteGameRankingList = ({ filterParams }: InfiniteGameRankingLis
     params: {
       ...filterParams,
       state: 'FINISHED', // ランキングなので、終了しているもののみを取得する
+      orderBy: [
+        { column: 'clearTime', sort: 'asc', nulls: 'last' }, // タイムが短い順に並べる
+        { column: 'createdAt', sort: 'asc' }, // 作成日が古い順に並べる
+      ],
     },
   });
 
-  const infiniteGames = formatInfiniteData(infiniteinfiniteGamesQuery.data);
+  // NOTICE: 上記の形でリクエストした場合確実にrankとclearTimeが存在する
+  const infiniteGames = formatInfiniteData(infiniteinfiniteGamesQuery.data) as (GameResponse & {
+    rank: number;
+    clearTime: number;
+  })[];
 
   const loadMoreRef = useRef<HTMLButtonElement>(null);
 
