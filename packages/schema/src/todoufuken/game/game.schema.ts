@@ -22,7 +22,7 @@ export const GameShema = z.object({
   mode: z.enum(GameMode).openapi({ example: 'NATIONWIDE' }),
   prefectureId: z.number().openapi({ example: 1 }),
   userId: z.string().openapi({ example: '00000000-0000-0000-0000-000000000000' }),
-  clearTime: z.number().nullable().openapi({ example: 1234.567 }),
+  clearTime: z.number().nullable().openapi({ example: 1234567 }),
   createdAt: z.date().openapi({ example: '2021-01-01T00:00:00.000Z' }),
   updatedAt: z.date().openapi({ example: '2021-01-01T00:00:00.000Z' }),
 });

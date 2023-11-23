@@ -550,7 +550,7 @@ paths:
                   clearTime:
                     type: number
                     nullable: true
-                    example: 1234.567
+                    example: 1234567
                   createdAt:
                     type: string
                     format: date-time
@@ -956,7 +956,7 @@ paths:
                   clearTime:
                     type: number
                     nullable: true
-                    example: 1234.567
+                    example: 1234567
                   createdAt:
                     type: string
                     format: date-time
@@ -1293,7 +1293,7 @@ paths:
                   clearTime:
                     type: number
                     nullable: true
-                    example: 1234.567
+                    example: 1234567
                   createdAt:
                     type: string
                     format: date-time
@@ -1679,7 +1679,7 @@ paths:
                   clearTime:
                     type: number
                     nullable: true
-                    example: 1234.567
+                    example: 1234567
                   createdAt:
                     type: string
                     format: date-time
@@ -2016,7 +2016,7 @@ paths:
                   clearTime:
                     type: number
                     nullable: true
-                    example: 1234.567
+                    example: 1234567
                   createdAt:
                     type: string
                     format: date-time
