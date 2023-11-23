@@ -56,7 +56,9 @@ export const GameTurnFactorSelect = ({
           ステータスの制覇数からどの県のどのデータを吸収したかを確認できるようにする */}
 
           {/* ここに選択した都道府県以外の吸収したデータの合計を表示 */}
-          {!game.hideData && <div>{`+ ${factor.totalValue - factor.value!} ${factor.unit}`}</div>}
+          {!game.hideData && factor.absorbedFactors.length > 0 && (
+            <div>{`+ ${factor.totalValue - factor.value!} ${factor.unit}`}</div>
+          )}
         </ImageBgButton>
       ))}
     </div>

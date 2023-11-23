@@ -97,7 +97,7 @@ export const GameTurnResult = () => {
         {`${allyFactor.label} ${allyFactor.totalValue!} ${allyFactor.unit}`}
         <div>
           {/* ここに選択した都道府県以外の吸収したデータの合計を表示 */}
-          {!game.hideData && (
+          {!game.hideData && allyFactor.absorbedFactors.length > 0 && (
             <div>{`+ ${allyFactor.totalValue - allyFactor.value!} ${allyFactor.unit}`}</div>
           )}
         </div>
