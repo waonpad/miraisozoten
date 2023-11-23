@@ -3,6 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { Game } from 'database';
 import { DefaultBodyType, MockedRequest, RestHandler, rest } from 'msw';
+import qs from 'qs';
 import { PrefectureStatsConfig } from 'schema/dist/prefecture/stats';
 import {
   CreateGameInputSchema,
@@ -21,13 +22,14 @@ import { computeGameData } from '../utils/compute-game-data';
 import { delayedResponse } from '../utils/delayed-response';
 import { gameRelationInclude } from '../utils/game-relation-include';
 import { getPageNumberPaginationMeta } from '../utils/get-page-number-pagination-meta';
-import { getRequestPramsObject } from '../utils/get-request-params-object';
 
 export const gameHandlers: RestHandler<MockedRequest<DefaultBodyType>>[] = [
   rest.get(`${env.VITE_API_URL}/games`, async (req, _res, ctx) => {
+    const userReq = await userMiddleware(req);
+
     const paramsOrError = (() => {
       try {
-        return GetGamesQuerySchema.parse(getRequestPramsObject(req.url.searchParams));
+        return GetGamesQuerySchema.parse(qs.parse(userReq.url.search.split('?')[1]));
       } catch (error: unknown) {
         return error as Error;
       }
@@ -51,9 +53,21 @@ export const gameHandlers: RestHandler<MockedRequest<DefaultBodyType>>[] = [
       );
     }
 
-    const { state, difficulty, mode, page, limit, userId } = paramsOrError as unknown as ReturnType<
-      typeof GetGamesQuerySchema.parse
-    >;
+    const { state, difficulty, mode, regionId, page, limit, userId, orderBy } =
+      paramsOrError as unknown as ReturnType<typeof GetGamesQuerySchema.parse>;
+
+    if (userId && userId !== userReq.user?.sub) {
+      // ユーザーIDが指定されているが、自分のIDと一致しない場合はエラー
+      // ただし、ランキングでは他のユーザーのゲームも見れる
+      return delayedResponse(
+        ctx.status(403),
+        ctx.json({ message: 'You can only get your own games' })
+      );
+    }
+
+    console.log(qs.parse(userReq.url.search));
+
+    console.log(paramsOrError);
 
     try {
       const games = db.game.findMany({
@@ -61,15 +75,43 @@ export const gameHandlers: RestHandler<MockedRequest<DefaultBodyType>>[] = [
           ...(state && { state: { equals: state } }),
           ...(difficulty && { difficulty: { equals: difficulty } }),
           ...(mode && { mode: { equals: mode } }),
+          // ネストしたクエリができない
+          // ...(regionId && { prefecture: { regionId: { equals: regionId } } }),
+          ...(regionId && {
+            prefectureId: {
+              in: db.prefecture
+                .findMany({ where: { regionId: { equals: regionId } } })
+                .map((prefecture) => prefecture.id),
+            },
+          }),
           ...(userId && { userId: { equals: userId } }),
         },
         take: limit,
         skip: (page - 1) * limit,
+        orderBy: [
+          ...orderBy.map((order) => ({
+            // nullsに対応していない
+            [order.column]: order.sort,
+          })),
+        ] as any,
       });
 
       const includedGames = games.map((game) => gameRelationInclude(game as unknown as Game));
 
       const computedGames = includedGames.map((game) => computeGameData({ game }));
+
+      // orderByにclearTimeが含まれている場合は順位を計算する
+      const rankedGames = orderBy.some((order) => order.column === 'clearTime')
+        ? computedGames.map((game) => {
+            const take = (page - 1) * limit;
+            const rank = games.findIndex((g) => g.id === game.id) + 1 + take;
+
+            return {
+              ...game,
+              rank,
+            };
+          })
+        : computedGames;
 
       const allGames = db.game.findMany({});
 
@@ -79,7 +121,7 @@ export const gameHandlers: RestHandler<MockedRequest<DefaultBodyType>>[] = [
         total: allGames.length,
       });
 
-      return delayedResponse(ctx.json([computedGames, pageMeta]));
+      return delayedResponse(ctx.json([rankedGames, pageMeta]));
     } catch (error: any) {
       return delayedResponse(
         ctx.status(400),
@@ -228,6 +270,15 @@ export const gameHandlers: RestHandler<MockedRequest<DefaultBodyType>>[] = [
 
       const includedGame = gameRelationInclude(game as unknown as Game);
 
+      // regionのprefecturesを取得
+      const regionPrefectures = db.prefecture.findMany({
+        where: {
+          regionId: {
+            equals: includedGame.prefecture.regionId,
+          },
+        },
+      });
+
       const computedGame = computeGameData({ game: includedGame });
 
       // factorNameがdata.factorNameと一致するかつ
@@ -290,11 +341,18 @@ export const gameHandlers: RestHandler<MockedRequest<DefaultBodyType>>[] = [
           ? 'WIN'
           : 'LOSE';
 
+      const now = new Date();
+
       // 隣接県が無いということは、全ての県を回りきったということなので、ゲームを終了する
       // が、このターンの対戦相手はまだ隣接県として残っているので、
       if (
-        computedGame.neighbors.length === 1 && // 残りの隣接県が1で
-        computedGame.neighbors[0].id === opponentId && // その隣接県が今回の対戦相手で
+        // 全国制覇モードで
+        // 制覇した県が45(最初に選択した県は含まず、今回のターンの対戦相手はまだ反映されていない)
+        ((computedGame.mode === 'NATIONWIDE' && computedGame.conquereds.length === 45) ||
+          // 地方制覇モードで
+          // 制覇した県が地方の県数 - 2(最初に選択した県は含まず、今回のターンの対戦相手はまだ反映されていない)
+          (computedGame.mode === 'REGIONAL' &&
+            computedGame.conquereds.length === regionPrefectures.length - 2)) &&
         result === 'WIN' // 勝利した場合
       ) {
         db.game.update({
@@ -305,6 +363,8 @@ export const gameHandlers: RestHandler<MockedRequest<DefaultBodyType>>[] = [
           },
           data: {
             state: 'FINISHED',
+            clearTime: now.getTime() - computedGame.createdAt.getTime(),
+            updatedAt: now.toString(),
           },
         });
       }
@@ -319,6 +379,8 @@ export const gameHandlers: RestHandler<MockedRequest<DefaultBodyType>>[] = [
         factorName,
         opponentId,
         gameId: req.params.id as string,
+        createdAt: now.toString(),
+        updatedAt: now.toString(),
       });
 
       const opponent = db.prefecture.findFirst({

@@ -93,6 +93,7 @@ const models = {
   region: {
     id: primaryKey(Number),
     name: String,
+    prefectures: manyOf('prefecture'),
   } satisfies {
     [K in keyof Region]: unknown;
   } & {
@@ -105,7 +106,7 @@ const models = {
     mode: String,
     prefectureId: Number,
     userId: String,
-    clearTime: Number,
+    clearTime: nullable(Number),
     createdAt: Date,
     updatedAt: Date,
   } satisfies {
