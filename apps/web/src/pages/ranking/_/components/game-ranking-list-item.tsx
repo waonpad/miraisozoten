@@ -1,13 +1,21 @@
 import { GameResponse } from 'schema/dist/todoufuken/game';
 
-// TODO: ランキングの順位を取得する方法が今のところないので、後で実装する
-export const InfiniteGameRankingListItem = ({}: { gameRanking: GameResponse }) => {
+import { millisecondsToHms } from '@/utils/format';
+
+export type InfiniteGameRankingListItemProps = {
+  gameRanking: GameResponse & {
+    rank: number;
+    clearTime: number;
+  };
+};
+
+export const InfiniteGameRankingListItem = ({ gameRanking }: InfiniteGameRankingListItemProps) => {
   return (
     <div>
-      <div>順位</div>
-      <div>名前</div>
-      <div>タイム</div>
-      <div>ミス数</div>
+      <div>{gameRanking.rank}</div>
+      <div>{gameRanking.user.name}</div>
+      <div>{millisecondsToHms(gameRanking.clearTime)}</div>
+      <div>{gameRanking.logs.filter((log) => log.result === 'LOSE').length}</div>
     </div>
   );
 };

@@ -105,6 +105,7 @@ const models = {
     mode: String,
     prefectureId: Number,
     userId: String,
+    clearTime: Number,
     createdAt: Date,
     updatedAt: Date,
   } satisfies {

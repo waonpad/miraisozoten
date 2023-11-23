@@ -30,13 +30,22 @@ export class GameService {
       throw new ForbiddenException('You can only get your own games');
     }
 
-    const { page, limit, regionId, ...rest } = query;
+    const { page, limit, regionId, orderBy, ...rest } = query;
 
     const games = await this.prisma
       .pg()
       .game.paginate({
         where: { prefecture: { regionId }, ...rest },
         include: gameDefaultInclude,
+        orderBy: orderBy.map((order) => ({
+          [order.column]:
+            'nulls' in order
+              ? {
+                  sort: order.sort,
+                  nulls: order.nulls,
+                }
+              : order.sort,
+        })),
       })
       .withPages({ page, limit, includePageCount: true });
 
@@ -44,9 +53,22 @@ export class GameService {
       games[0].map((game) => computeGameData({ game, prisma: this.prisma }))
     );
 
+    // orderByにclearTimeが含まれている場合は順位を計算する
+    const rankedGames = orderBy.some((order) => order.column === 'clearTime')
+      ? computedGames.map((game) => {
+          const take = (page - 1) * limit;
+          const rank = games[0].findIndex((g) => g.id === game.id) + 1 + take;
+
+          return {
+            ...game,
+            rank,
+          };
+        })
+      : computedGames;
+
     // NOTICE: なぜか型の補完が行われないが、正常にprismaの拡張によって計算されているため
     // 型アサーションしている
-    return [computedGames as GameResponse[], games[1]];
+    return [rankedGames as GameResponse[], games[1]];
   }
 
   async getGame(id: Game['id'], user: JwtDecodedUser): Promise<GameResponse | null> {
@@ -155,9 +177,12 @@ export class GameService {
         ? 'WIN'
         : 'LOSE';
 
+    const now = new Date();
+
     // 隣接県が無いということは、全ての県を回りきったということなので、ゲームを終了する
     // が、このターンの対戦相手はまだ隣接県として残っているので、
     if (
+      // BUG: 北海道→青森等、もとから隣接県が1の場合即終了してしまう Issue #258
       computedGame.neighbors.length === 1 && // 残りの隣接県が1で
       computedGame.neighbors[0].id === data.opponentId && // その隣接県が今回の対戦相手で
       result === 'WIN' // 勝利した場合
@@ -167,6 +192,8 @@ export class GameService {
         where: { id, userId: user.sub },
         data: {
           state: 'FINISHED',
+          clearTime: now.getTime() - computedGame.createdAt.getTime(),
+          updatedAt: now,
         },
       });
     }
@@ -185,6 +212,9 @@ export class GameService {
         game: {
           connect: { id },
         },
+        // clearTimeの計算とのズレを発生させないため、明示的にcreatedAtとupdatedAtを指定する
+        createdAt: now,
+        updatedAt: now,
       },
       include: {
         opponent: true,

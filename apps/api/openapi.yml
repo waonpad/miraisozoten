@@ -547,6 +547,10 @@ paths:
                   userId:
                     type: string
                     example: 00000000-0000-0000-0000-000000000000
+                  clearTime:
+                    type: number
+                    nullable: true
+                    example: 1234567
                   createdAt:
                     type: string
                     format: date-time
@@ -811,6 +815,9 @@ paths:
                         - kana
                         - en
                         - regionId
+                  rank:
+                    type: number
+                    example: 1
                 required:
                   - id
                   - state
@@ -818,6 +825,7 @@ paths:
                   - mode
                   - prefectureId
                   - userId
+                  - clearTime
                   - createdAt
                   - updatedAt
                   - prefecture
@@ -945,6 +953,10 @@ paths:
                   userId:
                     type: string
                     example: 00000000-0000-0000-0000-000000000000
+                  clearTime:
+                    type: number
+                    nullable: true
+                    example: 1234567
                   createdAt:
                     type: string
                     format: date-time
@@ -1209,6 +1221,9 @@ paths:
                         - kana
                         - en
                         - regionId
+                  rank:
+                    type: number
+                    example: 1
                 required:
                   - id
                   - state
@@ -1216,6 +1231,7 @@ paths:
                   - mode
                   - prefectureId
                   - userId
+                  - clearTime
                   - createdAt
                   - updatedAt
                   - prefecture
@@ -1274,6 +1290,10 @@ paths:
                   userId:
                     type: string
                     example: 00000000-0000-0000-0000-000000000000
+                  clearTime:
+                    type: number
+                    nullable: true
+                    example: 1234567
                   createdAt:
                     type: string
                     format: date-time
@@ -1538,6 +1558,9 @@ paths:
                         - kana
                         - en
                         - regionId
+                  rank:
+                    type: number
+                    example: 1
                 required:
                   - id
                   - state
@@ -1545,6 +1568,7 @@ paths:
                   - mode
                   - prefectureId
                   - userId
+                  - clearTime
                   - createdAt
                   - updatedAt
                   - prefecture
@@ -1652,6 +1676,10 @@ paths:
                   userId:
                     type: string
                     example: 00000000-0000-0000-0000-000000000000
+                  clearTime:
+                    type: number
+                    nullable: true
+                    example: 1234567
                   createdAt:
                     type: string
                     format: date-time
@@ -1916,6 +1944,9 @@ paths:
                         - kana
                         - en
                         - regionId
+                  rank:
+                    type: number
+                    example: 1
                 required:
                   - id
                   - state
@@ -1923,6 +1954,7 @@ paths:
                   - mode
                   - prefectureId
                   - userId
+                  - clearTime
                   - createdAt
                   - updatedAt
                   - prefecture
@@ -1981,6 +2013,10 @@ paths:
                   userId:
                     type: string
                     example: 00000000-0000-0000-0000-000000000000
+                  clearTime:
+                    type: number
+                    nullable: true
+                    example: 1234567
                   createdAt:
                     type: string
                     format: date-time
@@ -2245,6 +2281,9 @@ paths:
                         - kana
                         - en
                         - regionId
+                  rank:
+                    type: number
+                    example: 1
                 required:
                   - id
                   - state
@@ -2252,6 +2291,7 @@ paths:
                   - mode
                   - prefectureId
                   - userId
+                  - clearTime
                   - createdAt
                   - updatedAt
                   - prefecture
