@@ -10,14 +10,14 @@ hooks.afterEach(async (transaction, done) => {
 
     await firebaseAdmin.auth().deleteUsers(userIds);
 
-    // delete all users
-    await prisma.user.deleteMany();
-
     // delete all gamelogs
     await prisma.gameLog.deleteMany();
 
     // delete all games
     await prisma.game.deleteMany();
+
+    // delete all users
+    await prisma.user.deleteMany();
 
     done();
   });
