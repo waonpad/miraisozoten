@@ -14,7 +14,14 @@ export const GameModeInfo = () => {
           <Button variant="outline">モードの説明</Button>
         </TooltipTrigger>
         <TooltipContent>
-          <div>モードについての説明</div>
+          <div>【モード】</div>
+          <div>バトル時のモードを設定します。</div>
+          <div>
+            地方制覇モード：選択した都道府県の所属する地方の都道府県と闘います。手軽に遊びたい方におすすめです。
+          </div>
+          <div>
+            全国制覇モード：選択した都道府県で全国の都道府県と闘います。対戦数が多いため、集中して遊びたい方におすすめです。
+          </div>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>

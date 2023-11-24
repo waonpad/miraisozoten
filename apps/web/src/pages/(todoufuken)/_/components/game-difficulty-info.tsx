@@ -14,7 +14,12 @@ export const GameDifficultyInfo = () => {
           <Button variant="outline">難易度の説明</Button>
         </TooltipTrigger>
         <TooltipContent>
-          <div>難易度についての説明</div>
+          <div>【難易度】</div>
+          <div>バトル難易度を設定します。</div>
+          <div>Easy：3選択肢から対戦要素を選びます。</div>
+          <div>Normal：4選択肢から対戦要素を選びます。</div>
+          <div>Hard：4選択肢に加え、データの数値を見ることができません。</div>
+          <div>Very Hard：6選択肢に加え、データの数値を見ることができません。</div>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
