@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { usePrefectures } from '@/pages/(prefectures)/_/api/get-prefectures';
 import { assert } from '@/utils/asset';
+import { millisecondsToHms } from '@/utils/format';
 
 import { useGame } from '../hooks/use-game';
 
@@ -68,10 +69,7 @@ export const GameStatus = () => {
         制覇数: {conqueredsCount + 1} / {allCount}
       </div>
       <div>ミス: {missCount}</div>
-      {/* 秒ミリ秒を、分秒に変換 */}
-      <div>
-        タイム: {Math.floor(playTime / 60)}分{Math.floor(playTime % 60)}秒
-      </div>
+      <div>タイム: {millisecondsToHms(playTime)}</div>
     </>
   );
 };
