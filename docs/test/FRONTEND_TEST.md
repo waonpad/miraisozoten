@@ -7,8 +7,8 @@ APIモック: [msw](https://mswjs.io/)
 
 ### テスト対象のファイル一覧
 
-- app/web/src/(todoufuken) 配下の全てのファイル(/\_/api ディレクトリを除く)
-- app/web/src/components/maps 配下の全てのファイル(japan-checkbox-svg-map.tsxを除く)
+- apps/web/src/(todoufuken) 配下の全てのファイル(/\_/api ディレクトリを除く)
+- apps/web/src/components/maps 配下の全てのファイル(japan-checkbox-svg-map.tsxを除く)
 
 ### テストファイルについての規則
 
@@ -78,7 +78,7 @@ test: {
 
 ---
 
-packaes.jsonのtestスクリプトは, --silentオプションによってテスト実行時のコンソール出力を抑制している  
+packages.jsonのtestスクリプトは, --silentオプションによってテスト実行時のコンソール出力を抑制している  
 確認が必要な場合, 一時的にオプションを外す等して対応する
 
 ---
