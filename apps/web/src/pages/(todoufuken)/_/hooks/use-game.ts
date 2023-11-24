@@ -141,7 +141,7 @@ export const useGameCtx = () => {
         const startTime = new Date(createdAt).getTime();
         const latestLog = logs[logs.length - 1];
         const latestLogTime = latestLog ? new Date(latestLog.createdAt).getTime() : startTime;
-        const playTime = latestLog ? (latestLogTime - startTime) / 1000 : 0;
+        const playTime = latestLog ? latestLogTime - startTime : 0;
 
         return {
           ...gameData,

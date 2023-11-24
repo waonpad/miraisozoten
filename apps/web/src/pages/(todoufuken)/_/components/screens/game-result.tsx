@@ -3,6 +3,7 @@ import NotchedPaperOrange from '@/assets/notched-paper-orange.png';
 import { ImageBgButton } from '@/components/elements/image-bg-button';
 import { Link } from '@/router';
 import { assert } from '@/utils/asset';
+import { millisecondsToHms } from '@/utils/format';
 
 import { useGame } from '../../hooks/use-game';
 /**
@@ -18,10 +19,7 @@ export const GameResult = () => {
   return (
     <>
       <div>ミス: {missCount}</div>
-      {/* 秒ミリ秒を、分秒に変換 */}
-      <div>
-        タイム: {Math.floor(playTime / 60)}分{Math.floor(playTime % 60)}秒
-      </div>
+      <div>タイム: {millisecondsToHms(playTime)}</div>
       <ImageBgButton imagePath={NotchedPaperOrange} hoverImagePath={NotchedPaperOrangeHovered}>
         <Link to={'/menu'}>トップへ</Link>
       </ImageBgButton>
