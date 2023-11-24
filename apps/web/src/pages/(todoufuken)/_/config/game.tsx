@@ -56,10 +56,10 @@ export const FactorPickCount = {
  * ゲームの難易度を画面に表示する際、どのような文字列にするかの設定
  */
 export const LabeledGameDifficulty = {
-  EASY: 'easy',
-  NORMAL: 'normal',
-  HARD: 'hard',
-  VERY_HARD: 'very hard',
+  EASY: 'Easy',
+  NORMAL: 'Normal',
+  HARD: 'Hard',
+  VERY_HARD: 'Very Hard',
 } as const satisfies Record<GameDifficulty, string>;
 
 /**
