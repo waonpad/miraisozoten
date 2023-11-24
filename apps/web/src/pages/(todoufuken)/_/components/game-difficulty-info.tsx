@@ -1,6 +1,8 @@
 import { Button } from 'ui/components/ui/button';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from 'ui/components/ui/tooltip';
 
+import CircleInfoIcon from '@/assets/icons/circle-info.svg?react';
+
 /**
  * @description
  * 難易度の説明を表示するTooltip
@@ -10,8 +12,9 @@ export const GameDifficultyInfo = () => {
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
-          {/* TODO: アイコンボタンに変更する */}
-          <Button variant="outline">難易度の説明</Button>
+          <Button asChild size={'icon'} variant={'icon'}>
+            <CircleInfoIcon />
+          </Button>
         </TooltipTrigger>
         <TooltipContent>
           <div>【難易度】</div>
