@@ -11,6 +11,8 @@ const addr = address(RESOURCE, 'GET');
 
 hooks.before(addr, async (transaction, done) => {
   await dreddHooksWrapper(async () => {
+    await axios.post('/auth/login', null, reqHeadersWithTokenFromTransaction(transaction));
+
     const res = await axios.post(
       RESOURCES,
       dummySettings,

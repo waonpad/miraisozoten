@@ -7,11 +7,12 @@ const {
 const hooks = require('hooks');
 const { RESOURCE, RESOURCES, dummySettings } = require('./config');
 
-const addr = address(`${RESOURCE}/{id}/give-up`, 'PATCH');
+const addr = address(`${RESOURCE}/give-up`, 'PATCH');
 
 hooks.before(addr, async (transaction, done) => {
   await dreddHooksWrapper(async () => {
     await axios.post('/auth/login', null, reqHeadersWithTokenFromTransaction(transaction));
+
     const res = await axios.post(
       RESOURCES,
       dummySettings,
