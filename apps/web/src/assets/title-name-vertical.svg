@@ -1,0 +1,24 @@
+<svg id="_レイヤー_1" data-name="レイヤー 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 108.42 401.12">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        font-family: KsoShinryuSou-83pv-RKSJ-H, KsoShinryuSou;
+        font-size: 103.78px;
+      }
+
+      .cls-2 {
+        fill: #e2421f;
+      }
+
+      .cls-3 {
+        fill: #2f2f2f;
+        stroke-width: 0px;
+      }
+    </style>
+  </defs>
+  <text class="cls-1" transform="translate(.51 192.77)"><tspan x="0" y="0">道</tspan></text>
+  <text class="cls-1" transform="translate(.51 290.94)"><tspan x="0" y="0">賦</tspan></text>
+  <text class="cls-1" transform="translate(4.64 386.07)"><tspan x="0" y="0">県</tspan></text>
+  <rect class="cls-3" y="1.48" width="103.87" height="103.87"/>
+  <text class="cls-2" transform="translate(.49 89.15)"><tspan x="0" y="0">闘</tspan></text>
+</svg>

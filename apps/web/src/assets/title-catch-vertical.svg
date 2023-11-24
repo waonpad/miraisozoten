@@ -1,0 +1,21 @@
+<svg id="_レイヤー_1" data-name="レイヤー 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250.1 333">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #e2421f;
+        font-size: 59.09px;
+      }
+
+      .cls-2, .cls-3 {
+        font-family: KsoShinryuSou-83pv-RKSJ-H, KsoShinryuSou;
+      }
+
+      .cls-2, .cls-4 {
+        font-size: 44.32px;
+      }
+    </style>
+  </defs>
+  <text class="cls-3" transform="translate(191.01 50.76)"><tspan class="cls-1"><tspan x="0" y="0">新</tspan></tspan><tspan class="cls-4"><tspan x="0" y="46.4">感</tspan></tspan><tspan class="cls-4"><tspan x="0" y="90.72">覚</tspan></tspan></text>
+  <text class="cls-2" transform="translate(144.36 102.34)"><tspan x="0" y="0">都</tspan><tspan x="0" y="44.32">道</tspan><tspan x="0" y="88.63">府</tspan><tspan x="0" y="132.95">県</tspan></text>
+  <text class="cls-2" transform="translate(95.76 149.31)"><tspan x="0" y="0">統</tspan><tspan x="0" y="44.32">計</tspan><tspan x="0" y="88.63">バ</tspan><tspan x="0" y="132.95">ト</tspan><tspan x="0" y="177.26">ル</tspan></text>
+</svg>
