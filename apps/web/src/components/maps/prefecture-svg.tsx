@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import Japan from '@svg-maps/japan';
 import { Prefecture } from 'database';
 import { Map } from 'react-svg-map';
-import 'react-svg-map/lib/index.css'; // とりあえずそのままcssを流用
+import './styles/index.css';
 
 export type PrefectureSVGProps = {
   prefectureNameEn: Prefecture['en'];
@@ -208,23 +208,18 @@ export const PrefectureSVG = ({ prefectureNameEn }: PrefectureSVGProps) => {
     <div>
       <svg
         // eslint-disable-next-line tailwindcss/no-custom-classname
-        className="svg-map"
+        className="svg-map h-full max-h-full w-full max-w-full"
         viewBox={`0 0 ${(mixMax.maxBeforeCommas - mixMax.minBeforeCommas) * 10} ${
           (mixMax.maxAfterCommas - mixMax.minAfterCommas) * 10
         }`}
-        style={{
-          width: '100%',
-          maxWidth: '100%',
-          height: '100%',
-          maxHeight: '100%',
-        }}
       >
         <path
           id={pre.preId}
           name={pre.preName}
           d={pre.prePath}
           // eslint-disable-next-line tailwindcss/no-custom-classname
-          className="svg-map__location"
+          className="svg-map__location cursor-default"
+          aria-checked="true"
         ></path>
       </svg>
     </div>

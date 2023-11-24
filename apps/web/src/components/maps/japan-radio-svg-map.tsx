@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react';
 import { Prefecture } from 'database';
 import { Map, SVGMap, SVGMapProps } from 'react-svg-map';
 
-import 'react-svg-map/lib/index.css';
+// import 'react-svg-map/lib/index.css';
+import './styles/index.css';
 import { Japan, relocatedViewBox } from './config';
 import { DispatchSvgMapLocationElement } from './dispatch-svg-map-location-element';
 import { MapSeparator } from './map-separator';
