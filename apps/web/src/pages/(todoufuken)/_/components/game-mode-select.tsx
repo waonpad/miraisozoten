@@ -20,18 +20,21 @@ export type GameModeSelectProps = {
 export const GameModeSelect = ({ mode: currentMode, handleClickGameMode }: GameModeSelectProps) => {
   return (
     <>
-      {strictEntries(LabeledGameMode).map(([mode, label]) => (
-        <ImageBgButton
-          imagePath={NotchedPaperBurlywood}
-          hoverImagePath={NotchedPaperBurlywoodHovered}
-          selectedImagePath={NotchedPaperBurlywoodSelected}
-          selected={mode === currentMode}
-          key={mode}
-          onClick={() => handleClickGameMode(mode)}
-        >
-          {label}
-        </ImageBgButton>
-      ))}
+      <div className="grid grid-cols-2 gap-2 lg:flex lg:flex-col">
+        {strictEntries(LabeledGameMode).map(([mode, label]) => (
+          <ImageBgButton
+            imagePath={NotchedPaperBurlywood}
+            hoverImagePath={NotchedPaperBurlywoodHovered}
+            selectedImagePath={NotchedPaperBurlywoodSelected}
+            selected={mode === currentMode}
+            key={mode}
+            onClick={() => handleClickGameMode(mode)}
+            className="py-2 lg:py-5 lg:text-2xl"
+          >
+            {label}
+          </ImageBgButton>
+        ))}
+      </div>
     </>
   );
 };

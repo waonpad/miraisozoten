@@ -11,9 +11,9 @@ export const GameModeInfo = () => {
   return (
     <TooltipProvider>
       <Tooltip>
-        <TooltipTrigger asChild>
-          <Button asChild size={'icon'} variant={'icon'}>
-            <CircleInfoIcon />
+        <TooltipTrigger>
+          <Button asChild size={'icon'} variant={'icon'} className="h-7 w-7">
+            <CircleInfoIcon className="fill-current text-gray-600" />
           </Button>
         </TooltipTrigger>
         <TooltipContent>

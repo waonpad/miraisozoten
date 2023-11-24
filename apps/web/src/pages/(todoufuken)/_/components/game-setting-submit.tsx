@@ -17,17 +17,20 @@ export type GameSettingSubmitProps = {
 export const GameSettingSubmit = ({ settings, handleSubmit }: GameSettingSubmitProps) => {
   return (
     <>
-      <ImageBgButton
-        imagePath={NotchedPaperOrange}
-        hoverImagePath={NotchedPaperOrangeHovered}
-        disabledImagePath={NotchedPaperOrangeDisabled}
-        disabled={!settings.difficulty || !settings.mode}
-        onClick={handleSubmit}
-      >
-        都道府県選択へ
-      </ImageBgButton>
-      {!settings.difficulty && <div>難易度を選択してください</div>}
-      {!settings.mode && <div>モードを選択してください</div>}
+      <div className="grid grid-cols-1">
+        <ImageBgButton
+          imagePath={NotchedPaperOrange}
+          hoverImagePath={NotchedPaperOrangeHovered}
+          disabledImagePath={NotchedPaperOrangeDisabled}
+          disabled={!settings.difficulty || !settings.mode}
+          onClick={handleSubmit}
+          className="py-2 lg:py-5 lg:text-2xl"
+        >
+          都道府県選択へ
+        </ImageBgButton>
+      </div>
+      <div className="mt-2 grid grid-cols-1 gap-1 text-red-500"></div>
+      {/* 選択されていないときの警告は直にテキストを置くより別の方法で出したほうがよさそう */}
     </>
   );
 };
