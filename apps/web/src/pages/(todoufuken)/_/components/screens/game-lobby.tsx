@@ -71,6 +71,8 @@ export const GameLobby = () => {
   const handleClickGameSettingsSubmit = () => setCanSelectPrefectures(true);
 
   return (
+    // TODO: 設定を決定したら選択した設定以外と決定ボタンを非表示にする
+    // TODO: 設定を決定するまでは地図のホバーで何もしないようにする
     <>
       <div className="relative grid h-screen grid-cols-1 gap-1 p-2 lg:grid-cols-2 lg:p-3">
         <Logo className="absolute left-2 top-2 h-12 w-12 lg:h-28 lg:w-28" />

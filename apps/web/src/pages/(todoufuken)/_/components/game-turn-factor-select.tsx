@@ -1,4 +1,5 @@
 import { PrefectureStatsName } from 'schema/dist/prefecture/stats';
+import { cn } from 'ui/lib/utils';
 
 import NotchedPaperOrange from '@/assets/notched-paper-orange.png';
 import { ImageBgButton } from '@/components/elements/image-bg-button';
@@ -13,6 +14,12 @@ export type GameTurnFactorSelectProps = {
   selectedFactorName?: PrefectureStatsName;
 };
 
+const gridSwitcher = {
+  3: 'grid-cols-1 lg:grid-cols-3',
+  4: 'grid-cols-1 lg:grid-cols-2 lg:grid-rows-2',
+  6: 'grid-cols-2 grid-rows-3 lg:grid-cols-3 lg:grid-rows-2',
+} as const;
+
 /**
  * @description
  * ターンに使用する統計データ一覧を表示するコンポーネント \
@@ -26,32 +33,25 @@ export const GameTurnFactorSelect = ({
   const { game } = useGame();
   assert(game);
 
+  // 3, 4, 6はFactorPickCountによるもの
+  if ([3, 4, 6].includes(factors.length) === false) {
+    throw new Error(`invalid factors length: ${factors.length}`);
+  }
+
   return (
-    <div>
+    <div
+      className={cn(`grow grid gap-2`, gridSwitcher[factors.length as keyof typeof gridSwitcher])}
+    >
       {factors.map((factor, index) => (
         <ImageBgButton
           imagePath={NotchedPaperOrange}
           active={factor.name === selectedFactorName}
           key={index}
           onClick={() => handleClickSelectFactor(factor)}
+          className="py-2 text-xl lg:py-5 lg:text-2xl"
         >
-          {/* {factor.prefecture.name} */}
-          {factor.label}
-          {!game.hideData ? factor.totalValue : '〇〇'}
+          {factor.label}　{!game.hideData ? factor.totalValue : '〇〇'}
           {factor.unit}
-          {/* TODO: 吸収した県が複数になると表示できなくなってしまう */}
-          {/* {factor.absorbedFactors.map((absorbedFactor) => (
-            <div key={absorbedFactor.prefecture.id}>
-              {`+ ${!game.hideData ? `${absorbedFactor.value} ${absorbedFactor.unit}` : ''} (${
-                absorbedFactor.prefecture.name
-              })`}
-            </div>
-          ))} */}
-
-          {/* NOTICE: ここではどれだけプラスされたかのみを表示し、
-          ステータスの制覇数からどの県のどのデータを吸収したかを確認できるようにする */}
-
-          {/* ここに選択した都道府県以外の吸収したデータの合計を表示 */}
           {!game.hideData && factor.absorbedFactors.length > 0 && (
             <div>{`+ ${factor.totalValue - factor.value!} ${factor.unit}`}</div>
           )}

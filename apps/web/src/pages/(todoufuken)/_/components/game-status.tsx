@@ -65,12 +65,12 @@ export const GameStatus = () => {
 
   return (
     <>
-      <div className="flex gap-4">
-        <div className="font-mono">{millisecondsToHms(playTime)}</div>
-        <div>
+      <div className="flex gap-8">
+        <div className="tabular-nums">{millisecondsToHms(playTime)}</div>
+        <div className="tabular-nums">
           制覇数: {String(conqueredsCount).padStart(String(allCount).length, '0')} / {allCount}
         </div>
-        <div>ミス数: {missCount}</div>
+        <div className="tabular-nums">ミス数: {missCount}</div>
       </div>
     </>
   );

@@ -20,7 +20,7 @@ export const GameSettingSubmit = ({ settings, handleSubmit }: GameSettingSubmitP
           imagePath={NotchedPaperOrange}
           disabled={!settings.difficulty || !settings.mode}
           onClick={handleSubmit}
-          className="py-2 lg:py-5 lg:text-2xl"
+          className="py-2 text-xl lg:py-5 lg:text-2xl"
         >
           都道府県選択へ
         </ImageBgButton>

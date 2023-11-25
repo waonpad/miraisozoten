@@ -4,14 +4,16 @@ import Japan from '@svg-maps/japan';
 import { Prefecture } from 'database';
 import { Map } from 'react-svg-map';
 import './styles/index.css';
+import { cn } from 'ui/lib/utils';
 
 export type PrefectureSVGProps = {
   prefectureNameEn: Prefecture['en'];
-};
+  pathProps?: React.SVGProps<SVGPathElement>;
+} & React.SVGProps<SVGSVGElement>;
 
 // TODO: リファクタリング
 
-export const PrefectureSVG = ({ prefectureNameEn }: PrefectureSVGProps) => {
+export const PrefectureSVG = ({ prefectureNameEn, pathProps, ...props }: PrefectureSVGProps) => {
   const [pre, setPre] = useState<{
     preId: string;
     preName: string;
@@ -205,24 +207,25 @@ export const PrefectureSVG = ({ prefectureNameEn }: PrefectureSVGProps) => {
   }, []);
 
   return (
-    <div>
-      <svg
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      // eslint-disable-next-line tailwindcss/no-custom-classname
+      className={cn(`svg-map h-full max-h-full w-full max-w-full`, props.className)}
+      viewBox={`0 0 ${(mixMax.maxBeforeCommas - mixMax.minBeforeCommas) * 10} ${
+        (mixMax.maxAfterCommas - mixMax.minAfterCommas) * 10
+      }`}
+    >
+      <path
+        {...pathProps}
+        id={pre.preId}
+        name={pre.preName}
+        d={pre.prePath}
         // eslint-disable-next-line tailwindcss/no-custom-classname
-        className="svg-map h-full max-h-full w-full max-w-full"
-        viewBox={`0 0 ${(mixMax.maxBeforeCommas - mixMax.minBeforeCommas) * 10} ${
-          (mixMax.maxAfterCommas - mixMax.minAfterCommas) * 10
-        }`}
-      >
-        <path
-          id={pre.preId}
-          name={pre.preName}
-          d={pre.prePath}
-          // eslint-disable-next-line tailwindcss/no-custom-classname
-          className="svg-map__location cursor-default"
-          aria-checked="true"
-        ></path>
-      </svg>
-    </div>
+        className={cn(`svg-map__location cursor-default`, pathProps?.className)}
+        aria-checked="true"
+      ></path>
+    </svg>
   );
 };
 

@@ -61,45 +61,49 @@ export const GameTurnResult = () => {
 
   return (
     <>
-      <GameBattleDisplay prefecture={currentTurnAllyPrefecture} opponent={currentTurn.opponent} />
-      {/* ターンの結果 */}
-      {/* あとからモーダルにする */}
-      {game.state === 'FINISHED' ? (
-        <>
-          <div>おめでとう！</div>
-          <ImageBgButton imagePath={NotchedPaperOrange} onClick={handleClickChangeScreenResult}>
-            結果を見る！
-          </ImageBgButton>
-        </>
-      ) : (
-        <>
-          <div>{LabeledTurnResult[currentTurn.result]}</div>
-          <ImageBgButton imagePath={NotchedPaperOrange} onClick={handleClickNextTurn}>
-            次へ
-          </ImageBgButton>
-        </>
-      )}
-      {/* 自分が利用したデータと相手のデータを表示する */}
-      <ImageBgContainer imagePath={NotchedPaperBurlywood}>
-        {/* <div>自分の回答</div> */}
-        {/* 都道府県名 */}
-        {/* {prefectures.find((prefecture) => prefecture.id === currentTurn.factorPrefectureId)?.name} */}
-        {/* 都道府県のデータ */}
-        {`${allyFactor.label} ${allyFactor.totalValue!} ${allyFactor.unit}`}
+      <div>
         <div>
-          {/* ここに選択した都道府県以外の吸収したデータの合計を表示 */}
-          {!game.hideData && allyFactor.absorbedFactors.length > 0 && (
-            <div>{`+ ${allyFactor.totalValue - allyFactor.value!} ${allyFactor.unit}`}</div>
-          )}
+          <GameBattleDisplay
+            prefecture={currentTurnAllyPrefecture}
+            opponent={currentTurn.opponent}
+          />
         </div>
-      </ImageBgContainer>
-      <ImageBgContainer imagePath={NotchedPaperBurlywood}>
-        {/* <div>相手の回答</div> */}
-        {/* 都道府県名 */}
-        {/* {prefectures.find((prefecture) => prefecture.id === currentTurn.opponentId)?.name} */}
-        {/* 都道府県のデータ */}
-        {`${opponentFactor.label} ${opponentFactor.value!} ${opponentFactor.unit}`}
-      </ImageBgContainer>
+
+        {/* ターンの結果 */}
+        {/* あとからモーダルにする */}
+        {game.state === 'FINISHED' ? (
+          <div>
+            <div>おめでとう！</div>
+            <ImageBgButton imagePath={NotchedPaperOrange} onClick={handleClickChangeScreenResult}>
+              結果を見る！
+            </ImageBgButton>
+          </div>
+        ) : (
+          <div>
+            <div>{LabeledTurnResult[currentTurn.result]}</div>
+            <ImageBgButton imagePath={NotchedPaperOrange} onClick={handleClickNextTurn}>
+              次へ
+            </ImageBgButton>
+          </div>
+        )}
+      </div>
+
+      <div>
+        {/* 自分が利用したデータと相手のデータを表示する */}
+        <ImageBgContainer imagePath={NotchedPaperBurlywood}>
+          {`${allyFactor.label} ${allyFactor.totalValue!} ${allyFactor.unit}`}
+          <div>
+            {/* ここに選択した都道府県以外の吸収したデータの合計を表示 */}
+            {!game.hideData && allyFactor.absorbedFactors.length > 0 && (
+              <div>{`+ ${allyFactor.totalValue - allyFactor.value!} ${allyFactor.unit}`}</div>
+            )}
+          </div>
+        </ImageBgContainer>
+
+        <ImageBgContainer imagePath={NotchedPaperBurlywood}>
+          {`${opponentFactor.label} ${opponentFactor.value!} ${opponentFactor.unit}`}
+        </ImageBgContainer>
+      </div>
     </>
   );
 };

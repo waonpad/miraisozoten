@@ -27,14 +27,18 @@ export const GameScreen = {
   lobby: <GameLobby />,
   turnAction: (
     <>
-      <GameHeader />
-      <GameTurnAction />
+      <div className="flex min-h-screen flex-col">
+        <GameHeader />
+        <GameTurnAction />
+      </div>
     </>
   ),
   turnResult: (
     <>
-      <GameHeader />
-      <GameTurnResult />
+      <div className="flex min-h-screen flex-col">
+        <GameHeader />
+        <GameTurnResult />
+      </div>
     </>
   ),
   result: <GameResult />,

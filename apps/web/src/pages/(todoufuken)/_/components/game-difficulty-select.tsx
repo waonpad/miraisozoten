@@ -28,7 +28,7 @@ export const GameDifficultySelect = ({
             active={difficulty === currentDifficulty}
             key={difficulty}
             onClick={() => handleClickGameDifficulty(difficulty)}
-            className="py-2 lg:py-5 lg:text-2xl"
+            className="py-2 text-xl lg:py-5 lg:text-2xl"
           >
             {label}
           </ImageBgButton>

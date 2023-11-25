@@ -11,5 +11,9 @@ export type GameTurnQuestionProps = {
  * 問題文を表示するコンポーネント
  */
 export const GameTurnQuestion = ({ highLow }: GameTurnQuestionProps) => {
-  return <div>他の都道府県より{LabeledHighLow[highLow]}そうなのはどれ？</div>;
+  return (
+    <div className="text-2xl lg:text-3xl">
+      他の都道府県より{LabeledHighLow[highLow]}そうなのはどれ？
+    </div>
+  );
 };

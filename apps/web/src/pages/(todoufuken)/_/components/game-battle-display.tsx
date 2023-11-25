@@ -17,11 +17,19 @@ export type GameBattleVSProps = {
 export const GameBattleDisplay = ({ prefecture, opponent }: GameBattleVSProps) => {
   return (
     <>
-      <ImageBgContainer imagePath={NotchedPaperBurlywood}>{prefecture.name}</ImageBgContainer>
-      <PrefectureSVG prefectureNameEn={prefecture.en} />
-      <div>VS</div>
-      <ImageBgContainer imagePath={NotchedPaperBurlywood}>{opponent.name}</ImageBgContainer>
-      <PrefectureSVG prefectureNameEn={opponent.en} />
+      <div>
+        <div>
+          <ImageBgContainer imagePath={NotchedPaperBurlywood}>{prefecture.name}</ImageBgContainer>
+          <PrefectureSVG prefectureNameEn={prefecture.en} />
+        </div>
+
+        <div>VS</div>
+
+        <div>
+          <ImageBgContainer imagePath={NotchedPaperBurlywood}>{opponent.name}</ImageBgContainer>
+          <PrefectureSVG prefectureNameEn={opponent.en} />
+        </div>
+      </div>
     </>
   );
 };

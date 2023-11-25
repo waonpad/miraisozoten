@@ -25,7 +25,7 @@ export const GameModeSelect = ({ mode: currentMode, handleClickGameMode }: GameM
             active={mode === currentMode}
             key={mode}
             onClick={() => handleClickGameMode(mode)}
-            className="py-2 lg:py-5 lg:text-2xl"
+            className="py-2 text-xl lg:py-5 lg:text-2xl"
           >
             {label}
           </ImageBgButton>

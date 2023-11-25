@@ -32,14 +32,14 @@ export const ConfirmGiveUpDialog = ({
           <ImageBgButton
             imagePath={NotchedPaperOrange}
             onClick={handleGiveUp}
-            className="py-5 lg:text-xl"
+            className="py-5 text-xl"
           >
             はい
           </ImageBgButton>
           <ImageBgButton
             imagePath={NotchedPaperOrange}
             onClick={() => handleOpenChange(false)}
-            className="py-5 lg:text-xl"
+            className="py-5 text-xl"
           >
             いいえ
           </ImageBgButton>

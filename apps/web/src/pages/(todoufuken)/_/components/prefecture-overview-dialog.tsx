@@ -34,12 +34,12 @@ export const PrefectureOverviewDialog = ({
         >
           <div className="grid gap-6">
             <div className="grid grid-cols-2 gap-2">
-              <div>
-                <PrefectureSVG prefectureNameEn={prefecture.en} />
+              <div className="flex items-center justify-center">
+                <PrefectureSVG prefectureNameEn={prefecture.en} className="h-32 lg:h-60" />
               </div>
               <div className="flex flex-col items-center justify-center gap-1">
                 <div className="text-3xl">{prefecture.name}</div>
-                <div>{prefecture.region?.name}地方</div>
+                <div className="text-xl">{prefecture.region?.name}地方</div>
               </div>
             </div>
             <div>
@@ -55,7 +55,7 @@ export const PrefectureOverviewDialog = ({
                 handleSelect(prefecture);
                 handleOpenChange(false);
               }}
-              className="py-5 lg:text-xl"
+              className="py-5 text-xl"
             >
               この都道府県にする
             </ImageBgButton>

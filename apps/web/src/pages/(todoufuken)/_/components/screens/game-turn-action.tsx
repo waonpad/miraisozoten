@@ -59,21 +59,30 @@ export const GameTurnAction = () => {
 
   return (
     <>
-      {/* 見方都道府県と、ターンの相手を選択するエリアのまとまり */}
-      <GameBattleDisplayWithOpponentSelect
-        prefecture={findById(prefectures, game.prefectureId)!}
-        neighbors={game.neighbors}
-        disabled={!turnAction.factorName}
-        handleClickSelectOpponent={handleClickSelectOpponent}
-      />
-      {/* 問題文 */}
-      <GameTurnQuestion highLow={turnAction.highLow!} />
-      {/* 要素を選択するエリア */}
-      <GameTurnFactorSelect
-        factors={factors}
-        handleClickSelectFactor={handleClcikSelectFactor}
-        selectedFactorName={turnAction.factorName}
-      />
+      <div className="flex grow flex-col gap-4 p-2 lg:p-3 lg:px-10">
+        <div>
+          {/* 見方都道府県と、ターンの相手を選択するエリアのまとまり */}
+          <GameBattleDisplayWithOpponentSelect
+            prefecture={findById(prefectures, game.prefectureId)!}
+            neighbors={game.neighbors}
+            disabled={!turnAction.factorName}
+            handleClickSelectOpponent={handleClickSelectOpponent}
+          />
+        </div>
+        <div className="flex justify-center">
+          <GameTurnQuestion highLow={turnAction.highLow!} />
+        </div>
+        {/* 問題文 */}
+        {/* TODO：スマホ画面時の上とのスペース */}
+        <div className="flex grow">
+          {/* 要素を選択するエリア */}
+          <GameTurnFactorSelect
+            factors={factors}
+            handleClickSelectFactor={handleClcikSelectFactor}
+            selectedFactorName={turnAction.factorName}
+          />
+        </div>
+      </div>
     </>
   );
 };
