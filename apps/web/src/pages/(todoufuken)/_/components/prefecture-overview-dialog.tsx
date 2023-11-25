@@ -1,7 +1,6 @@
 import { PrefectureResponse } from 'schema/dist/prefecture';
 import { Dialog, DialogContent, DialogFooter } from 'ui/components/ui/dialog';
 
-import NotchedPaperOrangeHovered from '@/assets/notched-paper-orange-hovered.png';
 import NotchedPaperOrange from '@/assets/notched-paper-orange.png';
 import PaperOrange from '@/assets/paper-orange.jpg';
 import { ImageBgButton } from '@/components/elements/image-bg-button';
@@ -52,7 +51,6 @@ export const PrefectureOverviewDialog = ({
           <DialogFooter className="sm:flex-col sm:justify-center">
             <ImageBgButton
               imagePath={NotchedPaperOrange}
-              hoverImagePath={NotchedPaperOrangeHovered}
               onClick={() => {
                 handleSelect(prefecture);
                 handleOpenChange(false);

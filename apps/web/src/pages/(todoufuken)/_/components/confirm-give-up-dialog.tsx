@@ -1,7 +1,6 @@
 import { Dialog, DialogContent } from 'ui/components/ui/dialog';
 
 import NotchedPaperBurlywood from '@/assets/notched-paper-burlywood.png';
-import NotchedPaperOrangeHovered from '@/assets/notched-paper-orange-hovered.png';
 import NotchedPaperOrange from '@/assets/notched-paper-orange.png';
 import { ImageBgButton } from '@/components/elements/image-bg-button';
 
@@ -32,7 +31,6 @@ export const ConfirmGiveUpDialog = ({
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-2">
           <ImageBgButton
             imagePath={NotchedPaperOrange}
-            hoverImagePath={NotchedPaperOrangeHovered}
             onClick={handleGiveUp}
             className="py-5 lg:text-xl"
           >
@@ -40,7 +38,6 @@ export const ConfirmGiveUpDialog = ({
           </ImageBgButton>
           <ImageBgButton
             imagePath={NotchedPaperOrange}
-            hoverImagePath={NotchedPaperOrangeHovered}
             onClick={() => handleOpenChange(false)}
             className="py-5 lg:text-xl"
           >

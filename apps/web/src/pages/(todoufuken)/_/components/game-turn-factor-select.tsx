@@ -1,7 +1,5 @@
 import { PrefectureStatsName } from 'schema/dist/prefecture/stats';
 
-import NotchedPaperOrangeHovered from '@/assets/notched-paper-orange-hovered.png';
-import NotchedPaperOrangeSelected from '@/assets/notched-paper-orange-selected.png';
 import NotchedPaperOrange from '@/assets/notched-paper-orange.png';
 import { ImageBgButton } from '@/components/elements/image-bg-button';
 import { assert } from '@/utils/asset';
@@ -33,9 +31,7 @@ export const GameTurnFactorSelect = ({
       {factors.map((factor, index) => (
         <ImageBgButton
           imagePath={NotchedPaperOrange}
-          hoverImagePath={NotchedPaperOrangeHovered}
-          selectedImagePath={NotchedPaperOrangeSelected}
-          selected={factor.name === selectedFactorName}
+          active={factor.name === selectedFactorName}
           key={index}
           onClick={() => handleClickSelectFactor(factor)}
         >

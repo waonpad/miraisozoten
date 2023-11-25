@@ -1,5 +1,4 @@
 import NotchedPaperBurlywood from '@/assets/notched-paper-burlywood.png';
-import NotchedPaperOrangeHovered from '@/assets/notched-paper-orange-hovered.png';
 import NotchedPaperOrange from '@/assets/notched-paper-orange.png';
 import { ImageBgContainer } from '@/components/containers/image-bg-container';
 import { ImageBgButton } from '@/components/elements/image-bg-button';
@@ -68,22 +67,14 @@ export const GameTurnResult = () => {
       {game.state === 'FINISHED' ? (
         <>
           <div>おめでとう！</div>
-          <ImageBgButton
-            imagePath={NotchedPaperOrange}
-            hoverImagePath={NotchedPaperOrangeHovered}
-            onClick={handleClickChangeScreenResult}
-          >
+          <ImageBgButton imagePath={NotchedPaperOrange} onClick={handleClickChangeScreenResult}>
             結果を見る！
           </ImageBgButton>
         </>
       ) : (
         <>
           <div>{LabeledTurnResult[currentTurn.result]}</div>
-          <ImageBgButton
-            imagePath={NotchedPaperOrange}
-            hoverImagePath={NotchedPaperOrangeHovered}
-            onClick={handleClickNextTurn}
-          >
+          <ImageBgButton imagePath={NotchedPaperOrange} onClick={handleClickNextTurn}>
             次へ
           </ImageBgButton>
         </>

@@ -1,5 +1,3 @@
-import NotchedPaperOrangeDisabled from '@/assets/notched-paper-orange-disabled.png';
-import NotchedPaperOrangeHovered from '@/assets/notched-paper-orange-hovered.png';
 import NotchedPaperOrange from '@/assets/notched-paper-orange.png';
 import { ImageBgButton } from '@/components/elements/image-bg-button';
 
@@ -20,8 +18,6 @@ export const GameSettingSubmit = ({ settings, handleSubmit }: GameSettingSubmitP
       <div className="grid grid-cols-1">
         <ImageBgButton
           imagePath={NotchedPaperOrange}
-          hoverImagePath={NotchedPaperOrangeHovered}
-          disabledImagePath={NotchedPaperOrangeDisabled}
           disabled={!settings.difficulty || !settings.mode}
           onClick={handleSubmit}
           className="py-2 lg:py-5 lg:text-2xl"

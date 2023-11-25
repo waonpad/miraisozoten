@@ -1,4 +1,3 @@
-import NotchedPaperOrangeHovered from '@/assets/notched-paper-orange-hovered.png';
 import NotchedPaperOrange from '@/assets/notched-paper-orange.png';
 import { ImageBgButton } from '@/components/elements/image-bg-button';
 import { Link } from '@/router';
@@ -20,7 +19,7 @@ export const GameResult = () => {
     <>
       <div>ミス: {missCount}</div>
       <div>タイム: {millisecondsToHms(playTime)}</div>
-      <ImageBgButton imagePath={NotchedPaperOrange} hoverImagePath={NotchedPaperOrangeHovered}>
+      <ImageBgButton imagePath={NotchedPaperOrange}>
         <Link to={'/menu'}>トップへ</Link>
       </ImageBgButton>
     </>
