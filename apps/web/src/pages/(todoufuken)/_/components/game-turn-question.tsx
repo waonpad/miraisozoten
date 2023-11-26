@@ -12,7 +12,7 @@ export type GameTurnQuestionProps = {
  */
 export const GameTurnQuestion = ({ highLow }: GameTurnQuestionProps) => {
   return (
-    <div className="text-2xl lg:text-3xl">
+    <div className="text-xl sm:text-2xl lg:text-3xl">
       他の都道府県より{LabeledHighLow[highLow]}そうなのはどれ？
     </div>
   );

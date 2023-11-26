@@ -15,7 +15,7 @@ export type GameTurnFactorSelectProps = {
 };
 
 const gridSwitcher = {
-  3: 'grid-cols-1 lg:grid-cols-3',
+  3: 'grid-cols-1 lg:grid-cols-3 lg:py-8',
   4: 'grid-cols-1 lg:grid-cols-2 lg:grid-rows-2',
   6: 'grid-cols-2 grid-rows-3 lg:grid-cols-3 lg:grid-rows-2',
 } as const;
@@ -40,6 +40,7 @@ export const GameTurnFactorSelect = ({
 
   return (
     <div
+      // growの指定は親コンポーネントとスタイルが密になっているがとりあえず動かすため妥協
       className={cn(`grow grid gap-2`, gridSwitcher[factors.length as keyof typeof gridSwitcher])}
     >
       {factors.map((factor, index) => (
@@ -48,12 +49,39 @@ export const GameTurnFactorSelect = ({
           active={factor.name === selectedFactorName}
           key={index}
           onClick={() => handleClickSelectFactor(factor)}
-          className="py-2 text-xl lg:py-5 lg:text-2xl"
+          className="relative"
         >
-          {factor.label}　{!game.hideData ? factor.totalValue : '〇〇'}
-          {factor.unit}
+          <div className="text-xl lg:text-2xl">
+            <span>{factor.label}</span>
+            <br
+              className={`${
+                factors.length === 6
+                  ? 'inline lg:hidden'
+                  : factors.length === 3
+                  ? 'hidden lg:inline'
+                  : 'hidden'
+              }`}
+            />
+            <span
+              className={`${
+                factors.length === 6
+                  ? 'hidden lg:inline'
+                  : factors.length === 3
+                  ? 'inline lg:hidden'
+                  : 'inline'
+              }`}
+            >
+              {'　'}
+            </span>
+            <span>
+              {!game.hideData ? factor.totalValue : '〇〇'}
+              {factor.unit}
+            </span>
+          </div>
           {!game.hideData && factor.absorbedFactors.length > 0 && (
-            <div>{`+ ${factor.totalValue - factor.value!} ${factor.unit}`}</div>
+            <div className="absolute bottom-1 right-3 text-sm lg:bottom-2 lg:right-5 lg:text-base">{`+ ${
+              factor.totalValue - factor.value!
+            } ${factor.unit}`}</div>
           )}
         </ImageBgButton>
       ))}

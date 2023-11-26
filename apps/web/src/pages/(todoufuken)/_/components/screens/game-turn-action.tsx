@@ -73,7 +73,6 @@ export const GameTurnAction = () => {
           <GameTurnQuestion highLow={turnAction.highLow!} />
         </div>
         {/* 問題文 */}
-        {/* TODO：スマホ画面時の上とのスペース */}
         <div className="flex grow">
           {/* 要素を選択するエリア */}
           <GameTurnFactorSelect

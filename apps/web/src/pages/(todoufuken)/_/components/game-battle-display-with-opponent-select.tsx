@@ -30,7 +30,7 @@ export const GameBattleDisplayWithOpponentSelect = ({
         <div className="flex flex-1 flex-col">
           <ImageBgContainer
             imagePath={NotchedPaperBurlywood}
-            className="mb-2 py-2 text-xl lg:py-5 lg:text-2xl"
+            className="mb-2 py-2 text-2xl lg:py-3 lg:text-3xl"
           >
             {prefecture.name}
           </ImageBgContainer>
@@ -38,13 +38,13 @@ export const GameBattleDisplayWithOpponentSelect = ({
             <PrefectureSVG prefectureNameEn={prefecture.en} className="h-full" />
           </div>
         </div>
-        <div className="flex items-center justify-center px-4 text-3xl font-bold lg:px-20">VS</div>
+        <div className="flex items-center justify-center px-4 text-3xl lg:px-20">VS</div>
         {/* 相手県を選択するエリア */}
         {/* TODO: リストで表示する */}
         <div className="flex flex-1 flex-col">
           <ImageBgContainer
             imagePath={NotchedPaperBurlywood}
-            className="mb-2 py-2 sm:text-xl lg:py-5 lg:text-2xl"
+            className="mb-2 py-2 text-2xl lg:py-3 lg:text-3xl"
           >
             対戦する都道府県
           </ImageBgContainer>
