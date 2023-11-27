@@ -64,6 +64,14 @@ export const JapanRadioSVGMap = ({
     setJapanMap(updatedJapanMap);
   }, [relocation]);
 
+  useEffect(() => {
+    const svgMap = document.querySelector('.svg-map');
+
+    if (svgMap) {
+      svgMap.setAttribute('aria-disabled', disabled ? 'true' : 'false');
+    }
+  }, [disabled]);
+
   return (
     <SVGMap
       {...props}
