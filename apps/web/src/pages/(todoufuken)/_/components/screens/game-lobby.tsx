@@ -75,7 +75,7 @@ export const GameLobby = () => {
     // TODO: 設定を決定するまでは地図のホバーで何もしないようにする
     <>
       <div className="relative grid h-screen grid-cols-1 gap-1 p-2 lg:grid-cols-2 lg:p-3">
-        <Logo className="absolute left-2 top-2 h-12 w-12 lg:h-28 lg:w-28" />
+        <Logo wrapperProps={{ className: 'absolute left-2 top-2 h-12 w-12 lg:h-28 lg:w-28' }} />
         <div className="mt-2 grid h-fit grid-cols-1 gap-2 lg:ml-6 lg:mt-40 lg:grid-cols-2 lg:gap-6">
           <div>
             <div className="flex items-center justify-center gap-1 lg:justify-start">
