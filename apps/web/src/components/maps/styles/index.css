@@ -22,6 +22,10 @@
 
     .svg-map__location[aria-checked="true"] {
       fill: #36A741; }
+
+.svg-map[aria-disabled="true"] {
+  pointer-events: none; }
+
   
 
 /*         
