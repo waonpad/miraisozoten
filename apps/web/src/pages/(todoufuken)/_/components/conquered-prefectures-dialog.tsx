@@ -10,7 +10,7 @@ type ConqueredPrefecturesDialogProps = {
 
 /**
  * @description
- * ゲームをギブアップするか確認するダイアログ
+ * 吸収した都道府県の一覧を表示するダイアログ
  */
 export const ConqueredPrefecturesDialog = ({
   game,
