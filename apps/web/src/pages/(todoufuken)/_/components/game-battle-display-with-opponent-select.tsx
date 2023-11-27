@@ -61,8 +61,10 @@ export const GameBattleDisplayWithOpponentSelect = ({
                 <li
                   key={neighbor.id}
                   className="flex h-10 items-center justify-center text-xl hover:bg-gray-400/40 sm:h-16 lg:text-2xl"
+                  onClick={() => handleClickSelectOpponent(neighbor.id)}
+                  role="button"
                 >
-                  <div onClick={() => handleClickSelectOpponent(neighbor.id)}>{neighbor.name}</div>
+                  <div>{neighbor.name}</div>
                 </li>
               ))}
               {/* divideを出すためのダミー */}
