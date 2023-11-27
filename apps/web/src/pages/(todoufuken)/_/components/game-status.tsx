@@ -6,6 +6,8 @@ import { millisecondsToHms } from '@/utils/format';
 
 import { useGame } from '../hooks/use-game';
 
+import { ConqueredPrefecturesDialog } from './conquered-prefectures-dialog';
+
 /**
  * @description
  * ゲーム中。ゲームの状態を表示するコンポーネント
@@ -39,6 +41,20 @@ export const GameStatus = () => {
 
   /**
    * @description
+   * 吸収した都道府県の一覧を表示するダイアログの開閉状態
+   */
+  const [isConqueredPrefecturesDialogOpen, setIsConqueredPrefecturesDialogOpen] = useState(false);
+
+  /**
+   * @description
+   * 吸収した都道府県一覧のダイアログを開く
+   */
+  const handleClickConqueredPrefectures = () => {
+    setIsConqueredPrefecturesDialogOpen(true);
+  };
+
+  /**
+   * @description
    * ゲームの開始時間から現在の時間を計算して、ゲームのプレイ時間を更新する \
    * これは、ユーザーが見るための非正規なタイム
    */
@@ -67,11 +83,22 @@ export const GameStatus = () => {
     <>
       <div className="flex gap-8">
         <div className="tabular-nums">{millisecondsToHms(playTime)}</div>
-        <div className="tabular-nums">
+        <div
+          className="tabular-nums underline underline-offset-8"
+          role="button"
+          onClick={handleClickConqueredPrefectures}
+        >
           制覇数: {String(conqueredsCount).padStart(String(allCount).length, '0')} / {allCount}
         </div>
         <div className="tabular-nums">ミス数: {missCount}</div>
       </div>
+
+      {/* 吸収した都道府県一覧のダイアログ */}
+      <ConqueredPrefecturesDialog
+        game={game}
+        open={isConqueredPrefecturesDialogOpen}
+        handleOpenChange={setIsConqueredPrefecturesDialogOpen}
+      />
     </>
   );
 };
