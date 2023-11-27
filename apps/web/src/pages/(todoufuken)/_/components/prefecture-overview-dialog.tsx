@@ -1,7 +1,6 @@
 import { PrefectureResponse } from 'schema/dist/prefecture';
 import { Dialog, DialogContent, DialogFooter } from 'ui/components/ui/dialog';
 
-import NotchedPaperOrangeHovered from '@/assets/notched-paper-orange-hovered.png';
 import NotchedPaperOrange from '@/assets/notched-paper-orange.png';
 import PaperOrange from '@/assets/paper-orange.jpg';
 import { ImageBgButton } from '@/components/elements/image-bg-button';
@@ -30,26 +29,33 @@ export const PrefectureOverviewDialog = ({
         <DialogContent
           style={{
             backgroundImage: `url(${PaperOrange})`,
-            backgroundSize: '100% 100%',
           }}
+          className="max-w-[90vw] border-none bg-[length:100%_100%] sm:rounded-none lg:max-w-fit"
         >
-          <PrefectureSVG prefectureNameEn={prefecture.en} />
-          <div>{prefecture.name}</div>
-          <div>{prefecture.region?.name}</div>
-          {/* スペースが大きくなりすぎる可能性があるため、隣接県は表示しないことにした */}
-          {/* <div>隣接</div>
-          <div>{(prefecture.neighbors ?? []).map((neighbor) => neighbor.name).join(', ')}</div> */}
-          <div>基本データ</div>
-          <div>人口: </div>
-          <div>面積: </div>
-          <DialogFooter>
+          <div className="grid gap-6">
+            <div className="grid grid-cols-2 gap-2">
+              <div className="flex items-center justify-center">
+                <PrefectureSVG prefectureNameEn={prefecture.en} className="h-32 lg:h-60" />
+              </div>
+              <div className="flex flex-col items-center justify-center gap-1">
+                <div className="text-3xl">{prefecture.name}</div>
+                <div className="text-xl">{prefecture.region?.name}地方</div>
+              </div>
+            </div>
+            <div>
+              <div className="text-3xl">基本データ</div>
+              <div className="text-xl">人口: {prefecture.stats.population} 人</div>
+              <div className="text-xl">面積: {prefecture.stats.area} km²</div>
+            </div>
+          </div>
+          <DialogFooter className="sm:flex-col sm:justify-center">
             <ImageBgButton
               imagePath={NotchedPaperOrange}
-              hoverImagePath={NotchedPaperOrangeHovered}
               onClick={() => {
                 handleSelect(prefecture);
                 handleOpenChange(false);
               }}
+              className="py-5 text-xl"
             >
               この都道府県にする
             </ImageBgButton>

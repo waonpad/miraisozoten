@@ -1,7 +1,5 @@
 import { GameDifficulty } from 'schema/dist/todoufuken/game';
 
-import NotchedPaperBurlywoodHovered from '@/assets/notched-paper-burlywood-hovered.png';
-import NotchedPaperBurlywoodSelected from '@/assets/notched-paper-burlywood-selected.png';
 import NotchedPaperBurlywood from '@/assets/notched-paper-burlywood.png';
 import { ImageBgButton } from '@/components/elements/image-bg-button';
 import { strictEntries } from '@/utils/strict-entries';
@@ -23,18 +21,19 @@ export const GameDifficultySelect = ({
 }: GameDifficultySelectProps) => {
   return (
     <>
-      {strictEntries(LabeledGameDifficulty).map(([difficulty, label]) => (
-        <ImageBgButton
-          imagePath={NotchedPaperBurlywood}
-          hoverImagePath={NotchedPaperBurlywoodHovered}
-          selectedImagePath={NotchedPaperBurlywoodSelected}
-          selected={difficulty === currentDifficulty}
-          key={difficulty}
-          onClick={() => handleClickGameDifficulty(difficulty)}
-        >
-          {label}
-        </ImageBgButton>
-      ))}
+      <div className="grid grid-cols-2 gap-2 lg:flex lg:flex-col">
+        {strictEntries(LabeledGameDifficulty).map(([difficulty, label]) => (
+          <ImageBgButton
+            imagePath={NotchedPaperBurlywood}
+            active={difficulty === currentDifficulty}
+            key={difficulty}
+            onClick={() => handleClickGameDifficulty(difficulty)}
+            className="py-2 text-xl lg:py-5 lg:text-2xl"
+          >
+            {label}
+          </ImageBgButton>
+        ))}
+      </div>
     </>
   );
 };

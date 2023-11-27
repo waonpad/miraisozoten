@@ -1,5 +1,7 @@
 import { useRef } from 'react';
 
+import { cn } from 'ui/lib/utils';
+
 import { useDispatchSvgMapLocationEvent } from './hooks/use-dispatch-svg-map-location-event';
 
 export const DispatchSvgMapLocationElement = ({
@@ -17,12 +19,10 @@ export const DispatchSvgMapLocationElement = ({
 
   return (
     <path
-      opacity={0.3}
-      cursor="pointer"
-      style={{ outline: 'none' }}
       {...props}
       ref={dispatchElementRef}
       d={d}
+      className={cn('cursor-pointer opacity-0 outline-none', props.className)}
     ></path>
   );
 };

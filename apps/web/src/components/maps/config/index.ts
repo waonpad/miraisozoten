@@ -5,7 +5,7 @@ import { RelocationType } from '../types';
 export const Japan = J as Map;
 
 export const relocatedViewBox = {
-  okinawa: '0 0 438 385',
+  okinawa: '90 0 348 385',
   hokkaido: '0 107 438 411',
   okinawaAndHokkaido: '0 107 438 277',
 } as const satisfies Record<RelocationType, string>;

@@ -3,12 +3,10 @@ import { useState } from 'react';
 import { Prefecture } from 'database';
 import { PrefectureResponse } from 'schema/dist/prefecture';
 import { GameDifficulty, GameMode } from 'schema/dist/todoufuken/game';
-import { Button } from 'ui/components/ui/button';
 
 import { Logo } from '@/components/elements/logo';
 import { JapanRadioSVGMap } from '@/components/maps/japan-radio-svg-map';
 import { usePrefectures } from '@/pages/(prefectures)/_/api/get-prefectures';
-import { Link } from '@/router';
 
 import { GameDifficultySelect } from '../../components/game-difficulty-select';
 import { GameModeSelect } from '../../components/game-mode-select';
@@ -73,27 +71,58 @@ export const GameLobby = () => {
   const handleClickGameSettingsSubmit = () => setCanSelectPrefectures(true);
 
   return (
+    // TODO: 設定を決定したら選択した設定以外と決定ボタンを非表示にする
+    // TODO: 設定を決定するまでは地図のホバーで何もしないようにする
     <>
-      <Logo />
+      <div className="relative grid h-screen grid-cols-1 gap-1 p-2 lg:grid-cols-2 lg:p-3">
+        <Logo className="absolute left-2 top-2 h-12 w-12 lg:h-28 lg:w-28" />
+        <div className="mt-2 grid h-fit grid-cols-1 gap-2 lg:ml-6 lg:mt-40 lg:grid-cols-2 lg:gap-6">
+          <div>
+            <div className="flex items-center justify-center gap-1 lg:justify-start">
+              <span className="text-3xl">難易度</span>
+              <GameDifficultyInfo />
+            </div>
+            <div className="mt-1 lg:ml-3">
+              <GameDifficultySelect
+                difficulty={gameSettings.difficulty}
+                handleClickGameDifficulty={handleClickGameDifficulty}
+              />
+            </div>
+          </div>
 
-      <div>{gameSettings.mode}</div>
-      <div>モード</div>
-      <GameModeInfo />
-      <GameModeSelect mode={gameSettings.mode} handleClickGameMode={handleClickGameMode} />
-      <div>{gameSettings.difficulty}</div>
-      <div>難易度</div>
-      <GameDifficultyInfo />
-      <GameDifficultySelect
-        difficulty={gameSettings.difficulty}
-        handleClickGameDifficulty={handleClickGameDifficulty}
-      />
-      <div>{gameSettings.prefectureId}</div>
+          <div>
+            <div className="flex items-center justify-center gap-1 lg:justify-start">
+              <span className="text-3xl">モード</span>
+              <GameModeInfo />
+            </div>
+            <div className="mt-1 lg:ml-3">
+              <GameModeSelect mode={gameSettings.mode} handleClickGameMode={handleClickGameMode} />
+            </div>
+          </div>
 
-      {/* Submitしてもロックがかからず都道府県を選択する権利が付与される機能のみ */}
-      <GameSettingSubmit settings={gameSettings} handleSubmit={handleClickGameSettingsSubmit} />
+          {/* 設定の決定を右に置くためのダミー */}
+          <div></div>
 
-      <JapanRadioSVGMap onLocationClick={handleClickPrefecture} disabled={!canSelectPrefectures} />
+          {/* 設定決定ボタン */}
+          <div className="lg:ml-3">
+            <GameSettingSubmit
+              settings={gameSettings}
+              handleSubmit={handleClickGameSettingsSubmit}
+            />
+          </div>
+        </div>
 
+        {/* 都道府県選択エリア */}
+        <div className="min-h-full">
+          <JapanRadioSVGMap
+            onLocationClick={handleClickPrefecture}
+            disabled={!canSelectPrefectures}
+            relocation={{ okinawa: true }}
+          />
+        </div>
+      </div>
+
+      {/* ダイアログ */}
       {dialogPrefecture && (
         <PrefectureOverviewDialog
           prefecture={dialogPrefecture}
@@ -102,10 +131,6 @@ export const GameLobby = () => {
           handleSelect={handleClickSelectPrefecture}
         />
       )}
-
-      <Button asChild>
-        <Link to={'/menu'}>戻る</Link>
-      </Button>
     </>
   );
 };

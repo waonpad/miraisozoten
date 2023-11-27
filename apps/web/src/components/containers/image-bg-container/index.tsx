@@ -1,3 +1,5 @@
+import { cn } from 'ui/lib/utils';
+
 export type ImageBgContainerProps = {
   imagePath: string;
 } & React.HTMLAttributes<HTMLDivElement>;
@@ -8,13 +10,12 @@ export const ImageBgContainer = ({ imagePath, ...props }: ImageBgContainerProps)
       {...props}
       style={{
         backgroundImage: `url(${imagePath})`,
-        backgroundSize: '100% 100%',
-        backgroundColor: 'transparent',
-        justifyContent: 'center',
-        alignItems: 'center',
-        display: 'flex',
         ...props.style,
       }}
+      className={cn(
+        `flex items-center justify-center bg-transparent bg-[length:100%_100%]`,
+        props.className
+      )}
     >
       {props.children}
     </div>

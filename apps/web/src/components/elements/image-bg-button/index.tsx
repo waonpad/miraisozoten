@@ -1,51 +1,23 @@
-import { useState } from 'react';
+import { cn } from 'ui/lib/utils';
 
 export type ImageBgButtonProps = {
   imagePath: string;
-  hoverImagePath?: string;
-  selectedImagePath?: string;
-  disabledImagePath?: string;
-  selected?: boolean;
-  disabled?: boolean;
-} & React.HTMLAttributes<HTMLButtonElement>;
+  active?: boolean;
+} & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
-export const ImageBgButton = ({
-  imagePath,
-  hoverImagePath,
-  selectedImagePath,
-  disabledImagePath,
-  selected,
-  disabled,
-  ...props
-}: ImageBgButtonProps) => {
-  const [isHover, setIsHover] = useState(false);
-
+export const ImageBgButton = ({ imagePath, active, ...props }: ImageBgButtonProps) => {
   return (
     <button
       {...props}
       style={{
-        backgroundImage:
-          // disabledフラグがtrueでその時用の画像がある場合はdisabled時の画像を表示
-          disabled && disabledImagePath
-            ? `url(${disabledImagePath})`
-            : // 選択フラグがtrueでその時用の画像がある場合は選択時の画像を表示
-            selected && selectedImagePath
-            ? `url(${selectedImagePath})`
-            : // hoverされていて、かつhover時の画像がある場合はhover時の画像を表示
-            isHover && hoverImagePath
-            ? `url(${hoverImagePath})`
-            : // それ以外は通常の画像を表示
-              `url(${imagePath})`,
-        backgroundSize: '100% 100%',
-        backgroundColor: 'transparent',
-        justifyContent: 'center',
-        alignItems: 'center',
-        display: 'flex',
-        padding: '8px 16px 8px 16px',
+        backgroundImage: `url(${imagePath})`,
         ...props.style,
       }}
-      onMouseOver={() => setIsHover(true)}
-      onMouseLeave={() => setIsHover(false)}
+      className={cn(
+        `flex items-center justify-center bg-transparent bg-[length:100%_100%] cursor-pointer hover:cursor-pointer hover:saturate-150 disabled:cursor-default disabled:opacity-50 [&.active]:saturate-200 disabled:pointer-events-none`,
+        props.className,
+        active && 'active'
+      )}
     >
       {props.children}
     </button>

@@ -1,5 +1,3 @@
-import NotchedPaperOrangeDisabled from '@/assets/notched-paper-orange-disabled.png';
-import NotchedPaperOrangeHovered from '@/assets/notched-paper-orange-hovered.png';
 import NotchedPaperOrange from '@/assets/notched-paper-orange.png';
 import { ImageBgButton } from '@/components/elements/image-bg-button';
 
@@ -17,17 +15,18 @@ export type GameSettingSubmitProps = {
 export const GameSettingSubmit = ({ settings, handleSubmit }: GameSettingSubmitProps) => {
   return (
     <>
-      <ImageBgButton
-        imagePath={NotchedPaperOrange}
-        hoverImagePath={NotchedPaperOrangeHovered}
-        disabledImagePath={NotchedPaperOrangeDisabled}
-        disabled={!settings.difficulty || !settings.mode}
-        onClick={handleSubmit}
-      >
-        都道府県選択へ
-      </ImageBgButton>
-      {!settings.difficulty && <div>難易度を選択してください</div>}
-      {!settings.mode && <div>モードを選択してください</div>}
+      <div className="grid grid-cols-1">
+        <ImageBgButton
+          imagePath={NotchedPaperOrange}
+          disabled={!settings.difficulty || !settings.mode}
+          onClick={handleSubmit}
+          className="py-2 text-xl lg:py-5 lg:text-2xl"
+        >
+          都道府県選択へ
+        </ImageBgButton>
+      </div>
+      <div className="mt-2 grid grid-cols-1 gap-1 text-red-500"></div>
+      {/* 選択されていないときの警告は直にテキストを置くより別の方法で出したほうがよさそう */}
     </>
   );
 };

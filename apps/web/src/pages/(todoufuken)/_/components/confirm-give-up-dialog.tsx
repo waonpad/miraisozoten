@@ -1,7 +1,6 @@
 import { Dialog, DialogContent } from 'ui/components/ui/dialog';
 
 import NotchedPaperBurlywood from '@/assets/notched-paper-burlywood.png';
-import NotchedPaperOrangeHovered from '@/assets/notched-paper-orange-hovered.png';
 import NotchedPaperOrange from '@/assets/notched-paper-orange.png';
 import { ImageBgButton } from '@/components/elements/image-bg-button';
 
@@ -25,26 +24,26 @@ export const ConfirmGiveUpDialog = ({
       <DialogContent
         style={{
           backgroundImage: `url(${NotchedPaperBurlywood})`,
-          backgroundSize: '100% 100%',
-          backgroundColor: 'transparent',
         }}
-        className="border-none shadow-none"
+        className="min-w-[50vw] max-w-[90vw] border-none bg-transparent bg-[length:100%_100%] p-12 shadow-none sm:rounded-none lg:max-w-fit lg:p-16"
       >
-        <div>ギブアップしますか？</div>
-        <ImageBgButton
-          imagePath={NotchedPaperOrange}
-          hoverImagePath={NotchedPaperOrangeHovered}
-          onClick={handleGiveUp}
-        >
-          はい
-        </ImageBgButton>
-        <ImageBgButton
-          imagePath={NotchedPaperOrange}
-          hoverImagePath={NotchedPaperOrangeHovered}
-          onClick={() => handleOpenChange(false)}
-        >
-          いいえ
-        </ImageBgButton>
+        <div className="text-center text-2xl">ギブアップしますか？</div>
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-2">
+          <ImageBgButton
+            imagePath={NotchedPaperOrange}
+            onClick={handleGiveUp}
+            className="py-5 text-xl"
+          >
+            はい
+          </ImageBgButton>
+          <ImageBgButton
+            imagePath={NotchedPaperOrange}
+            onClick={() => handleOpenChange(false)}
+            className="py-5 text-xl"
+          >
+            いいえ
+          </ImageBgButton>
+        </div>
       </DialogContent>
     </Dialog>
   );

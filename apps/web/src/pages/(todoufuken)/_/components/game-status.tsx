@@ -28,8 +28,8 @@ export const GameStatus = () => {
 
   const allCount =
     mode === 'NATIONWIDE'
-      ? 47
-      : prefectures.filter((p) => p.regionId === prefecture.regionId).length;
+      ? 46
+      : prefectures.filter((p) => p.regionId === prefecture.regionId).length - 1;
 
   /**
    * @description
@@ -43,10 +43,10 @@ export const GameStatus = () => {
    * これは、ユーザーが見るための非正規なタイム
    */
   useEffect(() => {
-    setPlayTime((new Date().getTime() - startTime) / 1000);
+    setPlayTime(new Date().getTime() - startTime);
 
     const interval = setInterval(() => {
-      setPlayTime((new Date().getTime() - startTime) / 1000);
+      setPlayTime(new Date().getTime() - startTime);
     }, 1000);
 
     return () => clearInterval(interval);
@@ -65,11 +65,13 @@ export const GameStatus = () => {
 
   return (
     <>
-      <div>
-        制覇数: {conqueredsCount + 1} / {allCount}
+      <div className="flex gap-8">
+        <div className="tabular-nums">{millisecondsToHms(playTime)}</div>
+        <div className="tabular-nums">
+          制覇数: {String(conqueredsCount).padStart(String(allCount).length, '0')} / {allCount}
+        </div>
+        <div className="tabular-nums">ミス数: {missCount}</div>
       </div>
-      <div>ミス: {missCount}</div>
-      <div>タイム: {millisecondsToHms(playTime)}</div>
     </>
   );
 };

@@ -11,18 +11,20 @@ export const GameDifficultyInfo = () => {
   return (
     <TooltipProvider>
       <Tooltip>
-        <TooltipTrigger asChild>
-          <Button asChild size={'icon'} variant={'icon'}>
-            <CircleInfoIcon />
+        <TooltipTrigger>
+          <Button asChild size={'icon'} variant={'icon'} className="h-7 w-7">
+            <CircleInfoIcon className="fill-current text-gray-600" />
           </Button>
         </TooltipTrigger>
         <TooltipContent>
-          <div>【難易度】</div>
-          <div>バトル難易度を設定します。</div>
-          <div>Easy：3選択肢から対戦要素を選びます。</div>
-          <div>Normal：4選択肢から対戦要素を選びます。</div>
-          <div>Hard：4選択肢に加え、データの数値を見ることができません。</div>
-          <div>Very Hard：6選択肢に加え、データの数値を見ることができません。</div>
+          <div className="text-xl">
+            <div>【難易度】</div>
+            <div>バトル難易度を設定します。</div>
+            <div>Easy：3選択肢から対戦要素を選びます。</div>
+            <div>Normal：4選択肢から対戦要素を選びます。</div>
+            <div>Hard：4選択肢に加え、データの数値を見ることができません。</div>
+            <div>Very Hard：6選択肢に加え、データの数値を見ることができません。</div>
+          </div>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>

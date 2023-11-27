@@ -43,8 +43,16 @@ export const GameHeader = () => {
 
   return (
     <>
-      <GameStatus />
-      <GiveUpIconButton onClick={handleClickGiveUpDialogOpen} />
+      {/* TODO: 文字とアイコンが重なったりあふれたりしないようにする */}
+      <div className="relative flex h-16 items-center justify-start bg-[#333333] text-white sm:text-xl lg:justify-center">
+        <div className="ml-4 lg:ml-0">
+          <GameStatus />
+        </div>
+        <div className="absolute right-4 top-4">
+          <GiveUpIconButton onClick={handleClickGiveUpDialogOpen} />
+        </div>
+      </div>
+
       <ConfirmGiveUpDialog
         open={isGiveUpDialogOpen}
         handleOpenChange={setIsGiveUpDialogOpen}

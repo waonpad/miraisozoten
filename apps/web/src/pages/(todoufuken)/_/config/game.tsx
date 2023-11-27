@@ -27,14 +27,18 @@ export const GameScreen = {
   lobby: <GameLobby />,
   turnAction: (
     <>
-      <GameHeader />
-      <GameTurnAction />
+      <div className="flex min-h-screen flex-col">
+        <GameHeader />
+        <GameTurnAction />
+      </div>
     </>
   ),
   turnResult: (
     <>
-      <GameHeader />
-      <GameTurnResult />
+      <div className="flex min-h-screen flex-col">
+        <GameHeader />
+        <GameTurnResult />
+      </div>
     </>
   ),
   result: <GameResult />,
@@ -56,10 +60,10 @@ export const FactorPickCount = {
  * ゲームの難易度を画面に表示する際、どのような文字列にするかの設定
  */
 export const LabeledGameDifficulty = {
-  EASY: 'easy',
-  NORMAL: 'normal',
-  HARD: 'hard',
-  VERY_HARD: 'very hard',
+  EASY: 'Easy',
+  NORMAL: 'Normal',
+  HARD: 'Hard',
+  VERY_HARD: 'Very Hard',
 } as const satisfies Record<GameDifficulty, string>;
 
 /**
@@ -85,7 +89,7 @@ export const LabeledHighLow = {
  * ゲームの結果を画面に表示する際、どのような文字列にするかの設定
  */
 export const LabeledTurnResult = {
-  WIN: 'WIN',
-  LOSE: 'LOSE',
-  DRAW: 'DRAW',
+  WIN: '勝ち',
+  LOSE: '負け',
+  DRAW: '引き分け',
 } satisfies Record<GameResultType, string>;

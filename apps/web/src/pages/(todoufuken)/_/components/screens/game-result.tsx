@@ -1,4 +1,3 @@
-import NotchedPaperOrangeHovered from '@/assets/notched-paper-orange-hovered.png';
 import NotchedPaperOrange from '@/assets/notched-paper-orange.png';
 import { ImageBgButton } from '@/components/elements/image-bg-button';
 import { Link } from '@/router';
@@ -18,11 +17,28 @@ export const GameResult = () => {
 
   return (
     <>
-      <div>ミス: {missCount}</div>
-      <div>タイム: {millisecondsToHms(playTime)}</div>
-      <ImageBgButton imagePath={NotchedPaperOrange} hoverImagePath={NotchedPaperOrangeHovered}>
-        <Link to={'/menu'}>トップへ</Link>
-      </ImageBgButton>
+      <div className="mx-auto grid min-h-screen grid-cols-1 gap-10 p-10 lg:p-20">
+        <div className="flex flex-col items-center justify-end">
+          <table className="table-auto border-separate border-spacing-2 text-3xl">
+            <tr>
+              <td>タイム</td>
+              <td>{millisecondsToHms(playTime)}</td>
+            </tr>
+            <tr>
+              <td>ミス数</td>
+              <td>{missCount}</td>
+            </tr>
+          </table>
+        </div>
+        <div className="flex flex-col items-center justify-start lg:justify-end">
+          <ImageBgButton
+            imagePath={NotchedPaperOrange}
+            className="px-16 py-2 text-2xl lg:py-5 lg:text-3xl"
+          >
+            <Link to={'/menu'}>トップへ</Link>
+          </ImageBgButton>
+        </div>
+      </div>
     </>
   );
 };

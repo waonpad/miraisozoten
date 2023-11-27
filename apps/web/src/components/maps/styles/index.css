@@ -1,0 +1,46 @@
+/* stylelint-disable selector-class-pattern */
+
+/**
+ * react-svg-map/lib/index.css をコピーしたものを編集
+ */
+
+.svg-map {
+  width: 100%;
+  height: 100%;
+  stroke: #36A741;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 0.5; }
+
+  .svg-map__location {
+    cursor: pointer;
+    fill: #B7DB86; }
+
+    .svg-map__location:focus, .svg-map__location:hover {
+      outline: 0;
+      fill: #cbe9a2; }
+
+    .svg-map__location[aria-checked="true"] {
+      fill: #36A741; }
+  
+
+/*         
+.svg-map {
+  width: 100%;
+  height: auto;
+  stroke: #666;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1; }
+
+  .svg-map__location {
+    cursor: pointer;
+    fill: #a1d99b; }
+
+    .svg-map__location:focus, .svg-map__location:hover {
+      outline: 0;
+      fill: #b8e2b3; }
+
+    .svg-map__location[aria-checked="true"] {
+      fill: #f4bc44; }
+ */

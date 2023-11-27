@@ -1,7 +1,5 @@
 import { GameMode } from 'schema/dist/todoufuken/game';
 
-import NotchedPaperBurlywoodHovered from '@/assets/notched-paper-burlywood-hovered.png';
-import NotchedPaperBurlywoodSelected from '@/assets/notched-paper-burlywood-selected.png';
 import NotchedPaperBurlywood from '@/assets/notched-paper-burlywood.png';
 import { ImageBgButton } from '@/components/elements/image-bg-button';
 import { strictEntries } from '@/utils/strict-entries';
@@ -20,18 +18,19 @@ export type GameModeSelectProps = {
 export const GameModeSelect = ({ mode: currentMode, handleClickGameMode }: GameModeSelectProps) => {
   return (
     <>
-      {strictEntries(LabeledGameMode).map(([mode, label]) => (
-        <ImageBgButton
-          imagePath={NotchedPaperBurlywood}
-          hoverImagePath={NotchedPaperBurlywoodHovered}
-          selectedImagePath={NotchedPaperBurlywoodSelected}
-          selected={mode === currentMode}
-          key={mode}
-          onClick={() => handleClickGameMode(mode)}
-        >
-          {label}
-        </ImageBgButton>
-      ))}
+      <div className="grid grid-cols-2 gap-2 lg:flex lg:flex-col">
+        {strictEntries(LabeledGameMode).map(([mode, label]) => (
+          <ImageBgButton
+            imagePath={NotchedPaperBurlywood}
+            active={mode === currentMode}
+            key={mode}
+            onClick={() => handleClickGameMode(mode)}
+            className="py-2 text-xl lg:py-5 lg:text-2xl"
+          >
+            {label}
+          </ImageBgButton>
+        ))}
+      </div>
     </>
   );
 };

@@ -1,7 +1,6 @@
 import { PrefectureStatsName } from 'schema/dist/prefecture/stats';
+import { cn } from 'ui/lib/utils';
 
-import NotchedPaperOrangeHovered from '@/assets/notched-paper-orange-hovered.png';
-import NotchedPaperOrangeSelected from '@/assets/notched-paper-orange-selected.png';
 import NotchedPaperOrange from '@/assets/notched-paper-orange.png';
 import { ImageBgButton } from '@/components/elements/image-bg-button';
 import { assert } from '@/utils/asset';
@@ -14,6 +13,12 @@ export type GameTurnFactorSelectProps = {
   handleClickSelectFactor: (factor: ReturnType<typeof getAllFactors>[number]) => void;
   selectedFactorName?: PrefectureStatsName;
 };
+
+const gridSwitcher = {
+  3: 'grid-cols-1 lg:grid-cols-3 lg:py-8',
+  4: 'grid-cols-1 lg:grid-cols-2 lg:grid-rows-2',
+  6: 'grid-cols-2 grid-rows-3 lg:grid-cols-3 lg:grid-rows-2',
+} as const;
 
 /**
  * @description
@@ -28,36 +33,55 @@ export const GameTurnFactorSelect = ({
   const { game } = useGame();
   assert(game);
 
+  // 3, 4, 6はFactorPickCountによるもの
+  if ([3, 4, 6].includes(factors.length) === false) {
+    throw new Error(`invalid factors length: ${factors.length}`);
+  }
+
   return (
-    <div>
+    <div
+      // growの指定は親コンポーネントとスタイルが密になっているがとりあえず動かすため妥協
+      className={cn(`grow grid gap-2`, gridSwitcher[factors.length as keyof typeof gridSwitcher])}
+    >
       {factors.map((factor, index) => (
         <ImageBgButton
           imagePath={NotchedPaperOrange}
-          hoverImagePath={NotchedPaperOrangeHovered}
-          selectedImagePath={NotchedPaperOrangeSelected}
-          selected={factor.name === selectedFactorName}
+          active={factor.name === selectedFactorName}
           key={index}
           onClick={() => handleClickSelectFactor(factor)}
+          className="relative"
         >
-          {/* {factor.prefecture.name} */}
-          {factor.label}
-          {!game.hideData ? factor.totalValue : '〇〇'}
-          {factor.unit}
-          {/* TODO: 吸収した県が複数になると表示できなくなってしまう */}
-          {/* {factor.absorbedFactors.map((absorbedFactor) => (
-            <div key={absorbedFactor.prefecture.id}>
-              {`+ ${!game.hideData ? `${absorbedFactor.value} ${absorbedFactor.unit}` : ''} (${
-                absorbedFactor.prefecture.name
-              })`}
-            </div>
-          ))} */}
-
-          {/* NOTICE: ここではどれだけプラスされたかのみを表示し、
-          ステータスの制覇数からどの県のどのデータを吸収したかを確認できるようにする */}
-
-          {/* ここに選択した都道府県以外の吸収したデータの合計を表示 */}
+          <div className="text-xl lg:text-2xl">
+            <span>{factor.label}</span>
+            <br
+              className={`${
+                factors.length === 6
+                  ? 'inline lg:hidden'
+                  : factors.length === 3
+                  ? 'hidden lg:inline'
+                  : 'hidden'
+              }`}
+            />
+            <span
+              className={`${
+                factors.length === 6
+                  ? 'hidden lg:inline'
+                  : factors.length === 3
+                  ? 'inline lg:hidden'
+                  : 'inline'
+              }`}
+            >
+              {'　'}
+            </span>
+            <span>
+              {!game.hideData ? factor.totalValue : '〇〇'}
+              {factor.unit}
+            </span>
+          </div>
           {!game.hideData && factor.absorbedFactors.length > 0 && (
-            <div>{`+ ${factor.totalValue - factor.value!} ${factor.unit}`}</div>
+            <div className="absolute bottom-1 right-3 text-sm lg:bottom-2 lg:right-5 lg:text-base">{`+ ${
+              factor.totalValue - factor.value!
+            } ${factor.unit}`}</div>
           )}
         </ImageBgButton>
       ))}

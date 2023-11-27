@@ -11,19 +11,21 @@ export const GameModeInfo = () => {
   return (
     <TooltipProvider>
       <Tooltip>
-        <TooltipTrigger asChild>
-          <Button asChild size={'icon'} variant={'icon'}>
-            <CircleInfoIcon />
+        <TooltipTrigger>
+          <Button asChild size={'icon'} variant={'icon'} className="h-7 w-7">
+            <CircleInfoIcon className="fill-current text-gray-600" />
           </Button>
         </TooltipTrigger>
         <TooltipContent>
-          <div>【モード】</div>
-          <div>バトル時のモードを設定します。</div>
-          <div>
-            地方制覇モード：選択した都道府県の所属する地方の都道府県と闘います。手軽に遊びたい方におすすめです。
-          </div>
-          <div>
-            全国制覇モード：選択した都道府県で全国の都道府県と闘います。対戦数が多いため、集中して遊びたい方におすすめです。
+          <div className="text-xl">
+            <div>【モード】</div>
+            <div>バトル時のモードを設定します。</div>
+            <div>
+              地方制覇モード：選択した都道府県の所属する地方の都道府県と闘います。手軽に遊びたい方におすすめです。
+            </div>
+            <div>
+              全国制覇モード：選択した都道府県で全国の都道府県と闘います。対戦数が多いため、集中して遊びたい方におすすめです。
+            </div>
           </div>
         </TooltipContent>
       </Tooltip>
