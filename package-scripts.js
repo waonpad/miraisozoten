@@ -41,7 +41,7 @@ module.exports = {
     },
     test: {
       default: `nps test.web test.api`,
-      web: `cd ${fbToolsPath} && firebase emulators:exec "nps firebase.admin & cd ${webPath} && yarn test && nps util.pkill.fbadmin"`,
+      web: `cd ${fbToolsPath} && firebase emulators:exec "cd ${fbToolsPath} && yarn forever start lib/admin-server.js && cd ${webPath} && yarn test && cd ${fbToolsPath} && yarn forever stop lib/admin-server.js"`,
       api: `cd ${apiPath} && yarn test`, // まだfirebase emulator不要 あとから必要になるかもしれない
       predredd: `docker compose up -d && npx turbo run dev --scope=fb-tools --scope=api --parallel --no-daemon`,
       ci: {
