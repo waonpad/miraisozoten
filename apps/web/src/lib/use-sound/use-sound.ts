@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import ClickSound from '@/assets/sounds/click.mp3';
 import NegativeClickSound from '@/assets/sounds/click.mp3';
@@ -8,6 +8,8 @@ import GameTurnWinSound from '@/assets/sounds/click.mp3';
 import GameTurnLoseSound from '@/assets/sounds/click.mp3';
 import GameTurnDrawSound from '@/assets/sounds/click.mp3';
 import GameClearSound from '@/assets/sounds/click.mp3';
+import PageMoveSound from '@/assets/sounds/click.mp3';
+import BGM from '@/assets/sounds/click.mp3';
 import { createCtx } from '@/utils/create-ctx';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -23,10 +25,7 @@ export const useSound = createdUseSound;
 
 export const useSoundCtx = () => {
   const [options, setOptions] = useState<HookOptions>({
-    soundEnabled: true,
-    volume: 1,
-    playbackRate: 1,
-    interrupt: false,
+    soundEnabled: false,
   });
 
   const [playClick] = useSoundOrigin(ClickSound, options);
@@ -45,9 +44,30 @@ export const useSoundCtx = () => {
 
   const [playGameClear] = useSoundOrigin(GameClearSound, options);
 
+  const [playPageMove] = useSoundOrigin(PageMoveSound, options);
+
+  const [playBGM, { stop: stopBGM }] = useSoundOrigin(BGM, {
+    ...options,
+    loop: true,
+  });
+
+  /**
+   * @description
+   * サイトにアクセスして直後はブラウザが音声再生を許可していない \
+   * この関数を実行(ユーザーが何かのアクションを起こす)する必要がある
+   */
   const toggleSoundEnabled = () => {
-    setOptions((prev) => ({ ...prev, soundEnabled: !prev.soundEnabled }));
+    setOptions((prev) => ({
+      ...prev,
+      soundEnabled: !prev.soundEnabled,
+    }));
   };
+
+  useEffect(() => {
+    // NOTICE: とりあえずBGMの再生はここで盛業している
+    options.soundEnabled ? playBGM() : stopBGM();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [options.soundEnabled]);
 
   return {
     options,
@@ -59,6 +79,8 @@ export const useSoundCtx = () => {
     playGameTurnLose,
     playGameTurnDraw,
     playGameClear,
+    playPageMove,
+    playBGM,
     toggleSoundEnabled,
   };
 };
