@@ -36,6 +36,7 @@
     "tailwind-config": "*",
     "tailwindcss": "^3.3.3",
     "ui": "*",
+    "use-sound": "^4.0.1",
     "web-vitals": "^3.5.0",
     "zod": "^3.22.4"
   },
