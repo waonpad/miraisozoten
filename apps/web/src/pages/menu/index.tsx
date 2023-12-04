@@ -40,6 +40,7 @@ export default function Page() {
       <AuthIconButton />
 
       <Link to="/game">プレイ</Link>
+      <Link to="/game/explain">ゲーム説明</Link>
       <Link to="/archives">成績</Link>
       <Link to="/ranking">ランキング</Link>
 

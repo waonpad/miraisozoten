@@ -8,6 +8,7 @@ export type Path =
   | `/archives`
   | `/attribution`
   | `/game`
+  | `/game/explain`
   | `/menu`
   | `/ranking`
 
