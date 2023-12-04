@@ -8,6 +8,7 @@ export const SOUND_ATTRIBUTE_VALUE = {
   DISABLED_CLICK: 'disabled-click',
   OPEN_DIALOG: 'open-dialog',
   CLOSE_DIALOG: 'close-dialog',
+  PAGE_MOVE: 'page-move',
 } as const;
 
 // disabled-clickは、disabled属性が付与されている要素に直接指定しても動作しないため、divで囲んで

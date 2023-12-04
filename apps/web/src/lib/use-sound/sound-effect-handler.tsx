@@ -8,11 +8,14 @@ export type SoundEffectHandlerProps = {
 };
 
 export const SoundEffectHandler = ({ children }: SoundEffectHandlerProps) => {
-  const { playDisabledClick, playClick, playNegativeClick, playOpenDialog } = useSound();
+  const { playDisabledClick, playClick, playNegativeClick, playOpenDialog, playPageMove } =
+    useSound();
 
   useWindowEvent(
     'click',
     (event) => {
+      console.log('click');
+
       const target = event.target;
 
       if (!(target instanceof Element)) {
@@ -41,10 +44,18 @@ export const SoundEffectHandler = ({ children }: SoundEffectHandlerProps) => {
       const searchedEl = target.closest(
         `${soundAttributeString('CLICK')}, ${soundAttributeString(
           'NEGATIVE_CLICK'
-        )}, ${soundAttributeString('OPEN_DIALOG')}, ${soundAttributeString('CLOSE_DIALOG')}`
+        )}, ${soundAttributeString('OPEN_DIALOG')}, ${soundAttributeString(
+          'CLOSE_DIALOG'
+        )} ${soundAttributeString('PAGE_MOVE')}`
       );
 
       if (searchedEl) {
+        if (searchedEl.getAttribute(SOUND_ATTRIBUTE) === SOUND_ATTRIBUTE_VALUE.PAGE_MOVE) {
+          playPageMove();
+
+          return;
+        }
+
         if (searchedEl.getAttribute(SOUND_ATTRIBUTE) === SOUND_ATTRIBUTE_VALUE.OPEN_DIALOG) {
           playOpenDialog();
 
