@@ -1,10 +1,5 @@
 import { useState } from 'react';
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-// eslint-disable-next-line @typescript-eslint/no-unused-vars, unused-imports/no-unused-imports-ts
-import useSoundOrigin, { HookOptions, PlayOptions } from 'use-sound';
-
 import ClickSound from '@/assets/sounds/click.mp3';
 import NegativeClickSound from '@/assets/sounds/click.mp3';
 import DisabledClickSound from '@/assets/sounds/click.mp3';
@@ -14,6 +9,11 @@ import GameTurnLoseSound from '@/assets/sounds/click.mp3';
 import GameTurnDrawSound from '@/assets/sounds/click.mp3';
 import GameClearSound from '@/assets/sounds/click.mp3';
 import { createCtx } from '@/utils/create-ctx';
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+// eslint-disable-next-line @typescript-eslint/no-unused-vars, unused-imports/no-unused-imports-ts
+import { useSoundOrigin, HookOptions, PlayOptions } from '.';
 
 const [createdUseSound, SetSoundProvider] = createCtx<ReturnType<typeof useSoundCtx>>();
 
