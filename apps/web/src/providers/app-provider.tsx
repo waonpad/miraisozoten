@@ -11,6 +11,7 @@ import { SuspenseFallback } from '@/components/elements/suspense-fallback';
 import { WatchUnhandledError } from '@/lib/react-error-boundary';
 import { queryClient } from '@/lib/react-query';
 import * as Sentry from '@/lib/sentry';
+import { SoundEffectHandler } from '@/lib/use-sound/sound-effect-handler';
 import { SoundProvider } from '@/lib/use-sound/sound-provider';
 
 export const AppProvider = ({ children }: { children: React.ReactNode }) => {
@@ -20,15 +21,17 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
       <Sentry.ErrorBoundary fallback={ErrorFallback}>
         <WatchUnhandledError>
           <SoundProvider>
-            <Suspense fallback={<SuspenseFallback />}>
-              <HelmetProvider>
-                <QueryClientProvider client={queryClient}>
-                  <AuthProvider>
-                    <AuthGuard>{children}</AuthGuard>
-                  </AuthProvider>
-                </QueryClientProvider>
-              </HelmetProvider>
-            </Suspense>
+            <SoundEffectHandler>
+              <Suspense fallback={<SuspenseFallback />}>
+                <HelmetProvider>
+                  <QueryClientProvider client={queryClient}>
+                    <AuthProvider>
+                      <AuthGuard>{children}</AuthGuard>
+                    </AuthProvider>
+                  </QueryClientProvider>
+                </HelmetProvider>
+              </Suspense>
+            </SoundEffectHandler>
           </SoundProvider>
         </WatchUnhandledError>
       </Sentry.ErrorBoundary>
