@@ -1,5 +1,6 @@
 import NotchedPaperOrange from '@/assets/notched-paper-orange.png';
 import { ImageBgButton } from '@/components/elements/image-bg-button';
+import { useSound } from '@/lib/use-sound/use-sound';
 import { Link } from '@/router';
 import { assert } from '@/utils/asset';
 import { millisecondsToHms } from '@/utils/format';
@@ -14,6 +15,12 @@ export const GameResult = () => {
   assert(game);
 
   const { missCount, playTime } = game;
+
+  const { playPageMove } = useSound();
+
+  const handleClickNavigateToMenu = () => {
+    playPageMove();
+  };
 
   return (
     <>
@@ -35,7 +42,9 @@ export const GameResult = () => {
             imagePath={NotchedPaperOrange}
             className="px-16 py-2 text-2xl lg:py-5 lg:text-3xl"
           >
-            <Link to={'/menu'}>トップへ</Link>
+            <Link to={'/menu'} onClick={handleClickNavigateToMenu}>
+              トップへ
+            </Link>
           </ImageBgButton>
         </div>
       </div>

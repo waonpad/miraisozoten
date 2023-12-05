@@ -1,8 +1,11 @@
+import { useEffect } from 'react';
+
 import NotchedPaperBurlywood from '@/assets/notched-paper-burlywood.png';
 import NotchedPaperOrange from '@/assets/notched-paper-orange.png';
 import { ImageBgContainer } from '@/components/containers/image-bg-container';
 import { ImageBgButton } from '@/components/elements/image-bg-button';
 import { PrefectureSVG } from '@/components/maps/prefecture-svg';
+import { useSound } from '@/lib/use-sound/use-sound';
 import { usePrefectures } from '@/pages/(prefectures)/_/api/get-prefectures';
 import { assert } from '@/utils/asset';
 
@@ -19,6 +22,8 @@ import { getTurnOpponentFactor } from '../../utils/get-turn-opponent-factor';
 export const GameTurnResult = () => {
   const { game, changeScreenNextTurn, changeScreenResult } = useGame();
   assert(game);
+
+  const { playGameTurnWin, playGameTurnLose, playGameTurnDraw, playPageMove } = useSound();
 
   // 都道府県のデータを取得
   const prefecturesQuery = usePrefectures();
@@ -39,9 +44,29 @@ export const GameTurnResult = () => {
     (prefecture) => prefecture.id === currentTurn.factorPrefectureId
   )!;
 
-  const handleClickNextTurn = () => changeScreenNextTurn();
+  const handleClickNextTurn = () => {
+    playPageMove();
+    changeScreenNextTurn();
+  };
 
-  const handleClickChangeScreenResult = () => changeScreenResult();
+  const handleClickChangeScreenResult = () => {
+    playPageMove();
+    changeScreenResult();
+  };
+
+  /**
+   * @description
+   * 画面遷移してきたときに、ターンの結果に応じた効果音を再生する
+   */
+  useEffect(() => {
+    (() =>
+      ({
+        WIN: playGameTurnWin(),
+        LOSE: playGameTurnLose(),
+        DRAW: playGameTurnDraw(),
+      }[currentTurn.result]))();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   /**
    * @description

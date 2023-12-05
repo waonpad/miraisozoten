@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 
+import { useSound } from '@/lib/use-sound/use-sound';
 import { usePrefectures } from '@/pages/(prefectures)/_/api/get-prefectures';
 import { assert } from '@/utils/asset';
 import { millisecondsToHms } from '@/utils/format';
@@ -15,6 +16,8 @@ import { ConqueredPrefecturesDialog } from './conquered-prefectures-dialog';
 export const GameStatus = () => {
   const { game } = useGame();
   assert(game);
+
+  const { playOpenDialog, playCloseDialog } = useSound();
 
   const {
     prefecture,
@@ -50,7 +53,17 @@ export const GameStatus = () => {
    * 吸収した都道府県一覧のダイアログを開く
    */
   const handleClickConqueredPrefectures = () => {
+    playOpenDialog();
+
     setIsConqueredPrefecturesDialogOpen(true);
+  };
+
+  const handleOpenChangeConqueredPrefecturesDialog = (open: boolean) => {
+    if (!open) {
+      playCloseDialog();
+
+      setIsConqueredPrefecturesDialogOpen(open);
+    }
   };
 
   /**
@@ -97,7 +110,7 @@ export const GameStatus = () => {
       <ConqueredPrefecturesDialog
         game={game}
         open={isConqueredPrefecturesDialogOpen}
-        handleOpenChange={setIsConqueredPrefecturesDialogOpen}
+        handleOpenChange={handleOpenChangeConqueredPrefecturesDialog}
       />
     </>
   );

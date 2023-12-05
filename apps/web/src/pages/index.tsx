@@ -1,23 +1,28 @@
 import { Button } from 'ui/components/ui/button';
 
 import { Head } from '@/components/head';
-import { soundAttirbuteObject } from '@/lib/use-sound/constants';
 import { useSound } from '@/lib/use-sound/use-sound';
 import { Link } from '@/router';
 
 export default function Page() {
-  const { toggleSoundEnabled, stopBGM } = useSound();
+  const { playPageMove, toggleSoundEnabled, stopBGM } = useSound();
+
+  const handleClickLink = () => {
+    playPageMove();
+  };
 
   return (
     <>
       <Head description="新感覚！ 都道府県統計バトル！" />
 
       <div>タイトル</div>
-      <Button asChild {...soundAttirbuteObject('PAGE_MOVE')}>
+      <Button asChild onClick={handleClickLink}>
         <Link to="/menu">開始</Link>
       </Button>
       <div>タイトル画像を配置</div>
       <div>キャッチコピー</div>
+
+      {/* テスト用の一時的なボタン */}
 
       <button onClick={toggleSoundEnabled}>音声ON/OFF</button>
 

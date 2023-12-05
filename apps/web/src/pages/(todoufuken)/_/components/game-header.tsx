@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import { COOKIE_NAMES } from '@/constants/cookie-names';
+import { useSound } from '@/lib/use-sound/use-sound';
 import { useNavigate } from '@/router';
 import { assert } from '@/utils/asset';
 import { removeCookie } from '@/utils/cookie/remove-cookie';
@@ -20,13 +21,27 @@ export const GameHeader = () => {
   const { game } = useGame();
   assert(game);
 
+  const { playOpenDialog, playCloseDialog, playClick } = useSound();
+
   const navigate = useNavigate();
 
   const giveUpGameMutaiton = useGiveUpGame();
 
   const [isGiveUpDialogOpen, setIsGiveUpDialogOpen] = useState(false);
 
-  const handleClickGiveUpDialogOpen = () => setIsGiveUpDialogOpen(true);
+  const handleClickGiveUpDialogOpen = () => {
+    playOpenDialog();
+
+    setIsGiveUpDialogOpen(true);
+  };
+
+  const handleOpenChangeGiveUpDialog = (open: boolean) => {
+    if (!open) {
+      playCloseDialog();
+
+      setIsGiveUpDialogOpen(open);
+    }
+  };
 
   /**
    * @description
@@ -34,6 +49,8 @@ export const GameHeader = () => {
    * cookieを削除して、メニュー画面に遷移する
    */
   const handleGiveUp = async () => {
+    playClick();
+
     await giveUpGameMutaiton.mutateAsync({ id: game.id });
 
     removeCookie(COOKIE_NAMES.CURRENT_TODOUFUKEN_GAME_ID);
@@ -55,7 +72,7 @@ export const GameHeader = () => {
 
       <ConfirmGiveUpDialog
         open={isGiveUpDialogOpen}
-        handleOpenChange={setIsGiveUpDialogOpen}
+        handleOpenChange={handleOpenChangeGiveUpDialog}
         handleGiveUp={handleGiveUp}
       />
     </>

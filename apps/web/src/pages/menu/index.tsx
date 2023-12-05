@@ -6,16 +6,32 @@ import { AuthIconButton } from '@/components/elements/auth-icon-button';
 import { LoginAlerttDialog } from '@/components/elements/login-alert-dialog';
 import { Logo } from '@/components/elements/logo';
 import { Head } from '@/components/head';
+import { useSound } from '@/lib/use-sound/use-sound';
 import { Link } from '@/router';
 
 export default function Page() {
   const { login } = useAuth();
+  const { playClick, playCloseDialog, playPageMove } = useSound();
 
   const [isLoginDialogOpen, setIsLoginDialogOpen] = useState(false);
 
-  const handleConfirmLogin = () => login('google');
+  const handleConfirmLogin = () => {
+    playClick();
 
-  const handleCloseLoginDialog = (open: boolean) => setIsLoginDialogOpen(open);
+    login('google');
+  };
+
+  const handleOpenChangeLoginDialog = (open: boolean) => {
+    if (!open) {
+      playCloseDialog();
+
+      setIsLoginDialogOpen(open);
+    }
+  };
+
+  const handleClickLink = () => {
+    playPageMove();
+  };
 
   useEffect(() => {
     // もしauthguardによってリダイレクトされてきた場合、ログインを促すダイアログを表示する
@@ -39,16 +55,27 @@ export default function Page() {
       {/* ログインボタン */}
       <AuthIconButton />
 
-      <Link to="/game">プレイ</Link>
-      <Link to="/game/explain">ゲーム説明</Link>
-      <Link to="/archives">成績</Link>
-      <Link to="/ranking">ランキング</Link>
+      <Link to="/game" onClick={handleClickLink}>
+        プレイ
+      </Link>
+      <Link to="/game/explain" onClick={handleClickLink}>
+        ゲーム説明
+      </Link>
+      <Link to="/archives" onClick={handleClickLink}>
+        成績
+      </Link>
+      <Link to="/ranking" onClick={handleClickLink}>
+        ランキング
+      </Link>
 
-      <Link to="/attribution">使用データの出典</Link>
+      <Link to="/attribution" onClick={handleClickLink}>
+        使用データの出典
+      </Link>
 
       <LoginAlerttDialog
         open={isLoginDialogOpen}
-        handleOpenChange={handleCloseLoginDialog}
+        handleOpenChange={handleOpenChangeLoginDialog}
+        // handleConfirmLoginはクリック音を再生する
         handleConfirm={handleConfirmLogin}
       />
     </>

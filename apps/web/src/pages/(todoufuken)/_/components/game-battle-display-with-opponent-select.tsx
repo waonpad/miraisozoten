@@ -4,6 +4,7 @@ import { GameResponse } from 'schema/dist/todoufuken/game';
 import NotchedPaperBurlywood from '@/assets/notched-paper-burlywood.png';
 import { ImageBgContainer } from '@/components/containers/image-bg-container';
 import { PrefectureSVG } from '@/components/maps/prefecture-svg';
+import { useSound } from '@/lib/use-sound/use-sound';
 
 export type GameBattleDisplayWithOpponentSelectProps = {
   prefecture: PrefectureResponse;
@@ -23,6 +24,12 @@ export const GameBattleDisplayWithOpponentSelect = ({
   disabled,
   handleClickSelectOpponent,
 }: GameBattleDisplayWithOpponentSelectProps) => {
+  const { playDisabledClick } = useSound();
+
+  const handleClickDisabled = () => {
+    playDisabledClick();
+  };
+
   return (
     <>
       <div className="flex lg:px-20">
@@ -40,7 +47,6 @@ export const GameBattleDisplayWithOpponentSelect = ({
         </div>
         <div className="flex items-center justify-center px-4 text-3xl lg:px-20">VS</div>
         {/* 相手県を選択するエリア */}
-        {/* TODO: リストで表示する */}
         <div className="flex flex-1 flex-col">
           <ImageBgContainer
             imagePath={NotchedPaperBurlywood}
@@ -51,6 +57,7 @@ export const GameBattleDisplayWithOpponentSelect = ({
           <div
             // eslint-disable-next-line tailwindcss/no-custom-classname
             className="custom-scroll-bar h-48 overflow-scroll overflow-x-hidden border-4 border-gray-400 bg-white/40 sm:h-80"
+            onClick={disabled ? handleClickDisabled : undefined}
           >
             <ul
               className={`divide-y divide-gray-700 ${
