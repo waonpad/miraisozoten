@@ -64,7 +64,7 @@ export const useSoundCtx = () => {
   };
 
   useEffect(() => {
-    // NOTICE: とりあえずBGMの再生はここで盛業している
+    // NOTICE: とりあえずBGMの再生はここで制御している
     options.soundEnabled ? playBGM() : stopBGM();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [options.soundEnabled]);
@@ -81,6 +81,7 @@ export const useSoundCtx = () => {
     playGameClear,
     playPageMove,
     playBGM,
+    stopBGM,
     toggleSoundEnabled,
   };
 };

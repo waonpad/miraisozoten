@@ -51,6 +51,8 @@ export const SoundEffectHandler = ({ children }: SoundEffectHandlerProps) => {
 
       if (searchedEl) {
         if (searchedEl.getAttribute(SOUND_ATTRIBUTE) === SOUND_ATTRIBUTE_VALUE.PAGE_MOVE) {
+          console.log('page move');
+
           playPageMove();
 
           return;
@@ -81,7 +83,8 @@ export const SoundEffectHandler = ({ children }: SoundEffectHandlerProps) => {
         }
       }
     },
-    []
+    // 依存関係に含めないといけない
+    [playDisabledClick, playClick, playNegativeClick, playOpenDialog, playPageMove]
   );
 
   return children;
