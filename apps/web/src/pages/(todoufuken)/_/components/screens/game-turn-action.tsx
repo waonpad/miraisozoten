@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 
+import { useSound } from '@/lib/use-sound/use-sound';
 import { usePrefectures } from '@/pages/(prefectures)/_/api/get-prefectures';
 import { assert } from '@/utils/asset';
 
@@ -18,6 +19,8 @@ import { GameTurnQuestion } from '../game-turn-question';
 export const GameTurnAction = () => {
   const { game } = useGame();
   assert(game);
+
+  const { playClick } = useSound();
 
   const { turnAction, setTurnAction, submitTurnAction } = useGameTurnAction();
 
@@ -38,6 +41,8 @@ export const GameTurnAction = () => {
    * 使用するデータを選択したら、ステートに反映する関数
    */
   const handleClcikSelectFactor = (factor: ReturnType<typeof getAllFactors>[number]) => {
+    playClick();
+
     setTurnAction((prev) => ({
       ...prev,
       // factorPrefectureId: factor.prefecture.id,
@@ -51,6 +56,8 @@ export const GameTurnAction = () => {
    * 対戦相手の都道府県を選択したら、ターンの行動を決定して送信する関数
    */
   const handleClickSelectOpponent = (opponentId: number) => {
+    playClick();
+
     submitTurnAction({
       ...turnAction,
       opponentId,
@@ -65,6 +72,7 @@ export const GameTurnAction = () => {
           <GameBattleDisplayWithOpponentSelect
             prefecture={findById(prefectures, game.prefectureId)!}
             neighbors={game.neighbors}
+            // disabled時の音はコンポーネント内部で再生している
             disabled={!turnAction.factorName}
             handleClickSelectOpponent={handleClickSelectOpponent}
           />

@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 declare module 'use-sound' {
   // @ts-ignore
-  import { Howl } from 'howler';
+  import { Howl, HowlOptions } from 'howler';
 
-  interface HookOptions {
+  interface HookOptions extends Omit<HowlOptions, 'src'> {
     volume?: number;
     playbackRate?: number;
     interrupt?: boolean;

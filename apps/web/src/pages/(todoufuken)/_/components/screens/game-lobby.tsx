@@ -6,6 +6,7 @@ import { GameDifficulty, GameMode } from 'schema/dist/todoufuken/game';
 
 import { Logo } from '@/components/elements/logo';
 import { JapanRadioSVGMap } from '@/components/maps/japan-radio-svg-map';
+import { useSound } from '@/lib/use-sound/use-sound';
 import { usePrefectures } from '@/pages/(prefectures)/_/api/get-prefectures';
 
 import { GameDifficultySelect } from '../../components/game-difficulty-select';
@@ -22,6 +23,9 @@ import { GameSettingSubmit } from '../game-setting-submit';
  */
 export const GameLobby = () => {
   const { gameSettings, setGameSettings, startGame } = useGameSettings();
+
+  const { playClick, playDisabledClick, playOpenDialog, playCloseDialog, playPageMove } =
+    useSound();
 
   /**
    * @description
@@ -49,6 +53,8 @@ export const GameLobby = () => {
    * 地図上で都道府県をクリックしたら、ダイアログを表示する
    */
   const handleClickPrefecture = async (e: { target: { id: Prefecture['en'] } }) => {
+    playOpenDialog();
+
     setDialogPrefecture(prefectures.find((prefecture) => prefecture.en === e.target.id));
   };
 
@@ -57,18 +63,40 @@ export const GameLobby = () => {
    * ダイアログで表示している都道府県を選択したら、ゲームを開始するリクエストを送る
    */
   const handleClickSelectPrefecture = (prefecture: PrefectureResponse) => {
+    playPageMove();
+
     startGame({ ...gameSettings, prefectureId: prefecture.id });
   };
 
   const handleClickGameDifficulty = (difficulty: GameDifficulty) => {
+    playClick();
+
     setGameSettings((prev) => ({ ...prev, difficulty }));
   };
 
   const handleClickGameMode = (mode: GameMode) => {
+    playClick();
+
     setGameSettings((prev) => ({ ...prev, mode }));
   };
 
-  const handleClickGameSettingsSubmit = () => setCanSelectPrefectures(true);
+  const handleClickGameSettingsSubmit = () => {
+    playClick();
+
+    setCanSelectPrefectures(true);
+  };
+
+  const handleClickDisabledMap = () => {
+    playDisabledClick();
+  };
+
+  const handleOpenChangePrefectureDialog = (open: boolean) => {
+    if (!open) {
+      playCloseDialog();
+
+      setDialogPrefecture(undefined);
+    }
+  };
 
   return (
     // TODO: 設定を決定したら選択した設定以外と決定ボタンを非表示にする
@@ -113,7 +141,10 @@ export const GameLobby = () => {
         </div>
 
         {/* 都道府県選択エリア */}
-        <div className="min-h-full">
+        <div
+          className="min-h-full"
+          onClick={canSelectPrefectures ? undefined : handleClickDisabledMap}
+        >
           <JapanRadioSVGMap
             onLocationClick={handleClickPrefecture}
             disabled={!canSelectPrefectures}
@@ -127,7 +158,7 @@ export const GameLobby = () => {
         <PrefectureOverviewDialog
           prefecture={dialogPrefecture}
           open={!!dialogPrefecture}
-          handleOpenChange={() => setDialogPrefecture(undefined)}
+          handleOpenChange={handleOpenChangePrefectureDialog}
           handleSelect={handleClickSelectPrefecture}
         />
       )}

@@ -1,5 +1,6 @@
 import NotchedPaperOrange from '@/assets/notched-paper-orange.png';
 import { ImageBgButton } from '@/components/elements/image-bg-button';
+import { useSound } from '@/lib/use-sound/use-sound';
 
 import { useGameSettings } from '../hooks/use-game-settings';
 
@@ -13,9 +14,17 @@ export type GameSettingSubmitProps = {
  * ゲームの難易度とモードの設定完了を確認するコンポーネント
  */
 export const GameSettingSubmit = ({ settings, handleSubmit }: GameSettingSubmitProps) => {
+  const { playDisabledClick } = useSound();
+
+  const disabled = !settings.difficulty || !settings.mode;
+
+  const handleClickDisabled = () => {
+    playDisabledClick();
+  };
+
   return (
     <>
-      <div className="grid grid-cols-1">
+      <div className="grid grid-cols-1" onClick={disabled ? handleClickDisabled : undefined}>
         <ImageBgButton
           imagePath={NotchedPaperOrange}
           disabled={!settings.difficulty || !settings.mode}
