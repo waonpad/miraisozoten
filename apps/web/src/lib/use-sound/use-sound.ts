@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import ClickSound from '@/assets/sounds/click.mp3';
 import NegativeClickSound from '@/assets/sounds/click.mp3';
@@ -75,9 +75,44 @@ export const useSoundCtx = () => {
 
   useEffect(() => {
     // NOTICE: とりあえずBGMの再生はここで制御している
-    options.soundEnabled ? playBGM() : stopBGM();
+    if (options.soundEnabled) {
+      playBGM();
+    } else {
+      stopBGM();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [options.soundEnabled]);
+
+  /**
+   * @description
+   * ブラウザが自動再生を許可していないので、ユーザーがアクションを起こすまで \
+   * 再生を試行することで、何かしらのアクションがあったらすぐにBGMを再生できるようにするための処理
+   */
+  const [isFirstRender, setIsFirstRender] = useState(true);
+  const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
+
+  const intervalFn = useCallback(() => {
+    if (options.soundEnabled && isFirstRender) {
+      playBGM();
+
+      if (intervalId) clearInterval(intervalId);
+    }
+
+    setIsFirstRender(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isFirstRender, options.soundEnabled, playBGM]);
+
+  useEffect(() => {
+    if (!isFirstRender) return;
+
+    const _intervalId = setInterval(intervalFn, 1000);
+
+    setIntervalId(_intervalId);
+
+    return () => clearInterval(_intervalId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [intervalFn]);
+  /** ここまで  */
 
   return {
     options,
