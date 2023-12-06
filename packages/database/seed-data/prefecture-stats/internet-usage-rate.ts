@@ -1,0 +1,70 @@
+// 1. テンプレート(_template.ts)をコピーする
+// 2. ファイル名をデータの内容が分かる名前(ケバブケース)に変更する
+// 3. exportしている変数名をファイル名と対応した名前(パスカルケース)に変更する
+// 4. PrefectureStatsData型を満たすようにデータを入力する
+
+import { PrefectureStatsData } from "./types";
+
+export const  InternetUsageRate= {
+  label: "インターネット利用率",
+  unit: "%",
+  attribution: {
+    sourceSiteName: "都道府県データランキング",
+    sourceUrlTitle: "インターネット利用率",
+    sourceUrl: 'https://uub.jp/pdr/i/u_2a.html',
+    retrievedAt: {
+      year: 2023,
+      month: 11,
+      day: 28,
+    },
+  },
+  prefectures: {
+    1:  { id: 1,  name: '北海道',   value:  82.7},
+    2:  { id: 2,  name: '青森県',   value:  65.7},
+    3:  { id: 3,  name: '岩手県',   value:  70.5},
+    4:  { id: 4,  name: '宮城県',   value:  78.8},
+    5:  { id: 5,  name: '秋田県',   value:  68.0},
+    6:  { id: 6,  name: '山形県',   value:  71.0},
+    7:  { id: 7,  name: '福島県',   value:  73.2},
+    8:  { id: 8,  name: '茨城県',   value:  75.1},
+    9:  { id: 9,  name: '栃木県',   value:  75.3},
+    10: { id: 10, name: '群馬県',   value:  74.4},
+    11: { id: 11, name: '埼玉県',   value:  82.4},
+    12: { id: 12, name: '千葉県',   value:  81.4},
+    13: { id: 13, name: '東京都',   value:  84.1},
+    14: { id: 14, name: '神奈川県', value:  87.5},
+    15: { id: 15, name: '新潟県',   value:  71.2},
+    16: { id: 16, name: '富山県',   value:  72.1},
+    17: { id: 17, name: '石川県',   value:  75.8},
+    18: { id: 18, name: '福井県',   value:  76.9},
+    19: { id: 19, name: '山梨県',   value:  74.1},
+    20: { id: 20, name: '長野県',   value:  73.9},
+    21: { id: 21, name: '岐阜県',   value:  73.9},
+    22: { id: 22, name: '静岡県',   value:  77.6},
+    23: { id: 23, name: '愛知県',   value:  83.3},
+    24: { id: 24, name: '三重県',   value:  77.8},
+    25: { id: 25, name: '滋賀県',   value:  79.0},
+    26: { id: 26, name: '京都府',   value:  79.7},
+    27: { id: 27, name: '大阪府',   value:  82.0},
+    28: { id: 28, name: '兵庫県',   value:  78.6},
+    29: { id: 29, name: '奈良県',   value:  79.5},
+    30: { id: 30, name: '和歌山県', value:  76.1},
+    31: { id: 31, name: '鳥取県',   value:  72.9},
+    32: { id: 32, name: '島根県',   value:  72.4},
+    33: { id: 33, name: '岡山県',   value:  76.4},
+    34: { id: 34, name: '広島県',   value:  75.5},
+    35: { id: 35, name: '山口県',   value:  72.1},
+    36: { id: 36, name: '徳島県',   value:  76.6},
+    37: { id: 37, name: '香川県',   value:  74.7},
+    38: { id: 38, name: '愛媛県',   value:  73.5},
+    39: { id: 39, name: '高知県',   value:  68.8},
+    40: { id: 40, name: '福岡県',   value:  78.8},
+    41: { id: 41, name: '佐賀県',   value:  74.8},
+    42: { id: 42, name: '長崎県',   value:  72.2},
+    43: { id: 43, name: '熊本県',   value:  73.1},
+    44: { id: 44, name: '大分県',   value:  72.5},
+    45: { id: 45, name: '宮崎県',   value:  68.2},
+    46: { id: 46, name: '鹿児島県', value:  75.6},
+    47: { id: 47, name: '沖縄県',   value:  76.8},
+  }
+} as const satisfies PrefectureStatsData
