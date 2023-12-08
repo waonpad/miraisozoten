@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { RETURN_TO } from '@/auth/auth-guard';
 import { useAuth } from '@/auth/use-auth';
-import { AuthIconButton } from '@/components/elements/auth-icon-button';
+import { AuthButton } from '@/components/elements/auth-button';
 import { LoginAlerttDialog } from '@/components/elements/login-alert-dialog';
 import { Logo } from '@/components/elements/logo';
 import { Head } from '@/components/head';
@@ -50,27 +50,32 @@ export default function Page() {
         description="メニューページです。ここから様々なページに遷移できます。"
       />
 
-      <Logo />
+      <div className="relative flex h-screen flex-col items-center justify-center p-2 lg:p-3">
+        <Logo wrapperProps={{ className: 'absolute left-2 top-2 h-12 w-12 lg:h-28 lg:w-28' }} />
+        <div className="flex flex-col items-center justify-center space-y-14 text-3xl lg:text-4xl">
+          <Link to="/game" onClick={handleClickLink}>
+            プレイ
+          </Link>
+          <Link to="/game/explain" onClick={handleClickLink}>
+            ゲーム説明
+          </Link>
+          <Link to="/archives" onClick={handleClickLink}>
+            成績
+          </Link>
+          <Link to="/ranking" onClick={handleClickLink}>
+            順位
+          </Link>
+          <AuthButton />
+        </div>
 
-      {/* ログインボタン */}
-      <AuthIconButton />
-
-      <Link to="/game" onClick={handleClickLink}>
-        プレイ
-      </Link>
-      <Link to="/game/explain" onClick={handleClickLink}>
-        ゲーム説明
-      </Link>
-      <Link to="/archives" onClick={handleClickLink}>
-        成績
-      </Link>
-      <Link to="/ranking" onClick={handleClickLink}>
-        ランキング
-      </Link>
-
-      <Link to="/attribution" onClick={handleClickLink}>
-        使用データの出典
-      </Link>
+        <Link
+          to="/attribution"
+          onClick={handleClickLink}
+          className="absolute bottom-2 right-2 text-2xl lg:text-3xl"
+        >
+          使用データの出典
+        </Link>
+      </div>
 
       <LoginAlerttDialog
         open={isLoginDialogOpen}
