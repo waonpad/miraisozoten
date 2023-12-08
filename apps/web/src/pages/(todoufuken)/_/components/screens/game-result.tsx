@@ -1,5 +1,6 @@
 import NotchedPaperOrange from '@/assets/notched-paper-orange.png';
 import { ImageBgButton } from '@/components/elements/image-bg-button';
+import { SoundToggleIconButton } from '@/components/elements/sound-toggle-icon-button';
 import { useSound } from '@/lib/use-sound/use-sound';
 import { Link } from '@/router';
 import { assert } from '@/utils/asset';
@@ -48,6 +49,8 @@ export const GameResult = () => {
           </ImageBgButton>
         </div>
       </div>
+
+      <SoundToggleIconButton className="absolute right-2 top-2" />
     </>
   );
 };
