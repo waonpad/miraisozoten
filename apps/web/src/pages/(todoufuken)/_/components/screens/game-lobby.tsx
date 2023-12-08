@@ -5,6 +5,7 @@ import { PrefectureResponse } from 'schema/dist/prefecture';
 import { GameDifficulty, GameMode } from 'schema/dist/todoufuken/game';
 
 import { Logo } from '@/components/elements/logo';
+import { SoundToggleIconButton } from '@/components/elements/sound-toggle-icon-button';
 import { JapanRadioSVGMap } from '@/components/maps/japan-radio-svg-map';
 import { useSound } from '@/lib/use-sound/use-sound';
 import { usePrefectures } from '@/pages/(prefectures)/_/api/get-prefectures';
@@ -152,6 +153,8 @@ export const GameLobby = () => {
           />
         </div>
       </div>
+
+      <SoundToggleIconButton className="absolute right-2 top-2" />
 
       {/* ダイアログ */}
       {dialogPrefecture && (

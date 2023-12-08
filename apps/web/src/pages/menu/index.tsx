@@ -5,6 +5,7 @@ import { useAuth } from '@/auth/use-auth';
 import { AuthButton } from '@/components/elements/auth-button';
 import { LoginAlerttDialog } from '@/components/elements/login-alert-dialog';
 import { Logo } from '@/components/elements/logo';
+import { SoundToggleIconButton } from '@/components/elements/sound-toggle-icon-button';
 import { Head } from '@/components/head';
 import { useSound } from '@/lib/use-sound/use-sound';
 import { Link } from '@/router';
@@ -76,6 +77,8 @@ export default function Page() {
           使用データの出典
         </Link>
       </div>
+
+      <SoundToggleIconButton className="absolute right-2 top-2" />
 
       <LoginAlerttDialog
         open={isLoginDialogOpen}
