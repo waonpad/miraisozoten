@@ -1,21 +1,21 @@
 <svg id="_レイヤー_1" data-name="レイヤー 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 967.76 242.97">
   <defs>
     <style>
-      .cls-1 {
+      .cls-1-t-n-h {
         fill: #e2421f;
       }
 
-      .cls-2 {
+      .cls-2-t-n-h {
         font-family: KsoShinryuSou-83pv-RKSJ-H, KsoShinryuSou;
         font-size: 241.91px;
       }
 
-      .cls-3 {
+      .cls-3-t-n-h {
         fill: #2f2f2f;
         stroke-width: 0px;
       }
     </style>
   </defs>
-  <rect class="cls-3" y=".86" width="242.11" height="242.11"/>
-  <text class="cls-2" transform="translate(.11 207.8)"><tspan class="cls-1" x="0" y="0">闘</tspan><tspan x="241.91" y="0">道</tspan><tspan x="483.82" y="0">賦県</tspan></text>
+  <rect class="cls-3-t-n-h" y=".86" width="242.11" height="242.11"/>
+  <text class="cls-2-t-n-h" transform="translate(.11 207.8)"><tspan class="cls-1-t-n-h" x="0" y="0">闘</tspan><tspan x="241.91" y="0">道</tspan><tspan x="483.82" y="0">賦県</tspan></text>
 </svg>
