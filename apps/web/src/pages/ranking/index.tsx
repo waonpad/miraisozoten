@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { GameDifficulty, GameMode } from 'schema/dist/todoufuken/game';
+import { GameDifficulty } from 'schema/dist/todoufuken/game';
 
 import { Logo } from '@/components/elements/logo';
 import { Head } from '@/components/head';
@@ -25,7 +25,7 @@ export default function Page() {
     setRankingFilterParams((prev) => ({ ...prev, difficulty }));
   };
 
-  const handleClickGameMode = (mode: GameMode) => {
+  const handleClickGameMode = (mode: 'NATIONWIDE' | `REGIONAL-${number}`) => {
     setRankingFilterParams((prev) => ({ ...prev, mode }));
   };
 
