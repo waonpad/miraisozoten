@@ -25,7 +25,7 @@ export const SoundToggleIconButton = ({ svgProps, ...props }: SoundToggleIconBut
       asChild
       size={'icon'}
       variant={'icon'}
-      className={cn('h-7 w-7', props.className)}
+      className={cn('cursor-pointer h-7 w-7', props.className)}
     >
       {isSoundEnabled ? <VolumeHighIcon {...svgProps} /> : <VolumeXmarkIcon {...svgProps} />}
     </Button>

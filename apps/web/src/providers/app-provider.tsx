@@ -8,6 +8,7 @@ import { AuthGuard } from '@/auth/auth-guard';
 import { AuthProvider } from '@/auth/auth-provider';
 import { ErrorFallback } from '@/components/elements/error-fallback';
 import { SuspenseFallback } from '@/components/elements/suspense-fallback';
+import { FusumaTransitionProvider } from '@/components/transitions/fusuma-transition/fusuma-transition-provider';
 import { WatchUnhandledError } from '@/lib/react-error-boundary';
 import { queryClient } from '@/lib/react-query';
 import * as Sentry from '@/lib/sentry';
@@ -20,15 +21,17 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
       <Sentry.ErrorBoundary fallback={ErrorFallback}>
         <WatchUnhandledError>
           <SoundProvider>
-            <Suspense fallback={<SuspenseFallback />}>
-              <HelmetProvider>
-                <QueryClientProvider client={queryClient}>
-                  <AuthProvider>
-                    <AuthGuard>{children}</AuthGuard>
-                  </AuthProvider>
-                </QueryClientProvider>
-              </HelmetProvider>
-            </Suspense>
+            <FusumaTransitionProvider>
+              <Suspense fallback={<SuspenseFallback />}>
+                <HelmetProvider>
+                  <QueryClientProvider client={queryClient}>
+                    <AuthProvider>
+                      <AuthGuard>{children}</AuthGuard>
+                    </AuthProvider>
+                  </QueryClientProvider>
+                </HelmetProvider>
+              </Suspense>
+            </FusumaTransitionProvider>
           </SoundProvider>
         </WatchUnhandledError>
       </Sentry.ErrorBoundary>

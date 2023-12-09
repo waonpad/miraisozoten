@@ -7,10 +7,13 @@ import { LoginAlerttDialog } from '@/components/elements/login-alert-dialog';
 import { Logo } from '@/components/elements/logo';
 import { SoundToggleIconButton } from '@/components/elements/sound-toggle-icon-button';
 import { Head } from '@/components/head';
+import { useFusumaTransition } from '@/components/transitions/fusuma-transition/use-fusuma-transition';
 import { useSound } from '@/lib/use-sound/use-sound';
 import { Link } from '@/router';
 
 export default function Page() {
+  const fusumaTransition = useFusumaTransition();
+
   const { login } = useAuth();
   const { playClick, playCloseDialog, playPageMove } = useSound();
 
@@ -40,6 +43,11 @@ export default function Page() {
 
     if (returnTo) {
       setIsLoginDialogOpen(true);
+    }
+
+    // ゲームの終了時にふすまを閉じてここに遷移するため、開く
+    if (!fusumaTransition.isOpen) {
+      fusumaTransition.openFusuma();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

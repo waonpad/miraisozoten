@@ -4,17 +4,24 @@ import { HighLow } from 'schema/dist/todoufuken/game';
 import { CreateGameLogInput, CreateGameLogInputSchema } from 'schema/dist/todoufuken/game/log';
 
 import { queryClient, QUERY_KEYS } from '@/lib/react-query';
+import { createCtx } from '@/utils/create-ctx';
 import { randomElement } from '@/utils/random';
 
 import { useSubmitGameTurnAction } from '../api/submit-game-turn-action';
 
 import { useGame } from './use-game';
 
+const [createdUseGameTurnAction, SetGameTurnActionProvider] =
+  createCtx<ReturnType<typeof useGameTurnActionCtx>>();
+export { SetGameTurnActionProvider };
+
+export const useGameTurnAction = createdUseGameTurnAction;
+
 /**
  * @description
  * ターンの行動を管理するフック
  */
-export const useGameTurnAction = () => {
+export const useGameTurnActionCtx = () => {
   const { game, changeScreen } = useGame();
 
   const submitGameTurnActionMutation = useSubmitGameTurnAction();
@@ -43,6 +50,11 @@ export const useGameTurnAction = () => {
     if (res) {
       // ゲームのデータ取得を明示的に行い、待機する
       await queryClient.invalidateQueries([QUERY_KEYS.TODOUFUKEN_GAMES, res.gameId]);
+
+      // 初期化
+      setTurnAction({
+        highLow: randomElement([...HighLow]),
+      });
 
       // ゲームのデータが取得できたら画面を遷移する
       changeScreen('turnResult');
