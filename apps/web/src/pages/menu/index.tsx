@@ -7,12 +7,17 @@ import { LoginAlerttDialog } from '@/components/elements/login-alert-dialog';
 import { Logo } from '@/components/elements/logo';
 import { SoundToggleIconButton } from '@/components/elements/sound-toggle-icon-button';
 import { Head } from '@/components/head';
+import { useFadeTransition } from '@/components/transitions/fade-transition/use-fade-transition';
 import { useFusumaTransition } from '@/components/transitions/fusuma-transition/use-fusuma-transition';
 import { useSound } from '@/lib/use-sound/use-sound';
-import { Link } from '@/router';
+import { Link, Path, useNavigate } from '@/router';
 
 export default function Page() {
   const fusumaTransition = useFusumaTransition();
+
+  const fadeTransition = useFadeTransition();
+
+  const navigate = useNavigate();
 
   const { login } = useAuth();
   const { playClick, playCloseDialog, playPageMove } = useSound();
@@ -33,8 +38,20 @@ export default function Page() {
     }
   };
 
-  const handleClickLink = () => {
+  const handleClickLink = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    event.preventDefault();
+
+    fadeTransition.closeFade();
+
     playPageMove();
+
+    const path = event.currentTarget.getAttribute('href') as Path;
+
+    setTimeout(() => {
+      console.log('navigate', path);
+
+      navigate(path);
+    }, fadeTransition.duration);
   };
 
   useEffect(() => {
@@ -49,6 +66,12 @@ export default function Page() {
     if (!fusumaTransition.isOpen) {
       fusumaTransition.openFusuma();
     }
+
+    // トップ画面からの遷移でフェードしてくるため、開く
+    if (!fadeTransition.isOpen) {
+      fadeTransition.openFade();
+    }
+    // ここの依存にfadeTransitionを入れると、fadeTransitionが変更されるたびにuseEffectが呼ばれてしまう
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

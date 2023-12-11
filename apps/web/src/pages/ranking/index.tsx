@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { GameDifficulty, GameMode } from 'schema/dist/todoufuken/game';
 
 import { Logo } from '@/components/elements/logo';
 import { Head } from '@/components/head';
+import { useFadeTransition } from '@/components/transitions/fade-transition/use-fade-transition';
 
 import { GameRankingFilter } from './_/components/game-ranking-filter';
 import { InfiniteGameRankingListHeader } from './_/components/game-ranking-list-header';
@@ -21,6 +22,8 @@ export default function Page() {
   const [rankingFilterParams, setRankingFilterParams] =
     useState<InfiniteGameRankingListProps['filterParams']>(defaultFilterParams);
 
+  const fadeTransition = useFadeTransition();
+
   const handleClickGameDifficulty = (difficulty: GameDifficulty) => {
     setRankingFilterParams((prev) => ({ ...prev, difficulty }));
   };
@@ -28,6 +31,13 @@ export default function Page() {
   const handleClickGameMode = (mode: GameMode) => {
     setRankingFilterParams((prev) => ({ ...prev, mode }));
   };
+
+  useEffect(() => {
+    if (!fadeTransition.isOpen) {
+      fadeTransition.openFade();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>

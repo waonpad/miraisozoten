@@ -5,6 +5,7 @@ import NotchedPaperOrange from '@/assets/notched-paper-orange.png';
 import { ImageBgContainer } from '@/components/containers/image-bg-container';
 import { ImageBgButton } from '@/components/elements/image-bg-button';
 import { PrefectureSVG } from '@/components/maps/prefecture-svg';
+import { useFadeTransition } from '@/components/transitions/fade-transition/use-fade-transition';
 import { useSound } from '@/lib/use-sound/use-sound';
 import { usePrefectures } from '@/pages/(prefectures)/_/api/get-prefectures';
 import { assert } from '@/utils/asset';
@@ -24,6 +25,8 @@ export const GameTurnResult = () => {
   assert(game);
 
   const { playGameTurnWin, playGameTurnLose, playGameTurnDraw, playPageMove } = useSound();
+
+  const fadeTransition = useFadeTransition();
 
   // 都道府県のデータを取得
   const prefecturesQuery = usePrefectures();
@@ -46,12 +49,22 @@ export const GameTurnResult = () => {
 
   const handleClickNextTurn = () => {
     playPageMove();
-    changeScreenNextTurn();
+
+    fadeTransition.closeFade();
+
+    setTimeout(() => {
+      changeScreenNextTurn();
+    }, fadeTransition.duration);
   };
 
   const handleClickChangeScreenResult = () => {
     playPageMove();
-    changeScreenResult();
+
+    fadeTransition.closeFade();
+
+    setTimeout(() => {
+      changeScreenResult();
+    }, fadeTransition.duration);
   };
 
   /**
@@ -59,6 +72,10 @@ export const GameTurnResult = () => {
    * 画面遷移してきたときに、ターンの結果に応じた効果音を再生する
    */
   useEffect(() => {
+    if (!fadeTransition.isOpen) {
+      fadeTransition.openFade();
+    }
+
     (() =>
       ({
         WIN: playGameTurnWin(),
