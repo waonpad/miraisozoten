@@ -101,9 +101,12 @@ const arrayToObject = <T extends Record<string, unknown>[]>(
   }, {}) as { [K in keyof T[number]]: T[number][K] };
 };
 
-function convertToSnakeCase(input: string): string {
-  return input.replace(/([a-z])([A-Z])/g, '$1_$2').toLowerCase();
-}
+const toUpperSnakeCase = (str: string) => {
+  return str
+    .replace(/([A-Z])/g, '_$1')
+    .replace(/^_/, '')
+    .toUpperCase();
+};
 
 async function seedData() {
   try {
@@ -111,7 +114,7 @@ async function seedData() {
 
     for (const key of statsIndexKeys) {
       const data = PrefectureStatsIndex[key as keyof typeof PrefectureStatsIndex];
-      const uppercaseKey = convertToSnakeCase(key).toUpperCase();
+      const uppercaseKey = toUpperSnakeCase(key);
 
       await prisma.prefectureStatsMetadata.create({
         data: {
