@@ -61,6 +61,9 @@ async function main() {
       },
     });
   }
+
+  // Call the seedData function to start seeding
+  seedData();
 }
 
 // execute the main function
@@ -97,3 +100,44 @@ const arrayToObject = <T extends Record<string, unknown>[]>(
     return { ...acc, ...cur };
   }, {}) as { [K in keyof T[number]]: T[number][K] };
 };
+
+const toUpperSnakeCase = (str: string) => {
+  return str
+    .replace(/([A-Z])/g, '_$1')
+    .replace(/^_/, '')
+    .toUpperCase();
+};
+
+async function seedData() {
+  try {
+    const statsIndexKeys = Object.keys(PrefectureStatsIndex);
+
+    for (const key of statsIndexKeys) {
+      const data = PrefectureStatsIndex[key as keyof typeof PrefectureStatsIndex];
+      const uppercaseKey = toUpperSnakeCase(key);
+
+      await prisma.prefectureStatsMetadata.create({
+        data: {
+          // @ts-ignore
+          name: uppercaseKey,
+          label: data.label,
+          unit: data.unit,
+          sourceSiteName: data.attribution.sourceSiteName,
+          sourceUrlTitle: data.attribution.sourceUrlTitle,
+          sourceUrl: data.attribution.sourceUrl,
+          retrievedAt: new Date(
+            data.attribution.retrievedAt.year,
+            data.attribution.retrievedAt.month - 1,
+            data.attribution.retrievedAt.day
+          ),
+        },
+      });
+    }
+
+    console.log('Seeding completed successfully!');
+  } catch (error) {
+    console.error('Error seeding data:', error);
+  } finally {
+    await prisma.$disconnect();
+  }
+}
