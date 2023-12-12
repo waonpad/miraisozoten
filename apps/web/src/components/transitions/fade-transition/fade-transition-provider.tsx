@@ -8,7 +8,7 @@ export const FadeTransitionProvider = ({ children }: { children: React.ReactNode
   return (
     <SetFadeTransitionProvider value={fadeTransition}>
       <>
-        <FadeTransition />
+        {fadeTransition.isRender && <FadeTransition />}
         {children}
       </>
     </SetFadeTransitionProvider>
