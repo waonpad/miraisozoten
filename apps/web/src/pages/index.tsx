@@ -51,7 +51,7 @@ export default function Page() {
             </div>
             <div className="flex justify-center">
               <ImageBgButton
-                onClick={handleClickLink}
+                onClick={handleClickNavigateToMenu}
                 imagePath={NotchedPaperBurlywood}
                 className="px-20 py-2 text-xl"
               >
@@ -79,7 +79,7 @@ export default function Page() {
             </div>
             <div className="flex justify-center">
               <ImageBgButton
-                onClick={handleClickLink}
+                onClick={handleClickNavigateToMenu}
                 imagePath={NotchedPaperBurlywood}
                 className="px-20 py-5 text-2xl"
               >
