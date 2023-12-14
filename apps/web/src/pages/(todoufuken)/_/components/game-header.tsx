@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import { SoundToggleIconButton } from '@/components/elements/sound-toggle-icon-button';
 import { COOKIE_NAMES } from '@/constants/cookie-names';
 import { useSound } from '@/lib/use-sound/use-sound';
 import { useNavigate } from '@/router';
@@ -65,8 +66,9 @@ export const GameHeader = () => {
         <div className="ml-4 lg:ml-0">
           <GameStatus />
         </div>
-        <div className="absolute right-4 top-4">
+        <div className="absolute right-4 top-4 space-x-6">
           <GiveUpIconButton onClick={handleClickGiveUpDialogOpen} />
+          <SoundToggleIconButton svgProps={{ className: 'fill-white' }} />
         </div>
       </div>
 

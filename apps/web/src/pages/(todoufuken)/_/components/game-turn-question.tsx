@@ -1,9 +1,23 @@
-import { HighLow } from 'schema/dist/todoufuken/game';
+import { useMemo } from 'react';
 
-import { LabeledHighLow } from '../config/game';
+import { HighLow } from 'schema/dist/todoufuken/game';
 
 export type GameTurnQuestionProps = {
   highLow: HighLow;
+};
+
+const MESSAGES = {
+  HIGH: ['HIGHテキスト1', 'HIGHテキスト2', 'HIGHテキスト3'],
+  LOW: ['LOWテキスト1', 'LOWテキスト2', 'LOWテキスト3'],
+} satisfies {
+  [key in HighLow]: [string, ...string[]];
+};
+
+const randomMessage = <T extends keyof typeof MESSAGES>(
+  hishLow: T
+): (typeof MESSAGES)[T][number] => {
+  // どちらかの配列からランダムに一つ取得する
+  return MESSAGES[hishLow][Math.floor(Math.random() * MESSAGES[hishLow].length)];
 };
 
 /**
@@ -11,9 +25,7 @@ export type GameTurnQuestionProps = {
  * 問題文を表示するコンポーネント
  */
 export const GameTurnQuestion = ({ highLow }: GameTurnQuestionProps) => {
-  return (
-    <div className="text-xl sm:text-2xl lg:text-3xl">
-      他の都道府県より{LabeledHighLow[highLow]}そうなのはどれ？
-    </div>
-  );
+  const message = useMemo(() => randomMessage(highLow), [highLow]);
+
+  return <div className="text-xl sm:text-2xl lg:text-3xl">{message}</div>;
 };

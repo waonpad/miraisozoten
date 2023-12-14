@@ -8,7 +8,13 @@ export type GiveUpIconButtonProps = {
 
 export const GiveUpIconButton = ({ onClick }: GiveUpIconButtonProps) => {
   return (
-    <Button onClick={onClick} asChild size={'icon'} variant={'icon'} className="h-7 w-7">
+    <Button
+      onClick={onClick}
+      asChild
+      size={'icon'}
+      variant={'icon'}
+      className="h-7 w-7 cursor-pointer"
+    >
       <GiveUpIcon className="fill-white" />
     </Button>
   );

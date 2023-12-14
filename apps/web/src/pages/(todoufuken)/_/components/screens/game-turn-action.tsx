@@ -1,5 +1,7 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 
+import { useFadeTransition } from '@/components/transitions/fade-transition/use-fade-transition';
+import { useFusumaTransition } from '@/components/transitions/fusuma-transition/use-fusuma-transition';
 import { useSound } from '@/lib/use-sound/use-sound';
 import { usePrefectures } from '@/pages/(prefectures)/_/api/get-prefectures';
 import { assert } from '@/utils/asset';
@@ -17,6 +19,10 @@ import { GameTurnQuestion } from '../game-turn-question';
  * ランダムでhigh-lowが決まっており、ユーザーは対戦相手県と使用データを選択する
  */
 export const GameTurnAction = () => {
+  const fusumaTransition = useFusumaTransition();
+
+  const fadeTransition = useFadeTransition();
+
   const { game } = useGame();
   assert(game);
 
@@ -26,6 +32,20 @@ export const GameTurnAction = () => {
 
   // 都道府県のデータを取得
   const prefecturesQuery = usePrefectures();
+
+  useEffect(() => {
+    // 都道府県のデータが取得できたら、ふすまを開く
+    if (!fusumaTransition.isOpen && !!prefecturesQuery.data) {
+      fusumaTransition.openFusuma();
+    }
+
+    // 都道府県のデータが取得できたら、フェードを開く
+    if (!fadeTransition.isOpen && !!prefecturesQuery.data) {
+      fadeTransition.openFade();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const prefectures = prefecturesQuery.data!;
 
   /**

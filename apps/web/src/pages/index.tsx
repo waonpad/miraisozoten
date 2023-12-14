@@ -5,14 +5,27 @@ import TitleNameCatchHorizontal from '@/assets/title-name-catch-horizontal.png';
 import TitleNameVertical from '@/assets/title-name-vertical.png';
 import { ImageBgButton } from '@/components/elements/image-bg-button';
 import { Head } from '@/components/head';
+import { useFadeTransition } from '@/components/transitions/fade-transition/use-fade-transition';
 import { useSound } from '@/lib/use-sound/use-sound';
-import { Link } from '@/router';
+import { Link, useNavigate } from '@/router';
 
 export default function Page() {
   const { playPageMove } = useSound();
 
-  const handleClickLink = () => {
+  const fadeTransition = useFadeTransition();
+
+  const navigate = useNavigate();
+
+  const handleClickNavigateToMenu = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    event.preventDefault();
+
+    fadeTransition.closeFade();
+
     playPageMove();
+
+    setTimeout(() => {
+      navigate('/menu');
+    }, fadeTransition.duration);
   };
 
   return (
