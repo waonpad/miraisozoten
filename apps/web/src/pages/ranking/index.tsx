@@ -7,10 +7,8 @@ import { Head } from '@/components/head';
 
 import { GameRankingFilter } from './_/components/game-ranking-filter';
 import { InfiniteGameRankingListHeader } from './_/components/game-ranking-list-header';
-import {
-  InfiniteGameRankingList,
-  InfiniteGameRankingListProps,
-} from './_/components/infinite-game-ranking-list';
+import { InfiniteGameRankingListProps } from './_/components/infinite-game-ranking-list';
+import './_/css/ranking.css'; // css読み込み
 
 const defaultFilterParams = {
   mode: 'NATIONWIDE',
@@ -36,17 +34,118 @@ export default function Page() {
         description="ゲームのランキングページです。ゲームを速くクリアして高順位を目指そう！"
       />
 
-      <Logo />
+      <div className="pagetitle">
+        <Logo />
+        <p>ランキング</p>
+      </div>
 
-      <GameRankingFilter
-        filterParams={rankingFilterParams}
-        handleClickGameDifficulty={handleClickGameDifficulty}
-        handleClickGameMode={handleClickGameMode}
-      />
+      <div className="rankwrap">
+        <GameRankingFilter
+          filterParams={rankingFilterParams}
+          handleClickGameDifficulty={handleClickGameDifficulty}
+          handleClickGameMode={handleClickGameMode}
+        />
+        <div>
+          <InfiniteGameRankingListHeader />
 
-      <InfiniteGameRankingListHeader />
+          {/* 表題に対するデータ表示領域 */}
+          <div className="rankdata">
+            <div>
+              <div>1位</div>
+              <div className="rankname">
+                <div>
+                  ※名前長い人用スクロール表示可能。長い名前は好きじゃないしHAL SHINE長スンギ
+                </div>
+              </div>
+              <div>99:59:59</div>
+              <div>46</div>
+            </div>
 
-      <InfiniteGameRankingList filterParams={rankingFilterParams} />
+            <div>
+              <div>2位</div>
+              <div className="rankname">
+                <div>※名前</div>
+              </div>
+              <div>※タイム</div>
+              <div>※ミス数</div>
+            </div>
+
+            <div>
+              <div>3位</div>
+              <div className="rankname">
+                <div>※名前</div>
+              </div>
+              <div>※タイム</div>
+              <div>※ミス数</div>
+            </div>
+
+            <div>
+              <div>4位</div>
+              <div className="rankname">
+                <div>※名前</div>
+              </div>
+              <div>※タイム</div>
+              <div>※ミス数</div>
+            </div>
+
+            <div>
+              <div>5位</div>
+              <div className="rankname">
+                <div>※名前</div>
+              </div>
+              <div>※タイム</div>
+              <div>※ミス数</div>
+            </div>
+
+            <div>
+              <div>6位</div>
+              <div className="rankname">
+                <div>※名前</div>
+              </div>
+              <div>※タイム</div>
+              <div>※ミス数</div>
+            </div>
+
+            <div>
+              <div>7位</div>
+              <div className="rankname">
+                <div>※名前</div>
+              </div>
+              <div>※タイム</div>
+              <div>※ミス数</div>
+            </div>
+
+            <div>
+              <div>8位</div>
+              <div className="rankname">
+                <div>※名前</div>
+              </div>
+              <div>※タイム</div>
+              <div>※ミス数</div>
+            </div>
+
+            <div>
+              <div>9位</div>
+              <div className="rankname">
+                <div>※名前</div>
+              </div>
+              <div>※タイム</div>
+              <div>※ミス数</div>
+            </div>
+
+            <div>
+              <div>10位</div>
+              <div className="rankname">
+                <div>※名前</div>
+              </div>
+              <div>※タイム</div>
+              <div>※ミス数</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* <InfiniteGameRankingList filterParams={rankingFilterParams} /> */}
     </>
   );
 }
