@@ -8,7 +8,7 @@ export const FusumaTransitionProvider = ({ children }: { children: React.ReactNo
   return (
     <SetFusumaTransitionProvider value={fusumaTransition}>
       <>
-        <FusumaTransition />
+        {fusumaTransition.isRender && <FusumaTransition />}
         {children}
       </>
     </SetFusumaTransitionProvider>

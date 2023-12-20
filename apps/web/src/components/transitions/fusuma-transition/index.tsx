@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+
 import { cn } from 'ui/lib/utils';
 
 import FusumaLeft from '@/assets/fusuma-left.png';
@@ -10,29 +12,40 @@ const fusumaStyle = {
   img: `h-full w-full object-cover`,
 };
 
+const isCloseStyle = {
+  left: 'right-1/2',
+  right: 'left-1/2',
+};
+
+const isOpenStyle = {
+  left: 'right-[150vw]',
+  right: 'left-[150vw]',
+};
+
 export const FusumaTransition = () => {
   const { isOpen, duration } = useFusumaTransition();
+
+  const [classNames, setClassNames] = useState<{
+    left: string;
+    right: string;
+  }>(isOpenStyle);
+
+  useEffect(() => {
+    setClassNames(isOpen ? isOpenStyle : isCloseStyle);
+  }, [isOpen]);
 
   return (
     // とりあえず動くだけ
     <div className="pointer-events-none absolute">
       <div className="relative min-h-screen min-w-[100vw] overflow-hidden">
-        <div
-          className={cn(
-            `${fusumaStyle.wrapper} ${!isOpen ? 'right-1/2' : 'right-[150vw]'} duration-${duration}`
-          )}
-        >
+        <div className={cn(`${fusumaStyle.wrapper} ${classNames.left} duration-${duration}`)}>
           <img
             src={FusumaLeft}
             alt="ふすま画像左"
             className={`${fusumaStyle.img} object-right-top`}
           />
         </div>
-        <div
-          className={cn(
-            `${fusumaStyle.wrapper} ${!isOpen ? 'left-1/2' : 'left-[150vw]'} duration-${duration}`
-          )}
-        >
+        <div className={cn(`${fusumaStyle.wrapper} ${classNames.right} duration-${duration}`)}>
           <img
             src={FusumaRight}
             alt="ふすま画像右"

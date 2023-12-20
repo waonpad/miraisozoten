@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Prefecture } from 'database';
 import { PrefectureResponse } from 'schema/dist/prefecture';
@@ -7,6 +7,7 @@ import { GameDifficulty, GameMode } from 'schema/dist/todoufuken/game';
 import { Logo } from '@/components/elements/logo';
 import { SoundToggleIconButton } from '@/components/elements/sound-toggle-icon-button';
 import { JapanRadioSVGMap } from '@/components/maps/japan-radio-svg-map';
+import { useFadeTransition } from '@/components/transitions/fade-transition/use-fade-transition';
 import { useSound } from '@/lib/use-sound/use-sound';
 import { usePrefectures } from '@/pages/(prefectures)/_/api/get-prefectures';
 
@@ -23,6 +24,8 @@ import { GameSettingSubmit } from '../game-setting-submit';
  * ゲームの設定を行う画面
  */
 export const GameLobby = () => {
+  const fadeTransition = useFadeTransition();
+
   const { gameSettings, setGameSettings, startGame } = useGameSettings();
 
   const { playClick, playDisabledClick, playOpenDialog, playCloseDialog, playPageMove } =
@@ -98,6 +101,13 @@ export const GameLobby = () => {
       setDialogPrefecture(undefined);
     }
   };
+
+  useEffect(() => {
+    if (!fadeTransition.isOpen) {
+      fadeTransition.openFade();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     // TODO: 設定を決定したら選択した設定以外と決定ボタンを非表示にする

@@ -8,6 +8,8 @@ import { AuthGuard } from '@/auth/auth-guard';
 import { AuthProvider } from '@/auth/auth-provider';
 import { ErrorFallback } from '@/components/elements/error-fallback';
 import { SuspenseFallback } from '@/components/elements/suspense-fallback';
+import { ForeFroundLeafAnimation } from '@/components/foreground-animations/foreground-leaf-animation';
+import { FadeTransitionProvider } from '@/components/transitions/fade-transition/fade-transition-provider';
 import { FusumaTransitionProvider } from '@/components/transitions/fusuma-transition/fusuma-transition-provider';
 import { WatchUnhandledError } from '@/lib/react-error-boundary';
 import { queryClient } from '@/lib/react-query';
@@ -21,16 +23,19 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
       <Sentry.ErrorBoundary fallback={ErrorFallback}>
         <WatchUnhandledError>
           <SoundProvider>
+            <ForeFroundLeafAnimation />
             <FusumaTransitionProvider>
-              <Suspense fallback={<SuspenseFallback />}>
-                <HelmetProvider>
-                  <QueryClientProvider client={queryClient}>
-                    <AuthProvider>
-                      <AuthGuard>{children}</AuthGuard>
-                    </AuthProvider>
-                  </QueryClientProvider>
-                </HelmetProvider>
-              </Suspense>
+              <FadeTransitionProvider>
+                <Suspense fallback={<SuspenseFallback />}>
+                  <HelmetProvider>
+                    <QueryClientProvider client={queryClient}>
+                      <AuthProvider>
+                        <AuthGuard>{children}</AuthGuard>
+                      </AuthProvider>
+                    </QueryClientProvider>
+                  </HelmetProvider>
+                </Suspense>
+              </FadeTransitionProvider>
             </FusumaTransitionProvider>
           </SoundProvider>
         </WatchUnhandledError>

@@ -1,6 +1,9 @@
+import { useEffect } from 'react';
+
 import NotchedPaperOrange from '@/assets/notched-paper-orange.png';
 import { ImageBgButton } from '@/components/elements/image-bg-button';
 import { SoundToggleIconButton } from '@/components/elements/sound-toggle-icon-button';
+import { useFadeTransition } from '@/components/transitions/fade-transition/use-fade-transition';
 import { useFusumaTransition } from '@/components/transitions/fusuma-transition/use-fusuma-transition';
 import { useSound } from '@/lib/use-sound/use-sound';
 import { Link, useNavigate } from '@/router';
@@ -14,6 +17,8 @@ import { useGame } from '../../hooks/use-game';
  */
 export const GameResult = () => {
   const fusumaTransition = useFusumaTransition();
+
+  const fadeTransition = useFadeTransition();
 
   const navigate = useNavigate();
 
@@ -35,6 +40,13 @@ export const GameResult = () => {
       navigate('/menu');
     }, fusumaTransition.duration);
   };
+
+  useEffect(() => {
+    if (!fadeTransition.isOpen) {
+      fadeTransition.openFade();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
