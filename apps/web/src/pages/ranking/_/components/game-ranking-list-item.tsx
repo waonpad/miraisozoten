@@ -11,11 +11,22 @@ export type InfiniteGameRankingListItemProps = {
 
 export const InfiniteGameRankingListItem = ({ gameRanking }: InfiniteGameRankingListItemProps) => {
   return (
-    <div>
-      <div>{gameRanking.rank}</div>
-      <div>{gameRanking.user.name}</div>
-      <div>{millisecondsToHms(gameRanking.clearTime)}</div>
-      <div>{gameRanking.logs.filter((log) => log.result === 'LOSE').length}</div>
+    <div className="flex">
+      <div className="flex items-center justify-center text-center">{gameRanking.rank}</div>
+      <div
+        /**
+         * rankname is custom css class
+         */
+        className="rankname flex items-center justify-start text-center"
+      >
+        <div className="overflow-x-auto whitespace-nowrap">{gameRanking.user.name}</div>
+      </div>
+      <div className="flex items-center justify-center text-center">
+        {millisecondsToHms(gameRanking.clearTime)}
+      </div>
+      <div className="flex items-center justify-center text-center">
+        {gameRanking.logs.filter((log) => log.result === 'LOSE').length}
+      </div>
     </div>
   );
 };

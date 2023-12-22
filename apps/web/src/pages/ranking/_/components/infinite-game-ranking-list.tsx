@@ -64,16 +64,19 @@ export const InfiniteGameRankingList = ({ filterParams }: InfiniteGameRankingLis
   });
 
   return (
-    <>
-      <ul>
-        {infiniteGames.map((game) => (
-          <li key={game.id}>
-            <InfiniteGameRankingListItem gameRanking={game} />
-          </li>
-        ))}
-      </ul>
-      {/* ボタンは不要なので後で消す */}
-      <Button ref={loadMoreRef}>Load More</Button>
-    </>
+    <div
+      /**
+       * rankdata is custom css class
+       */
+      className="rankdata bg-white/70"
+    >
+      {infiniteGames.map((game) => (
+        <InfiniteGameRankingListItem gameRanking={game} key={game.id} />
+      ))}
+      {/* ボタンは見えているひつようが無いので非表示にしてトリガーのみ動くようにする */}
+      <Button className="invisible" ref={loadMoreRef}>
+        Load More
+      </Button>
+    </div>
   );
 };

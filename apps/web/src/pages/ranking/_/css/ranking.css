@@ -1,6 +1,6 @@
 @charset "utf-8";
 
-html{
+/* html{
   box-sizing: border-box;
   max-width: 100vw;
   max-height: 100vh;
@@ -9,7 +9,7 @@ html{
 main{
   height: 100vh;
   max-height: 100vh;
-}
+} */
 
 .pagetitle{
   display: flex;
@@ -26,49 +26,49 @@ main{
   height: 100%;
 }
 
-.ranktitle{
+/* .ranktitle{
   display: flex;
   background: url("../../../../../src/assets/notched-paper-burlywood.png");
   background-repeat: no-repeat;
   background-position: 50% 50%;
   background-size: 110% 120%;
-}
+} */
 
-.ranktitle div{
+/* .ranktitle div{
   text-align: center;
-}
+} */
 
 .rankwrap > div > div button{
   border: 1px solid #000;
   border-radius: 1px;
 }
 
-.rankdata{
+/* .rankdata{
   background: rgb(255 255 255 / 70%);
-}
+} */
 
-.rankname div{
+/* .rankname div{
   overflow-x: auto;
   white-space: nowrap;
-}
+} */
 
-.rankdata > div{
+/* .rankdata > div{
   display: flex;
-}
+} */
 
-.rankdata div div{
+/* .rankdata div div{
   text-align: center;
-}
+} */
 
-.rankdata > div > div{
+/* .rankdata > div > div{
   display: flex;
   align-items: center;
   justify-content: center;
-}
+} */
 
-.rankdata > div > div:nth-child(2){
+/* .rankdata > div > div:nth-child(2){
   justify-content: flex-start;
-}
+} */
 
 
 
@@ -76,10 +76,10 @@ main{
 
 /* スマホ・タブレットサイズ =================================== */
 @media screen and (width <=1024px){
-  main{
+  /* main{
     padding: 2.5vw;
   }
-  
+   */
   .pagetitle div{
     width: 8%;
   }
@@ -183,9 +183,9 @@ main{
 
 /* PCサイズ ================================================== */
 @media screen and (width >=1025px){
-  main{
+  /* main{
     padding: 20px;
-  }
+  } */
   
   .pagetitle{
     margin-bottom: 10px;
@@ -207,7 +207,7 @@ main{
 
   .rankwrap{
     display: flex;
-    align-items: center;
+    align-items: start; /* changed */
     width: 80%;
     margin: 0 auto;
   }
@@ -224,6 +224,7 @@ main{
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin-top: 180px; /* added */
   }
 
   .rankwrap > div:last-child{
