@@ -34,6 +34,15 @@ export default ({ mode }) => {
       },
       setupFiles: ['./src/setup-tests.ts'],
     },
+    esbuild: {
+      drop:
+        process.env.VITE_APP_ENV === 'production'
+          ? [
+              'console',
+              // 'debugger'
+            ]
+          : [],
+    },
   } as UserConfig & { test: VitestUserConfig['test'] });
 };
 
