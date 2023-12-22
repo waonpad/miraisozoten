@@ -1,16 +1,17 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import ClickSound from '@/assets/sounds/click.mp3';
-import NegativeClickSound from '@/assets/sounds/click.mp3';
-import DisabledClickSound from '@/assets/sounds/click.mp3';
-import OpenDialogSound from '@/assets/sounds/click.mp3';
-import CloseDialogSound from '@/assets/sounds/click.mp3'; // openと同じでいいかも
-import GameTurnWinSound from '@/assets/sounds/click.mp3';
-import GameTurnLoseSound from '@/assets/sounds/click.mp3';
-import GameTurnDrawSound from '@/assets/sounds/click.mp3';
-import GameClearSound from '@/assets/sounds/click.mp3';
-import PageMoveSound from '@/assets/sounds/click.mp3';
-import BGM from '@/assets/sounds/click.mp3';
+import BGM from '@/assets/sounds/common-bgm.mp3';
+import DisabledClickSound from '@/assets/sounds/disabled-click.mp3';
+import GameBGM from '@/assets/sounds/game-bgm.mp3';
+import GameClearSound from '@/assets/sounds/game-clear.mp3';
+import GameTurnLoseSound from '@/assets/sounds/game-turn-lose.mp3';
+import GameTurnDrawSound from '@/assets/sounds/game-turn-lose.mp3';
+import GameTurnWinSound from '@/assets/sounds/game-turn-win.mp3';
+import NegativeClickSound from '@/assets/sounds/negative-click.mp3';
+import OpenDialogSound from '@/assets/sounds/open-dialog.mp3';
+import CloseDialogSound from '@/assets/sounds/open-dialog.mp3';
+import PageMoveSound from '@/assets/sounds/page-move.mp3';
 import { COOKIE_NAMES } from '@/constants/cookie-names';
 import { getCookie } from '@/utils/cookie/get-cookie';
 import { setCookie } from '@/utils/cookie/set-cookie';
@@ -44,17 +45,35 @@ export const useSoundCtx = () => {
 
   const [playCloseDialog] = useSoundOrigin(CloseDialogSound, options);
 
-  const [playGameTurnWin] = useSoundOrigin(GameTurnWinSound, options);
+  const [playGameTurnWin] = useSoundOrigin(GameTurnWinSound, {
+    ...options,
+    volume: 0.5,
+  });
 
-  const [playGameTurnLose] = useSoundOrigin(GameTurnLoseSound, options);
+  const [playGameTurnLose] = useSoundOrigin(GameTurnLoseSound, {
+    ...options,
+    volume: 0.5,
+  });
 
-  const [playGameTurnDraw] = useSoundOrigin(GameTurnDrawSound, options);
+  const [playGameTurnDraw] = useSoundOrigin(GameTurnDrawSound, {
+    ...options,
+    volume: 0.5,
+  });
 
-  const [playGameClear] = useSoundOrigin(GameClearSound, options);
+  const [playGameClear] = useSoundOrigin(GameClearSound, {
+    ...options,
+    volume: 0.5,
+  });
 
   const [playPageMove] = useSoundOrigin(PageMoveSound, options);
 
   const [playBGM, { stop: stopBGM }] = useSoundOrigin(BGM, {
+    ...options,
+    loop: true,
+  });
+
+  // TODO: ゲームBGMの制御 #322
+  const [playGameBGM, { stop: stopGameBGM }] = useSoundOrigin(GameBGM, {
     ...options,
     loop: true,
   });
@@ -128,6 +147,8 @@ export const useSoundCtx = () => {
     playPageMove,
     playBGM,
     stopBGM,
+    playGameBGM,
+    stopGameBGM,
     toggleSoundEnabled,
   };
 };
