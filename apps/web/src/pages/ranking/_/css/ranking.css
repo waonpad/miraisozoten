@@ -207,7 +207,7 @@ main{
 
   .rankwrap{
     display: flex;
-    align-items: start; /* changed */
+    align-items: flex-start; /* changed */
     width: 80%;
     margin: 0 auto;
   }
