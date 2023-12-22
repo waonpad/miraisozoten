@@ -76,12 +76,13 @@ export const GameTurnResult = () => {
       fadeTransition.openFade();
     }
 
-    (() =>
+    (() => {
       ({
-        WIN: playGameTurnWin(),
-        LOSE: playGameTurnLose(),
-        DRAW: playGameTurnDraw(),
-      }[currentTurn.result]))();
+        WIN: playGameTurnWin,
+        LOSE: playGameTurnLose,
+        DRAW: playGameTurnDraw,
+      })[currentTurn.result]();
+    })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
