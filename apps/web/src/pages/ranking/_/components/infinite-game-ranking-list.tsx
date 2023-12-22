@@ -12,8 +12,10 @@ import { InfiniteGameRankingListItem } from './game-ranking-list-item';
 export type InfiniteGameRankingListProps = {
   filterParams: Omit<
     typeof useInfiniteGames extends (args: { params: infer T }) => unknown ? T : never,
-    'state' | 'orderBy' | 'userId'
-  >;
+    'state' | 'orderBy' | 'userId' | 'mode' | 'regionId'
+  > & {
+    mode: 'NATIONWIDE' | `REGIONAL-${number}`;
+  };
 };
 
 /**
@@ -21,14 +23,29 @@ export type InfiniteGameRankingListProps = {
  * 絞りこまれたランキングを無限スクロールで表示するコンポーネント
  */
 export const InfiniteGameRankingList = ({ filterParams }: InfiniteGameRankingListProps) => {
+  const modeAndRegionId = (() => {
+    if (filterParams.mode === 'NATIONWIDE') {
+      return { mode: filterParams.mode };
+    }
+
+    return {
+      mode: 'REGIONAL',
+      regionId: Number(filterParams.mode.split('-')[1]),
+    } as const;
+  })();
+
   const infiniteinfiniteGamesQuery = useInfiniteGames({
     params: {
       ...filterParams,
+      ...modeAndRegionId,
       state: 'FINISHED', // ランキングなので、終了しているもののみを取得する
       orderBy: [
         { column: 'clearTime', sort: 'asc', nulls: 'last' }, // タイムが短い順に並べる
         { column: 'createdAt', sort: 'asc' }, // 作成日が古い順に並べる
       ],
+    },
+    config: {
+      suspense: false, // suspenseをtrueにするとフィルターを変更したときに毎回ローディングが表示されるのでfalseにする
     },
   });
 
@@ -47,16 +64,19 @@ export const InfiniteGameRankingList = ({ filterParams }: InfiniteGameRankingLis
   });
 
   return (
-    <>
-      <ul>
-        {infiniteGames.map((game) => (
-          <li key={game.id}>
-            <InfiniteGameRankingListItem gameRanking={game} />
-          </li>
-        ))}
-      </ul>
-      {/* ボタンは不要なので後で消す */}
-      <Button ref={loadMoreRef}>Load More</Button>
-    </>
+    <div
+      /**
+       * rankdata is custom css class
+       */
+      className="rankdata bg-white/70"
+    >
+      {infiniteGames.map((game) => (
+        <InfiniteGameRankingListItem gameRanking={game} key={game.id} />
+      ))}
+      {/* ボタンは見えているひつようが無いので非表示にしてトリガーのみ動くようにする */}
+      <Button className="invisible" ref={loadMoreRef}>
+        Load More
+      </Button>
+    </div>
   );
 };

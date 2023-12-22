@@ -1,0 +1,293 @@
+@charset "utf-8";
+
+/* html{
+  box-sizing: border-box;
+  max-width: 100vw;
+  max-height: 100vh;
+}
+
+main{
+  height: 100vh;
+  max-height: 100vh;
+} */
+
+.pagetitle{
+  display: flex;
+}
+
+.pagetitle div{
+  height: auto;
+  aspect-ratio: 3007 / 3334;
+  margin-right: 10px;
+}
+
+.pagetitle div img{
+  width: 100%;
+  height: 100%;
+}
+
+/* .ranktitle{
+  display: flex;
+  background: url("../../../../../src/assets/notched-paper-burlywood.png");
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: 110% 120%;
+} */
+
+/* .ranktitle div{
+  text-align: center;
+} */
+
+.rankwrap > div > div button{
+  border: 1px solid #000;
+  border-radius: 1px;
+}
+
+/* .rankdata{
+  background: rgb(255 255 255 / 70%);
+} */
+
+/* .rankname div{
+  overflow-x: auto;
+  white-space: nowrap;
+} */
+
+/* .rankdata > div{
+  display: flex;
+} */
+
+/* .rankdata div div{
+  text-align: center;
+} */
+
+/* .rankdata > div > div{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} */
+
+/* .rankdata > div > div:nth-child(2){
+  justify-content: flex-start;
+} */
+
+
+
+
+
+/* スマホ・タブレットサイズ =================================== */
+@media screen and (width <=1024px){
+  /* main{
+    padding: 2.5vw;
+  }
+   */
+  .pagetitle div{
+    width: 8%;
+  }
+
+  .pagetitle p{
+    font-size: 5vw;
+  }
+
+  .rankwrap{
+    margin-top: 15px;
+  }
+
+  .ranktitle div{
+    font-size: 3vw;
+  }
+
+  .rankdata > div{
+    margin-top: 30px;
+  }
+
+  .rankdata > div > div{
+    font-size: 2.5vw;
+  }
+
+  .rankwrap > div:first-child{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 7vw;
+  }
+
+  .ranktitle > div:nth-child(1){
+    width: 10%;
+  }
+
+  .ranktitle > div:nth-child(2){
+    width: 50%;
+  }
+
+  .ranktitle > div:nth-child(3), .ranktitle > div:nth-child(4){
+    width: 20%;
+  }
+
+  .rankdata > div:first-child{
+    margin-top: 0;
+  }
+
+  .rankdata > div > div:nth-child(1){
+    width: 10%;
+  }
+
+  .rankdata > div > div:nth-child(2){
+    width: 50%;
+  }
+
+  .rankdata > div > div:nth-child(3), .rankdata > div > div:nth-child(4){
+    width: 20%;
+  }
+
+  .rankwrap > div:first-child > div{
+    width: 40%;
+  }
+
+  .rankwrap > div:first-child > div:last-child{
+    margin-left: 5%;
+  }
+
+  .rankwrap > div:first-child > div button{
+    height: auto;
+    padding: 1.5vw 2vw;
+    font-size: 2.8vw;
+  }
+
+  .ranktitle{
+    padding: 1.2vw 1vw;
+  }
+
+  .rankdata{
+    padding: 30px 5px;
+    margin-top: 10px;
+  }
+
+  .rankname{
+    max-width: 50%;
+  }
+}
+
+
+
+
+
+/* スマホ微調整用サイズ ====================================== */
+@media screen and (width <=500px){
+  .rankdata div{
+    font-size: 3vw !important;
+  }
+}
+
+
+
+
+
+/* PCサイズ ================================================== */
+@media screen and (width >=1025px){
+  /* main{
+    padding: 20px;
+  } */
+  
+  .pagetitle{
+    margin-bottom: 10px;
+  }
+
+  .pagetitle div{
+    width: 5vw;
+  }
+
+  .pagetitle div img{
+    width: 100%;
+  }
+
+  .pagetitle p{
+    display: flex;
+    align-items: center;
+    font-size: 2rem;
+  }
+
+  .rankwrap{
+    display: flex;
+    align-items: start; /* changed */
+    width: 80%;
+    margin: 0 auto;
+  }
+
+  .rankwrap > div{
+    height: 100%;
+  }
+
+  .rankdata > div{
+    padding-top: 20px;
+  }
+
+  .rankwrap > div:first-child{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 180px; /* added */
+  }
+
+  .rankwrap > div:last-child{
+    width: 100%;
+    margin-left: 20px;
+  }
+  
+  .ranktitle div:nth-child(1){
+    width: 10%;
+  }
+
+  .ranktitle div:nth-child(2){
+    width: 50%;
+  }
+
+  .ranktitle div:nth-child(3), .ranktitle div:nth-child(4){
+    width: 20%;
+  }
+
+  .rankdata > div:first-child{
+    padding-top: 0;
+  }
+
+  .rankdata > div > div:nth-child(1){
+    width: 10%;
+  }
+
+  .rankdata > div > div:nth-child(2){
+    width: 50%;
+  }
+
+  .rankdata > div > div:nth-child(3), .rankdata > div > div:nth-child(4){
+    width: 20%;
+  }
+
+  .rankwrap > div:first-child > div{
+    height: auto;
+  }
+
+  .rankwrap > div:first-child > div:first-child{
+    margin-bottom: 10px;
+  }
+
+  .rankwrap > div:first-child button{
+    font-size: 1rem;
+  }
+
+  .rankwrap > div:first-child button span{
+    width: 10vw;
+  }
+
+  .ranktitle{
+    padding: 10px 0;
+    font-size: 1.3rem;
+  }
+
+  
+
+  .rankdata{
+    padding: 30px 0;
+    margin-top: 20px;
+    overflow-y: auto;
+    border: 1px solid #888;
+    border-width: 0 1px;
+  }
+}
