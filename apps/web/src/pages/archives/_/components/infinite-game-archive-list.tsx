@@ -1,7 +1,5 @@
 import { useRef } from 'react';
 
-import { Button } from 'ui/components/ui/button';
-
 import { useAuth } from '@/auth/use-auth';
 import { useInfiniteGames } from '@/pages/(todoufuken)/_/api/get-infinite-games';
 import { formatInfiniteData } from '@/utils/format';
@@ -42,7 +40,7 @@ export const InfiniteGameArchiveList = () => {
         ))}
       </ul>
       {/* ボタンは不要なので後で消す */}
-      <Button ref={loadMoreRef}>Load More</Button>
+      {/* <Button ref={loadMoreRef}>Load More</Button> */}
     </>
   );
 };

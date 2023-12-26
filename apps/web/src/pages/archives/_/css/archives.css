@@ -1,0 +1,151 @@
+@charset "utf-8";
+
+.archwrap{
+  max-height: calc(100vh - (5vw + 100px));
+  overflow-y: auto;
+}
+
+.archmode, .archvalue{
+  display: flex;
+  justify-content: center;
+}
+
+.archdata{
+  background-image: url("../../../../assets/notched-paper-burlywood.png");
+  background-size: 100% 100%;
+}
+
+.archdata:first-child{
+  margin-top: 0;
+}
+
+.archmode p{
+  text-align: center;
+  background: url("../../../../assets/notched-paper-orange.png");
+  background-size: 100% 100%;
+}
+
+.archmode p:first-child, .archvalue p:first-child{
+  margin-left: 0;
+}
+
+
+
+
+/* スマホ・タブレットサイズ =================================== */
+@media screen and (width <=1024px){
+  .archwrap{
+    width: 75%;
+    padding-right: 10px;
+    margin: 30px auto 0;
+  }
+
+  .archdata{
+    width: 100%;
+    padding: 25px 30px;
+    margin: 30px auto 0;
+    font-size: 1.3rem;
+  }
+
+  .archday{
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  .archmode p{
+    width: 40%;
+    padding: 3px 0;
+    margin-left: 20px;
+  }
+
+  .archvalue p{
+    margin-left: 3vw;
+  }
+}
+
+
+
+
+
+/* スマホ微調整用サイズ ====================================== */
+
+@media screen and (width <=500px){
+  .archwrap{
+    width: 90%;
+    padding-right: 10px;
+    margin: 30px auto 0;
+  }
+
+  .archdata{
+    padding: 3vw 5vw;
+    margin: 20px auto 0;
+    font-size: 1rem;
+  }
+
+  .archday{
+    font-size: 1.2rem;
+  }
+
+  .archvalue p{
+    margin-left: 10px;
+  }
+}
+
+
+
+
+
+/* PCサイズ ================================================== */
+@media screen and (width >=1025px){
+  .archwrap{
+    width: 750px;
+    margin: 0 auto;
+  }
+
+  .archdata{
+    display: flex;
+    width: 100%;
+    padding: 25px 30px;
+    margin: 20px auto 0;
+    font-size: 1.3rem;
+  }
+
+  .archday{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px 0 10px;
+  }
+
+  .archday::after{
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 2px;
+    height: 100%;
+    content: '';
+    background: #fff;
+    transform: translateY(-50%);
+  }
+
+  .archdata > div{
+    width: 100%;
+    padding-right: 10px;
+  }
+
+  .archmode p{
+    width: 30%;
+    padding: 3px 0;
+    margin-left: 20px;
+  }
+
+  .archvalue{
+    margin-top: 10px;
+  }
+
+  .archvalue p{
+    margin-left: 30px;
+  }
+}
