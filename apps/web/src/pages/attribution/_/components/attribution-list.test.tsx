@@ -1,4 +1,4 @@
-import { AttributionList } from '@/pages/attribution/_/api/components/attribution-list';
+import { AttributionList } from '@/pages/attribution/_/components/attribution-list';
 import { render, screen } from '@/test/utils';
 
 test('renders AttributionList', async () => {

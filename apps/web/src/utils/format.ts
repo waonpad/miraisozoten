@@ -2,7 +2,7 @@ import { InfiniteData } from '@tanstack/react-query';
 import { default as dayjs } from 'dayjs';
 
 export const formatDate = (date: string | number | Date | dayjs.Dayjs) =>
-  dayjs(date).format('MMMM D, YYYY h:mm A');
+  dayjs(date).format('YYYY/MM/DD hh:mm');
 
 export const millisecondsToHms = (milliseconds: number) => {
   const seconds = milliseconds / 1000;
