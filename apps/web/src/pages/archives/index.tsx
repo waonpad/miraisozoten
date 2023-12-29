@@ -6,6 +6,8 @@ import { useFadeTransition } from '@/components/transitions/fade-transition/use-
 
 import { InfiniteGameArchiveList } from './_/components/infinite-game-archive-list';
 
+import './_/css/archives.css'; // css読み込み
+
 export default function Page() {
   const fadeTransition = useFadeTransition();
 
@@ -23,9 +25,14 @@ export default function Page() {
         description="あなたが過去にプレイしたゲームの成績一覧です。どれだけ成長したか確認してみよう！"
       />
 
-      <Logo />
+      <div className="p-2 lg:p-4">
+        <div className="pagetitle">
+          <Logo />
+          <p>成績</p>
+        </div>
 
-      <InfiniteGameArchiveList />
+        <InfiniteGameArchiveList />
+      </div>
     </>
   );
 }

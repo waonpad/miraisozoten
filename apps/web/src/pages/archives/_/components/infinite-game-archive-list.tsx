@@ -34,15 +34,19 @@ export const InfiniteGameArchiveList = () => {
 
   return (
     <>
-      <ul>
+      <div
+        /**
+         * archwrap is custom class
+         */
+        className="archwrap"
+      >
         {infiniteGames.map((game) => (
-          <li key={game.id}>
-            <InfiniteGameArchiveListItem gameArchive={game} />
-          </li>
+          <InfiniteGameArchiveListItem gameArchive={game} key={game.id} />
         ))}
-      </ul>
-      {/* ボタンは不要なので後で消す */}
-      <Button ref={loadMoreRef}>Load More</Button>
+      </div>
+      <Button className="invisible" ref={loadMoreRef}>
+        Load More
+      </Button>
     </>
   );
 };
