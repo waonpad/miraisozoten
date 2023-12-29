@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 
 import { Logo } from '@/components/elements/logo';
+import { SoundToggleIconButton } from '@/components/elements/sound-toggle-icon-button';
 import { Head } from '@/components/head';
 import { useFadeTransition } from '@/components/transitions/fade-transition/use-fade-transition';
 
@@ -33,6 +34,8 @@ export default function Page() {
 
         <InfiniteGameArchiveList />
       </div>
+      
+      <SoundToggleIconButton className="absolute right-2 top-2" />
     </>
   );
 }
