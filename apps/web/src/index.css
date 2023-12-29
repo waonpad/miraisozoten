@@ -1,5 +1,9 @@
 @import 'tailwind-config/globals.css';
 
+*{
+  font-family : YuMincho, 'Yu Mincho', serif;
+}
+
 .firebase-emulator-warning {
   display: none;
 }
