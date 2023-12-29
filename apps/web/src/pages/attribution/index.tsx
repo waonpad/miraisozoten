@@ -1,12 +1,13 @@
 import { useEffect } from 'react';
 
 import { Logo } from '@/components/elements/logo';
+import { SoundToggleIconButton } from '@/components/elements/sound-toggle-icon-button';
 import { Head } from '@/components/head';
 import { useFadeTransition } from '@/components/transitions/fade-transition/use-fade-transition';
 
-import { AttributionList } from './_/api/components/attribution-list';
+import { AttributionList } from './_/components/attribution-list';
 
-import './_/attribution.css'; // css読み込み
+import './_/css/attribution.css'; // css読み込み
 
 export default function Page() {
   const fadeTransition = useFadeTransition();
@@ -25,13 +26,18 @@ export default function Page() {
         description="このサイトで現在使用しているデータの出典一覧です。"
       />
 
-      <div className="pagetitle">
-        <Logo />
-        <p>都道府県データの引用元</p>
+      <div className="p-2 lg:p-4">
+        <div className="pagetitle">
+          <Logo />
+          <p>都道府県データの引用元</p>
+        </div>
+
+        <div className="attrtable">
+          <AttributionList />
+        </div>
       </div>
-      <div className="attrtable">
-        <AttributionList />
-      </div>
+
+      <SoundToggleIconButton className="absolute right-2 top-2" />
     </>
   );
 }
