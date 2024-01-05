@@ -47,24 +47,35 @@ enum PrefectureStatsName {
   IMPORTANT_CULTURAL_PROPERTY_COUNT
   ACADEMICABILITY
   ANNUAL_PRECIPITATION
+  APPLE_CONSUMPTION
   AREA
   ARTMUSEUM_COUNT
   ATTRACTIVENESS_RANKING
   AVERAGE_TEMPERATURE
+  BRIDGE_COUNT
+  CONVENIENCE_STORE_COUNT
   DETACHED_HOUSE_RATE
   DEVIATION_VALUE
   ELEMENTARY_SCHOOL_COUNT
+  FOREST_AREA
   GARBAGE_RECYCLING_RATE
   G_D_P
   HOMETOWN_TAX
+  KEROSENE_PRICE
   KOSHIEN_COUNT
+  MORNING_READING_ENFORCEMENT_RATE
   NATURAL_MONUMENT_COUNT
   POPULATION
+  POST_OFFICE_COUNT
+  RICE_CONSUMPTION
   RICE_PRODUCTION_RATE
   SHRINE_COUNT
   SOCCER_POPULATION
+  STARBUCKS_COUNT
   STATION_COUNT
   SUGAR_CONSUMPTION
+  TUNNEL_COUNT
+  UNIQLO_COUNT
 }
 
 model PrefectureStats {
@@ -72,24 +83,35 @@ model PrefectureStats {
   importantCulturalPropertyCount Int
   academicability Float
   annualPrecipitation Int
+  appleConsumption Int
   area Int
   artmuseumCount Int
   attractivenessRanking Float
   averageTemperature Float
+  bridgeCount Int
+  convenienceStoreCount Int
   detachedHouseRate Float
   deviationValue Float
   elementarySchoolCount Int
+  forestArea Int
   garbageRecyclingRate Float
   gDP Int
   hometownTax Int
+  kerosenePrice Int
   koshienCount Int
+  morningReadingEnforcementRate Int
   naturalMonumentCount Int
   population Int
+  postOfficeCount Int
+  riceConsumption Int
   riceProductionRate Int
   shrineCount Int
   soccerPopulation Int
+  starbucksCount Int
   stationCount Int
   sugarConsumption Int
+  tunnelCount Int
+  uniqloCount Int
   prefecture Prefecture?
 }
 
