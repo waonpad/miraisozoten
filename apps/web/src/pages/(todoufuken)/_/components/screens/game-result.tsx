@@ -7,6 +7,7 @@ import { useFadeTransition } from '@/components/transitions/fade-transition/use-
 import { useFusumaTransition } from '@/components/transitions/fusuma-transition/use-fusuma-transition';
 import { useSound } from '@/lib/use-sound/use-sound';
 import { Link, useNavigate } from '@/router';
+import { assert } from '@/utils/asset';
 import { millisecondsToHms } from '@/utils/format';
 
 import { useGame } from '../../hooks/use-game';
@@ -53,14 +54,16 @@ export const GameResult = () => {
       <div className="mx-auto grid min-h-screen grid-cols-1 gap-10 p-10 lg:p-20">
         <div className="flex flex-col items-center justify-end">
           <table className="table-auto border-separate border-spacing-2 text-3xl">
-            <tr>
-              <td>タイム</td>
-              <td>{millisecondsToHms(playTime)}</td>
-            </tr>
-            <tr>
-              <td>ミス数</td>
-              <td>{missCount}</td>
-            </tr>
+            <tbody>
+              <tr>
+                <td>タイム</td>
+                <td>{millisecondsToHms(playTime)}</td>
+              </tr>
+              <tr>
+                <td>ミス数</td>
+                <td>{missCount}</td>
+              </tr>
+            </tbody>
           </table>
         </div>
         <div className="flex flex-col items-center justify-start lg:justify-end">
