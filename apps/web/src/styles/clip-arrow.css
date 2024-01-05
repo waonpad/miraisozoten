@@ -1,0 +1,35 @@
+@keyframes clip-animation-vertical {
+  0% {
+    clip-path: inset(100% 0 0 0);
+  }
+
+  50% {
+    clip-path: inset(0 0 0 0);
+  }
+
+  100% {
+    clip-path: inset(100% 0 0 0);
+  }
+}
+
+.clip-arrow-vertical {
+  animation: clip-animation-vertical 3s infinite;
+}
+
+@keyframes clip-animation-horizontal {
+  0% {
+    clip-path: inset(0 0 0 100%);
+  }
+
+  50% {
+    clip-path: inset(0 0 0 0);
+  }
+
+  100% {
+    clip-path: inset(0 0 0 100%);
+  }
+}
+
+.clip-arrow-horizontal {
+  animation: clip-animation-horizontal 3s infinite;
+}

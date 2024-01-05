@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 
+import ArrowHorizontal from '@/assets/arrow-horizontal.svg?react';
+import ArrowVertical from '@/assets/arrow-vertical.svg?react';
 import NotchedPaperBurlywood from '@/assets/notched-paper-burlywood.png';
 import NotchedPaperOrange from '@/assets/notched-paper-orange.png';
 import { ImageBgContainer } from '@/components/containers/image-bg-container';
@@ -14,6 +16,8 @@ import { LabeledTurnResult } from '../../config/game';
 import { useGame } from '../../hooks/use-game';
 import { getTurnAllyFactor } from '../../utils/get-turn-ally-factor';
 import { getTurnOpponentFactor } from '../../utils/get-turn-opponent-factor';
+
+import '@/styles/clip-arrow.css';
 
 /**
  * @description
@@ -193,7 +197,7 @@ export const GameTurnResult = () => {
 
         <div className="grid grow grid-cols-1 gap-4 lg:grid-cols-3 lg:py-8">
           {/* 自分が利用したデータと相手のデータを表示する */}
-          <div className="flex flex-col">
+          <div className="relative flex flex-col">
             <div className="flex justify-center text-2xl lg:hidden">
               {allyFactor.prefecture.name}
             </div>
@@ -219,10 +223,34 @@ export const GameTurnResult = () => {
                 )}
               </div>
             </ImageBgContainer>
+
+            {/* スマホ用 */}
+            <div className="absolute right-0 top-[100%] mt-1 flex h-14 items-center lg:hidden">
+              {currentTurn.result === 'WIN' ? (
+                <>
+                  <div className="clip-arrow-vertical relative mr-2 aspect-[12/30] h-full">
+                    <ArrowVertical className="absolute left-0 top-0 h-full w-full" />
+                  </div>
+                  <div className="text-xl">吸収</div>
+                </>
+              ) : (
+                <></>
+              )}
+            </div>
           </div>
 
-          {/* ダミー */}
-          <div className="hidden lg:block"></div>
+          <div className="hidden lg:flex lg:flex-col lg:items-center">
+            {currentTurn.result === 'WIN' ? (
+              <>
+                <div className="text-3xl">吸収</div>
+                <div className="relative w-full flex-1">
+                  <ArrowHorizontal className="clip-arrow-horizontal absolute left-0 top-1/2 h-full w-full -translate-y-1/2" />
+                </div>
+              </>
+            ) : (
+              <></>
+            )}
+          </div>
 
           <div className="flex flex-col">
             <div className="flex justify-center text-2xl lg:hidden">
