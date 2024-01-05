@@ -89,7 +89,7 @@ export const LabeledHighLow = {
  * ゲームの結果を画面に表示する際、どのような文字列にするかの設定
  */
 export const LabeledTurnResult = {
-  WIN: '勝ち',
-  LOSE: '負け',
-  DRAW: '引き分け',
+  WIN: '勝利',
+  LOSE: '敗北',
+  DRAW: '引分',
 } satisfies Record<GameResultType, string>;

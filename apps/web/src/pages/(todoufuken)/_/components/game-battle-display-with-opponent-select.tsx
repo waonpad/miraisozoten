@@ -52,7 +52,7 @@ export const GameBattleDisplayWithOpponentSelect = ({
             imagePath={NotchedPaperBurlywood}
             className="mb-2 py-2 text-2xl lg:py-3 lg:text-3xl"
           >
-            対戦する都道府県
+            どの都道府県に挑む？
           </ImageBgContainer>
           <div
             // eslint-disable-next-line tailwindcss/no-custom-classname

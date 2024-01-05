@@ -27,7 +27,7 @@ export const ConfirmGiveUpDialog = ({
         }}
         className="min-w-[50vw] max-w-[90vw] border-none bg-transparent bg-[length:100%_100%] p-12 shadow-none sm:rounded-none lg:max-w-fit lg:p-16"
       >
-        <div className="text-center text-2xl">ギブアップしますか？</div>
+        <div className="text-center text-2xl">降参する？</div>
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-2">
           <ImageBgButton
             imagePath={NotchedPaperOrange}
