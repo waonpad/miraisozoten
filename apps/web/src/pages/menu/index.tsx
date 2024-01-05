@@ -64,7 +64,10 @@ export default function Page() {
 
     // ゲームの終了時にふすまを閉じてここに遷移するため、開く
     if (!fusumaTransition.isOpen) {
-      fusumaTransition.openFusuma();
+      // 実際のAPIだと処理がはやすぎてふすまが見えないので、1秒後に開く
+      setTimeout(() => {
+        fusumaTransition.openFusuma();
+      }, 1000);
     }
 
     // トップ画面からの遷移でフェードしてくるため、開く

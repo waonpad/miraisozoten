@@ -36,7 +36,10 @@ export const GameTurnAction = () => {
   useEffect(() => {
     // 都道府県のデータが取得できたら、ふすまを開く
     if (!fusumaTransition.isOpen && !!prefecturesQuery.data) {
-      fusumaTransition.openFusuma();
+      // 実際のAPIだと処理がはやすぎてふすまが見えないので、1秒後に開く
+      setTimeout(() => {
+        fusumaTransition.openFusuma();
+      }, 1000);
     }
 
     // 都道府県のデータが取得できたら、フェードを開く
