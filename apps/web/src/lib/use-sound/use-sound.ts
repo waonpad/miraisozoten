@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import ClickSound from '@/assets/sounds/click.mp3';
 import BGM from '@/assets/sounds/common-bgm.mp3';
@@ -67,16 +68,23 @@ export const useSoundCtx = () => {
 
   const [playPageMove] = useSoundOrigin(PageMoveSound, options);
 
-  const [playBGM, { stop: stopBGM }] = useSoundOrigin(BGM, {
+  const [playBGM, { stop: stopBGM, sound: BGMSound }] = useSoundOrigin(BGM, {
     ...options,
     loop: true,
+    volume: 0.5,
   });
 
-  // TODO: ゲームBGMの制御 #322
-  const [playGameBGM, { stop: stopGameBGM }] = useSoundOrigin(GameBGM, {
+  const [isPlayingBGM, setIsPlayingBGM] = useState(false);
+
+  const [playGameBGM, { stop: stopGameBGM, sound: gameBGMSound }] = useSoundOrigin(GameBGM, {
     ...options,
     loop: true,
+    volume: 0.2,
   });
+
+  const [isPlayingGameBGM, setIsPlayingGameBGM] = useState(false);
+
+  const location = useLocation();
 
   /**
    * @description
@@ -93,45 +101,83 @@ export const useSoundCtx = () => {
   };
 
   useEffect(() => {
-    // NOTICE: とりあえずBGMの再生はここで制御している
     if (options.soundEnabled) {
-      playBGM();
+      if (location.pathname === '/game') {
+        stopBGM();
+        setIsPlayingBGM(false);
+
+        playGameBGM();
+        setIsPlayingGameBGM(true);
+      } else {
+        stopGameBGM();
+        setIsPlayingGameBGM(false);
+
+        playBGM();
+        setIsPlayingBGM(true);
+      }
     } else {
       stopBGM();
+      setIsPlayingBGM(false);
+
+      stopGameBGM();
+      setIsPlayingGameBGM(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [options.soundEnabled]);
 
-  /**
-   * @description
-   * ブラウザが自動再生を許可していないので、ユーザーがアクションを起こすまで \
-   * 再生を試行することで、何かしらのアクションがあったらすぐにBGMを再生できるようにするための処理
-   */
-  const [isFirstRender, setIsFirstRender] = useState(true);
-  const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
+  useEffect(() => {
+    // console.log('useEffect', {
+    //   isPlayingBGM,
+    //   isPlayingGameBGM,
+    //   locationPathname: location.pathname,
+    //   BGMSound,
+    //   gameBGMSound,
+    // });
 
-  const intervalFn = useCallback(() => {
-    if (options.soundEnabled && isFirstRender) {
-      playBGM();
+    if (!BGMSound || !gameBGMSound) {
+      console.log('sound is not loaded');
 
-      if (intervalId) clearInterval(intervalId);
+      return;
     }
 
-    setIsFirstRender(false);
+    const intervalId = setInterval(() => {
+      if (options.soundEnabled) {
+        const isInGame = location.pathname === '/game';
+
+        if (isInGame && !isPlayingGameBGM) {
+          console.log('playGameBGM');
+
+          stopBGM();
+          setIsPlayingBGM(false);
+
+          playGameBGM();
+          setIsPlayingGameBGM(true);
+        }
+
+        if (!isInGame && !isPlayingBGM) {
+          console.log('playBGM');
+
+          stopGameBGM();
+          setIsPlayingGameBGM(false);
+
+          playBGM();
+          setIsPlayingBGM(true);
+        }
+      }
+
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, 1000);
+
+    return () => clearInterval(intervalId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isFirstRender, options.soundEnabled, playBGM]);
-
-  useEffect(() => {
-    if (!isFirstRender) return;
-
-    const _intervalId = setInterval(intervalFn, 1000);
-
-    setIntervalId(_intervalId);
-
-    return () => clearInterval(_intervalId);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [intervalFn]);
-  /** ここまで  */
+  }, [
+    isPlayingBGM,
+    isPlayingGameBGM,
+    location.pathname,
+    options.soundEnabled,
+    BGMSound,
+    gameBGMSound,
+  ]);
 
   return {
     options,
