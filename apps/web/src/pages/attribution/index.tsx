@@ -6,6 +6,7 @@ import { Head } from '@/components/head';
 import { useFadeTransition } from '@/components/transitions/fade-transition/use-fade-transition';
 
 import { AttributionList } from './_/components/attribution-list';
+import { SoundAttributions } from './_/constants/sound-attributions';
 
 import './_/css/attribution.css'; // css読み込み
 
@@ -34,6 +35,25 @@ export default function Page() {
 
         <div className="attrtable">
           <AttributionList />
+        </div>
+
+        <div className="ml-[2.5%] mt-6 text-3xl">サウンド</div>
+
+        <div className="attrtable">
+          <ul>
+            {SoundAttributions.map((soundAttribution, index) => (
+              <li key={index}>
+                <a
+                  href={soundAttribution.sourceSiteUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="underline"
+                >
+                  {soundAttribution.sourceSiteName}
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
 
