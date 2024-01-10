@@ -34,9 +34,6 @@ export const createEnv = ({ runtimeEnv }: { runtimeEnv: NodeJS.ProcessEnv }) => 
           VITE_FIREBASE_AUTH_EMULATOR_HOST: z.string(),
         }),
       }),
-
-      // TODO: あとで消す
-      VITE_GAKUNAI_SHINSA: z.enum(['true', 'false']),
     },
     runtimeEnv: runtimeEnv,
     emptyStringAsUndefined: true,
