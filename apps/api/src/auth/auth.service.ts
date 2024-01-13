@@ -1,13 +1,21 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { ForbiddenException, Inject, Injectable } from '@nestjs/common';
 import { UserResponse, JwtDecodedUser } from 'schema/dist/user';
 import { InjectionToken } from 'src/config/environments/constants/injection-token.enum';
+import { Env } from 'src/config/environments/env.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class AuthService {
-  constructor(@Inject(InjectionToken.PRISMA_SERVICE) private readonly prisma: PrismaService) {}
+  constructor(
+    @Inject(InjectionToken.PRISMA_SERVICE) private readonly prisma: PrismaService,
+    private readonly env: Env
+  ) {}
 
   async login(user: JwtDecodedUser): Promise<UserResponse> {
+    if (this.env.get('EXHIBITION') && user.provider_id !== 'anonymous') {
+      throw new ForbiddenException('ゲストユーザーのみログイン可能です');
+    }
+
     // 匿名ログインの場合
     if (user.provider_id === 'anonymous') {
       user.name = 'ゲスト';
