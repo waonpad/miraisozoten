@@ -34,6 +34,8 @@ export const createEnv = ({ runtimeEnv }: { runtimeEnv: NodeJS.ProcessEnv }) => 
           VITE_FIREBASE_AUTH_EMULATOR_HOST: z.string(),
         }),
       }),
+
+      VITE_EXHIBITION: z.enum(['true', 'false']).optional(),
     },
     runtimeEnv: runtimeEnv,
     emptyStringAsUndefined: true,

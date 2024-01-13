@@ -34,6 +34,8 @@ export class Env {
           // これが設定されていると、自動的にfirebase-adminの初期化時にemulatorを使うようになる
           FIREBASE_AUTH_EMULATOR_HOST: z.string().optional(),
         }),
+
+        EXHIBITION: z.coerce.boolean().optional(),
       },
       clientPrefix: '',
       client: {},

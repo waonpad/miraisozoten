@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import { useAuth } from '@/auth/use-auth';
+import { env } from '@/constants/env';
 import { useSound } from '@/lib/use-sound/use-sound';
 
 import { ConfirmLogoutDialog } from '../confirm-logout-dialog';
@@ -45,7 +46,9 @@ export const AuthButton = () => {
 
   return (
     <>
-      {isLoggedIn && !isAnonymous && (
+      {env.VITE_EXHIBITION === 'true' ? (
+        <div className="opacity-50">展示中はログインできません</div>
+      ) : isLoggedIn && !isAnonymous ? (
         // ログインしていて、かつ匿名ユーザーでなければログアウトできる
         <div
           onClick={handleClickLogout}
@@ -55,10 +58,8 @@ export const AuthButton = () => {
         >
           ログアウト
         </div>
-      )}
-      {((isLoggedIn && isAnonymous) || !isLoggedIn) && (
+      ) : (
         // ログインされていていも、匿名ユーザーなら実際のアカウントでログインできる
-        // ログインされていなければログインできる(自動で匿名ログインされるため、起こらないはず)
         <div
           onClick={handleClickLogin}
           style={{
