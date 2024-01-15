@@ -13,6 +13,7 @@ import NegativeClickSound from '@/assets/sounds/negative-click.mp3';
 import OpenDialogSound from '@/assets/sounds/open-dialog.mp3';
 import CloseDialogSound from '@/assets/sounds/open-dialog.mp3';
 import PageMoveSound from '@/assets/sounds/page-move.mp3';
+import SwordSlashSound from '@/assets/sounds/sword-slash.mp3';
 import { COOKIE_NAMES } from '@/constants/cookie-names';
 import { getCookie } from '@/utils/cookie/get-cookie';
 import { setCookie } from '@/utils/cookie/set-cookie';
@@ -67,6 +68,8 @@ export const useSoundCtx = () => {
   });
 
   const [playPageMove] = useSoundOrigin(PageMoveSound, options);
+
+  const [playSwordSlash] = useSoundOrigin(SwordSlashSound, options);
 
   const [playBGM, { stop: stopBGM, sound: BGMSound }] = useSoundOrigin(BGM, {
     ...options,
@@ -191,6 +194,7 @@ export const useSoundCtx = () => {
     playGameTurnDraw,
     playGameClear,
     playPageMove,
+    playSwordSlash,
     playBGM,
     stopBGM,
     playGameBGM,
