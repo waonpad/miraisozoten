@@ -22,4 +22,8 @@ export const SoundAttributions: {
     sourceSiteUrl: 'https://music.storyinvention.com/',
     sourceSiteName: 'MOMIZizm MUSiC',
   },
+  {
+    sourceSiteUrl: 'https://www.springin.org/',
+    sourceSiteName: 'Springin’',
+  },
 ];
