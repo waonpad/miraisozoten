@@ -37,7 +37,7 @@ nps gc.project.set
 `<rootDir>/.env` の `GC_BILLING_ACCOUNT_ID` を確認してから
 
 ```
-nps billing.link
+nps gc.billing.link
 ```
 
 #### Secret Manager に機密情報をアップロード
@@ -45,7 +45,7 @@ nps billing.link
 `<rootDir>/.env` の `GC_SERVICE_ACCOUNT`, `GC_SECRET_` プレフィックスのついた変数を確認してから
 
 ```
-nps gx.secret.enable
+nps gc.secret.enable
 nps gc.secret.role.add
 nps gc.secret.deploy
 ```
@@ -67,14 +67,14 @@ nps gc.docker.push
 
 #### Cloud Run にデプロイ
 
-`<rootDir>/.env` の `GC_RUN_ENV_` プレフィックスのついた変数を確認してから
+`apps/api/.env` の本番環境に必要な環境変数をコピーし、 `GC_RUN_ENV_` プレフィックスをつけて `<rootDir>/.env` に追加し、`<rootDir>/.env` の `GC_RUN_ENV_` プレフィックスのついた変数を確認してから
 
 ```
 nps gc.run.role.add
 nps gc.run.deploy
 ```
 
-💡 デフォルト構成では, このタイミングでホスティング先DBのスキーマが更新される
+💡 FirebaseのPRIVATE KEY は改行コードが含まれているため、 '"<key文字列>"' として囲む
 
 #### アクセスする
 
