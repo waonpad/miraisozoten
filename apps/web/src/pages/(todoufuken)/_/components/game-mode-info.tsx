@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import { Button } from 'ui/components/ui/button';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from 'ui/components/ui/tooltip';
 
@@ -8,11 +10,23 @@ import CircleInfoIcon from '@/assets/icons/circle-info.svg?react';
  * モードの説明を表示するTooltip
  */
 export const GameModeInfo = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleClickTrigger = () => {
+    setIsOpen((prev) => !prev);
+  };
+
   return (
     <TooltipProvider>
-      <Tooltip>
+      <Tooltip open={isOpen} onOpenChange={setIsOpen}>
         <TooltipTrigger>
-          <Button asChild size={'icon'} variant={'icon'} className="h-7 w-7">
+          <Button
+            asChild
+            size={'icon'}
+            variant={'icon'}
+            className="h-7 w-7"
+            onClick={handleClickTrigger}
+          >
             <CircleInfoIcon className="fill-current text-gray-600" />
           </Button>
         </TooltipTrigger>
