@@ -12,7 +12,7 @@ export class AuthService {
   ) {}
 
   async login(user: JwtDecodedUser): Promise<UserResponse> {
-    if (this.env.get('EXHIBITION') && user.provider_id !== 'anonymous') {
+    if (this.env.get('EXHIBITION') === 'true' && user.provider_id !== 'anonymous') {
       throw new ForbiddenException('ゲストユーザーのみログイン可能です');
     }
 

@@ -15,7 +15,7 @@ async function bootstrap() {
   const env: Env = app.get(Env);
 
   // Sentry
-  if (env.get('SENTRY_DSN') && (env.isProduction() || env.get('SENTRY_ENABLED'))) {
+  if (env.get('SENTRY_DSN') && (env.isProduction() || env.get('SENTRY_ENABLED') === 'true')) {
     console.log('Sentry enabled');
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
