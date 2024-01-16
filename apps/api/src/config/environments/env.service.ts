@@ -20,7 +20,7 @@ export class Env {
         PORT: z.coerce.number(),
         DATABASE_URL: z.string().url(),
 
-        SENTRY_ENABLED: z.coerce.boolean(),
+        SENTRY_ENABLED: z.enum(['true', 'false']),
         // Sentryを有効にするならDSNが必須
         ...((runtimeEnv.APP_ENV === 'production' || runtimeEnv.SENTRY_ENABLED === 'true') && {
           SENTRY_DSN: z.string().url(),
@@ -35,7 +35,7 @@ export class Env {
           FIREBASE_AUTH_EMULATOR_HOST: z.string().optional(),
         }),
 
-        EXHIBITION: z.coerce.boolean().optional(),
+        EXHIBITION: z.enum(['true', 'false']).optional(),
       },
       clientPrefix: '',
       client: {},
