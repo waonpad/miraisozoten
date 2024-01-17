@@ -3,6 +3,10 @@
     {
       "source": "/:path*",
       "destination": "/index.html"
+    },
+    {
+      "source": "/__/auth/:slug*",
+      "destination": "https://miraisozoten-dev.firebaseapp.com/__/auth/:slug*"
     }
   ]
 }
