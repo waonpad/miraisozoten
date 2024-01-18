@@ -1,7 +1,7 @@
 @charset "utf-8";
 
 .archwrap{
-  max-height: calc(100vh - (5vw + 100px));
+  max-height: calc(100dvh - (5vw + 100px));
   overflow-y: auto;
 }
 

@@ -21,7 +21,7 @@ export const ConqueredPrefecturesDialog = ({
   // TODO: ダイアログの上辺は常にヘッダーの下辺から少し下に位置し、画面の中心＝ダイアログの中心にはならないようにする
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="flex max-h-[80vh] min-w-[90vw] max-w-[90vw] flex-col gap-0 border-none p-0 sm:rounded-none">
+      <DialogContent className="flex max-h-[80dvh] min-w-[90vw] max-w-[90vw] flex-col gap-0 border-none p-0 sm:rounded-none">
         <div className="flex items-center justify-center bg-gray-300 py-4 text-xl lg:text-2xl">
           吸収都道府県
         </div>

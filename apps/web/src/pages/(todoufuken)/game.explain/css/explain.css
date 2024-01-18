@@ -29,7 +29,7 @@
   }
 
   .battleimages{
-    height: 50vh;
+    height: 50dvh;
     aspect-ratio: 823	/ 1385;
     margin-top: 40px;
     background: url("../images/battleimg_sp.png");

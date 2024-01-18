@@ -40,7 +40,7 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
                 backgroundRepeat: 'no-repeat',
                 backgroundAttachment: 'fixed',
               }),
-          minHeight: '100vh',
+          minHeight: '100dvh',
         }}
       >
         {children}
