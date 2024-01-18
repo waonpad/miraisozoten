@@ -31,7 +31,7 @@ export const GameModeInfo = () => {
           </Button>
         </TooltipTrigger>
         <TooltipContent>
-          <div className="text-xl">
+          <div className="max-w-[100vw] text-xl">
             <div>【モード】</div>
             <div>バトル時のモードを設定します。</div>
             <div>

@@ -31,7 +31,7 @@ export const GameDifficultyInfo = () => {
           </Button>
         </TooltipTrigger>
         <TooltipContent>
-          <div className="text-xl">
+          <div className="max-w-[100vw] text-xl">
             <div>【難易度】</div>
             <div>バトル難易度を設定します。</div>
             <div>Easy：3選択肢から対戦要素を選びます。</div>
